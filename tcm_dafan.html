@@ -1,0 +1,135 @@
+<style>
+    ul,
+    menu,
+    dir {
+        display: block;
+        list-style-type: disc;
+        -webkit-margin-before: 1em;
+        -webkit-margin-after: 1em;
+        -webkit-margin-start: 0px;
+        -webkit-margin-end: 0px;
+        -webkit-padding-start: 40px;
+    }
+</style>
+<script src="tcmdafan.js"></script>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"
+    integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+<script>
+
+    function addLabel(parent, text) {
+        label = $("<label>")
+        label.text(text)
+        parent.append(label)
+        return label
+    }
+    function addLine(parent) {
+        line = $("<hr>")
+        parent.append(line)
+    }
+    function addSubTitle(parent, text) {
+        addNextLine(main)
+        addLabel(parent, text)
+    }
+    function addSubTitleAndLabel(parent, title, text, separator = "，") {
+        //addNextLine(main)
+        span = $("<div>")
+        addLabel(span, title)
+        addBlank(span)
+        if (text.indexOf(separator) != -1) {
+            addList(span, text, separator)
+        } else if (text.indexOf("◦") != -1) {
+            addList(span, text, "◦")
+        } else {
+            //addNextLine(span)
+            if (text.trim() == "") {
+                text = "N/A"
+            }
+            addLabel(span, text.replace("•", "").replace("–", "").replace("|", "").replace("◦", "").replace("–", ""))
+        }
+        parent.append(span)
+    }
+    function addList(parent, text, separator) {
+        list = text.split(separator)
+        ul = $("<ul>")
+        for (i = 0; i < list.length; i++) {
+            if (list[i].trim() == "") {
+                continue
+            }
+            li = $("<li>")
+            li.text(list[i].trim().replace("•", "").replace("–", "").replace("|", "").replace("◦", "").replace("–", ""))
+            ul.append(li)
+        }
+        parent.append(ul)
+        return ul
+    }
+    function addBlank(parent) {
+        parent.append("<label>&nbsp;</label>")
+    }
+    function addNextLine(parent) {
+        parent.append("<br/>")
+    }
+    function addGroupSeperator(parent) {
+        parent.append("<label>&nbsp;->&nbsp;</label>")
+    }
+    function getDiv(dict) {
+        main = $("<div>")
+        addLabel(main, dict["NAME"])
+        addBlank(main)
+        addLabel(main, dict["PINYIN_NAME"])
+        addBlank(main)
+        addLabel(main, "( " + dict["LATIN_NAME"] + " )")
+        addBlank(main)
+        //main.append("<label>&nbsp;-&nbsp;</label>")
+        //addLabel(main, "[ " + dict["LITERAL_ENGLISH"] + " ]")
+        addNextLine(main)
+        addSubTitleAndLabel(main, "Common Name:", dict["COMMON_NAME"])
+        addNextLine(main)
+        addSubTitleAndLabel(main, "Literal English:", dict["LITERAL_ENGLISH"])
+        addNextLine(main)
+        addLabel(main, dict["SUBJECT"])
+        addNextLine(main)
+        addLabel(main, dict["GROUP"])
+        addGroupSeperator(main)
+        //addNextLine(main)
+        addLabel(main, dict["SUBGROUP_1"])
+        addGroupSeperator(main)
+        addLabel(main, dict["SUBGROUP_2"])
+        addNextLine(main)
+        addSubTitleAndLabel(main, "Channels:", dict["CHANNELS"])
+        addSubTitleAndLabel(main, "Properties:", dict["PROPERTIES"])
+        addSubTitleAndLabel(main, "Actions & Indications:", dict["ACTIONS_INDICATIONS"], separator = "•")
+        addSubTitleAndLabel(main, "Dosage:", dict["DOSAGE"])
+        addNextLine(main)
+        addSubTitleAndLabel(main, "Common Combinations:", dict["COMMON_COMBINATIONS"], separator = "•")
+        addSubTitleAndLabel(main, "Others:", dict["OTHERS"], separator = "|")
+        addSubTitleAndLabel(main, "Fufan:", dict["FUFAN"], separator = "|")
+        /*for (key in dict) {
+            console.log(key, dict[key])
+        }*/
+        //main.appendTo("body")
+        //$("#mainDiv").append(main)
+        return main
+    }
+    $(function () {
+        area = $("#mainDiv")
+        //getDiv(dafanList[0])
+        //addLine(area)
+        //getDiv(dafanList[1])
+        //
+        for (ii = 0; ii < dafanList.length; ii++) {
+            //print(dafanList[i])
+            console.log(ii)
+            div = getDiv(dafanList[ii])
+            area.append(div)
+            addLine(area)
+            console.log(ii)
+        }
+    });
+
+</script>
+
+<body>
+    <div id="mainDiv">
+
+    </div>
+</body>
