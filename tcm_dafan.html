@@ -39,7 +39,6 @@
         addLabel(parent, text)
     }
     function addSubTitleAndLabel(parent, title, text, separator = "，", isFufan = false) {
-        //addNextLine(main)
         span = $("<div>")
         addLabel(span, title)
         addBlank(span)
@@ -48,7 +47,6 @@
         } else if (text.indexOf("◦") != -1) {
             addList(span, text, "◦", isFufan)
         } else {
-            //addNextLine(span)
             if (text.trim() == "") {
                 text = "N/A"
             }
@@ -70,8 +68,7 @@
                 if (fufandict[array[0]] === undefined) {
                     li.text(content)
                 } else {
-                    alink = $("<a href='" + fufandict[array[0]] + "'>" + content + "</a>")
-                    li.append(alink)
+                    li.html("<a href='" + fufandict[array[0]] + "'>" + array[0] + "</a>=>" + array[1])
                 }
             } else {
                 li.text(content)
@@ -138,4 +135,5 @@
     <div id="mainDiv">
 
     </div>
+
 </body>
