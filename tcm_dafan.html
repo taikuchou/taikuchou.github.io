@@ -118,20 +118,121 @@
         addSubTitleAndLabel(main, "Fufan:", dict["FUFAN"], separator = "|", isFufan = true)
         return main
     }
-    $(function () {
-        area = $("#mainDiv")
-        for (ii = 0; ii < dafanList.length; ii++) {
-            console.log(ii)
-            div = getDiv(dafanList[ii])
+
+    function initChannelsDropDownList(channels) {
+        select = $("<select id='channel'></select>")
+        opt = $("<option value='none'>Please select a option</option>")
+        select.append(opt)
+        opt = $("<option value='all'>All</option>")
+        select.append(opt)
+        for (i = 0; i < channels.length; i++) {
+            val = channels[i]
+            opt = $("<option value='" + val + "'>" + val + "</option>")
+            select.append(opt)
+        }
+        $("#funcArea").append(select);
+    }
+
+    function initChannelsCheckboxes(channels) {
+        container = $("#funcArea")
+        for (i = 0; i < channels.length; i++) {
+            val = channels[i]
+            $('<input />', { type: 'checkbox', id: 'cb' + i, class: 'channelcbs', value: val }).appendTo(container);
+            $('<label />', { 'for': 'cb' + i, text: val }).appendTo(container);
+        }
+        $(".channelcbs").change(function () {
+            list = checkBoxesHandler()
+            showList($("#mainDiv"), list)
+        })
+    }
+
+    function dropdownListHandler() {
+        list = []
+        if (channel == "all") {
+            list = dafanList;
+        } else if (channel != "none") {
+            for (j = 0; j < dafanList.length; j++) {
+                channels = dafanList[j]["CHANNELS"]
+                if (channels === undefined) {
+                    continue
+                }
+                console.log(channel, channels)
+                if (channels.indexOf(channel) != -1) {
+                    list.push(dafanList[j])
+                }
+            }
+        }
+        return list
+    }
+
+    function checkBoxesHandler() {
+        list = []
+        var $boxes = $('input[type=checkbox]:checked');
+        searchChannels = []
+        $boxes.each(function () {
+            //console.log($(this).val())
+            searchChannels.push($(this).val())
+        });
+        if (searchChannels.length == 0) {
+            list = dafanList;
+        } else {
+            //console.log(searchChannels.length)
+            for (j = 0; j < dafanList.length; j++) {
+                channels = dafanList[j]["CHANNELS"]
+                isAdd = true
+                console.log(channels)
+                for (k = 0; k < searchChannels.length; k++) {
+                    channel = searchChannels[k]
+                    console.log(channel, channels)
+                    if (channels.indexOf(channel) == -1) {
+                        isAdd = false
+                        break
+                    }
+                }
+                if (isAdd) {
+                    list.push(dafanList[j])
+                }
+            }
+        }
+        return list
+    }
+
+    function showList(area, list) {
+        area.empty()//Remoive all children
+        for (ii = 0; ii < list.length; ii++) {
+            div = getDiv(list[ii])
             area.append(div)
             addLine(area)
-            console.log(ii)
         }
+    }
+    channels = ["LR", "LU", "ST", "BL", "HT", "KI", "ST", "SP", "GV"]
+    $(function () {
+        initChannelsCheckboxes(channels)
+        //initChannelsDropDownList(channels)
+        /*$("#search").click(function () {
+            //channel = $("#channel").val()
+            //console.log(channel)
+            //list = dropdownListHandler()
+            list = checkBoxesHandler()
+            showList($("#mainDiv"), list)
+        })*/
+        $("#clear").click(function () {
+            $(".channelcbs").prop("checked", "")
+            list = checkBoxesHandler()
+            showList($("#mainDiv"), list)
+
+        })
     });
 
 </script>
 
 <body>
+    <div id="funcArea">
+
+
+    </div>
+    <!-- <button id="search">Search</button><br> -->
+    <button id="clear">Clear</button><br>
     <div id="mainDiv">
 
     </div>
