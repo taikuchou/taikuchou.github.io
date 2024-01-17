@@ -12,6 +12,7 @@
     }
 </style>
 <script src="tcmdafan.js"></script>
+<script src="tcmfufandict.js"></script>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"
     integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 <script>
@@ -25,7 +26,7 @@
     function addLink(parent, text, url) {
         link = $("<a>")
         link.text(text)
-        link.prop("href",url)
+        link.prop("href", url)
         parent.append(link)
         return label
     }
@@ -37,15 +38,15 @@
         addNextLine(main)
         addLabel(parent, text)
     }
-    function addSubTitleAndLabel(parent, title, text, separator = "，") {
+    function addSubTitleAndLabel(parent, title, text, separator = "，", isFufan = false) {
         //addNextLine(main)
         span = $("<div>")
         addLabel(span, title)
         addBlank(span)
         if (text.indexOf(separator) != -1) {
-            addList(span, text, separator)
+            addList(span, text, separator, isFufan)
         } else if (text.indexOf("◦") != -1) {
-            addList(span, text, "◦")
+            addList(span, text, "◦", isFufan)
         } else {
             //addNextLine(span)
             if (text.trim() == "") {
@@ -55,7 +56,7 @@
         }
         parent.append(span)
     }
-    function addList(parent, text, separator) {
+    function addList(parent, text, separator, isFufan = false) {
         list = text.split(separator)
         ul = $("<ul>")
         for (i = 0; i < list.length; i++) {
@@ -63,7 +64,18 @@
                 continue
             }
             li = $("<li>")
-            li.text(list[i].trim().replace("•", "").replace("–", "").replace("|", "").replace("◦", "").replace("–", ""))
+            content = list[i].trim().replace("•", "").replace("–", "").replace("|", "").replace("◦", "").replace("–", "")
+            if (isFufan) {
+                array = content.split("=>")
+                if (fufandict[array[0]] === undefined) {
+                    li.text(content)
+                } else {
+                    alink = $("<a href='" + fufandict[array[0]] + "'>" + content + "</a>")
+                    li.append(alink)
+                }
+            } else {
+                li.text(content)
+            }
             ul.append(li)
         }
         parent.append(ul)
@@ -86,8 +98,6 @@
         addBlank(main)
         addLabel(main, "( " + dict["LATIN_NAME"] + " )")
         addBlank(main)
-        //main.append("<label>&nbsp;-&nbsp;</label>")
-        //addLabel(main, "[ " + dict["LITERAL_ENGLISH"] + " ]")
         addNextLine(main)
         addSubTitleAndLabel(main, "Common Name:", dict["COMMON_NAME"])
         addNextLine(main)
@@ -97,7 +107,6 @@
         addNextLine(main)
         addLabel(main, dict["GROUP"])
         addGroupSeperator(main)
-        //addNextLine(main)
         addLabel(main, dict["SUBGROUP_1"])
         addGroupSeperator(main)
         addLabel(main, dict["SUBGROUP_2"])
@@ -109,22 +118,12 @@
         addNextLine(main)
         addSubTitleAndLabel(main, "Common Combinations:", dict["COMMON_COMBINATIONS"], separator = "•")
         addSubTitleAndLabel(main, "Others:", dict["OTHERS"], separator = "|")
-        addSubTitleAndLabel(main, "Fufan:", dict["FUFAN"], separator = "|")
-        /*for (key in dict) {
-            console.log(key, dict[key])
-        }*/
-        //main.appendTo("body")
-        //$("#mainDiv").append(main)
+        addSubTitleAndLabel(main, "Fufan:", dict["FUFAN"], separator = "|", isFufan = true)
         return main
     }
     $(function () {
         area = $("#mainDiv")
-        //getDiv(dafanList[0])
-        //addLine(area)
-        //getDiv(dafanList[1])
-        //
         for (ii = 0; ii < dafanList.length; ii++) {
-            //print(dafanList[i])
             console.log(ii)
             div = getDiv(dafanList[ii])
             area.append(div)
