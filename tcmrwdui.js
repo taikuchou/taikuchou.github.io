@@ -16,19 +16,19 @@ function addTitle(parent, dict) {
     parent.append($(html))
 }
 function addThreeColunmnTextRow(parent, dict, title1, title2, title3, key1, key2, key3) {
-    var html = '<div class="input-row">' +
+    var html = '<div class="">' +
         '<div class="row">' +
-        '<div class="col-12 col-md-4">' +
+        '<div class="col-12 col-md-12">' +
         '<label>{t1}：</label>' +
-        '<input type="text" value="{subject}" readonly="">' +
+        '<label>{subject}</label>' +
         '</div>' +
-        '<div class="col-12 col-md-4">' +
+        '<div class="col-12 col-md-6">' +
         '<label>{t2}：</label>' +
-        '<input type="text" value="{cn}" readonly="">' +
+        '<label>{cn}</label>' +
         '</div>' +
-        '<div class="col-12 col-md-4">' +
+        '<div class="col-12 col-md-6">' +
         '<label>{t3}：</label>' +
-        '<input type="text" value="{le}" readonly="">' +
+        '<label>{le}</label>' +
         '</div>' +
         '</div>' +
         '</div>'
@@ -48,15 +48,15 @@ function getData(dict, key) {
     return data
 }
 function addTwoColunmnTextRow(parent, dict, title1, title2, key1, key2) {
-    var html = '<div class="input-row">' +
+    var html = '<div class="input">' +
         '<div class="row">' +
         '<div class="col-12 col-md-6">' +
-        '<label>{t1}:</label>' +
-        '<input type="text" value="{c}" readonly="">' +
+        '<label>{t1}:</label>&nbsp;' +
+        '<label>{c}</label>' +
         '</div>' +
         '<div class="col-12 col-md-6">' +
-        '<label>{t2}：</label>' +
-        '<input type="text" value="{d}" readonly="">' +
+        '<label>{t2}:</label>&nbsp;' +
+        '<label>{d}</label>' +
         '</div>' +
         '</div>' +
         '</div>'
@@ -64,8 +64,8 @@ function addTwoColunmnTextRow(parent, dict, title1, title2, key1, key2) {
     html = html.replace("{t2}", title2)
     html = html.replace("{c}", dict[key1])
     html = html.replace("{d}", dict[key2])
-    console.log(dict[key1])
-    console.log(dict[key2])
+    // console.log(dict[key1])
+    // console.log(dict[key2])
     parent.append($(html))
 }
 function addOneColunmnListRow(parent, dict, title1, key1, s1, isFufan = false) {
@@ -113,7 +113,7 @@ function getListHTML(text, separator = "，", isFufan = false) {
         if (list[i].trim() == "") {
             continue
         }
-        li = $("<li ></li>")
+        li = $("<li></li>")
         content = list[i].trim().replace("•", "").replace("–", "").replace("|", "").replace("◦", "")
         if (isFufan) {
             array = content.split("=>")
@@ -127,20 +127,36 @@ function getListHTML(text, separator = "，", isFufan = false) {
         }
         ul1.append(li)
     }
-    console.log(ul1.html())
+    // console.log(ul1.html())
     return ul1.html()
 }
 
+function addOneColunmnInputTextRow(parent, dict, title1, key1) {
+    var html = '<div class="">' +
+        '<div class="row">' +
+        '<div class="col-12 col-md-12">' +
+        '<label>{t1}:</label>' +
+        '<input type="text" value="{c}" readonly="">' +
+        '</div>' +
+        '</div>' +
+        '</div>'
+    html = html.replace("{t1}", title1)
+    html = html.replace("{c}", dict[key1])
+    parent.append($(html))
+}
 function getDiv(dict) {
     main = $('<section class="section-box"></section>')
     formBox = $('<div class="form-box"></div>')
     main.append(formBox)
-    row = $('<div class="input-row"></div>')
+    row = $('<div class=""></div>')
     formBox.append(row)
     addGrpup(row, dict)
     addTitle(row, dict)
-    addThreeColunmnTextRow(formBox, dict, "Subject", "Common Name", "Literal English", "SUBJECT", "COMMON_NAME", "LITERAL_ENGLISH")
-    addTwoColunmnTextRow(formBox, dict, "Channels", "Dosage", "CHANNELS", "DOSAGE")
+    addTwoColunmnTextRow(formBox, dict, "Subject", "Dosage", "SUBJECT", "DOSAGE")
+    // addThreeColunmnTextRow(formBox, dict, "Subject", "Common Name", "Literal English", "SUBJECT", "COMMON_NAME", "LITERAL_ENGLISH")
+    addTwoColunmnTextRow(formBox, dict, "Common Name", "Literal English", "COMMON_NAME", "LITERAL_ENGLISH")
+    // addTwoColunmnTextRow(formBox, dict, "Channels", "Dosage", "CHANNELS", "DOSAGE")
+    addOneColunmnInputTextRow(formBox, dict, "Channels", "CHANNELS")
     addTwoColunmnListRow(formBox, dict, "Efficacy", "Properties", "EFFECT", "PROPERTIES")
     addOneColunmnListRow(formBox, dict, "Actions & Indications", "ACTIONS_INDICATIONS", "•")
     addOneColunmnListRow(formBox, dict, "Others", "OTHERS", "•")
