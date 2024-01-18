@@ -117,7 +117,8 @@ function getListHTML(text, separator = "，", isFufan = false) {
             continue
         }
         li = $("<li></li>")
-        content = list[i].trim().replace("•", "").replace("–", "").replace("|", "").replace("◦", "")
+        content = list[i].trim().replace("•", "").replace("–", "").replace("|", "").replace("◦", "").replace("，", ", ")
+        console.log(content)
         if (isFufan) {
             console.log("A")
             array = content.split("=>")
