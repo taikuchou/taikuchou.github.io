@@ -102,10 +102,13 @@ function addTwoColunmnListRow(parent, dict, title1, title2, key1, key2, s1 = "�
 }
 function getListHTML(text, separator = "，", isFufan = false) {
     if (text.indexOf(separator) == -1) {
-        if (text == "") {
+        if (text.indexOf("◦") != -1) {
+            separator = "◦"
+
+        } else if (text == "") {
             text = "N/A"
+            return "<label>{t}</label>".replace("{t}".replace("◦", ""))
         }
-        return "<label>{t}</label>".replace("{t}", text)
     }
     list = text.split(separator)
     var ul1 = $("<ul class='ul-line'></ul>")
