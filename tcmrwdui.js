@@ -62,8 +62,8 @@ function addTwoColunmnTextRow(parent, dict, title1, title2, key1, key2) {
         '</div>'
     html = html.replace("{t1}", title1)
     html = html.replace("{t2}", title2)
-    html = html.replace("{c}", dict[key1])
-    html = html.replace("{d}", dict[key2])
+    html = html.replace("{c}", getData(dict, key1))
+    html = html.replace("{d}", getData(dict, key2))
     // console.log(dict[key1])
     // console.log(dict[key2])
     parent.append($(html))
@@ -141,7 +141,7 @@ function addOneColunmnInputTextRow(parent, dict, title1, key1) {
         '</div>' +
         '</div>'
     html = html.replace("{t1}", title1)
-    html = html.replace("{c}", dict[key1])
+    html = html.replace("{c}", getData(dict, key1))
     parent.append($(html))
 }
 function getDiv(dict) {
@@ -153,9 +153,7 @@ function getDiv(dict) {
     addGrpup(row, dict)
     addTitle(row, dict)
     addTwoColunmnTextRow(formBox, dict, "Subject", "Dosage", "SUBJECT", "DOSAGE")
-    // addThreeColunmnTextRow(formBox, dict, "Subject", "Common Name", "Literal English", "SUBJECT", "COMMON_NAME", "LITERAL_ENGLISH")
     addTwoColunmnTextRow(formBox, dict, "Common Name", "Literal English", "COMMON_NAME", "LITERAL_ENGLISH")
-    // addTwoColunmnTextRow(formBox, dict, "Channels", "Dosage", "CHANNELS", "DOSAGE")
     addOneColunmnInputTextRow(formBox, dict, "Channels", "CHANNELS")
     addTwoColunmnListRow(formBox, dict, "Efficacy", "Properties", "EFFECT", "PROPERTIES")
     addOneColunmnListRow(formBox, dict, "Actions & Indications", "ACTIONS_INDICATIONS", "•")
