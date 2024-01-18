@@ -96,8 +96,8 @@ function addTwoColunmnListRow(parent, dict, title1, title2, key1, key2, s1 = "�
         '</div>'
     html = html.replace("{t1}", title1)
     html = html.replace("{t2}", title2)
-    html = html.replace("{c}", getListHTML(dict[key1], s1, isFufan))
-    html = html.replace("{d}", getListHTML(dict[key2], s2))
+    html = html.replace("{c}", getListHTML(dict[key1], s1))
+    html = html.replace("{d}", getListHTML(dict[key2], s2, isFufan))
     parent.append($(html))
 }
 function getListHTML(text, separator = "，", isFufan = false) {
@@ -116,6 +116,7 @@ function getListHTML(text, separator = "，", isFufan = false) {
         li = $("<li></li>")
         content = list[i].trim().replace("•", "").replace("–", "").replace("|", "").replace("◦", "")
         if (isFufan) {
+            console.log("A")
             array = content.split("=>")
             if (fufandict[array[0]] === undefined) {
                 li.text(content)
@@ -144,6 +145,19 @@ function addOneColunmnInputTextRow(parent, dict, title1, key1) {
     html = html.replace("{c}", getData(dict, key1))
     parent.append($(html))
 }
+function addOneColunmnTextRow(parent, dict, title1, key1) {
+    var html = '<div class="">' +
+        '<div class="row">' +
+        '<div class="col-12 col-md-12">' +
+        '<label>{t1}:</label>&nbsp;' +
+        '<label>{c}</label>' +
+        '</div>' +
+        '</div>' +
+        '</div>'
+    html = html.replace("{t1}", title1)
+    html = html.replace("{c}", getData(dict, key1))
+    parent.append($(html))
+}
 function getDiv(dict) {
     main = $('<section class="section-box"></section>')
     formBox = $('<div class="form-box"></div>')
@@ -152,13 +166,12 @@ function getDiv(dict) {
     formBox.append(row)
     addGrpup(row, dict)
     addTitle(row, dict)
-    addTwoColunmnTextRow(formBox, dict, "Subject", "Dosage", "SUBJECT", "DOSAGE")
-    addTwoColunmnTextRow(formBox, dict, "Common Name", "Literal English", "COMMON_NAME", "LITERAL_ENGLISH")
-    addOneColunmnInputTextRow(formBox, dict, "Channels", "CHANNELS")
-    addTwoColunmnListRow(formBox, dict, "Efficacy", "Properties", "EFFECT", "PROPERTIES")
-    addOneColunmnListRow(formBox, dict, "Actions & Indications", "ACTIONS_INDICATIONS", "•")
+    addTwoColunmnTextRow(formBox, dict, "Subject", "Common Name", "SUBJECT", "COMMON_NAME")
+    addTwoColunmnTextRow(formBox, dict, "Dosage", "Literal English", "DOSAGE", "LITERAL_ENGLISH")
+    addOneColunmnTextRow(formBox, dict, "Channels", "CHANNELS")
+    addTwoColunmnListRow(formBox, dict, "Properties", "Fufan", "PROPERTIES", "FUFAN", "，", "|", is2Fufan = true)
+    addTwoColunmnListRow(formBox, dict, "Actions & Indications", "Efficacy", "ACTIONS_INDICATIONS", "EFFECT", "•", "，")
     addOneColunmnListRow(formBox, dict, "Others", "OTHERS", "•")
-    addOneColunmnListRow(formBox, dict, "Fufan", "FUFAN", "|", isFufan = true)
     return main
 }
 
