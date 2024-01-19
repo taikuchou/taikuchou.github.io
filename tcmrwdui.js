@@ -268,6 +268,7 @@ $(function () {
         $("#group").val("none")
         list = searchHandler()
         showList($("#mainDiv"), list)
+        $("#clear").hide()
     })
     $("#clear").hide()
     showList($("#mainDiv"), dafanList)
