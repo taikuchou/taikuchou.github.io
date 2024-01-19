@@ -64,8 +64,6 @@ function addTwoColunmnTextRow(parent, dict, title1, title2, key1, key2) {
     html = html.replace("{t2}", title2)
     html = html.replace("{c}", getData(dict, key1))
     html = html.replace("{d}", getData(dict, key2))
-    // console.log(dict[key1])
-    // console.log(dict[key2])
     parent.append($(html))
 }
 function addOneColunmnListRow(parent, dict, title1, key1, s1, isFufan = false) {
@@ -105,9 +103,9 @@ function getListHTML(text, separator = "，", isFufan = false) {
         if (text.indexOf("◦") != -1) {
             separator = "◦"
 
-        } else if (text == "") {
+        } else if (text == "" || text === undefined) {
             text = "N/A"
-            return "<label>{t}</label>".replace("{t}".replace("◦", ""))
+            return "<label>{t}</label>".replace("{t}", text)
         }
     }
     list = text.split(separator)
@@ -116,14 +114,14 @@ function getListHTML(text, separator = "，", isFufan = false) {
         if (list[i].trim() == "") {
             continue
         }
-        li = $("<li></li>")
+        li = $("<li class='wrap'></li>")
         content = list[i].trim().replace("•", "").replace("–", "").replace("|", "").replace("◦", "").replace("，", ", ")
-        console.log(content)
+
         if (isFufan) {
-            console.log("A")
+
             array = content.split("=>")
             if (fufandict[array[0]] === undefined) {
-                li.text(content)
+                li.text(array[0] + " => " + array[1])
             } else {
                 li.html("<a href='" + fufandict[array[0]] + "'>" + array[0] + "</a>&nbsp;=>&nbsp;" + array[1])
             }
@@ -132,7 +130,7 @@ function getListHTML(text, separator = "，", isFufan = false) {
         }
         ul1.append(li)
     }
-    // console.log(ul1.html())
+
     return ul1.html()
 }
 
@@ -152,7 +150,7 @@ function addOneColunmnInputTextRow(parent, dict, title1, key1) {
 function addOneColunmnTextRow(parent, dict, title1, key1) {
     var html = '<div class="">' +
         '<div class="row">' +
-        '<div class="col-12 col-md-12">' +
+        '<div class="col-12 col-md-10">' +
         '<label>{t1}:</label>&nbsp;' +
         '<label>{c}</label>' +
         '</div>' +
@@ -222,7 +220,6 @@ function searchHandler() {
     var $boxes = $('input[type=checkbox]:checked');
     searchChannels = []
     $boxes.each(function () {
-        //console.log($(this).val())
         searchChannels.push($(this).val())
     })
     var group = $("#group").val()
@@ -230,7 +227,6 @@ function searchHandler() {
     if ((group == "all" || group == "none") && searchChannels.length == 0) {
         list = dafanList;
     } else {
-        //console.log(searchChannels.length)
         for (j = 0; j < dafanList.length; j++) {
             channels = dafanList[j]["CHANNELS"]
             isAdd = true
@@ -241,7 +237,6 @@ function searchHandler() {
             }
             for (k = 0; k < searchChannels.length; k++) {
                 channel = searchChannels[k]
-                //console.log(channel, channels)
                 if (channels.indexOf(channel) == -1) {
                     isAdd = false
                     break
