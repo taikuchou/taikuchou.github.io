@@ -115,7 +115,7 @@ function getListHTML(text, separator = "，", isFufan = false) {
             continue
         }
         li = $("<li class='wrap'></li>")
-        content = list[i].trim().replace("•", "").replace("–", "").replace("|", "").replace("◦", "").replace("，", ", ")
+        content = list[i].trim().replaceAll("•", "").replaceAll("–", "").replaceAll("|", "").replaceAll("◦", "").replaceAll("，", ", ")
 
         if (isFufan) {
 
@@ -194,15 +194,16 @@ function initDropDownList(key, channels) {
     })
 }
 function reloadPage() {
+    text = $("#searchText").val()
+    $("#resultText").val("")
     list = searchHandler()
+    if (text.trim() != "") {
+        list = keyworkSearchHandler(list, text.trim())
+    }
     showList($("#mainDiv"), list)
     var $boxes = $('input[type=checkbox]:checked');
-    if ($boxes.length == 0) {
-        $("#clear").hide()
-    } else {
-        $("#clear").show()
-    }
 }
+
 function initChannelsCheckboxes(channels) {
     container = $("#funcArea")
     for (i = 0; i < channels.length; i++) {
@@ -223,7 +224,7 @@ function searchHandler() {
         searchChannels.push($(this).val())
     })
     var group = $("#group").val()
-    console.log(group)
+    // console.log(group)
     if ((group == "all" || group == "none") && searchChannels.length == 0) {
         list = dafanList;
     } else {
@@ -250,6 +251,27 @@ function searchHandler() {
     }
     return list
 }
+function keyworkSearchHandler(list, text) {
+    text = text.trim()
+    ret = []
+    if (text != "") {
+        for (j = 0; j < list.length; j++) {
+            dict = list[j]
+            //console.log(dict)
+            for (k = 0; k < searchkeys.length; k++) {
+                key = searchkeys[k].toUpperCase()
+                if (dict[key].indexOf(text) != -1) {
+                    console.log(key)
+                    ret.push(list[j])
+                    break
+                }
+            }
+        }
+        return ret
+    } else {
+        return list
+    }
+}
 
 function showList(area, list) {
     area.empty()//Remoive all children
@@ -257,19 +279,37 @@ function showList(area, list) {
         div = getDiv(list[ii])
         area.append(div)
     }
+    // if (list.length == 0) {
+    //     $("#searchArea").hide()
+    // } else {
+    //     $("#searchArea").show()
+    // }
+    $("#resultText").html("&nbsp; Total " + list.length + "&nbsp;records matched!")
 }
 channels = ['LU', 'BL', 'ST', 'LR', 'SP', 'HT', 'KI', 'GV', 'LV', 'GB', 'PC', 'TH', 'LI', 'SI', 'TE']
 groups = ['Warm, Acrid herbs that Release the Exterior', 'Cool Acrid Herbs that Release the Exterior', 'Herbs that Clear Heat', 'Downward Draining Herbs', 'Herbs that Drain Dampness', 'Aromatic herbs that Transform Damp', 'Herbs that Dispel Wind‐Dampness', 'Herbs that Transform Phlegm, and Stop Cough', 'Herbs that Regulate the Qi', 'Herbs that Regulate the Blood', 'Herbs that Tonify', 'Herbs that Warm the Interior and Expel Cold', 'Herbs that Calm the Spirit', 'Herbs that Extinguish Wind and Stop Tremors', 'Herbs that Stabilize and Bind', 'Herbs that Relieve Food Stagnation (Hot&Cold)', 'Herbs that Expel Parasites', 'Aromatic Herbs that Open the Orifices']
+dkeys = ["URL", "SUBJECT", "EFFECT", "GROUP", "SUBGROUP_1",
+    "SUBGROUP_2", "PINYIN_NAME", "NAME", "LATIN_NAME", "Properties", "Channels", "Actions_Indications", "Dosage", "Common_Name", "Literal_English", "Contraindications_Cautions", "Common_Combinations", "Others", "FuFan"]
+searchkeys = ["SUBJECT", "EFFECT", "PINYIN_NAME", "NAME", "LATIN_NAME", "Properties", "Actions_Indications", "Dosage", "Common_Name", "Literal_English", "Contraindications_Cautions", "Common_Combinations", "Others", "FuFan"]
+
 $(function () {
     initDropDownList("group", groups)
     initChannelsCheckboxes(channels)
     $("#clear").click(function () {
         $(".channelcbs").prop("checked", "")
         $("#group").val("none")
+        $("#searchText").val("")
         list = searchHandler()
         showList($("#mainDiv"), list)
-        $("#clear").hide()
+        //$("#clear").hide()
     })
-    $("#clear").hide()
+    $("#search").click(function () {
+        text = $("#searchText").val()
+        $("#resultText").val("")
+        list = searchHandler()
+        list = keyworkSearchHandler(list, text)
+        showList($("#mainDiv"), list)
+    })
+    // $("#searchArea").hide()
     showList($("#mainDiv"), dafanList)
 });
