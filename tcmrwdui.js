@@ -173,6 +173,7 @@ function getDiv(dict) {
     addOneColunmnTextRow(formBox, dict, "Channels", "CHANNELS")
     addTwoColunmnListRow(formBox, dict, "Properties", "Fufan", "PROPERTIES", "FUFAN", "，", "|", is2Fufan = true)
     addTwoColunmnListRow(formBox, dict, "Actions & Indications", "Efficacy", "ACTIONS_INDICATIONS", "EFFECT", "•", "，")
+    addTwoColunmnListRow(formBox, dict, "Contraindications / Cautions", "Common Combinations", "CONTRAINDICATIONS_CAUTIONS", "COMMON_COMBINATIONS", "•", "，")
     addOneColunmnListRow(formBox, dict, "Others", "OTHERS", "•")
     return main
 }
