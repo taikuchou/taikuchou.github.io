@@ -128,7 +128,7 @@ function getListHTML(text, separator = "，", isFufan = false) {
         } else {
             if (content.indexOf("＊＊") != -1){
                 content = content.replaceAll("＊＊", "")
-                li.html("<label class='redText'>＊"+content+"</label>")
+                li.html("<label class='redText'>"+content+"</label>")
             }else{
                 li.text(content)
             }
