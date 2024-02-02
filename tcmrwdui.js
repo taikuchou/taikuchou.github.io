@@ -115,7 +115,7 @@ function getListHTML(text, separator = "，", isFufan = false) {
             continue
         }
         li = $("<li class='wrap'></li>")
-        content = list[i].trim().replace("•", "").replace("–", "").replace("|", "").replace("◦", "").replace("，", ", ")
+        content = list[i].trim().replaceAll("•", "").replaceAll("–", "").replaceAll("|", "").replaceAll("◦", "").replaceAll("，", ", ")
 
         if (isFufan) {
 
