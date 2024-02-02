@@ -45,7 +45,7 @@ function getData(dict, key) {
     if (data == "") {
         data = "N/A"
     }
-    return data
+    return data.replaceAll("，", ", ")
 }
 function addTwoColunmnTextRow(parent, dict, title1, title2, key1, key2) {
     var html = '<div class="input">' +
