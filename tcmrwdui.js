@@ -121,7 +121,11 @@ function getListHTML(text, separator = "，", isFufan = false) {
 
             array = content.split("=>")
             if (fufandict[array[0]] === undefined) {
-                li.text(array[0] + " => " + array[1])
+                txt = ""
+                if (array[1] !== undefined){
+                    txt = array[1]
+                }
+                li.text(array[0] + " => " + txt)
             } else {
                 li.html("<a href='" + fufandict[array[0]] + "'>" + array[0] + "</a>&nbsp;=>&nbsp;" + array[1])
             }
