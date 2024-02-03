@@ -21,7 +21,13 @@
             white-space: normal;
             word-wrap: break-word;
         }
-
+        h3 {
+            float: none;
+            display: flex;
+        }
+        .dis {
+            margin: 10px 0px 0px 0px;
+        }
         .redText{
             color: red;
         }
@@ -42,7 +48,14 @@
     <div id="funcArea">
     </div>
     <div>
-        <button id="clear" class="btn btn-b1 btn-full">Clear Options</button><br>
+        <section id="searchArea">
+            <input type="text" id="searchText" class="dis" placeholder="Enter keyword to search" />
+            <div class="col-12 col-md-12">
+                <button class="btn-w" id="clear">Clear Options</button>
+                <button class="btn-w" id="search">Search</button>
+            </div>
+        </section>
+        <H4 id="resultText" class="dis"></H4><br>
     </div>
     <div id="">
         <div id="mainDiv">
