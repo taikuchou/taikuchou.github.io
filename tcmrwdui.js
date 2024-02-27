@@ -132,7 +132,21 @@ function getListHTML(text, separator = "，", isFufan = false) {
         } else {
             if (content.indexOf("＊＊") != -1){
                 content = content.replaceAll("＊＊", "")
-                li.html("<span class='redText'>"+content+"</span>")
+                //li.html("<span class='redText'>"+content.substring(0, 4)+"</span> <span class='blueText'>"+content.substring(4)+"</span> ")
+                li.html("<span class='redText'>"+content+"</span> ")
+            }else if (content.indexOf("＆＆") != -1){
+                content = content.replaceAll("＆＆", "")
+                li.html("<span class='blueText'>"+content+"</span> ")
+            }else if (content.indexOf("[") != -1 && content.indexOf("]") != -1){
+                licontent = ""
+                while (content.indexOf("[") != -1 && content.indexOf("]") != -1){
+                    start = content.indexOf("[")
+                    end = content.indexOf("]")
+                    licontent += "<span class=''>"+content.substring(0, start)+"</span> "
+                    licontent += "<span class='redText'>"+content.substring(start+1, end)+"</span> "
+                    content = content.substring(end+1)
+                }
+                li.html(licontent)
             }else{
                 li.text(content)
             }
@@ -298,7 +312,7 @@ function showList(area, list) {
 }
 channels = ['LU', 'BL', 'ST', 'LR', 'SP', 'HT', 'KI', 'GV', 'GB', 'PC', 'TH', 'LI', 'SI', 'TE']
 groups = ['Warm, Acrid herbs that Release the Exterior', 'Cool Acrid Herbs that Release the Exterior', 'Herbs that Clear Heat', 'Downward Draining Herbs', 'Herbs that Drain Dampness', 'Aromatic herbs that Transform Damp', 'Herbs that Dispel Wind‐Dampness', 'Herbs that Transform Phlegm, and Stop Cough', 'Herbs that Regulate the Qi', 'Herbs that Regulate the Blood', 'Herbs that Tonify', 'Herbs that Warm the Interior and Expel Cold', 'Herbs that Calm the Spirit', 'Herbs that Extinguish Wind and Stop Tremors', 'Herbs that Stabilize and Bind', 'Herbs that Relieve Food Stagnation (Hot&Cold)', 'Herbs that Expel Parasites', 'Aromatic Herbs that Open the Orifices']
-dkeys = ["URL", "SUBJECT", "EFFECT", "GROUP", "SUBGROUP_1",
+dkeys = ["URL", "SUBJECT", "EFFECT", "MainCategory","GROUP", "SUBGROUP_1",
     "SUBGROUP_2", "PINYIN_NAME", "NAME", "LATIN_NAME", "Properties", "Channels", "Actions_Indications", "Dosage", "Common_Name", "Literal_English", "Contraindications_Cautions", "Common_Combinations", "Others", "FuFan"]
 searchkeys = ["SUBJECT", "EFFECT", "PINYIN_NAME", "NAME", "LATIN_NAME", "Properties", "Actions_Indications", "Dosage", "Common_Name", "Literal_English", "Contraindications_Cautions", "Common_Combinations", "Others", "FuFan"]
 
