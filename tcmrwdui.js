@@ -1,7 +1,8 @@
 
 channelsDict = {}
 function addGrpup(parent, dict) {
-    var html = '<div class="container"><ul class="breadcrumbs ul-line"><li><a href=""><i class="fas fa-home"></i>{group}</a></li><li><a href="">{sub_1}</a></li><li><a href="">{sub_2}</a></li></ul></div>'
+    var html = '<div class="container"><ul class="breadcrumbs ul-line"><li><a href=""><i class="fas fa-home"></i>{main}</a></li><li><a href="">{group}</a></li><li><li><a href="">{sub_1}</a></li><li><a href="">{sub_2}</a></li></ul></div>'
+    html = html.replace("{main}", dict["MAINCATEGORY"])
     html = html.replace("{group}", dict["GROUP"])
     html = html.replace("{sub_1}", dict["SUBGROUP_1"])
     html = html.replace("{sub_2}", dict["SUBGROUP_2"])
