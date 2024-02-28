@@ -147,6 +147,9 @@ function getListHTML(text, separator = "，", isFufan = false) {
                     licontent += "<span class='redText'>"+content.substring(start+1, end)+"</span> "
                     content = content.substring(end+1)
                 }
+                if (content != ""){
+                    licontent += "<span class=''>"+content+"</span> "
+                }
                 li.html(licontent)
             }else{
                 li.text(content)
