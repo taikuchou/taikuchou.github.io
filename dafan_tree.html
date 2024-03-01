@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta charset="utf-8">
+<title>TCM藥草學</title>
+<style type="text/css">
+.navigation{
+	margin:50px auto;
+	width: 100%;
+	padding:0;
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:1.6em;
+	display: flex;
+	cursor: pointer;
+	/*text-align:center;*/
+	flex-direction: column;/*row column*/
+}
+.menu{
+	margin:0 auto;
+	width: 80%;
+}
+.menuList{
+	border: 1px solid gray;
+	text-align:center;
+	background:  #8dccad;
+}
+.menuItem{
+	display: none;
+	border: 1px solid gray;
+	border-top:none;
+	background: lightblue;
+}
+.menuListSub{
+	background: #f27c8d;
+	position: relative;
+}
+.menuListSubT{
+	background: #f5cc7f;
+	position: relative;
+}
+.menuItemSub {
+	background: #7b9fe0;
+	border-top: 1px solid gray;
+	display: none;
+	margin-left: 30px;
+}
+
+/* 滑鼠滑入顯示子選單 */
+.menu:hover .menuItem{
+	display:block; 
+}
+.menuItem:hover .menuItemSub{
+	display:block; 
+}
+.menuListSub::after{
+	content: "+";
+	display: inline-block;
+	position: absolute;
+	right: 10px;
+}
+.menuItem:hover .menuListSub::after{
+	content: "-";
+}
+.menuList:hover{ background:green;}
+.menuList:active{background:#888;}
+.menuItem:hover{ background:cyan;}
+.menuItem:active{background:#888;}
+</style>
+<script src="tcmdafan_group3.js"></script>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"
+    integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+<script src="dafan_tree.js"></script>
+</head>
+
+<body>
+<div class="navigation" id="maindiv">
+</div>
+</body>
+</html>
