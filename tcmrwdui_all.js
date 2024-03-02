@@ -1,7 +1,8 @@
 
-function showList(area, list) {
+function showList(area, list, groups) {
     
-    for (var level1 in list){
+    for (var idx in groups){
+        level1 = groups[idx]
         count = 0
         var html = '<li class="dropdown"></li>'
         level1li = $(html)
@@ -196,7 +197,7 @@ function getListHTML(text, separator = "，", isFufan = false) {
     return ul1.html()
 }
 $(function () {
-    showList($("#menuroot"), dafanGroup)
+    showList($("#menuroot"), dafanGroup, groups)
     $("a.level3").click(function(){
         pname = $(this).attr("data")
         // console.log(pname)

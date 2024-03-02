@@ -315,7 +315,6 @@ function showList(area, list) {
     $("#resultText").html("&nbsp; Total " + list.length + "&nbsp;records matched!")
 }
 channels = ['LU', 'BL', 'ST', 'LR', 'SP', 'HT', 'KI', 'GV', 'GB', 'PC', 'TH', 'LI', 'SI', 'TE']
-groups = ["Warm, Acrid for Exterior", "Cool Acrid for Exterior", "Clear Heat", "Downward Draining", "Drain Dampness", "Aromatic  transform Damp", "Dispel Wind\u2010Dampness", "Transform Phlegm, stop cough", "Regulate Qi", "Regulate Blood", "Tonifying Qi", "Tonify Yin", "Tonify Yang", "Warm Interior&Expel Cold", " Calm the Spirit", "Extinguish Wind and Stop Tremors", "Stabilize and Bind", "Relieve Food Stagnation (Hot&Cold)", "Expel Parasites", "Aromatic  Open the Orifices"];
 dkeys = ["URL", "SUBJECT", "EFFECT", "MainCategory","GROUP", "SUBGROUP_1",
     "SUBGROUP_2", "PINYIN_NAME", "NAME", "LATIN_NAME", "Properties", "Channels", "Actions_Indications", "Dosage", "Common_Name", "Literal_English", "Contraindications_Cautions", "Common_Combinations", "Others", "FuFan"]
 searchkeys = ["SUBJECT", "EFFECT", "PINYIN_NAME", "NAME", "LATIN_NAME", "Properties", "Actions_Indications", "Dosage", "Common_Name", "Literal_English", "Contraindications_Cautions", "Common_Combinations", "Others", "FuFan"]

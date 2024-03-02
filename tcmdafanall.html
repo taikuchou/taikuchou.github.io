@@ -48,9 +48,15 @@
 		.level3 {
             color: whitesmoke;
         }
-		#g0,#g1,#g2,#g3, .menu>.dropdown>a{
+		ul>li>a, #g0,#g1,#g2,#g3, .menu>.dropdown>a{
 			color: black;
 		}
+		.fixed-content {
+			min-height:100%;
+			position:fixed;
+			overflow-y:hidden;
+			overflow-x:hidden;
+		} 
     </style>
 </head>
 <body>
@@ -66,7 +72,7 @@
 		</header>
 		
 		<div id="container">
-			<div id="main">
+			<div id="main" >
                 <br>
 				<ul class="breadcrumbs ul-line">
 	<li><a href=""><i class="fas fa-home" ></i> <label id="g0"></label></a></li>
@@ -116,6 +122,7 @@
 	<script type="text/javascript" src="js/jquery.magnific-popup.min.js"></script>
 	<script type="text/javascript" src="js/script.js"></script>
     <script src="tcmdafan.js"></script>
+	<script src="groups.js"></script>
     <script src="tcmfufandict.js"></script>
     <script src="tcmdafan_group3.js"></script>
     <script src="tcmrwdui_all.js"></script>
