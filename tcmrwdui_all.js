@@ -17,7 +17,7 @@ function showList(area, list) {
             html = '<li class="dropdown"></li>'
             level2li = $(html)
             level2ul.append(level2li)
-            html = '<a href="" class="level2">{level2}</a>'
+            html = '<a href="" class="level2" style="color:#F7DB4F;">{level2}</a>'
             html = html.replace("{level2}", level2)
             level2li.append($(html))
             level3ul = $("<ul></ul>") 
