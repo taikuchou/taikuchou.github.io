@@ -76,6 +76,7 @@ function showDafan(data){
     $("#g3").text(data["SUBGROUP_2".toUpperCase()])
     $("#title").html(data["PINYIN_NAME"]+" ("+data["NAME"]+") ")
     formBox = $("#formbox")
+    formBox.empty()
     addTwoColunmnTextRow(formBox, data, "Subject", "Common Name", "SUBJECT", "COMMON_NAME")
     addTwoColunmnTextRow(formBox, data, "Dosage", "Literal English", "DOSAGE", "LITERAL_ENGLISH")
     addOneColunmnTextRow(formBox, data, "Channels", "CHANNELS")
