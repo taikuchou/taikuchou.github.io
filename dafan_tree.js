@@ -13,12 +13,12 @@ function showData(root , list){
             
             menuItem = $('<div class="menuItem"></div>')
             menu.append(menuItem)
-            html = '<div class="menuListSub menuListSubT" >{level2}</div>'
+            html = '<div class="menuListSub" >{level2}</div>'
             html = html.replace("{level2}", level2)
             menuItem.append($(html))
             for (var level3 in list[level1][level2]){
                 dafan = list[level1][level2][level3]
-                html = '<div class="menuListSub">{level3} {level4}</div>'
+                html = '<div class="menuItemSub">{level3} {level4}</div>'
                 html = html.replace("{level3}", dafan["NAME"])
                 html = html.replace("{level4}", dafan["PINYIN_NAME"])
                 menuItem.append($(html))
