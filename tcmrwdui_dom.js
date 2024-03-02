@@ -5,7 +5,7 @@ function initDropDownList(key, channels) {
     opt = $("<option value='none'>Please select a group</option>")
     select.append(opt)
     opt = $("<option value='all'>All</option>")
-    //select.append(opt)
+    select.append(opt)
     for (i = 0; i < channels.length; i++) {
         val = channels[i]
         opt = $("<option value='" + val + "'>" + val + "</option>")
