@@ -11,7 +11,7 @@ html {
   color: #191919;
   font-size: 16px;
   background-color: #C8C8A9;
-}C8C8A9
+}
 
 * {
   box-sizing: border-box;
@@ -398,7 +398,7 @@ input[readonly] {
 header {
   display: flex;
   justify-content: space-between;
-  background: #474747;/*linear-gradient(180deg, #2e75b6 0%, #002870 100%);*/
+  background: #474747;
   padding: 16px 20px;
   flex-wrap: wrap;
   width: 100%;
@@ -432,7 +432,7 @@ header #menu {
   height: calc(100vh - 74px);
   left: 0;
   top: 74px;
-  background: #474747;/*linear-gradient(180deg, #2e75b6 0%, #002870 100%);*/
+  background: #474747;
   padding: 25px 20px;
   overflow-y: auto;
   color: #fff;
