@@ -9,7 +9,7 @@ function addGrpup(parent, dict) {
     parent.append($(html))
 }
 function addTitle(parent, dict) {
-    var html = "<div class='row'><h3 class='color-b1'>{name}&nbsp;<a href='{url}'>{pinyin}</a>&nbsp;({latin})</h3></div>"
+    var html = "<div class='row'><h3 class=''>{name}&nbsp;<a href='{url}'>{pinyin}</a>&nbsp;({latin})</h3></div>"
     html = html.replace("{name}", dict["NAME"])
     html = html.replace("{pinyin}", getData(dict, "PINYIN_NAME"))
     html = html.replace("{latin}", getData(dict, "LATIN_NAME"))
@@ -315,7 +315,7 @@ function showList(area, list) {
     $("#resultText").html("&nbsp; Total " + list.length + "&nbsp;records matched!")
 }
 channels = ['LU', 'BL', 'ST', 'LR', 'SP', 'HT', 'KI', 'GV', 'GB', 'PC', 'TH', 'LI', 'SI', 'TE']
-groups = ['Warm, Acrid herbs that Release the Exterior', 'Cool Acrid Herbs that Release the Exterior', 'Herbs that Clear Heat', 'Downward Draining Herbs', 'Herbs that Drain Dampness', 'Aromatic herbs that Transform Damp', 'Herbs that Dispel Wind‐Dampness', 'Herbs that Transform Phlegm, and Stop Cough', 'Herbs that Regulate the Qi', 'Herbs that Regulate the Blood', 'Herbs that Tonify', 'Herbs that Warm the Interior and Expel Cold', 'Herbs that Calm the Spirit', 'Herbs that Extinguish Wind and Stop Tremors', 'Herbs that Stabilize and Bind', 'Herbs that Relieve Food Stagnation (Hot&Cold)', 'Herbs that Expel Parasites', 'Aromatic Herbs that Open the Orifices']
+groups = ["Warm, Acrid for Exterior", "Cool Acrid for Exterior", "Clear Heat", "Downward Draining", "Drain Dampness", "Aromatic  transform Damp", "Dispel Wind\u2010Dampness", "Transform Phlegm, stop cough", "Regulate Qi", "Regulate Blood", "Tonifying Qi", "Tonify Yin", "Tonify Yang", "Warm Interior&Expel Cold", " Calm the Spirit", "Extinguish Wind and Stop Tremors", "Stabilize and Bind", "Relieve Food Stagnation (Hot&Cold)", "Expel Parasites", "Aromatic  Open the Orifices"];
 dkeys = ["URL", "SUBJECT", "EFFECT", "MainCategory","GROUP", "SUBGROUP_1",
     "SUBGROUP_2", "PINYIN_NAME", "NAME", "LATIN_NAME", "Properties", "Channels", "Actions_Indications", "Dosage", "Common_Name", "Literal_English", "Contraindications_Cautions", "Common_Combinations", "Others", "FuFan"]
 searchkeys = ["SUBJECT", "EFFECT", "PINYIN_NAME", "NAME", "LATIN_NAME", "Properties", "Actions_Indications", "Dosage", "Common_Name", "Literal_English", "Contraindications_Cautions", "Common_Combinations", "Others", "FuFan"]
