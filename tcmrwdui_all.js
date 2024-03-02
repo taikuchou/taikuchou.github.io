@@ -1,14 +1,16 @@
 
 function showList(area, list) {
-    count = 0
+    
     for (var level1 in list){
+        count = 0
         var html = '<li class="dropdown"></li>'
         level1li = $(html)
         area.append(level1li)
-        html = '<a href="">{level1}</a>'
-        html = html.replace("{level1}", level1)
+        html = '<a href="">{level1}({count})</a>'
+        html = html.replace("{level1}", level1).replace("{level1}", level1)
         //Add Level1
-        level1li.append($(html))
+        level1a = $(html)
+        level1li.append(level1a)
         level2ul = $("<ul></ul>") 
         //Add Level2
         level1li.append(level2ul)
@@ -29,8 +31,10 @@ function showList(area, list) {
                 html = html.replace("{level3}", dafan["NAME"])
                 html = html.replaceAll("{level4}", dafan["PINYIN_NAME"])
                 level3ul.append($(html))
+                count += 1
             }
         }
+        level1a.html(level1a.html().replace("{count}", count))
     }
     
     //$("#resultText").html("&nbsp; Total " + count + "&nbsp;records matched!")
