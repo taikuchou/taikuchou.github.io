@@ -205,6 +205,7 @@ $(function () {
         if (pdata != undefined){
             console.log(pdata)
             showDafan(pdata)
+            window.scrollTo(0, 0);
         }
     })
     showDafan(dafanList[0])
