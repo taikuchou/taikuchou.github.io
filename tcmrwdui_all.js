@@ -17,10 +17,11 @@ function showList(area, list, groups) {
         level1li.append(level2ul)
         for (var level2 in list[level1]){
             //console.log(level1,">",level2)
+            subcount = 0
             html = '<li class="dropdown"></li>'
             level2li = $(html)
             level2ul.append(level2li)
-            html = '<a href="" class="level2" style="color:#F7DB4F;">{level2}</a>'
+            html = '<a href="" class="level2" style="color:#F7DB4F;">{level2}({subcount})</a>'
             html = html.replace("{level2}", level2)
             level2li.append($(html))
             level3ul = $("<ul></ul>") 
@@ -33,7 +34,9 @@ function showList(area, list, groups) {
                 html = html.replaceAll("{level4}", dafan["PINYIN_NAME"])
                 level3ul.append($(html))
                 count += 1
+                subcount += 1
             }
+            level2li.html(level2li.html().replace("{subcount}", subcount))
         }
         level1a.html(level1a.html().replace("{count}", count))
     }
