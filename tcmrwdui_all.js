@@ -82,7 +82,7 @@ function showDafan(data){
     $("#g1").text(data["GROUP".toUpperCase()])
     $("#g2").text(data["SUBGROUP_1".toUpperCase()])
     $("#g3").text(data["SUBGROUP_2".toUpperCase()])
-    $("#title").html(data["PINYIN_NAME"]+" ("+data["NAME"]+") ")
+    $("#title").html("<a href='"+data["URL"]+"'>"+data["PINYIN_NAME"]+" ("+data["NAME"]+")</a>")
     formBox = $("#formbox")
     formBox.empty()
     addTwoColunmnTextRow(formBox, data, "Subject", "Common Name", "SUBJECT", "COMMON_NAME")
