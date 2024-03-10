@@ -57,13 +57,22 @@
 			overflow-y:scroll;
 			overflow-x:hidden;
 		} 
+		body,
+html {
+  padding: 0;
+  margin: 0;
+  font-family: "Noto Sans TC", "Microsoft JhengHei", "LiHei Pro", "WenQuanYi Zen Hei", Helvetica, Arial, sans-serif;
+  color: #191919;
+  font-size: 16px;
+  background-color: #E9CEC3;
+}
     </style>
 </head>
 <body>
-	<div id="app" >
+	<div id="app">
 		
 		<header>
-			<h3 class=" whilteText"><a href="tcm_dafan.html">Materia</a>&nbsp;<a href="tcmdafan_comparisonlist.html">Medica</a></h3>
+			<h3 class=" whilteText"><a href="tcmdafanall.html">Materia Medica</a></h3>
 			<a href="#" class="btn-ham d-lg-none btnHam"></a>
 			<div id="menu">
 				<ul class="menu" id="menuroot">
@@ -124,8 +133,8 @@
     <script src="tcmdafan.js"></script>
 	<script src="groups.js"></script>
     <script src="tcmfufandict.js"></script>
-    <script src="tcmdafan_group3.js"></script>
-    <script src="tcmrwdui_all.js"></script>
+    <script src="tcmdafan_comparison.js"></script>
+    <script src="tcmrwdui_comparison.js"></script>
 	<script>
 		$(document).ready(function() {
 			var main = new Main();
