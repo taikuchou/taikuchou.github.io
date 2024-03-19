@@ -211,6 +211,7 @@ $(function () {
             window.scrollTo(0, 0);
             $("#menu").removeClass("active");
             $("#menuA").removeClass("active"); 
+            $("body").removeClass("hidden"); 
         }
     })
     showDafan(dafanList[0])
