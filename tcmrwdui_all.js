@@ -209,6 +209,8 @@ $(function () {
             console.log(pdata)
             showDafan(pdata)
             window.scrollTo(0, 0);
+            $("#menu").removeClass("active");
+            $("#menuA").removeClass("active"); 
         }
     })
     showDafan(dafanList[0])
