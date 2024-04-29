@@ -774,3 +774,7 @@ a:active {
     width:100%;
     position:absolute;
 }
+
+div.skill-item p{
+    color: yellow;
+}
