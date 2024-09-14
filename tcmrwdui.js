@@ -123,7 +123,7 @@ function getListHTML(text, separator = "，", isFufan = false) {
             array = content.split("=>")
             if (fufandict[array[0]] === undefined) {
                 txt = ""
-                if (array[1] !== undefined){
+                if (array[1] !== undefined) {
                     txt = array[1]
                 }
                 li.text(array[0] + " => " + txt)
@@ -131,27 +131,27 @@ function getListHTML(text, separator = "，", isFufan = false) {
                 li.html("<a href='" + fufandict[array[0]] + "'>" + array[0] + "</a>&nbsp;=>&nbsp;" + array[1])
             }
         } else {
-            if (content.indexOf("＊＊") != -1){
+            if (content.indexOf("＊＊") != -1) {
                 content = content.replaceAll("＊＊", "")
                 //li.html("<span class='redText'>"+content.substring(0, 4)+"</span> <span class='blueText'>"+content.substring(4)+"</span> ")
-                li.html("<span class='redText'>"+content+"</span> ")
-            }else if (content.indexOf("＆＆") != -1){
+                li.html("<span class='redText'>" + content + "</span> ")
+            } else if (content.indexOf("＆＆") != -1) {
                 content = content.replaceAll("＆＆", "")
-                li.html("<span class='blueText'>"+content+"</span> ")
-            }else if (content.indexOf("[") != -1 && content.indexOf("]") != -1){
+                li.html("<span class='blueText'>" + content + "</span> ")
+            } else if (content.indexOf("[") != -1 && content.indexOf("]") != -1) {
                 licontent = ""
-                while (content.indexOf("[") != -1 && content.indexOf("]") != -1){
+                while (content.indexOf("[") != -1 && content.indexOf("]") != -1) {
                     start = content.indexOf("[")
                     end = content.indexOf("]")
-                    licontent += "<span class=''>"+content.substring(0, start)+"</span> "
-                    licontent += "<span class='redText'>"+content.substring(start+1, end)+"</span> "
-                    content = content.substring(end+1)
+                    licontent += "<span class=''>" + content.substring(0, start) + "</span> "
+                    licontent += "<span class='redText'>" + content.substring(start + 1, end) + "</span> "
+                    content = content.substring(end + 1)
                 }
-                if (content != ""){
-                    licontent += "<span class=''>"+content+"</span> "
+                if (content != "") {
+                    licontent += "<span class=''>" + content + "</span> "
                 }
                 li.html(licontent)
-            }else{
+            } else {
                 li.text(content)
             }
         }
@@ -279,15 +279,15 @@ function searchHandler() {
     }
     return list
 }
-function keyworkSearchHandler(list, text) {
+function searchFieldsHandler(list, text, searchfields) {
     text = text.trim()
     ret = []
     if (text != "") {
         for (j = 0; j < list.length; j++) {
             dict = list[j]
             //console.log(dict)
-            for (k = 0; k < searchkeys.length; k++) {
-                key = searchkeys[k].toUpperCase()
+            for (k = 0; k < searchfields.length; k++) {
+                key = searchfields[k].toUpperCase()
                 if (dict[key].indexOf(text) != -1) {
                     console.log(key)
                     ret.push(list[j])
@@ -315,9 +315,10 @@ function showList(area, list) {
     $("#resultText").html("&nbsp; Total " + list.length + "&nbsp;records matched!")
 }
 channels = ['LU', 'BL', 'ST', 'LR', 'SP', 'HT', 'KI', 'GV', 'GB', 'PC', 'TH', 'LI', 'SI', 'TE']
-dkeys = ["URL", "SUBJECT", "EFFECT", "MainCategory","GROUP", "SUBGROUP_1",
+dkeys = ["URL", "SUBJECT", "EFFECT", "MainCategory", "GROUP", "SUBGROUP_1",
     "SUBGROUP_2", "PINYIN_NAME", "NAME", "LATIN_NAME", "Properties", "Channels", "Actions_Indications", "Dosage", "Common_Name", "Literal_English", "Contraindications_Cautions", "Common_Combinations", "Others", "FuFan"]
 searchkeys = ["SUBJECT", "EFFECT", "PINYIN_NAME", "NAME", "LATIN_NAME", "Properties", "Actions_Indications", "Dosage", "Common_Name", "Literal_English", "Contraindications_Cautions", "Common_Combinations", "Others", "FuFan"]
+searchTitles = ["PINYIN_NAME", "NAME", "LATIN_NAME"]
 
 $(function () {
     initDropDownList("group", groups)
@@ -331,12 +332,19 @@ $(function () {
         //$("#clear").hide()
     })
     $("#search").click(function () {
-        text = $("#searchText").val()
-        $("#resultText").val("")
-        list = searchHandler()
-        list = keyworkSearchHandler(list, text)
-        showList($("#mainDiv"), list)
+        search_utils(searchkeys)
+    })
+    $("#searcht").click(function () {
+        search_utils(searchTitles)
     })
     // $("#searchArea").hide()
     showList($("#mainDiv"), dafanList)
 });
+
+function search_utils(fieldList) {
+    text = $("#searchText").val()
+    $("#resultText").val("")
+    list = searchHandler()
+    list = searchFieldsHandler(list, text, fieldList)
+    showList($("#mainDiv"), list)
+}
