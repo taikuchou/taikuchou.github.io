@@ -197,10 +197,10 @@ function getDiv(dict) {
     addTitle(row, dict)
     console.log(dict)
     addTwoColunmnListRow(formBox, dict, "Indication", "Latin Name", "SUBJECT", "LATIN_NAME", "•", "•")
-    addTwoColunmnListRow(formBox, dict, "Functions", "Ingredients", "DOSAGE", "COMMON_NAME", "•", "|")
-    addTwoColunmnListRow(formBox, dict, "Review 1", "Review 2", "CHANNELS", "LITERAL_ENGLISH", "•", "，")
+    addTwoColunmnListRow(formBox, dict, "Functions", "Ingredients", "DOSAGE", "COMMON_NAME", "•", "•")
+    addTwoColunmnListRow(formBox, dict, "Review 1", "Review 2", "CHANNELS", "LITERAL_ENGLISH", "•", "•")
     addTwoColunmnListRow(formBox, dict, "Manifestation", "Modification", "PROPERTIES", "CONTRAINDICATIONS_CAUTIONS", "•", "•")
-    addTwoColunmnListRow(formBox, dict, "Others", "Summary", "ACTIONS_INDICATIONS", "EFFECT", "•", "|")
+    addTwoColunmnListRow(formBox, dict, "Others", "Summary", "ACTIONS_INDICATIONS", "EFFECT", "•", "•")
     return main
 }
 
