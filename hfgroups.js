@@ -1,1 +1,1 @@
-var groups = ["Exterior Wind-Cold"]
+var groups = ["Exterior Wind-Cold", "Exterior Wind-Heat ", "Purgation", "Harmonizing"]
