@@ -10,9 +10,9 @@ function addGrpup(parent, dict) {
 }
 function addTitle(parent, dict) {
     var html = "<div class='row'><h3 class=''>{name}&nbsp;<a href='{url}'>{pinyin}</a>&nbsp;({latin})</h3></div>"
-    html = html.replace("{name}", dict["NAME"])
-    html = html.replace("{pinyin}", getData(dict, "PINYIN_NAME"))
-    html = html.replace("{latin}", getData(dict, "LATIN_NAME"))
+    html = html.replace("{name}", filter(dict["NAME"]))
+    html = html.replace("{pinyin}", filter(getData(dict, "PINYIN_NAME")))
+    html = html.replace("{latin}", filter(getData(dict, "LATIN_NAME")))
     html = html.replace("{url}", dict["URL"])
     parent.append($(html))
 }
@@ -93,8 +93,8 @@ function addTwoColunmnListRow(parent, dict, title1, title2, key1, key2, s1 = "ï¼
         '</div>' +
         '</div>' +
         '</div>'
-    html = html.replace("{t1}", title1)
-    html = html.replace("{t2}", title2)
+    html = html.replace("{t1}", filter(title1))
+    html = html.replace("{t2}", filter(title2))
     html = html.replace("{c}", getListHTML(dict[key1], s1))
     html = html.replace("{d}", getListHTML(dict[key2], s2, isFufan))
     parent.append($(html))
@@ -160,7 +160,9 @@ function getListHTML(text, separator = "ï¼Œ", isFufan = false) {
 
     return ul1.html()
 }
-
+function filter(word) {
+    return word.replace("_x000b_", "")
+}
 function addOneColunmnInputTextRow(parent, dict, title1, key1) {
     var html = '<div class="">' +
         '<div class="row">' +
@@ -170,7 +172,7 @@ function addOneColunmnInputTextRow(parent, dict, title1, key1) {
         '</div>' +
         '</div>' +
         '</div>'
-    html = html.replace("{t1}", title1)
+    html = html.replace("{t1}", filter(title1))
     html = html.replace("{c}", getData(dict, key1))
     parent.append($(html))
 }
@@ -183,8 +185,8 @@ function addOneColunmnTextRow(parent, dict, title1, key1) {
         '</div>' +
         '</div>' +
         '</div>'
-    html = html.replace("{t1}", title1)
-    html = html.replace("{c}", getData(dict, key1))
+    html = html.replace("{t1}", filter(title1))
+    html = html.replace("{c}", filter(getData(dict, key1)))
     parent.append($(html))
 }
 function getDiv(dict) {

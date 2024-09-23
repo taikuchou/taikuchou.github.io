@@ -30,8 +30,8 @@ function showList(area, list, groups) {
                 dafan = list[level1][level2][level3];
                 // console.log(level1,">",level2,">", dafan)
                 html = '<li><a href="" class="level3" data="{level4}">{level3} {level4}</a></li>'
-                html = html.replace("{level3}", dafan["NAME"])
-                html = html.replaceAll("{level4}", dafan["PINYIN_NAME"])
+                html = html.replace("{level3}", filter(dafan["NAME"]))
+                html = html.replaceAll("{level4}", filter(dafan["PINYIN_NAME"]))
                 level3ul.append($(html))
                 count += 1
                 subcount += 1
@@ -63,8 +63,8 @@ function addTwoColunmnTextRow(parent, dict, title1, title2, key1, key2) {
         '</div>' +
         '</div>' +
         '</div>'
-    html = html.replace("{t1}", title1)
-    html = html.replace("{t2}", title2)
+    html = html.replace("{t1}", filter(title1))
+    html = html.replace("{t2}", filter(title2))
     html = html.replace("{c}", getData(dict, key1))
     html = html.replace("{d}", getData(dict, key2))
     parent.append($(html))
@@ -77,12 +77,16 @@ function getDafan(name) {
         }
     }
 }
+
+function filter(word) {
+    return word.replace("_x000b_", "")
+}
 function showDafan(data) {
     $("#g0").text(data["MainCategory".toUpperCase()])
     $("#g1").text(data["GROUP".toUpperCase()])
     $("#g2").text(data["SUBGROUP_1".toUpperCase()])
     $("#g3").text(data["SUBGROUP_2".toUpperCase()])
-    $("#title").html("<a href='" + data["URL"] + "'>" + data["PINYIN_NAME"] + " (" + data["NAME"] + ") </a>")//+ data["LATIN_NAME"] +
+    $("#title").html("<a href='" + data["URL"] + "'>" + data["PINYIN_NAME"] + " (" + filter(data["NAME"]) + ") </a>")//+ data["LATIN_NAME"] +
     formBox = $("#formbox")
     formBox.empty()
     addTwoColunmnListRow(formBox, data, "Indication", "Latin Name", "SUBJECT", "LATIN_NAME", "•", "•")
