@@ -1,12 +1,12 @@
 var dafanGroup = {
     "Exterior Wind-Cold": {
-        "Taiyang Cold ,Cool&Transform Phlegm\u2010Heat": [
+        "Taiyang Cold,": [
             {
                 "URL": "https://yibian.hopto.org/db/?fno=96&lc=tw",
                 "MAINCATEGORY": "Exterior Wind-Cold",
                 "GROUP": "Exterior Wind-Cold",
-                "SUBGROUP_1": "Taiyang Cold ",
-                "SUBGROUP_2": "Cool&Transform Phlegm\u2010Heat",
+                "SUBGROUP_1": "Taiyang Cold",
+                "SUBGROUP_2": "",
                 "CHANNELS": "Exterior Wind-Cold Syndrome\uff1a|\u2022chill and fever (4\u7a2e\u90fd\u53ef)|\u2022coughing\u9ebb\u9ec3\u6e6f|\u2022pain, headaches\u4e5d\u5473\u7f8c\u6d3b\u6e6f|\u2022running nose, phlegm\u5c0f\u9752\u9f8d\u6e6f",
                 "LITERAL_ENGLISH": "\u2022Ephedra (Mahuang)\u9ebb\u9ec3\uff1a\u8f9b\u82e6\uff0c \u8d70\u80ba\u3001\u53ef\u4ee5\u6563\u5be6\uff0c \u6b62\u54b3\u964d\u80ba\u6c23\uff0c \u767c\u6c57|\u2022Cinnamon twigs (Guizhi)\u6842\u679d\uff1a\u8f9b\u7518\uff0c \u8d70\u5fc3\u80ba\u3001\u53ef\u4ee5\u8abf\u548c\u71df\u885b\uff0c \u6b62\u80f8\u75db|\u2022Elsholtzia (Xiangru)\u9999\u85b7\uff1a\u4f5c\u7528\u985e\u4f3c\u9ebb\u9ec3||\u2022\uff06\uff06Fresh ginger (Shengjiang)\u751f\u8591\uff1a\u8f9b\u6eab\u89e3\u8868\uff0c \u8d70\u80ba|\u2022\uff06\uff06Schizonepeta (Jingjie)\u834a\u82a5\uff1a\u8f9b\u6eab\u89e3\u8868\u3001\u795b\u98a8\u6b62\u7662||\u2022Ledebouriella root (Fangfeng)\u9632\u98a8\uff1a\u8d70\u5c11\u967d\u81bd\u3001\u90fd\u662f\u5916\u611f\u3001\u6b62\u7662|\u2022Notopterygium root (Qianghuo)\u7f8c\u6d3b\uff1a\u8d70\u592a\u967d\u7d93||\u2022\uff06\uff06Dahurian angelica root (Baizhi)\u767d\u82b7\uff1a\u8d70\u967d\u660e\u7d93\u3001\u984d\u982d\u75db|\u2022\uff06\uff06Magnolia flower (Xinyi)\u7d30\u8f9b\uff1a\u8d70\u5c11\u9670\u7d93||",
                 "EFFECT": "[Taiyang Syndrome: aversion to cold, headache and neck pain, floating pulse.]|\u2022Taiyang Cold Syndrome: Ma Huang Tang (aversion to cold, body aches, no sweating,  [tense pulse=excess cold]\u7528\u9ebb\u9ec3\u6e6f)  [cold\u6703\u7dca\u7e2e]\u3002Fever but no sweating(\u9ebb\u9ec3), cough(\u674f\u4ec1), izyma|\u2022Taiyang Wind Syndrome: Gui Zhi Tang (aversion to wind, headache, sweating, moderate pulse)\uff0c [Wind\u6703\u5230\u8655\u8dd1\uff0c \u591a\u982d\u75db]|",
@@ -19,35 +19,12 @@ var dafanGroup = {
                 "SUBJECT": "\u2022Wind-cold [exterior excess] syndromes",
                 "PROPERTIES": "\u2022aversion to cold|\u2022fever|\u2022headache|\u2022general body aches|\u2022[cough and dyspnea]|\u2022no sweating|\u2022a thin-white coating|\u2022and superficial-tense pulse|\u2022\u5982\u679c\u6c92\u6709\u6025\u6027\u54b3\u55fd\u4e0d\u8981\u7528\u9ebb\u9ec3\u6e6f\u3002\u56e0\u70ba\u8840\u8ddf\u6c57\u4f86\u6e90\u4e00\u6a23\uff0c \u6240\u4ee5\u8840\u865b\u7684\u4eba\u4e0d\u80fd\u7528\u9ebb\u9ec3\u6e6f",
                 "CONTRAINDICATIONS_CAUTIONS": "\u2022In cases where the main issue is asthma and there is only mild aversion to cold, omit Guizhi to make a recipe entitled San\u2019ao Tang, a formula is specially tailored to relieving asthma.\u5982\u679c\u53ea\u6709\u54b3\u55fd\u4f46\u6c92\u6709\u51b7\u71b1\u4ea4\u96dc\uff0c \u53ef\u4ee5\u79fb\u9664\u6842\u679d\uff0c \u53ea\u9700\u8981\u9ebb\u9ec3\u8ddf\u674f\u4ec1\u8655\u7406\u54b3\u55fd\u554f\u984c\uff0c \u53ef\u52a0\u534a\u590f\u8655\u7406\u75f0\u7684\u554f\u984c\u3002\u9ebb\u9ec3\u6709\u6bd2\u6027\u6240\u4ee5\u975e\u5fc5\u8981(\u6c92\u6709\u6d41\u6c57)\u4e0d\u8981\u7528\uff0c \u6240\u4ee5\u5982\u679c\u6842\u679d\u6e6f\u75c7\u7684\u4eba\u4f7f\u7528\u6703\u6709\u554f\u984c\u3002|\u2022Where asthma and cough with profuse white sputum are the main issue, Guizhi is replaced with Peucedanum root (Qianhu). |\u2022If accompanied with water retention on the upper part of the body, add White atractylodes (Baizhu)|\u2022In cases of serious aversion to cold accompanied interior heat, add Gypsum (Shigao) to clear away the interior heat. This formula is called Da Qing Long Tang. \u5982\u679c\u9ad8\u71d2\uff0c \u53ef\u52a0\u77f3\u818f(\u5bd2)\uff0c \u9ebb\u9ec3\u662fwarm\uff0c \u7d44\u5408\u6210\u5927\u9752\u9f8d\u6e6f|In cases where the main issue is asthma and there is only mild|        aversion to cold, omit Guizhi to make a recipe entitled San\u2019ao Tang, a formula is specially tailored to relieving asthma.\u5982\u679c\u53ea\u6709\u54b3\u55fd\u4f46\u6c92\u6709\u51b7\u71b1\u4ea4\u96dc\uff0c \u53ef\u4ee5\u79fb\u9664\u6842\u679d\uff0c \u53ea\u9700\u8981\u9ebb\u9ec3\u8ddf\u674f\u4ec1\u8655\u7406\u54b3\u55fd\u554f\u984c\uff0c \u53ef\u52a0\u534a\u590f\u8655\u7406\u75f0\u7684\u554f\u984c\u3002\u9ebb\u9ec3\u6709\u6bd2\u6027\u6240\u4ee5\u975e\u5fc5\u8981(\u6c92\u6709\u6d41\u6c57)\u4e0d\u8981\u7528\uff0c \u6240\u4ee5\u5982\u679c\u6842\u679d\u6e6f\u75c7\u7684\u4eba\u4f7f\u7528\u6703\u6709\u554f\u984c\u3002||Where asthma and cough with profuse white sputum are the main issue, Guizhi is replaced with Peucedanum root (Qianhu). ||If accompanied with water retention on the upper part of the body, add White atractylodes (Baizhu)||In cases of serious aversion to cold accompanied interior heat, add Gypsum (Shigao) to clear away the interior heat. This formula is called Da Qing Long Tang. \u5982\u679c\u9ad8\u71d2\uff0c \u53ef\u52a0\u77f3\u818f(\u5bd2)\uff0c \u9ebb\u9ec3\u662fwarm\uff0c \u7d44\u5408\u6210\u5927\u9752\u9f8d\u6e6f|"
-            }
-        ],
-        "Taiyang Wind,": [
-            {
-                "URL": "https://yibian.hopto.org/db/?fno=113&lc=tw",
-                "MAINCATEGORY": "Exterior Wind-Cold",
-                "GROUP": "Exterior Wind-Cold",
-                "SUBGROUP_1": "Taiyang Wind",
-                "SUBGROUP_2": "",
-                "CHANNELS": "",
-                "LITERAL_ENGLISH": "\u2022What are the indications of Ma Huang Tang in addition to exterior wind-cold syndrome?|\u2022Compare Ma Huang Tang to Gui Zhi Tang?|\u2022How to take Gui Zhi Tang?\u9ebb\u9ec3\u6e6f\u6709\u5f88\u5f37\u7684\u51fa\u6c57\u529f\u80fd\uff0c \u6842\u679d\u6e6f\u53ef\u8b93\u904e\u591a\u7684\u51fa\u6c57\u6b62\u4f4f|\u2022Give a case to show modification of Gui Zhi Tang\uff1f\u559d\u4e86\u71b1\u7ca5\u5f8c\u53bb\u7761\u89ba\u53ef\u4ee5\u51fa\u6c57|\u2022\u5403\u6842\u679d\u6e6f\u524d\u6d41\u6c57\uff0c \u662f\u56e0\u70ba\u75c5\u6a5f\u3002\u5403\u6842\u679d\u6e6f+\u7ca5\u5f8c\u6d41\u6c57\uff0c \u662f\u56e0\u70ba\u6cbb\u7642\u5f8c\u7684\u6548\u679c|",
-                "EFFECT": "",
-                "ACTIONS_INDICATIONS": "",
-                "LATIN_NAME": "Cinnamon Twig Decoction_x000b_",
-                "PINYIN_NAME": "Gui Zhi Tang",
-                "NAME": "\u6842\u679d\u6e6f",
-                "COMMON_NAME": "\u2022Cinnamon twigs (Guizhi)\u6842\u679d9 g \u88dc\u80ba\u3001[\u885b\u6c23]\u3002[\u6842\u679d\u8ddf\u767d\u828d\u5c0d\u85e5]|\u2022White peony root (Baishao)\u767d\u828d9 g\u88dc[\u71df\u8840]|\u2022Baked licorice (Zhigancao)\u7099\u7518\u83496 g|\u2022Fresh ginger (Shengjiang) \u751f\u85919 g \u88dc\u885b\u3001\u88dc\u80ba\u6c23\u3002[\u751f\u8591\u8ddf\u5927\u68d7\u5c0d\u85e5]|\u2022Jujube (Dazao)\u5927\u68d73 pcs\u88dc\u8840|",
-                "DOSAGE": "\u2022Expel wind-cold from exterior|\u2022Harmonize Ying and Wei \u8abf\u548c\u71df\u885b(\u71df\u8840\u5f31\u4f46\u885b\u6c23\u4ecd\u5f37)|\u2022\u5169\u500b\u5c0d\u85e5(\u6842\u679d\u767d\u828d+\u751f\u8591\u7d05\u68d7)\uff0c \u540c\u70ba\u8abf\u548c\u71df\u885b|\u2022\u795e\u8fb2\u672c\u8349\u7d93\u4e2d\u5206\u70ba\u4e0a\u4e2d\u4e0b\u7d1a\u7684\u85e5(\u4ee5\u6709\u6c92\u6709\u6bd2\u6027\u4f86\u5206\u754c\uff0c \u4f8b\u5982\u4eba\u8518\u70ba\u4e0a\u7d1ahigh class\u3001\u9644\u5b50\u56e0\u70ba\u6709\u6bd2\u6240\u4ee5\u5373\u4fbf\u85e5\u6027\u5f37\u4e5f\u662f\u4e0b\u7d1alow class)|",
-                "SUBJECT": "\u2022Wind-cold exterior deficiency syndromes, Ying/Wei disharmony|\u2022\u6842\u679d\u6e6f\u6700\u91cd\u8981\u7684\u5224\u65b7\u662f\u6709\u6c92\u6709\u6d41\u6c57\uff0c \u6709\u6d41\u6c57\u624d\u7528\u6842\u679d\u6e6f\uff0c \u6c92\u6d41\u6c57\u4e0d\u80fd\u7528|",
-                "PROPERTIES": "\u2022headache|\u2022fever|\u2022perspiration with aversion to wind|\u2022a thin whitish coating|\u2022a superficial and moderate pulse.",
-                "CONTRAINDICATIONS_CAUTIONS": "|\u2022If accompanied by stiffness and pain of the neck and back, add Pueraria root (Gegen)|\u2022If cough is severe, add Magnolia bark (Houpo) and Apricot seed (Xingren).  |\u2022If accompanied by abdominal pain, [double White peony root (Baishao)] and add honey to make Xiao Jian Zhong Tang [\u5982\u679c\u6c92\u6709\u885b\u7684\u554f\u984c\uff0c \u53ea\u8981\u8abf\u71df\u5c31\u597d\uff0c \u7528\u5c0f\u5efa\u4e2d\u6e6f]||"
-            }
-        ],
-        "Taiyang Cold ,": [
+            },
             {
                 "URL": "https://yibian.hopto.org/db/?fno=120",
                 "MAINCATEGORY": "Exterior Wind-Cold",
                 "GROUP": "Exterior Wind-Cold",
-                "SUBGROUP_1": "Taiyang Cold ",
+                "SUBGROUP_1": "Taiyang Cold",
                 "SUBGROUP_2": "",
                 "CHANNELS": "",
                 "LITERAL_ENGLISH": "",
@@ -66,7 +43,7 @@ var dafanGroup = {
                 "URL": "https://yibian.hopto.org/db/?fno=116",
                 "MAINCATEGORY": "Exterior Wind-Cold",
                 "GROUP": "Exterior Wind-Cold",
-                "SUBGROUP_1": "Taiyang Cold ",
+                "SUBGROUP_1": "Taiyang Cold",
                 "SUBGROUP_2": "",
                 "CHANNELS": "",
                 "LITERAL_ENGLISH": "\u2022Compare Mahuang Tang and Guizhi Tang in treating common cold.|\u2022Compare Mahuang Tang and Xiao Qing Long Tang in treating asthma.|\u2022Compare Xiao Qing Long Tang and Da Qing Long Tang in treating flu. |",
@@ -81,16 +58,37 @@ var dafanGroup = {
                 "PROPERTIES": "\u2022aversion to cold|\u2022fever|\u2022absence of perspiration|\u2022headache|\u2022aching upper back and limbs|\u2022bitter taste in mouth with slight thirst|\u2022whitish or yellowish tongue coating|\u2022and superficial pulse",
                 "CONTRAINDICATIONS_CAUTIONS": "\u2022If there are more pain in the extremities, the dosage of Qianghuo can be doubled.|\u2022Where there is no bitter taste and only slight thirst, omit Shengdihuang and Huangqin."
             }
+        ],
+        "Taiyang Win,": [
+            {
+                "URL": "https://yibian.hopto.org/db/?fno=113&lc=tw",
+                "MAINCATEGORY": "Exterior Wind-Cold",
+                "GROUP": "Exterior Wind-Cold",
+                "SUBGROUP_1": "Taiyang Win",
+                "SUBGROUP_2": "",
+                "CHANNELS": "",
+                "LITERAL_ENGLISH": "\u2022What are the indications of Ma Huang Tang in addition to exterior wind-cold syndrome?|\u2022Compare Ma Huang Tang to Gui Zhi Tang?|\u2022How to take Gui Zhi Tang?\u9ebb\u9ec3\u6e6f\u6709\u5f88\u5f37\u7684\u51fa\u6c57\u529f\u80fd\uff0c \u6842\u679d\u6e6f\u53ef\u8b93\u904e\u591a\u7684\u51fa\u6c57\u6b62\u4f4f|\u2022Give a case to show modification of Gui Zhi Tang\uff1f\u559d\u4e86\u71b1\u7ca5\u5f8c\u53bb\u7761\u89ba\u53ef\u4ee5\u51fa\u6c57|\u2022\u5403\u6842\u679d\u6e6f\u524d\u6d41\u6c57\uff0c \u662f\u56e0\u70ba\u75c5\u6a5f\u3002\u5403\u6842\u679d\u6e6f+\u7ca5\u5f8c\u6d41\u6c57\uff0c \u662f\u56e0\u70ba\u6cbb\u7642\u5f8c\u7684\u6548\u679c|",
+                "EFFECT": "",
+                "ACTIONS_INDICATIONS": "",
+                "LATIN_NAME": "Cinnamon Twig Decoction_x000b_",
+                "PINYIN_NAME": "Gui Zhi Tang",
+                "NAME": "\u6842\u679d\u6e6f",
+                "COMMON_NAME": "\u2022Cinnamon twigs (Guizhi)\u6842\u679d9 g \u88dc\u80ba\u3001[\u885b\u6c23]\u3002[\u6842\u679d\u8ddf\u767d\u828d\u5c0d\u85e5]|\u2022White peony root (Baishao)\u767d\u828d9 g\u88dc[\u71df\u8840]|\u2022Baked licorice (Zhigancao)\u7099\u7518\u83496 g|\u2022Fresh ginger (Shengjiang) \u751f\u85919 g \u88dc\u885b\u3001\u88dc\u80ba\u6c23\u3002[\u751f\u8591\u8ddf\u5927\u68d7\u5c0d\u85e5]|\u2022Jujube (Dazao)\u5927\u68d73 pcs\u88dc\u8840|",
+                "DOSAGE": "\u2022Expel wind-cold from exterior|\u2022Harmonize Ying and Wei \u8abf\u548c\u71df\u885b(\u71df\u8840\u5f31\u4f46\u885b\u6c23\u4ecd\u5f37)|\u2022\u5169\u500b\u5c0d\u85e5(\u6842\u679d\u767d\u828d+\u751f\u8591\u7d05\u68d7)\uff0c \u540c\u70ba\u8abf\u548c\u71df\u885b|\u2022\u795e\u8fb2\u672c\u8349\u7d93\u4e2d\u5206\u70ba\u4e0a\u4e2d\u4e0b\u7d1a\u7684\u85e5(\u4ee5\u6709\u6c92\u6709\u6bd2\u6027\u4f86\u5206\u754c\uff0c \u4f8b\u5982\u4eba\u8518\u70ba\u4e0a\u7d1ahigh class\u3001\u9644\u5b50\u56e0\u70ba\u6709\u6bd2\u6240\u4ee5\u5373\u4fbf\u85e5\u6027\u5f37\u4e5f\u662f\u4e0b\u7d1alow class)|",
+                "SUBJECT": "\u2022Wind-cold exterior deficiency syndromes, Ying/Wei disharmony|\u2022\u6842\u679d\u6e6f\u6700\u91cd\u8981\u7684\u5224\u65b7\u662f\u6709\u6c92\u6709\u6d41\u6c57\uff0c \u6709\u6d41\u6c57\u624d\u7528\u6842\u679d\u6e6f\uff0c \u6c92\u6d41\u6c57\u4e0d\u80fd\u7528|",
+                "PROPERTIES": "\u2022headache|\u2022fever|\u2022perspiration with aversion to wind|\u2022a thin whitish coating|\u2022a superficial and moderate pulse.",
+                "CONTRAINDICATIONS_CAUTIONS": "|\u2022If accompanied by stiffness and pain of the neck and back, add Pueraria root (Gegen)|\u2022If cough is severe, add Magnolia bark (Houpo) and Apricot seed (Xingren).  |\u2022If accompanied by abdominal pain, [double White peony root (Baishao)] and add honey to make Xiao Jian Zhong Tang [\u5982\u679c\u6c92\u6709\u885b\u7684\u554f\u984c\uff0c \u53ea\u8981\u8abf\u71df\u5c31\u597d\uff0c \u7528\u5c0f\u5efa\u4e2d\u6e6f]||"
+            }
         ]
     },
     "Exterior Wind-Heat ": {
-        "Exterior Wind-Heat ": [
+        "Exterior Wind-Heat ,": [
             {
                 "URL": "https://yibian.hopto.org/db/?fno=122",
                 "MAINCATEGORY": "Exterior Wind-Heat ",
                 "GROUP": "Exterior Wind-Heat ",
                 "SUBGROUP_1": "Exterior Wind-Heat ",
-                "SUBGROUP_2": "Exterior Wind-Heat ",
+                "SUBGROUP_2": "",
                 "CHANNELS": "Exterior Wind-Heat Syndrome        |\u2022Fever more than chill|\u2022[Cough ]|\u2022[Sore throat]|\u2022[Red eyes]|\u2022Floating pulse|\u2022Thin white or slight yellow coating |",
                 "LITERAL_ENGLISH": "\u2022Mentha (Bohe)\u8584\u8377\uff1a\u8f03\u6dbcpungent[\u5589\u56a8\u75db]|\u2022Fructus Arctii ( Niu Bang Zi)\u2f5c\u84a1\u2f26[\u5589\u56a8\u75db]|\u2022\uff06\uff06Mulberry leaf (Sangye)\u6851\u8449\uff1a\u4f5c\u2f64\u5728\u80ba[\u4f5c\u7528\u5728\u809d\u8ddf\u80ba]|\u2022\uff06\uff06Chrysanthemum flower (Juhua)\u83ca\u82b1\uff1a\u4f5c\u2f64\u5728\u809d(\u773c\u775b)[\u4f5c\u7528\u5728\u809d\u8ddf\u80ba]|\u2022Pueraria root (Gegen)\u845b\u6839\uff1a\u4f5c\u2f64\u5728\u967d\u660e\u80c3\uff0c \u984d\u982d\u75db[\u90fd\u5c0d\u982d\u75db\u6709\u7528]|\u2022Bupleurum root (Chaihu)\u67f4\u80e1\uff1a\u4f5c\u2f64\u5728\u5c11\u967d\u81bd\uff0c \u982d\u5074\u75db[\u90fd\u5c0d\u982d\u75db\u6709\u7528]|",
                 "EFFECT": "",
@@ -103,9 +101,7 @@ var dafanGroup = {
                 "SUBJECT": "Slight wind-warm at the early stage",
                 "PROPERTIES": "dry cough|\u2022sore throat|\u2022mild feverish sensation|\u2022slight thirst|\u2022red tip and margin of the tongue|\u2022a superficial and rapid pulse",
                 "CONTRAINDICATIONS_CAUTIONS": "\u2022In cases of excessive heat add Anemarrhena rhizome (Zhimu) and Gypsum (Shigao). |\u2022If cough with thick yellow sputum is present, add Trichosanthes fruit (Gualou), Scutellaria root (Huangqin). |\u2022For severe thirst add Trichosanthes root (Tianhuafen). |\u2022For severe sore throat, add Scrophularia (Xuanshen), Arctium fruit (Niubangzi).|\u2022\u4f8b\u5982\uff1a\u56db\u541b\u2f26\u6e6f\u662f\u5f88\u57fa\u672c\u7684\u7d44\u5408\uff0c \u4f46\u53ef\u4ee5\u4f9d\u7167\u75c5\u60c5\u7d44\u5408\u51fa\u5176\u4ed6\u85e5\u65b9|"
-            }
-        ],
-        "Exterior Wind-Heat ,": [
+            },
             {
                 "URL": "https://yibian.hopto.org/db/?fno=123",
                 "MAINCATEGORY": "Exterior Wind-Heat ",
@@ -309,7 +305,7 @@ var dafanGroup = {
                 "COMMON_NAME": "\u2022\u6e05\u71b1\uff1aSweet wormwood (Qinghao)\u9752\u84bf 6 g\u6e05\u865b\u71b1\uff0c \u9664\u9aa8\u84b8\uff0c \u89e3\u6691LR, GB, KI|\u2022\u6e05\u71b1\uff1aScutellaria root (Huangqin)\u9ec3\u82a9 6 g\u7009\u4e0b\u7126\u6fd5\u71b1|\u2022\u53bb\u75f0\uff1aPinellia tuber (Banxia)\u534a\u590f 5 g\u6709\u6bd2\u3001\u71e5\u6fd5\u5316\u75f0\uff0c \u964d\u9006\u6b62\u5614\uff0c \u6d88\u75de\u6563\u7d50|\u2022\u53bb\u75f0\uff1aCitrus peel (Chenpi)\u9673\u76ae 5 g\u7406\u6c23\u5065\u813e\uff0c \u71e5\u6fd5\u5316\u75f0|\u2022\uff06\uff06(\u5c0d\u85e5\uff1a\u9673\u76ae+\u534a\u590f=\u4e8c\u9673\u6e6f)|\u2022\u53bb\u6fd5\uff1aBitter orange (Zhiqiao)\u67b3\u6bbc 5 g|\u2022\u53bb\u6fd5\uff1aBamboo shavings (Zhuru)\u7af9\u8339 9 g\u6e05\u71b1\u5316\u75f0\uff0c \u9664\u7169\u6b62\u5614LU, ST|\u2022\u53bb\u6fd5\uff1aPoria (Fuling)\u832f\u82d3 9 g|",
                 "DOSAGE": "\u2022To clear heat and dampness in the gall bladder;|\u2022To harmonize the stomach and resolve phlegm.|\u2022[\u7279\u6b8a\u5c11\u967d\u75c7\u72c0=\u5c11\u967d\u75c7+\u6fd5\u71b1_x000b_]|\u2022\u5bd2\u71b1\u5982\u7627\u3001\u5bd2\u8f15\u71b1\u91cd\u3001\u80f8\u8105\u8139\u60b6\u3001\u53e3\u82e6\u6cdb\u9178\u3001\u6216\u5614\u9ec3\u6d8e\u800c\u7c98\u3001\u820c\u7d05\u82d4\u9ec3\u81a9\u3001\u8108\u5f26\u6ed1|\u2022_x000b_\uff06\uff06\u9752\u84bf\u4ee5\u53ef\u4ee5\u6cbb\u7627\u75be(malaria)\u805e\u540d\uff0c \u85e5\u6548\u6bd4\u67f4\u80e1\u5f37",
                 "SUBJECT": "[damp-heat] in the [Shaoyang Meridian]",
-                "PROPERTIES": "alternate chills and fever, bitter taste in the mouth, chest distress, acid regurgitation, or vomiting, hiccupping, red tongue with greasy yellowish coating, and rapid pulse, wiry on left side, smooth on right side",
+                "PROPERTIES": "\u2022alternate chills and fever|\u2022bitter taste in the mouth, |\u2022chest distress, acid regurgitation, |\u2022or vomiting, hiccupping, |\u2022red tongue with greasy yellowish coating, |\u2022and rapid pulse, |\u2022wiry on left side, |\u2022smooth on right side",
                 "CONTRAINDICATIONS_CAUTIONS": "In case of  jaundice, replace Banxia/Chenpi with Oriental wormwood (Yinchenhao\u8335\u9673\u84bf\uff1a\u5229\u6fd5\u9000\u9ec3\u3001\u6e05\u5229\u6fd5\u71b1) and Capejasmine fruit (Zhizi\u6800\u5b50\uff1a\u6e05\u71b1\u7009\u706b\u5229\u6fd5\u6b62\u75db).|"
             },
             {
@@ -387,6 +383,86 @@ var dafanGroup = {
                 "SUBJECT": "\u2022Disharmony of Spleen/Stomach",
                 "PROPERTIES": "\u2022Stomach fullness without pain|\u2022vomiting, borborygmus and diarrhea|\u2022slight yellowish and greasy tongue coating|\u2022wiry and rapid pulse|",
                 "CONTRAINDICATIONS_CAUTIONS": "\u2022For severe fullness and distension in the epigastric region, replace Renshen with Immature bitter orange (Zhishi\u67b3\u5be6).|\u2022If the constitution is not weak, remove Renshen and Ganjiang.|\u2022Modify dried ginger to fresh ginger for vomiting.|\u2022Double the dosage of Gancao for stomach defi.|"
+            }
+        ]
+    },
+    "Clearing Heat": {
+        "Clearing Heat,": [
+            {
+                "URL": "https://yibian.hopto.org/db/?fno=194",
+                "MAINCATEGORY": "Clearing Heat",
+                "GROUP": "Clearing Heat",
+                "SUBGROUP_1": "Clearing Heat",
+                "SUBGROUP_2": "",
+                "CHANNELS": "\u2022Six Stages\uff1a|\u2022Tai Yang------Tai Yin|\u2022Yang Ming(Jing\u967d\u660e\u7d93+Fu\u967d\u660e\u8151)------Jue Yin|\u2022Shao Yang------Shao Yin||\u2022Four Levels\uff1a|\u2022Wei\uff1a|\u2022Qi\uff1a|\u2022Ying\uff1a|\u2022Xue\uff1a|",
+                "LITERAL_ENGLISH": "\u2022Compare Bai Hu Tang and Zhuye Shi Gao Tang|in the treatment for Yangming heat syndrome\uff1a|\u2022Bai Hu Tang|\u2022Zhuye Shi Gao Tang||\u2022Compare the treatment principle of Qing Ying Tang and Xijiao Dihuang Tang\uff1a|\u2022Qing Ying Tang|\u2022Xijiao Dihuang Tang",
+                "EFFECT": "\u2022Herbs That Clear Heat and [Reduce Fire]\uff1a|\u2022\u6dbc\u8840\uff1aGypsum (Shigao)|\u2022\u6dbc\u8840\uff1aAnemarrhena rhizome (Zhimu)||\u2022\u6dbc\u8840\uff1aTrichosanthes root (Tianhuafen)|\u2022\u6dbc\u8840\uff1aCapejasmine (Zhizi)||\u2022Herbs That Clear Heat and [Dry Dampness]\uff1a|\u2022\u6dbc\u8840\uff1aScutellaria root (Huangqin)|\u2022\u6dbc\u8840\uff1aCoptis root (Huanglian)|\u2022\u6dbc\u8840\uff1aPhellodendron bark (Huangbai)||\u2022Herbs That Clear Heat and [Cool Blood]\uff1a|\u2022Rhinoceros horn (Xijiao)|\u2022\u6dbc\u8840\uff1aFresh rehmannia root (Shengdihuang)|\u2022\u6dbc\u8840\uff1aScrophularia (Xuanshen)|\u2022\u53bb\u8840\uff1aMoutan bark (Mudanpi)|\u2022\u53bb\u8840\uff1aRed peony (Chishao)||\u2022Herbs That Clear Heat and[ Release Toxins]\uff1a|\u2022\u53bb\u8840\uff1aHoneysuckle flower (Jinyinhua), |\u2022\u53bb\u8840\uff1aForsythia fruit (Lianqiao)|",
+                "ACTIONS_INDICATIONS": "\u2022Bai Hu Tang (White Tiger Decoction) \u767d\u864e\u6e6f |\u2022Zhu Ye Shi Gao Tang (Lophatherus and Gypsum Decoction) \u7af9\u8449\u77f3\u818f\u6e6f|\u2022Qing Ying Tang (Clear Heat from the Nutritive Level Decoction \u6e05\u71df\u6e6f |\u2022Xi Jiao Di Huang Tang (Rhinoceros Horn and Rehmannia Decoction)  |\u7280\u89d2\u5730\u9ec3\u6e6f|",
+                "LATIN_NAME": "White Tiger Decoction _x000b_",
+                "PINYIN_NAME": "Bai Hu Tang",
+                "NAME": "\u767d\u864e\u6e6f  ",
+                "COMMON_NAME": "\u2022Gypsum (Shigao)30 g|\u2022Anemarrhena rhizome (Zhimu)9 g|\u2022Licorice (Gancao)3 g|\u2022Rice (Jingmi)9 g|",
+                "DOSAGE": "Clear away heat and promote the production of body fluids.",
+                "SUBJECT": "Excessive heat in the Yangming level",
+                "PROPERTIES": "\u2022Four bigs: |\u2022fever|\u2022sweating|\u2022thirsty|\u2022strong pulse",
+                "CONTRAINDICATIONS_CAUTIONS": "\u2022In cases of large but weak pulse, and thirst that is not quenched by drinking, add Ginseng (Renshen). This mixture becomes the formula Baihu Jia Renshen Tang.|\u2022For arthritis with swelling and painful joints, add Atractylodes rhizome (Cangzhu) to create the formula Baihu Jia Cangzhu Tang.|\u2022In cases of excess heat causing wind accompanied by spasms of the limbs, add Uncaria stem (Gouteng), Earthworm (Dilong) and Antelope horn (Lingyangjiao).||"
+            },
+            {
+                "URL": "https://yibian.hopto.org/db/?fno=213",
+                "MAINCATEGORY": "Clearing Heat",
+                "GROUP": "Clearing Heat",
+                "SUBGROUP_1": "Clearing Heat",
+                "SUBGROUP_2": "",
+                "CHANNELS": "",
+                "LITERAL_ENGLISH": "",
+                "EFFECT": "",
+                "ACTIONS_INDICATIONS": "",
+                "LATIN_NAME": "Lophatherus and Gypsum Decoction_x000b_",
+                "PINYIN_NAME": "Zhu Ye Shi Gao Tang",
+                "NAME": "\u7af9\u8449\u77f3\u818f\u6e6f",
+                "COMMON_NAME": "\u2022Gypsum (Shigao)30 g|\u2022Zhuye 6 g|\u2022Licorice (Gancao)3 g|\u2022Rice (Jingmi)9 g||\u2022Renshen 6 g|\u2022Maidong 6 g|\u2022Banxia 6 g|",
+                "DOSAGE": "",
+                "SUBJECT": "Late stage of Yangming heat syndrome with Qi and Yin deficiency|",
+                "PROPERTIES": "\u2022Tired|\u2022red tongue with dry coating|\u2022nausea|\u2022weak and rapid pulse",
+                "CONTRAINDICATIONS_CAUTIONS": ""
+            },
+            {
+                "URL": "https://yibian.hopto.org/db/?fno=215",
+                "MAINCATEGORY": "Clearing Heat",
+                "GROUP": "Clearing Heat",
+                "SUBGROUP_1": "Clearing Heat",
+                "SUBGROUP_2": "",
+                "CHANNELS": "",
+                "LITERAL_ENGLISH": "",
+                "EFFECT": "",
+                "ACTIONS_INDICATIONS": "",
+                "LATIN_NAME": "Clear Heat from the Nutritive Level Decoction ",
+                "PINYIN_NAME": "Qing Ying Tang",
+                "NAME": "\u6e05\u71df\u6e6f ",
+                "COMMON_NAME": "\u2022Rhinoceros horn (Xijiao) 3 g||\u2022Fresh rehmannia root (Shengdihuang) 15 g|\u2022Scrophularia (Xuanshen) 9 g|\u2022Ophiopogon root (Maidong) 9 g||\u2022Honeysuckle flower (Jinyinhua) 9 g|\u2022Forsythia fruit (Lianqiao) 6 g||\u2022Red sage root (Danshen) 6 g |\u2022Coptis (Huanglian) 5 g|\u2022Bamboo leaf (Zhuye) 3 g|",
+                "DOSAGE": "Clear away heat at Ying level and nourish yin.",
+                "SUBJECT": "Heat syndrome at Ying level",
+                "PROPERTIES": "\u2022Fever at night|\u2022intermittent delirium|\u2022restless|\u2022thirsty|\u2022indistinct skin rashes|\u2022crimsom tongue|\u2022thready and rapid pulse",
+                "CONTRAINDICATIONS_CAUTIONS": ""
+            },
+            {
+                "URL": "https://yibian.hopto.org/db/?fno=217",
+                "MAINCATEGORY": "Clearing Heat",
+                "GROUP": "Clearing Heat",
+                "SUBGROUP_1": "Clearing Heat",
+                "SUBGROUP_2": "",
+                "CHANNELS": "",
+                "LITERAL_ENGLISH": "",
+                "EFFECT": "",
+                "ACTIONS_INDICATIONS": "",
+                "LATIN_NAME": "Rhinoceros Horn and Rehmannia Decoction _x000b_",
+                "PINYIN_NAME": "Xi Jiao Di Huang Tang",
+                "NAME": "\u7280\u89d2\u5730\u9ec3\u6e6f",
+                "COMMON_NAME": "\u2022Rhinoceros horn (Xijiao)                                3 g|\u2022Fresh rehmannia root (Shengdihuang)                30 g|\u2022Red peony (Chishao)                                12 g|\u2022Moutan bark (Mudanpi)                                9 g",
+                "DOSAGE": "\u2022Clear heat from blood level |\u2022Clear away heat from blood level and resolve blood stasis",
+                "SUBJECT": "Heat syndrome at blood level",
+                "PROPERTIES": "\u2022symptoms of heat at Ying level with bleeding from different parts|\u2022darker tongue with spike|",
+                "CONTRAINDICATIONS_CAUTIONS": ""
             }
         ]
     }
