@@ -138,8 +138,8 @@ function addTwoColunmnListRow(parent, dict, title1, title2, key1, key2, s1 = "ï¼
         '</div>'
     html = html.replace("{t1}", title1)
     html = html.replace("{t2}", title2)
-    html = html.replace("{c}", getListHTML(dict[key1], s1))
-    html = html.replace("{d}", getListHTML(dict[key2], s2, isFufan))
+    html = html.replace("{c}", getListHTML(filter(dict[key1]), s1))
+    html = html.replace("{d}", getListHTML(filter(dict[key2]), s2, isFufan))
     parent.append($(html))
 }
 function getListHTML(text, separator = "ï¼Œ", isFufan = false) {
