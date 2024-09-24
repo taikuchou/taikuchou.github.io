@@ -32,11 +32,12 @@ function showList(area, list, groups) {
                 html = '<li><a href="" class="level3" data="{level4}">{level3} {level4}</a></li>'
                 html = html.replace("{level3}", filter(dafan["NAME"]))
                 html = html.replaceAll("{level4}", filter(dafan["PINYIN_NAME"]))
+
                 level3ul.append($(html))
                 count += 1
                 subcount += 1
             }
-            level2li.html(level2li.html().replace("{subcount}", subcount))
+            level2li.html(level2li.html().replace("{subcount}", subcount).replace(",", "").replace(" (", "("))
         }
         level1a.html(level1a.html().replace("{count}", count))
     }
@@ -79,13 +80,13 @@ function getDafan(name) {
 }
 
 function filter(word) {
-    return word.replace("_x000b_", "")
+    return word.replace("_x000b_", "").replace(",", "")
 }
 function showDafan(data) {
     $("#g0").text(data["MainCategory".toUpperCase()])
-    $("#g1").text(data["GROUP".toUpperCase()])
+    //$("#g1").text(data["GROUP".toUpperCase()])
     $("#g2").text(data["SUBGROUP_1".toUpperCase()])
-    $("#g3").text(data["SUBGROUP_2".toUpperCase()])
+    //$("#g3").text(data["SUBGROUP_2".toUpperCase()])
     $("#title").html("<a href='" + data["URL"] + "'>" + data["PINYIN_NAME"] + " (" + filter(data["NAME"]) + ") </a>")//+ data["LATIN_NAME"] +
     formBox = $("#formbox")
     formBox.empty()
