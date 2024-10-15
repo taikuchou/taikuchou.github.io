@@ -89,9 +89,9 @@ function showDafan(data) {
     formBox.empty()
     addTwoColunmnListRow(formBox, data, "Indication", "Latin Name", "SUBJECT", "LATIN_NAME", "•", "•")
     addTwoColunmnListRow(formBox, data, "Functions", "Ingredients", "DOSAGE", "COMMON_NAME", "•", "•")
-    addTwoColunmnListRow(formBox, data, "Review 1", "Review 2", "CHANNELS", "LITERAL_ENGLISH", "•", "•")
     addTwoColunmnListRow(formBox, data, "Manifestation", "Modification", "PROPERTIES", "CONTRAINDICATIONS_CAUTIONS", "•", "•")
-    addTwoColunmnListRow(formBox, data, "Others", "Summary", "ACTIONS_INDICATIONS", "EFFECT", "•", "•")
+    addTwoColunmnListRow(formBox, data, "Review 1", "Review 2", "CHANNELS", "EFFECT", "•", "•")
+    addTwoColunmnListRow(formBox, data, "Others", "Summary", "LITERAL_ENGLISH", "ACTIONS_INDICATIONS", "•", "•")
     console.log(data["EFFECT"])
 }
 function addOneColunmnTextRow(parent, dict, title1, key1) {
