@@ -1,12 +1,9 @@
 
 channelsDict = {}
 function addGrpup(parent, dict) {
-    // var html = '<div class="container"><ul class="breadcrumbs ul-line"><li><a href=""><i class="fas fa-home"></i>{main}</a></li><li><a href="">{group}</a></li><li><li><a href="">{sub_1}</a></li><li><a href="">{sub_2}</a></li></ul></div>'
     var html = '<div class="container"><ul class="breadcrumbs ul-line"><li><a href=""><i class="fas fa-home"></i>{main}</a></li><li><li><a href="">{sub_1}</a></li></ul></div>'
     html = html.replace("{main}", dict["MAINCATEGORY"])
-    // html = html.replace("{group}", dict["GROUP"])
     html = html.replace("{sub_1}", dict["SUBGROUP_1"])
-    // html = html.replace("{sub_2}", dict["SUBGROUP_2"])
     parent.append($(html))
 }
 function addTitle(parent, dict) {
@@ -100,6 +97,26 @@ function addTwoColunmnListRow(parent, dict, title1, title2, key1, key2, s1 = "�
     html = html.replace("{d}", getListHTML(filter(dict[key2]), s2, isFufan))
     parent.append($(html))
 }
+
+function specialStyle1(content, colorCSS = "redText") {
+    licontent = ""
+    if (content.indexOf("[") != -1 && content.indexOf("]") != -1) {
+        while (content.indexOf("[") != -1 && content.indexOf("]") != -1) {
+            start = content.indexOf("[")
+            end = content.indexOf("]")
+            licontent += "<span class=''>" + content.substring(0, start) + "</span> "
+            licontent += "<span class='" + colorCSS + "'>" + content.substring(start + 1, end) + "</span> "
+            content = content.substring(end + 1)
+        }
+        if (content != "") {
+            licontent += "<span class=''>" + content + "</span> "
+        }
+    } else {
+        licontent = content
+    }
+    return licontent
+}
+
 function getListHTML(text, separator = "，", isFufan = false) {
     if (text.indexOf(separator) == -1) {
         if (text.indexOf("◦") != -1) {
@@ -121,36 +138,20 @@ function getListHTML(text, separator = "，", isFufan = false) {
         content = filter(content)
         if (isFufan) {
 
-            // array = content.split("=>")
-            // if (fufandict[array[0]] === undefined) {
-            //     txt = ""
-            //     if (array[1] !== undefined) {
-            //         txt = array[1]
-            //     }
-            //     li.text(array[0] + " => " + txt)
-            // } else {
-            //     li.html("<a href='" + fufandict[array[0]] + "'>" + array[0] + "</a>&nbsp;=>&nbsp;" + array[1])
-            // }
         } else {
-            if (content.indexOf("＊＊") != -1) {
+            if (content.indexOf("{SPERATE}") != -1) {
+                li.toggleClass("sepline")
+                li.html("<span class=''>&nbsp;</span>\n")
+            } else if (content.indexOf("＊＊") != -1) {
                 content = content.replaceAll("＊＊", "")
-                //li.html("<span class='redText'>"+content.substring(0, 4)+"</span> <span class='blueText'>"+content.substring(4)+"</span> ")
+                content = specialStyle1(content, 'blueText')
                 li.html("<span class='redText'>" + content + "</span> ")
             } else if (content.indexOf("＆＆") != -1) {
                 content = content.replaceAll("＆＆", "")
+                content = specialStyle1(content)
                 li.html("<span class='blueText'>" + content + "</span> ")
             } else if (content.indexOf("[") != -1 && content.indexOf("]") != -1) {
-                licontent = ""
-                while (content.indexOf("[") != -1 && content.indexOf("]") != -1) {
-                    start = content.indexOf("[")
-                    end = content.indexOf("]")
-                    licontent += "<span class=''>" + content.substring(0, start) + "</span> "
-                    licontent += "<span class='redText'>" + content.substring(start + 1, end) + "</span> "
-                    content = content.substring(end + 1)
-                }
-                if (content != "") {
-                    licontent += "<span class=''>" + content + "</span> "
-                }
+                licontent = specialStyle1(content)
                 li.html(licontent)
             } else {
                 li.text(content)
@@ -237,7 +238,6 @@ function reloadPage() {
 function searchHandler() {
     list = []
     var group = $("#group").val()
-    // console.log(group)
     if ((group == "all" || group == "none")) {
         list = dafanList;
     } else {
@@ -262,7 +262,6 @@ function searchFieldsHandler(list, text, searchfields) {
     if (text != "") {
         for (j = 0; j < list.length; j++) {
             dict = list[j]
-            //console.log(dict)
             for (k = 0; k < searchfields.length; k++) {
                 key = searchfields[k].toUpperCase()
                 if (dict[key].indexOf(text) != -1) {
@@ -297,7 +296,6 @@ $(function () {
     $("#searcht").click(function () {
         search_utils(searchTitles)
     })
-    // $("#searchArea").hide()
     showList($("#mainDiv"), dafanList)
 });
 

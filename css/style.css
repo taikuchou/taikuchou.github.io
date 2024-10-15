@@ -1604,6 +1604,10 @@ footer .copyright img {
   }
 }
 
+.sepline{
+  list-style-type: none;
+}
+
 @media screen and (min-width: 1200px) {
   header {
     width: 330px;

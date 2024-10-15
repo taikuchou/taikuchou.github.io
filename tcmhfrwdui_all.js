@@ -28,7 +28,6 @@ function showList(area, list, groups) {
             level2li.append(level3ul)
             for (var level3 in list[level1][level2]) {
                 dafan = list[level1][level2][level3];
-                // console.log(level1,">",level2,">", dafan)
                 html = '<li><a href="" class="level3" data="{level4}">{level3} {level4}</a></li>'
                 html = html.replace("{level3}", filter(dafan["NAME"]))
                 html = html.replaceAll("{level4}", filter(dafan["PINYIN_NAME"]))
@@ -41,8 +40,6 @@ function showList(area, list, groups) {
         }
         level1a.html(level1a.html().replace("{count}", count))
     }
-
-    //$("#resultText").html("&nbsp; Total " + count + "&nbsp;records matched!")
 }
 function getData(dict, key) {
     data = dict[key]
@@ -142,6 +139,24 @@ function addTwoColunmnListRow(parent, dict, title1, title2, key1, key2, s1 = "�
     html = html.replace("{d}", getListHTML(filter(dict[key2]), s2, isFufan))
     parent.append($(html))
 }
+function specialStyle1(content, colorCSS = "redText") {
+    licontent = ""
+    if (content.indexOf("[") != -1 && content.indexOf("]") != -1) {
+        while (content.indexOf("[") != -1 && content.indexOf("]") != -1) {
+            start = content.indexOf("[")
+            end = content.indexOf("]")
+            licontent += "<span class=''>" + content.substring(0, start) + "</span> "
+            licontent += "<span class='" + colorCSS + "'>" + content.substring(start + 1, end) + "</span> "
+            content = content.substring(end + 1)
+        }
+        if (content != "") {
+            licontent += "<span class=''>" + content + "</span> "
+        }
+    } else {
+        licontent = content
+    }
+    return licontent
+}
 function getListHTML(text, separator = "，", isFufan = false) {
     if (text.indexOf(separator) == -1) {
         if (text.indexOf("◦") != -1) {
@@ -162,36 +177,24 @@ function getListHTML(text, separator = "，", isFufan = false) {
         content = list[i].trim().replaceAll("–", "").replaceAll("|", "").replaceAll("◦", "").replaceAll("，", ", ")
         content = filter(content)
         if (isFufan) {
-            // array = content.split("=>")
-            // if (fufandict[array[0]] === undefined) {
-            //     txt = ""
-            //     if (array[1] !== undefined) {
-            //         txt = array[1]
-            //     }
-            //     li.text(array[0] + " => " + txt)
-            // } else {
-            //     li.html("<a href='" + fufandict[array[0]] + "'>" + array[0] + "</a>&nbsp;=>&nbsp;" + array[1])
-            // }
+
         } else {
-            if (content.indexOf("＊＊") != -1) {
+            if (content.indexOf("{SPERATE_LINE}") != -1) {
+                li.toggleClass("sepline")
+                li.html("<span class=''>------------------------------</span>\n")
+            } else if (content.indexOf("{SPERATE}") != -1) {
+                li.toggleClass("sepline")
+                li.html("<span class=''>&nbsp;</span>\n")
+            } else if (content.indexOf("＊＊") != -1) {
                 content = content.replaceAll("＊＊", "")
-                //li.html("<span class='redText'>"+content.substring(0, 4)+"</span> <span class='blueText'>"+content.substring(4)+"</span> ")
+                content = specialStyle1(content, 'blueText')
                 li.html("<span class='redText'>" + content + "</span> ")
             } else if (content.indexOf("＆＆") != -1) {
                 content = content.replaceAll("＆＆", "")
+                content = specialStyle1(content)
                 li.html("<span class='blueText'>" + content + "</span> ")
             } else if (content.indexOf("[") != -1 && content.indexOf("]") != -1) {
-                licontent = ""
-                while (content.indexOf("[") != -1 && content.indexOf("]") != -1) {
-                    start = content.indexOf("[")
-                    end = content.indexOf("]")
-                    licontent += "<span class=''>" + content.substring(0, start) + "</span> "
-                    licontent += "<span class='redText'>" + content.substring(start + 1, end) + "</span> "
-                    content = content.substring(end + 1)
-                }
-                if (content != "") {
-                    licontent += "<span class=''>" + content + "</span> "
-                }
+                licontent = specialStyle1(content)
                 li.html(licontent)
             } else {
                 li.text(content)
