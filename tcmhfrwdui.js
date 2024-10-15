@@ -139,7 +139,10 @@ function getListHTML(text, separator = "，", isFufan = false) {
         if (isFufan) {
 
         } else {
-            if (content.indexOf("{SPERATE}") != -1) {
+            if (content.indexOf("{SPERATE_LINE}") != -1) {
+                li.toggleClass("sepline")
+                li.html("<span class=''>------------------------------</span>\n")
+            } else if (content.indexOf("{SPERATE}") != -1) {
                 li.toggleClass("sepline")
                 li.html("<span class=''>&nbsp;</span>\n")
             } else if (content.indexOf("＊＊") != -1) {
