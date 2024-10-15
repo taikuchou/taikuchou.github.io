@@ -46,7 +46,7 @@ function getData(dict, key) {
     if (data == "") {
         data = "N/A"
     }
-    return data.replaceAll("，", ", ")
+    return data//.replaceAll("，", ", ")
 }
 function addTwoColunmnTextRow(parent, dict, title1, title2, key1, key2) {
     var html = '<div class="input">' +
@@ -174,7 +174,7 @@ function getListHTML(text, separator = "，", isFufan = false) {
             continue
         }
         li = $("<li class='wrap'></li>")
-        content = list[i].trim().replaceAll("–", "").replaceAll("|", "").replaceAll("◦", "").replaceAll("，", ", ")
+        content = list[i].trim().replaceAll("–", "").replaceAll("|", "").replaceAll("◦", "")//replaceAll("，", ", ")
         content = filter(content)
         if (isFufan) {
 
