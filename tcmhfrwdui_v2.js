@@ -240,6 +240,7 @@ function reloadPage() {
 
 function searchHandler() {
     list = []
+    dafanList = alldata.dafanList
     var group = $("#group").val()
     if ((group == "all" || group == "none")) {
         list = dafanList;
@@ -295,11 +296,11 @@ searchkeys = ["SUBJECT", "EFFECT", "PINYIN_NAME", "NAME", "LATIN_NAME", "Propert
 searchTitles = ["PINYIN_NAME", "NAME", "LATIN_NAME"]
 
 $(function () {
-    initDropDownList("group", groups)
+    initDropDownList("group", alldata.groups)
     $("#searcht").click(function () {
         search_utils(searchTitles)
     })
-    showList($("#mainDiv"), dafanList)
+    showList($("#mainDiv"), alldata.dafanList)
 });
 
 function search_utils(fieldList) {

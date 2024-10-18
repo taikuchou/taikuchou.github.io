@@ -68,6 +68,7 @@ function addTwoColunmnTextRow(parent, dict, title1, title2, key1, key2) {
     parent.append($(html))
 }
 function getDafan(name) {
+    dafanList = alldata.dafanList
     for (j = 0; j < dafanList.length; j++) {
         pinyinName = dafanList[j]["PINYIN_NAME"]
         if (name == pinyinName) {
@@ -206,7 +207,7 @@ function getListHTML(text, separator = "，", isFufan = false) {
     return ul1.html()
 }
 $(function () {
-    showList($("#menuroot"), dafanGroup, groups)
+    showList($("#menuroot"), alldata.dafanGroup, alldata.groups)
     $("a.level3").click(function () {
         pname = $(this).attr("data")
         pdata = getDafan(pname)
@@ -219,5 +220,5 @@ $(function () {
             $("body").removeClass("hidden");
         }
     })
-    showDafan(dafanList[0])
+    showDafan(alldata.dafanList[0])
 });
