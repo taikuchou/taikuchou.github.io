@@ -207,6 +207,7 @@ function getListHTML(text, separator = "，", isFufan = false) {
     return ul1.html()
 }
 $(function () {
+    $("#version_info").text(alldata.version)
     showList($("#menuroot"), alldata.dafanGroup, alldata.groups)
     $("a.level3").click(function () {
         pname = $(this).attr("data")
