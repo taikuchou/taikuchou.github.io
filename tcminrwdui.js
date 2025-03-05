@@ -231,9 +231,8 @@ function replaceDuplicate(str, delimiter = ":") {
         } else {
             strReplaced = array[1].replaceAll(title, "")
             console.log(strReplaced)
-            str = title + strReplaced + array[2];
+            str = title + strReplaced + (array[2] == undefined ? "" : array[2]);
         }
-        return str
     }
     return str;
 }
