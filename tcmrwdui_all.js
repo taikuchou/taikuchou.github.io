@@ -1,7 +1,7 @@
 
 function showList(area, list, groups) {
-    
-    for (var idx in groups){
+
+    for (var idx in groups) {
         level1 = groups[idx]
         count = 0
         var html = '<li class="dropdown"></li>'
@@ -12,10 +12,10 @@ function showList(area, list, groups) {
         //Add Level1
         level1a = $(html)
         level1li.append(level1a)
-        level2ul = $("<ul></ul>") 
+        level2ul = $("<ul></ul>")
         //Add Level2
         level1li.append(level2ul)
-        for (var level2 in list[level1]){
+        for (var level2 in list[level1]) {
             //console.log(level1,">",level2)
             subcount = 0
             html = '<li class="dropdown"></li>'
@@ -24,9 +24,9 @@ function showList(area, list, groups) {
             html = '<a href="" class="level2" style="color:#F7DB4F;">{level2}({subcount})</a>'
             html = html.replace("{level2}", level2)
             level2li.append($(html))
-            level3ul = $("<ul></ul>") 
+            level3ul = $("<ul></ul>")
             level2li.append(level3ul)
-            for (var level3 in list[level1][level2]){
+            for (var level3 in list[level1][level2]) {
                 dafan = list[level1][level2][level3];
                 // console.log(level1,">",level2,">", dafan)
                 html = '<li><a href="" class="level3" data="{level4}">{level3} {level4}</a></li>'
@@ -40,7 +40,7 @@ function showList(area, list, groups) {
         }
         level1a.html(level1a.html().replace("{count}", count))
     }
-    
+
     //$("#resultText").html("&nbsp; Total " + count + "&nbsp;records matched!")
 }
 function getData(dict, key) {
@@ -69,7 +69,7 @@ function addTwoColunmnTextRow(parent, dict, title1, title2, key1, key2) {
     html = html.replace("{d}", getData(dict, key2))
     parent.append($(html))
 }
-function getDafan(name){
+function getDafan(name) {
     for (j = 0; j < dafanList.length; j++) {
         pinyinName = dafanList[j]["PINYIN_NAME"]
         if (name == pinyinName) {
@@ -77,12 +77,12 @@ function getDafan(name){
         }
     }
 }
-function showDafan(data){
+function showDafan(data) {
     $("#g0").text(data["MainCategory".toUpperCase()])
     $("#g1").text(data["GROUP".toUpperCase()])
     $("#g2").text(data["SUBGROUP_1".toUpperCase()])
     $("#g3").text(data["SUBGROUP_2".toUpperCase()])
-    $("#title").html("<a href='"+data["URL"]+"'>"+data["PINYIN_NAME"]+" ("+data["NAME"]+") </a>")//+ data["LATIN_NAME"] +
+    $("#title").html("<a href='" + data["URL"] + "'>" + data["PINYIN_NAME"] + " (" + data["NAME"] + ") </a>")//+ data["LATIN_NAME"] +
     formBox = $("#formbox")
     formBox.empty()
     addTwoColunmnTextRow(formBox, data, "Subject", "Latin Name", "SUBJECT", "LATIN_NAME")
@@ -165,7 +165,7 @@ function getListHTML(text, separator = "，", isFufan = false) {
             array = content.split("=>")
             if (fufandict[array[0]] === undefined) {
                 txt = ""
-                if (array[1] !== undefined){
+                if (array[1] !== undefined) {
                     txt = array[1]
                 }
                 li.text(array[0] + " => " + txt)
@@ -173,27 +173,27 @@ function getListHTML(text, separator = "，", isFufan = false) {
                 li.html("<a href='" + fufandict[array[0]] + "'>" + array[0] + "</a>&nbsp;=>&nbsp;" + array[1])
             }
         } else {
-            if (content.indexOf("＊＊") != -1){
+            if (content.indexOf("＊＊") != -1) {
                 content = content.replaceAll("＊＊", "")
                 //li.html("<span class='redText'>"+content.substring(0, 4)+"</span> <span class='blueText'>"+content.substring(4)+"</span> ")
-                li.html("<span class='redText'>"+content+"</span> ")
-            }else if (content.indexOf("＆＆") != -1){
+                li.html("<span class='redText'>" + content + "</span> ")
+            } else if (content.indexOf("＆＆") != -1) {
                 content = content.replaceAll("＆＆", "")
-                li.html("<span class='blueText'>"+content+"</span> ")
-            }else if (content.indexOf("[") != -1 && content.indexOf("]") != -1){
+                li.html("<span class='blueText'>" + content + "</span> ")
+            } else if (content.indexOf("[") != -1 && content.indexOf("]") != -1) {
                 licontent = ""
-                while (content.indexOf("[") != -1 && content.indexOf("]") != -1){
+                while (content.indexOf("[") != -1 && content.indexOf("]") != -1) {
                     start = content.indexOf("[")
                     end = content.indexOf("]")
-                    licontent += "<span class=''>"+content.substring(0, start)+"</span> "
-                    licontent += "<span class='redText'>"+content.substring(start+1, end)+"</span> "
-                    content = content.substring(end+1)
+                    licontent += "<span class=''>" + content.substring(0, start) + "</span> "
+                    licontent += "<span class='redText'>" + content.substring(start + 1, end) + "</span> "
+                    content = content.substring(end + 1)
                 }
-                if (content != ""){
-                    licontent += "<span class=''>"+content+"</span> "
+                if (content != "") {
+                    licontent += "<span class=''>" + content + "</span> "
                 }
                 li.html(licontent)
-            }else{
+            } else {
                 li.text(content)
             }
         }
@@ -204,17 +204,17 @@ function getListHTML(text, separator = "，", isFufan = false) {
 }
 $(function () {
     showList($("#menuroot"), dafanGroup, groups)
-    $("a.level3").click(function(){
+    $("a.level3").click(function () {
         pname = $(this).attr("data")
         // console.log(pname)
         pdata = getDafan(pname)
-        if (pdata != undefined){
+        if (pdata != undefined) {
             console.log(pdata)
             showDafan(pdata)
             window.scrollTo(0, 0);
             $("#menu").removeClass("active");
-            $("#menuA").removeClass("active"); 
-            $("body").removeClass("hidden"); 
+            $("#menuA").removeClass("active");
+            $("body").removeClass("hidden");
         }
     })
     showDafan(dafanList[0])

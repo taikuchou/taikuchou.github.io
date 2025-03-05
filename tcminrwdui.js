@@ -92,8 +92,8 @@ function addTwoColunmnListRow(parent, dict, title1, title2, key1, key2, s1 = "�
         '</div>'
     html = html.replace("{t1}", filter(title1))
     html = html.replace("{t2}", filter(title2))
-    html = html.replace("{c}", getListHTML(filter(dict[key1]), s1))
-    html = html.replace("{d}", getListHTML(filter(dict[key2]), s2, isFufan))
+    html = html.replace("{c}", getListHTML(filter(dict[key1]), s1, isFufan, key1 == "LATIN_NAME"))
+    html = html.replace("{d}", getListHTML(filter(dict[key2]), s2, isFufan, key2 == "LATIN_NAME"))
     parent.append($(html))
 }
 
@@ -116,7 +116,7 @@ function specialStyle1(content, colorCSS = "redText") {
     return licontent
 }
 
-function getListHTML(text, separator = "，", isFufan = false) {
+function getListHTML(text, separator = "，", isFufan = false, isRemoveDuplicate = false) {
     if (text.indexOf(separator) == -1) {
         if (text.indexOf("◦") != -1) {
             separator = "◦"
@@ -134,6 +134,10 @@ function getListHTML(text, separator = "，", isFufan = false) {
         }
         li = $("<li class='wrap'></li>")
         content = list[i].trim().replaceAll("–", "").replaceAll("|", "").replaceAll("◦", "")//.replaceAll("，", ", ")
+        //Ken:isRemoveDuplicate
+        if (isRemoveDuplicate) {
+            content = replaceDuplicate(content)
+        }
         content = filter(content)
         if (isFufan) {
 
@@ -209,7 +213,30 @@ function getDiv(dict) {
 
     return main
 }
-
+function replaceDuplicate(str, delimiter = ":") {
+    let array = str.split(delimiter);
+    let numCount = array.length
+    if (numCount >= 2) {
+        title = array[0]
+        console.log(title)
+        if (title.indexOf("、") != -1) {
+            channels = title.split("、")
+            ret = str.replaceAll("、", "").replaceAll(":", "")
+            for (let i = 0; i < channels.length; i++) {
+                // console.log(ret.indexOf(channels[i]))
+                ret = ret.replaceAll(channels[i].trim(), "");
+                // console.log(channels[i], ret)
+            }
+            str = title + ":" + ret
+        } else {
+            strReplaced = array[1].replaceAll(title, "")
+            console.log(strReplaced)
+            str = title + strReplaced + array[2];
+        }
+        return str
+    }
+    return str;
+}
 function initDropDownList(key, channels) {
     select = $("<select id='" + key + "' class='select2-accessible'></select>")
     opt = $("<option value='none'>Please select a group</option>")
