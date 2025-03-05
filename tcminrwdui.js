@@ -202,10 +202,10 @@ function getDiv(dict) {
     addGrpup(row, dict)
     addTitle(row, dict)
     console.log(dict)
-    addTwoColunmnListRow(formBox, dict, "Treatment Principles/Pattern", "Symptoms and Signs/Actions", "EFFECT", "ACTIONS_INDICATIONS", "•", "•")
-    addTwoColunmnListRow(formBox, dict, "Point/Ingredients", "Formula/Modifications", "LATIN_NAME", "PINYIN_NAME", "•", "•")
-    addTwoColunmnListRow(formBox, dict, "Definition1", "Definition2", "NAME", "COMMON_NAME", "•", "•")
-    addTwoColunmnListRow(formBox, dict, "Definition3", "Definition4", "DOSAGE", "CONTRAINDICATIONS_CAUTIONS", "•", "•")
+    addTwoColunmnListRow(formBox, dict, "Treatment Principles", "Symptoms and Signs", "EFFECT", "ACTIONS_INDICATIONS", "•", "•")
+    addTwoColunmnListRow(formBox, dict, "Point Prescription", "Formula", "LATIN_NAME", "PINYIN_NAME", "•", "•")
+    addTwoColunmnListRow(formBox, dict, "Formula Pattern", "Formula Actions", "NAME", "COMMON_NAME", "•", "•")
+    addTwoColunmnListRow(formBox, dict, "Formula Ingredients", "Formula Modifications", "DOSAGE", "CONTRAINDICATIONS_CAUTIONS", "•", "•")
 
     return main
 }

@@ -88,11 +88,11 @@ function showDafan(data) {
     $("#title").html("<a href='" + data["URL"] + "'>" + data["CHANNELS"] + " (" + filter(data["LITERAL_ENGLISH"]) + ") </a>")//+ data["LATIN_NAME"] +
     formBox = $("#formbox")
     formBox.empty()
-    addTwoColunmnListRow(formBox, data, "Treatment Principles/Pattern", "Symptoms and Signs/Actions", "EFFECT", "ACTIONS_INDICATIONS", "•", "•")
-    addTwoColunmnListRow(formBox, data, "Point/Ingredients", "Formula/Modifications", "LATIN_NAME", "PINYIN_NAME", "•", "•")
-    addTwoColunmnListRow(formBox, data, "Definition1", "Definition2", "NAME", "COMMON_NAME", "•", "•")
-    addTwoColunmnListRow(formBox, data, "Definition3", "Definition4", "DOSAGE", "CONTRAINDICATIONS_CAUTIONS", "•", "•")
-
+    dict = data
+    addTwoColunmnListRow(formBox, dict, "Treatment Principles", "Symptoms and Signs", "EFFECT", "ACTIONS_INDICATIONS", "•", "•")
+    addTwoColunmnListRow(formBox, dict, "Point Prescription", "Formula", "LATIN_NAME", "PINYIN_NAME", "•", "•")
+    addTwoColunmnListRow(formBox, dict, "Formula Pattern", "Formula Actions", "NAME", "COMMON_NAME", "•", "•")
+    addTwoColunmnListRow(formBox, dict, "Formula Ingredients", "Formula Modifications", "DOSAGE", "CONTRAINDICATIONS_CAUTIONS", "•", "•")
     console.log(data["EFFECT"])
 }
 function addOneColunmnTextRow(parent, dict, title1, key1) {
