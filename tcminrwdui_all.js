@@ -28,10 +28,11 @@ function showList(area, list, groups) {
             level2li.append(level3ul)
             for (var level3 in list[level1][level2]) {
                 dafan = list[level1][level2][level3];
-                html = '<li><a href="" class="level3" data="{level5}">{level3} {level4}</a></li>'
+                html = '<li><a href="" class="level3" data="{level5},{level6}">{level3} {level4}</a></li>'
                 html = html.replace("{level3}", filter(dafan["CHANNELS"]))
                 html = html.replaceAll("{level4}", filter(dafan["LITERAL_ENGLISH"]))
                 html = html.replaceAll("{level5}", filter(dafan["CHANNELS"]))
+                html = html.replaceAll("{level6}", filter(dafan["GROUP"]))
                 level3ul.append($(html))
                 count += 1
                 subcount += 1
@@ -67,11 +68,15 @@ function addTwoColunmnTextRow(parent, dict, title1, title2, key1, key2) {
     html = html.replace("{d}", getData(dict, key2))
     parent.append($(html))
 }
-function getDafan(name) {
+function getDafan(pname) {
+    array = pname.split(",")
+    name = array[0]
+    group_name = array[1]
     dafanList = alldata.dafanList
     for (j = 0; j < dafanList.length; j++) {
         pinyinName = dafanList[j]["CHANNELS"]
-        if (name == pinyinName) {
+        groupName = dafanList[j]["GROUP"]
+        if (name == pinyinName && group_name == groupName) {
             return dafanList[j]
         }
     }
@@ -89,6 +94,7 @@ function showDafan(data) {
     formBox = $("#formbox")
     formBox.empty()
     dict = data
+    // console.log("showDafan", dict)
     addTwoColunmnListRow(formBox, dict, "Treatment Principles", "Symptoms and Signs", "EFFECT", "ACTIONS_INDICATIONS", "•", "•")
     addTwoColunmnListRow(formBox, dict, "Point Prescription", "Formula", "LATIN_NAME", "PINYIN_NAME", "•", "•")
     addTwoColunmnListRow(formBox, dict, "Formula Pattern", "Formula Actions", "NAME", "COMMON_NAME", "•", "•")
@@ -100,7 +106,7 @@ function replaceDuplicate(str, delimiter = ":") {
     let numCount = array.length
     if (numCount >= 2) {
         title = array[0]
-        console.log(title)
+        // console.log(title)
         if (title.indexOf("、") != -1) {
             channels = title.split("、")
             ret = str.replaceAll("、", "").replaceAll(":", "")
@@ -112,7 +118,7 @@ function replaceDuplicate(str, delimiter = ":") {
             str = title + ":" + ret
         } else {
             strReplaced = array[1].replaceAll(title, "")
-            console.log(strReplaced)
+            // console.log(strReplaced)
             str = title + strReplaced + (array[2] == undefined ? "" : array[2]);
         }
     }
@@ -239,6 +245,7 @@ $(function () {
     showList($("#menuroot"), alldata.dafanGroup, alldata.groups)
     $("a.level3").click(function () {
         pname = $(this).attr("data")
+        console.log(pname)
         pdata = getDafan(pname)
         if (pdata != undefined) {
             //console.log(pdata)
