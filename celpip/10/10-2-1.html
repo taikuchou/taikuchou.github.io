@@ -1,22 +1,28 @@
 <!DOCTYPE html>
 <!-- saved from url=(0132)https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest10/OPT10/View/ac5276a6-1cdb-4e8b-84ce-653ddff20c89 -->
-<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><style>
-    a {
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <style>
+      a {
         outline: 0;
-    }
-</style>
+      }
+    </style>
 
-
-
-    
     <title>Practice Test</title>
-    <meta name="description">
-    <link href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/favicon.ico" rel="shortcut icon" type="image/x-icon">
-    <meta name="viewport" content="width=device-width">
-    <link href="./10-2-1_files/bootstrap.css" rel="stylesheet">
-<link href="./10-2-1_files/Site.css" rel="stylesheet">
+    <meta name="description" />
+    <link
+      href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/favicon.ico"
+      rel="shortcut icon"
+      type="image/x-icon"
+    />
+    <meta name="viewport" content="width=device-width" />
+    <link href="./10-2-1_files/bootstrap.css" rel="stylesheet" />
+    <link href="./10-2-1_files/Site.css" rel="stylesheet" />
 
-    <script src="./10-2-1_files/399283786078546" async=""></script><script async="" src="./10-2-1_files/fbevents.js.下載"></script><script src="./10-2-1_files/jquery-1.9.1.min.js.下載"></script>
+    <script src="./10-2-1_files/399283786078546" async=""></script>
+    <script async="" src="./10-2-1_files/fbevents.js.下載"></script>
+    <script src="./10-2-1_files/jquery-1.9.1.min.js.下載"></script>
 
     <script src="./10-2-1_files/jquery.unobtrusive-ajax.min.js.下載"></script>
 
@@ -29,177 +35,208 @@
     <script src="./10-2-1_files/facebook-pixel.js.下載"></script>
 
     <script>
-    paragon.pt = paragon.pt || {};
-    paragon.pt.backUrl = "";
-    paragon.pt.nextUrl = "";
-    paragon.pt.speakingPrepTimeLeft = 0;
-    paragon.pt.speakingRecordingTimeLeft = 0;
-    paragon.pt.itemIndex = 0;
+      paragon.pt = paragon.pt || {};
+      paragon.pt.backUrl = "";
+      paragon.pt.nextUrl = "";
+      paragon.pt.speakingPrepTimeLeft = 0;
+      paragon.pt.speakingRecordingTimeLeft = 0;
+      paragon.pt.itemIndex = 0;
 
-    paragon.pt.showAlert = function (msg) {
+      paragon.pt.showAlert = function (msg) {
         alert(msg);
-    }
+      };
 
-    paragon.pt.showBackButton = function () {
+      paragon.pt.showBackButton = function () {
         $("#btnBack").show();
-    }
+      };
 
-    paragon.pt.showNextButton = function () {
+      paragon.pt.showNextButton = function () {
         $("#btnNext").show();
-    }
+      };
 
-    paragon.pt.hideBackButton = function () {
+      paragon.pt.hideBackButton = function () {
         $("#btnBack").hide();
-    }
+      };
 
-    paragon.pt.hideNextButton = function () {
+      paragon.pt.hideNextButton = function () {
         $("#btnNext").hide();
-    }
+      };
 
-    paragon.pt.goNext = function () {
+      paragon.pt.goNext = function () {
         window.location = paragon.pt.nextUrl;
-    }
+      };
 
-    paragon.pt.goBack = function () {
+      paragon.pt.goBack = function () {
         window.location = paragon.pt.backUrl;
-    }
+      };
 
-    //Timer For Listening, Reading and Writing
-    paragon.pt.timer = paragon.pt.timer || {};
-    paragon.pt.timer.totalTime = 0;
-    paragon.pt.timer.timeLeft = 0;
-    paragon.pt.timer.interval = null;
-    paragon.pt.timer.start = function (timeLeft) {
+      //Timer For Listening, Reading and Writing
+      paragon.pt.timer = paragon.pt.timer || {};
+      paragon.pt.timer.totalTime = 0;
+      paragon.pt.timer.timeLeft = 0;
+      paragon.pt.timer.interval = null;
+      paragon.pt.timer.start = function (timeLeft) {
         paragon.pt.timer.timeLeft = timeLeft;
-        paragon.pt.timer.totalTime = timeLeft
+        paragon.pt.timer.totalTime = timeLeft;
         var minutes = Math.floor(timeLeft / 60);
         var seconds = timeLeft - minutes * 60;
 
         if (minutes < 1) {
-            $("#timer strong").html(seconds + " seconds");
-            $("#timer strong").attr("style", "color:red");
-        }
-        else if (minutes == 1) {
-            $("#timer strong").html(minutes + " minute");
-        }
-        else {
-            $("#timer strong").html(minutes + " minutes");
+          $("#timer strong").html(seconds + " seconds");
+          $("#timer strong").attr("style", "color:red");
+        } else if (minutes == 1) {
+          $("#timer strong").html(minutes + " minute");
+        } else {
+          $("#timer strong").html(minutes + " minutes");
         }
 
         $("#timer").show();
 
         if (paragon.pt.timer.interval)
-            window.clearInterval(paragon.pt.timer.interval);
+          window.clearInterval(paragon.pt.timer.interval);
 
-        paragon.pt.timer.interval = window.setInterval(function () { paragon.pt.timer.deductTime() }, 1000);
+        paragon.pt.timer.interval = window.setInterval(function () {
+          paragon.pt.timer.deductTime();
+        }, 1000);
 
         paragon.showFooter();
-    }
+      };
 
-    paragon.pt.timer.deductTime = function () {
+      paragon.pt.timer.deductTime = function () {
         if (paragon.pt.timer.timeLeft > 0) {
-            paragon.pt.timer.timeLeft -= 1;
+          paragon.pt.timer.timeLeft -= 1;
 
-            var minutes = Math.floor(paragon.pt.timer.timeLeft / 60);
-            var seconds = paragon.pt.timer.timeLeft - minutes * 60;
+          var minutes = Math.floor(paragon.pt.timer.timeLeft / 60);
+          var seconds = paragon.pt.timer.timeLeft - minutes * 60;
 
-            if (minutes < 1) {
-                $("#timer strong").html(seconds + " seconds");
-                $("#timer strong").attr("style", "color:red");
-            }
-            else if (minutes == 1) {
-                $("#timer strong").html(minutes + " minute");
-            }
-            else {
-                $("#timer strong").html(minutes + " minutes");
-            }
+          if (minutes < 1) {
+            $("#timer strong").html(seconds + " seconds");
+            $("#timer strong").attr("style", "color:red");
+          } else if (minutes == 1) {
+            $("#timer strong").html(minutes + " minute");
+          } else {
+            $("#timer strong").html(minutes + " minutes");
+          }
+        } else {
+          window.clearInterval(paragon.pt.timer.interval);
+          $("#timer strong").html("None");
         }
-        else {
-            window.clearInterval(paragon.pt.timer.interval);
-            $("#timer strong").html("None");
-        }
-    }
+      };
 
-    //Timer For Speaking, work in progress
-    paragon.pt.showTimerSpeaking = function (prepTime, recordingTime) {
+      //Timer For Speaking, work in progress
+      paragon.pt.showTimerSpeaking = function (prepTime, recordingTime) {
         paragon.pt.speakingPrepTimeLeft = prepTime;
         paragon.pt.speakingRecordingTimeLeft = recordingTime;
         $("#timerSpeaking strong:first-child").html(prepTime + " seconds");
         $("#timerSpeaking strong:last-child").html(recordingTime + " seconds");
         $("#timerSpeaking").show();
         paragon.showFooter();
-    }
+      };
 
-    paragon.pt.userResponse = paragon.pt.userResponse || {};
+      paragon.pt.userResponse = paragon.pt.userResponse || {};
 
-    paragon.pt.uploadMultipleChoicesValue = function (url, sectionId, itemId, choiceId) {
+      paragon.pt.uploadMultipleChoicesValue = function (
+        url,
+        sectionId,
+        itemId,
+        choiceId
+      ) {
         $.ajax({
-            type: "POST",
-            url: url,
-            data: { sectionId: sectionId, itemId: itemId, choiceId: choiceId },
-            dataType: "json",
-            cache: false,
-            success: function (json) {
-                console.log(json);
-                console.log("ItemId: " + itemId + ", " + "ChoiceId: " + choiceId);
-            }
+          type: "POST",
+          url: url,
+          data: { sectionId: sectionId, itemId: itemId, choiceId: choiceId },
+          dataType: "json",
+          cache: false,
+          success: function (json) {
+            console.log(json);
+            console.log("ItemId: " + itemId + ", " + "ChoiceId: " + choiceId);
+          },
         });
-    }
+      };
 
-    paragon.pt.activateMultipleChoices = function (url, sectionId) {
+      paragon.pt.activateMultipleChoices = function (url, sectionId) {
         $(document).delegate(".multipleChoices li", "click", function () {
-            var ul = $(this).parent();
-            ul.find("li").removeClass("selected");
-            $(this).addClass("selected");
+          var ul = $(this).parent();
+          ul.find("li").removeClass("selected");
+          $(this).addClass("selected");
 
-            paragon.pt.uploadMultipleChoicesValue(url, sectionId, ul.data("id"), $(this).data("id"));
+          paragon.pt.uploadMultipleChoicesValue(
+            url,
+            sectionId,
+            ul.data("id"),
+            $(this).data("id")
+          );
         });
-    }
+      };
 
-    paragon.pt.renderMultipleChoices = function (url, sectionId, item, renderItemText, hasImage, renderChoiceText) {
+      paragon.pt.renderMultipleChoices = function (
+        url,
+        sectionId,
+        item,
+        renderItemText,
+        hasImage,
+        renderChoiceText
+      ) {
         var template;
         if (renderItemText == true) {
-            if (hasImage == true) {
-                template = Handlebars.compile($("#multipleChoicesTemplateWithItemTextAndImage").html());
+          if (hasImage == true) {
+            template = Handlebars.compile(
+              $("#multipleChoicesTemplateWithItemTextAndImage").html()
+            );
+          } else {
+            template = Handlebars.compile(
+              $("#multipleChoicesTemplateWithItemText").html()
+            );
+          }
+        } else {
+          if (hasImage == true) {
+            if (renderChoiceText == true) {
+              template = Handlebars.compile(
+                $("#multipleChoicesTemplateWithImage").html()
+              );
+            } else {
+              template = Handlebars.compile(
+                $("#multipleChoicesTemplateWithImageNoText").html()
+              );
             }
-            else {
-                template = Handlebars.compile($("#multipleChoicesTemplateWithItemText").html());
-            }
-        }
-        else {
-            if (hasImage == true) {
-
-                if (renderChoiceText == true) {
-                    template = Handlebars.compile($("#multipleChoicesTemplateWithImage").html());
-                }
-                else {
-                    template = Handlebars.compile($("#multipleChoicesTemplateWithImageNoText").html());
-                }
-            }
-            else {
-                template = Handlebars.compile($("#multipleChoicesTemplate").html());
-            }
+          } else {
+            template = Handlebars.compile($("#multipleChoicesTemplate").html());
+          }
         }
 
         $("#multipleChoices").html(template(item));
 
         paragon.pt.activateMultipleChoices(url, sectionId);
-    }
+      };
 
-    //Drop down list
-    paragon.pt.dropDown = paragon.pt.dropDown || {};
-    paragon.pt.dropDown.activeMenu = null;
-    paragon.pt.dropDown.renderTemplate = function (url, sectionId, templateToRender, elementToRender, items) {
+      //Drop down list
+      paragon.pt.dropDown = paragon.pt.dropDown || {};
+      paragon.pt.dropDown.activeMenu = null;
+      paragon.pt.dropDown.renderTemplate = function (
+        url,
+        sectionId,
+        templateToRender,
+        elementToRender,
+        items
+      ) {
         var template = Handlebars.compile(templateToRender);
         $(elementToRender).html(template(items));
-    }
+      };
 
-    paragon.pt.dropDown.renderInline = function (url, sectionId, items, startIndex, endIndex, elementToRender) {
-
-        var template = Handlebars.compile($("#dropDownListInlineTemplate").html());
+      paragon.pt.dropDown.renderInline = function (
+        url,
+        sectionId,
+        items,
+        startIndex,
+        endIndex,
+        elementToRender
+      ) {
+        var template = Handlebars.compile(
+          $("#dropDownListInlineTemplate").html()
+        );
         var text = elementToRender[0].innerHTML;
         for (var i = startIndex; i <= endIndex; i++) {
-            text = text.replace("{" + items[i].Num + "}", template(items[i]));
+          text = text.replace("{" + items[i].Num + "}", template(items[i]));
         }
         //Handlebars.registerHelper('renderInline', function (src, items, startIndex, endIndex, options) {
         //    var template = Handlebars.compile($("#dropDownListInlineTemplate").html());
@@ -209,589 +246,638 @@
         //    return src;
         //});
         $(elementToRender).html(text);
-    }
+      };
 
-    paragon.pt.dropDown.activate = function (url, sectionId) {
-
+      paragon.pt.dropDown.activate = function (url, sectionId) {
         $(document.body).click(function () {
-            $(".dd").each(function (i) {
-                if (i != paragon.pt.dropDown.activeMenu) {
-                    $(this).find(".ddMenu").hide();
-                    $(this).removeClass('active');
-                }
-            });
+          $(".dd").each(function (i) {
+            if (i != paragon.pt.dropDown.activeMenu) {
+              $(this).find(".ddMenu").hide();
+              $(this).removeClass("active");
+            }
+          });
         });
 
-        $(".dd").mouseover(function () {
+        $(".dd")
+          .mouseover(function () {
             paragon.pt.dropDown.activeMenu = $(".dd").index(this);
-        }).mouseout(function () {
+          })
+          .mouseout(function () {
             paragon.pt.dropDown.activeMenu = null;
-        });
+          });
 
         $(".ddToggle").click(function () {
-            var parent = $(this).parent();
-            parent.toggleClass("active");
-            var ddMenu = parent.find(".ddMenu");
-            ddMenu.animate({ height: 'toggle', opacity: 'toggle' }, 100);
-            var left = $(this).position().left;
-            ddMenu.css("left", Math.round(left) + "px");
+          var parent = $(this).parent();
+          parent.toggleClass("active");
+          var ddMenu = parent.find(".ddMenu");
+          ddMenu.animate({ height: "toggle", opacity: "toggle" }, 100);
+          var left = $(this).position().left;
+          ddMenu.css("left", Math.round(left) + "px");
 
-            //place the dropDown menu 20px below the box
-            var top = parent.position().top;
-            ddMenu.css("top", Math.round(top) + 20 + "px");
-
+          //place the dropDown menu 20px below the box
+          var top = parent.position().top;
+          ddMenu.css("top", Math.round(top) + 20 + "px");
         });
 
-        $('.dd li').click(function () {
-            $(this).parent().find("li").removeClass("selected");
-            $(this).addClass("selected");
-            var parent = $(this).parent().parent().parent();
-            var ddToggle = parent.find(".ddToggle");
-            ddToggle.html($(this).html());
-            ddToggle.addClass("ddToggle1");
-            parent.find(".ddMenu").animate({ height: 'toggle', opacity: 'toggle' }, 400);
-            parent.removeClass('active');
-            var ul = $(this).parent();
-            paragon.pt.uploadMultipleChoicesValue(url, sectionId, ul.data("id"), $(this).data("id"));
+        $(".dd li").click(function () {
+          $(this).parent().find("li").removeClass("selected");
+          $(this).addClass("selected");
+          var parent = $(this).parent().parent().parent();
+          var ddToggle = parent.find(".ddToggle");
+          ddToggle.html($(this).html());
+          ddToggle.addClass("ddToggle1");
+          parent
+            .find(".ddMenu")
+            .animate({ height: "toggle", opacity: "toggle" }, 400);
+          parent.removeClass("active");
+          var ul = $(this).parent();
+          paragon.pt.uploadMultipleChoicesValue(
+            url,
+            sectionId,
+            ul.data("id"),
+            $(this).data("id")
+          );
         });
-    }
+      };
 
-    paragon.pt.showInfoBox = function (message) {
+      paragon.pt.showInfoBox = function (message) {
         var infoBox = $("#infoBox");
-        if (message)
-            $("#infoBox .boxText p").html(message);
+        if (message) $("#infoBox .boxText p").html(message);
         infoBox.show();
-    }
+      };
 
-    paragon.pt.hideInfoBox = function () {
+      paragon.pt.hideInfoBox = function () {
         $("#infoBox").hide();
-    }
+      };
 
-    //Audio Playback for the Listening Component
-    paragon.pt.playAudio = paragon.pt.playAudio || {};
-    paragon.pt.playAudio.player = null;
-    paragon.pt.playAudio.totalTime = 0;
-    paragon.pt.playAudio.timeLeft = 0;
-    paragon.pt.playAudio.interval = null;
-    paragon.pt.playAudio.onDone = null;
+      //Audio Playback for the Listening Component
+      paragon.pt.playAudio = paragon.pt.playAudio || {};
+      paragon.pt.playAudio.player = null;
+      paragon.pt.playAudio.totalTime = 0;
+      paragon.pt.playAudio.timeLeft = 0;
+      paragon.pt.playAudio.interval = null;
+      paragon.pt.playAudio.onDone = null;
 
-    paragon.pt.playAudio.start = function (playAudioTime) {
+      paragon.pt.playAudio.start = function (playAudioTime) {
         paragon.pt.hideInfoBox();
         paragon.pt.playAudio.totalTime = playAudioTime;
         paragon.pt.playAudio.timeLeft = playAudioTime;
         if (paragon.pt.playAudio.interval)
-            window.clearInterval(paragon.pt.playAudio.interval);
+          window.clearInterval(paragon.pt.playAudio.interval);
 
         $("#playAudioBox").fadeIn(1000);
-    }
+      };
 
+      //recording functions
 
-    //recording functions
+      paragon.pt.recording = paragon.pt.recording || {};
+      paragon.pt.recording.totalTime = 0;
+      paragon.pt.recording.timeLeft = 0;
+      paragon.pt.recording.interval = null;
+      paragon.pt.recording.onDone = null;
 
-    paragon.pt.recording = paragon.pt.recording || {};
-    paragon.pt.recording.totalTime = 0;
-    paragon.pt.recording.timeLeft = 0;
-    paragon.pt.recording.interval = null;
-    paragon.pt.recording.onDone = null;
-
-    paragon.pt.recording.updateProgressBar = function () {
-        var percentage = 100 - (paragon.pt.recording.timeLeft / paragon.pt.recording.totalTime) * 100;
+      paragon.pt.recording.updateProgressBar = function () {
+        var percentage =
+          100 -
+          (paragon.pt.recording.timeLeft / paragon.pt.recording.totalTime) *
+            100;
         $("#startRecTime .progressbar-cover").css("left", percentage + "%");
-    }
+      };
 
-    paragon.pt.recording.deductTime = function () {
+      paragon.pt.recording.deductTime = function () {
         if (paragon.pt.recording.timeLeft > 0) {
-            paragon.pt.recording.timeLeft -= 1;
-            paragon.pt.recording.updateProgressBar();
+          paragon.pt.recording.timeLeft -= 1;
+          paragon.pt.recording.updateProgressBar();
+        } else {
+          window.clearInterval(paragon.pt.recording.interval);
+          $("#startRecTime").hide();
+          paragon.pt.showNextButton();
+          if (paragon.pt.recording.onDone) {
+            paragon.pt.recording.onDone();
+          }
         }
-        else {
-            window.clearInterval(paragon.pt.recording.interval);
-            $("#startRecTime").hide();
-            paragon.pt.showNextButton();
-            if (paragon.pt.recording.onDone) {
-                paragon.pt.recording.onDone();
-            }
-        }
-    }
+      };
 
-    paragon.pt.recording.start = function (playAudioTime) {
+      paragon.pt.recording.start = function (playAudioTime) {
         paragon.pt.recording.totalTime = playAudioTime;
         paragon.pt.recording.timeLeft = playAudioTime;
         if (paragon.pt.recording.interval)
-            window.clearInterval(paragon.pt.recording.interval);
+          window.clearInterval(paragon.pt.recording.interval);
 
-        paragon.pt.recording.interval = window.setInterval(function () { paragon.pt.recording.deductTime() }, 1000);
+        paragon.pt.recording.interval = window.setInterval(function () {
+          paragon.pt.recording.deductTime();
+        }, 1000);
         paragon.pt.recording.updateProgressBar();
         $("#startRecTime").fadeIn(1000);
-    }
+      };
 
-    //end recording
+      //end recording
 
-    //preperation functions
+      //preperation functions
 
-    paragon.pt.preparation = paragon.pt.preparation || {};
-    paragon.pt.preparation.totalTime = 0;
-    paragon.pt.preparation.timeLeft = 0;
-    paragon.pt.preparation.interval = null;
-    paragon.pt.preparation.onDone = null;
-    paragon.pt.preparation.startRecording = null;
+      paragon.pt.preparation = paragon.pt.preparation || {};
+      paragon.pt.preparation.totalTime = 0;
+      paragon.pt.preparation.timeLeft = 0;
+      paragon.pt.preparation.interval = null;
+      paragon.pt.preparation.onDone = null;
+      paragon.pt.preparation.startRecording = null;
 
-    paragon.pt.preparation.updateProgressBar = function () {
-        $("#startPrepTime #progressTimer").html(paragon.pt.preparation.timeLeft);
-    }
+      paragon.pt.preparation.updateProgressBar = function () {
+        $("#startPrepTime #progressTimer").html(
+          paragon.pt.preparation.timeLeft
+        );
+      };
 
-    paragon.pt.preparation.deductTime = function () {
+      paragon.pt.preparation.deductTime = function () {
         if (paragon.pt.preparation.timeLeft > 0) {
-            paragon.pt.preparation.timeLeft -= 1;
-            paragon.pt.preparation.updateProgressBar();
+          paragon.pt.preparation.timeLeft -= 1;
+          paragon.pt.preparation.updateProgressBar();
+        } else {
+          window.clearInterval(paragon.pt.preparation.interval);
+          $("#startPrepTime").hide();
+          paragon.pt.showNextButton();
+          if (paragon.pt.preparation.onDone) {
+            paragon.pt.preparation.onDone();
+          }
         }
-        else {
-            window.clearInterval(paragon.pt.preparation.interval);
-            $("#startPrepTime").hide();
-            paragon.pt.showNextButton();
-            if (paragon.pt.preparation.onDone) {
-                paragon.pt.preparation.onDone();
-            }
-        }
-    }
+      };
 
-    paragon.pt.preparation.start = function (playAudioTime) {
+      paragon.pt.preparation.start = function (playAudioTime) {
         paragon.pt.preparation.totalTime = playAudioTime;
         paragon.pt.preparation.timeLeft = playAudioTime;
         if (paragon.pt.preparation.interval)
-            window.clearInterval(paragon.pt.preparation.interval);
+          window.clearInterval(paragon.pt.preparation.interval);
 
-        paragon.pt.preparation.interval = window.setInterval(function () { paragon.pt.preparation.deductTime() }, 1000);
+        paragon.pt.preparation.interval = window.setInterval(function () {
+          paragon.pt.preparation.deductTime();
+        }, 1000);
         paragon.pt.preparation.updateProgressBar();
         $("#startPrepTime").fadeIn(1000);
-    }
+      };
 
-    //end prep functinos
+      //end prep functinos
 
-    paragon.pt.createAudioPlayer = function (contentUrl, audiofile) {
+      paragon.pt.createAudioPlayer = function (contentUrl, audiofile) {
         //create player if not exists
         if (!paragon.pt.playAudio.player) {
-            paragon.pt.playAudio.player = document.createElement('audio');
+          paragon.pt.playAudio.player = document.createElement("audio");
 
-            paragon.pt.playAudio.player.controls = true;
-            paragon.pt.playAudio.player.controlsList = "nodownload";
-            paragon.pt.playAudio.player.oggSrc = document.createElement('source');
-            paragon.pt.playAudio.player.oggSrc.setAttribute('type', 'audio/ogg');
-            paragon.pt.playAudio.player.appendChild(paragon.pt.playAudio.player.oggSrc);
+          paragon.pt.playAudio.player.controls = true;
+          paragon.pt.playAudio.player.controlsList = "nodownload";
+          paragon.pt.playAudio.player.oggSrc = document.createElement("source");
+          paragon.pt.playAudio.player.oggSrc.setAttribute("type", "audio/ogg");
+          paragon.pt.playAudio.player.appendChild(
+            paragon.pt.playAudio.player.oggSrc
+          );
 
-            paragon.pt.playAudio.player.mp3Src = document.createElement('source');
-            paragon.pt.playAudio.player.mp3Src.setAttribute('type', 'audio/mp3');
-            paragon.pt.playAudio.player.appendChild(paragon.pt.playAudio.player.mp3Src);
+          paragon.pt.playAudio.player.mp3Src = document.createElement("source");
+          paragon.pt.playAudio.player.mp3Src.setAttribute("type", "audio/mp3");
+          paragon.pt.playAudio.player.appendChild(
+            paragon.pt.playAudio.player.mp3Src
+          );
 
-            paragon.pt.playAudio.player.ontimeupdate = function () {
-                var duration = paragon.pt.playAudio.player.duration;
-                var currentTime = paragon.pt.playAudio.player.currentTime;
-                if (duration) {
-                    var progress = (currentTime / duration) * 100;
-                    $("#playAudioBox .progressbar-cover").css("left", progress + "%");
-                    if (progress >= 100) {
-                        $("#playAudioBox").hide();
-                        paragon.pt.showInfoBox();
-                        paragon.pt.showNextButton();
-                        if (paragon.pt.playAudio.onDone) {
-                            paragon.pt.playAudio.onDone();
-                        }
-                    }
+          paragon.pt.playAudio.player.ontimeupdate = function () {
+            var duration = paragon.pt.playAudio.player.duration;
+            var currentTime = paragon.pt.playAudio.player.currentTime;
+            if (duration) {
+              var progress = (currentTime / duration) * 100;
+              $("#playAudioBox .progressbar-cover").css("left", progress + "%");
+              if (progress >= 100) {
+                $("#playAudioBox").hide();
+                paragon.pt.showInfoBox();
+                paragon.pt.showNextButton();
+                if (paragon.pt.playAudio.onDone) {
+                  paragon.pt.playAudio.onDone();
                 }
-            };
+              }
+            }
+          };
 
-            paragon.pt.playAudio.player.onplay = function () {
-                paragon.pt.playAudio.start(paragon.pt.playAudio.player.duration);
-            };
+          paragon.pt.playAudio.player.onplay = function () {
+            paragon.pt.playAudio.start(paragon.pt.playAudio.player.duration);
+          };
         }
 
-        paragon.pt.playAudio.player.addEventListener("loadedmetadata", function (e) {
+        paragon.pt.playAudio.player.addEventListener(
+          "loadedmetadata",
+          function (e) {
             if (e.target) {
-                paragon.pt.playAudio.player.play();
-                paragon.pt.playAudio.start(e.target.duration);
+              paragon.pt.playAudio.player.play();
+              paragon.pt.playAudio.start(e.target.duration);
             }
-        });
+          }
+        );
 
-        paragon.pt.playAudio.player.oggSrc.setAttribute('src', contentUrl + audiofile + ".ogg");
-        paragon.pt.playAudio.player.mp3Src.setAttribute('src', contentUrl + audiofile + ".mp3");
+        paragon.pt.playAudio.player.oggSrc.setAttribute(
+          "src",
+          contentUrl + audiofile + ".ogg"
+        );
+        paragon.pt.playAudio.player.mp3Src.setAttribute(
+          "src",
+          contentUrl + audiofile + ".mp3"
+        );
 
         paragon.pt.playAudio.player.load();
         return paragon.pt.playAudio.player;
-    }
+      };
 
+      paragon.pt.moveScrollBar = function (div, scrollSize) {
+        div.animate(
+          {
+            scrollTop: scrollSize,
+          },
+          1200,
+          function () {
+            div.animate({ scrollTop: 0 }, 300, function () {});
+          }
+        );
+      };
 
-    paragon.pt.moveScrollBar = function (div, scrollSize) {
-        div.animate({
-            scrollTop: scrollSize
-        }, 1200, function () {
-            div.animate({ scrollTop: 0 }, 300, function () {
-            });
-        });
-    }
+      paragon.pt.showScrollBar = function (leftDiv, rightDiv) {
+        if (
+          rightDiv.length &&
+          rightDiv.is(":visible") &&
+          leftDiv.length &&
+          leftDiv.is(":visible")
+        ) {
+          $.blockUI({
+            message: "Scroll up and down to see everything.",
+            css: {
+              width: "400px",
+              border: "2px solid #000",
+              top: "35%",
+              padding: "50px",
+              color: "#1A578A",
+              fontWeight: "bold",
+            },
+            showOverlay: false,
+          });
 
-    paragon.pt.showScrollBar = function (leftDiv, rightDiv) {
+          var rightScrollSize = rightDiv[0].scrollHeight;
+          var leftScrollSize = leftDiv[0].scrollHeight;
+          window.setTimeout(function () {
+            paragon.pt.moveScrollBar(rightDiv, rightScrollSize);
+            paragon.pt.moveScrollBar(leftDiv, leftScrollSize);
 
-        if (rightDiv.length && rightDiv.is(":visible") && leftDiv.length && leftDiv.is(":visible")) {
-            $.blockUI({
-                message: "Scroll up and down to see everything.",
-                css: { width: '400px', border: '2px solid #000', top: '35%', padding: '50px', color: '#1A578A', fontWeight: 'bold' },
-                showOverlay: false
-            });
-
-            var rightScrollSize = rightDiv[0].scrollHeight;
-            var leftScrollSize = leftDiv[0].scrollHeight;
             window.setTimeout(function () {
-                paragon.pt.moveScrollBar(rightDiv, rightScrollSize);
-                paragon.pt.moveScrollBar(leftDiv, leftScrollSize);
-
-                window.setTimeout(function () { $.unblockUI(); }, 2300);
-            }, 1400);
-
-
+              $.unblockUI();
+            }, 2300);
+          }, 1400);
         }
+      };
 
-    }
-
-    paragon.pt.wordCount = function () {
+      paragon.pt.wordCount = function () {
         $(".writtenTextAreaBox").keyup(countWords);
 
         function countWords() {
-            var text = " ";
-            if (this.value != "") {
-                var wordCount = this.value.match(/\S+/g).length;
-                if (wordCount == 1) {
-                    text = wordCount + " word";
-                } else {
-                    text = wordCount + " words";
-                }
+          var text = " ";
+          if (this.value != "") {
+            var wordCount = this.value.match(/\S+/g).length;
+            if (wordCount == 1) {
+              text = wordCount + " word";
+            } else {
+              text = wordCount + " words";
             }
-            document.getElementById("wordCount").innerHTML = text;
+          }
+          document.getElementById("wordCount").innerHTML = text;
         }
-    }
+      };
 
-    paragon.pt.calcSectionNumQuestion = function (sectionID) {
+      paragon.pt.calcSectionNumQuestion = function (sectionID) {
         var pt1lpSection = sectionID;
-        $.post("/InstructionalProducts/PracticeTest10/OPT10/GetNumberOfQuestions", { sectionId: pt1lpSection }, function (data) { console.log(data); document.getElementById("numQuestion").innerHTML = data.totalQuestions-1 });
-    }
+        $.post(
+          "/InstructionalProducts/PracticeTest10/OPT10/GetNumberOfQuestions",
+          { sectionId: pt1lpSection },
+          function (data) {
+            console.log(data);
+            document.getElementById("numQuestion").innerHTML =
+              data.totalQuestions - 1;
+          }
+        );
+      };
 
-    paragon.pt.calcSectionNumQuestionLS = function (sectionID) {
+      paragon.pt.calcSectionNumQuestionLS = function (sectionID) {
         var pt1lpSection = sectionID;
-        $.post("/InstructionalProducts/PracticeTest10/OPT10LS/GetNumberOfQuestions", { sectionId: pt1lpSection }, function (data) { console.log(data); document.getElementById("numQuestion").innerHTML = data.totalQuestions-1 });
-    }
+        $.post(
+          "/InstructionalProducts/PracticeTest10/OPT10LS/GetNumberOfQuestions",
+          { sectionId: pt1lpSection },
+          function (data) {
+            console.log(data);
+            document.getElementById("numQuestion").innerHTML =
+              data.totalQuestions - 1;
+          }
+        );
+      };
 
-    paragon.pt.calcListScoreGeneral = function (sectionID) {
-
-        $.post("/InstructionalProducts/PracticeTest10/OPT10/GetScoreOnSection", { sectionId: sectionID }, function (data) {
-            console.log(data); document.getElementById("yourScore").innerHTML = data.userScore;
+      paragon.pt.calcListScoreGeneral = function (sectionID) {
+        $.post(
+          "/InstructionalProducts/PracticeTest10/OPT10/GetScoreOnSection",
+          { sectionId: sectionID },
+          function (data) {
+            console.log(data);
+            document.getElementById("yourScore").innerHTML = data.userScore;
 
             var userLScore = data.userScore;
 
             paragon.pt.findListScore(userLScore);
+          }
+        );
+      };
 
-        });
-    }
-
-    paragon.pt.calcListScoreLS = function (sectionID) {
-
-        $.post("/InstructionalProducts/PracticeTest10/OPT10LS/GetScoreOnSection", { sectionId: sectionID }, function (data) {
-            console.log(data); document.getElementById("yourScore").innerHTML = data.userScore;
+      paragon.pt.calcListScoreLS = function (sectionID) {
+        $.post(
+          "/InstructionalProducts/PracticeTest10/OPT10LS/GetScoreOnSection",
+          { sectionId: sectionID },
+          function (data) {
+            console.log(data);
+            document.getElementById("yourScore").innerHTML = data.userScore;
 
             var userLScore = data.userScore;
 
             paragon.pt.findListScore(userLScore);
+          }
+        );
+      };
 
-        });
-    }
-
-    paragon.pt.findListScore = function (userLScore) {
+      paragon.pt.findListScore = function (userLScore) {
         if (userLScore <= 7) {
-            document.getElementById("celScore").innerHTML = "M";
-            return;
-        }
-        else if (userLScore <= 12) {
-            document.getElementById("celScore").innerHTML = "3";
-            return;
-        }
-        else if (userLScore <= 18) {
-            document.getElementById("celScore").innerHTML = "4";
-            return;
-        }
-        else if (userLScore <= 23) {
-            document.getElementById("celScore").innerHTML = "5";
-            return;
-        }
-        else if (userLScore <= 28) {
-            document.getElementById("celScore").innerHTML = "6";
-            return;
-        }
-        else if (userLScore <= 31) {
-            document.getElementById("celScore").innerHTML = "7";
-            return;
-        }
-        else if (userLScore <= 33) {
-            document.getElementById("celScore").innerHTML = "8";
-            return;
-        }
-        else if (userLScore <= 35) {
+          document.getElementById("celScore").innerHTML = "M";
+          return;
+        } else if (userLScore <= 12) {
+          document.getElementById("celScore").innerHTML = "3";
+          return;
+        } else if (userLScore <= 18) {
+          document.getElementById("celScore").innerHTML = "4";
+          return;
+        } else if (userLScore <= 23) {
+          document.getElementById("celScore").innerHTML = "5";
+          return;
+        } else if (userLScore <= 28) {
+          document.getElementById("celScore").innerHTML = "6";
+          return;
+        } else if (userLScore <= 31) {
+          document.getElementById("celScore").innerHTML = "7";
+          return;
+        } else if (userLScore <= 33) {
+          document.getElementById("celScore").innerHTML = "8";
+          return;
+        } else if (userLScore <= 35) {
           document.getElementById("celScore").innerHTML = "9";
           return;
-          }
-          else {
+        } else {
           document.getElementById("celScore").innerHTML = "10-12";
-          }
-          }
+        }
+      };
 
-          paragon.pt.calcListScoreOnYourScore = function (sectionScore, sectionCell) {
+      paragon.pt.calcListScoreOnYourScore = function (
+        sectionScore,
+        sectionCell
+      ) {
+        var userLScore = sectionScore;
 
-          var userLScore = sectionScore;
+        if (userLScore <= 7) {
+          document.getElementById(sectionCell).innerHTML = "M";
+          return;
+        } else if (userLScore <= 12) {
+          document.getElementById(sectionCell).innerHTML = "3";
+          return;
+        } else if (userLScore <= 18) {
+          document.getElementById(sectionCell).innerHTML = "4";
+          return;
+        } else if (userLScore <= 23) {
+          document.getElementById(sectionCell).innerHTML = "5";
+          return;
+        } else if (userLScore <= 28) {
+          document.getElementById(sectionCell).innerHTML = "6";
+          return;
+        } else if (userLScore <= 31) {
+          document.getElementById(sectionCell).innerHTML = "7";
+          return;
+        } else if (userLScore <= 33) {
+          document.getElementById(sectionCell).innerHTML = "8";
+          return;
+        } else if (userLScore <= 35) {
+          document.getElementById(sectionCell).innerHTML = "9";
+          return;
+        } else {
+          document.getElementById(sectionCell).innerHTML = "10-12";
+        }
+      };
 
-          if (userLScore <= 7) {
-                document.getElementById(sectionCell).innerHTML = "M";
-                return;
-            }
-            else if (userLScore <= 12) {
-                document.getElementById(sectionCell).innerHTML = "3";
-                return;
-            }
-            else if (userLScore <= 18) {
-                document.getElementById(sectionCell).innerHTML = "4";
-                return;
-            }
-            else if (userLScore <= 23) {
-                document.getElementById(sectionCell).innerHTML = "5";
-                return;
-            }
-            else if (userLScore <= 28) {
-                document.getElementById(sectionCell).innerHTML = "6";
-                return;
-            }
-            else if (userLScore <= 31) {
-                document.getElementById(sectionCell).innerHTML = "7";
-                return;
-            }
-            else if (userLScore <= 33) {
-                document.getElementById(sectionCell).innerHTML = "8";
-                return;
-            }
-            else if (userLScore <= 35) {
-                document.getElementById(sectionCell).innerHTML = "9";
-                return;
-            }
-            else {
-                document.getElementById(sectionCell).innerHTML = "10-12";
-            }
-
-
-    }
-
-    paragon.pt.calcReadScore = function (sectionID) {
-
-        $.post("/InstructionalProducts/PracticeTest10/OPT10/GetScoreOnSection", { sectionId: sectionID }, function (data) {
-            console.log(data); document.getElementById("yourScore").innerHTML = data.userScore;
+      paragon.pt.calcReadScore = function (sectionID) {
+        $.post(
+          "/InstructionalProducts/PracticeTest10/OPT10/GetScoreOnSection",
+          { sectionId: sectionID },
+          function (data) {
+            console.log(data);
+            document.getElementById("yourScore").innerHTML = data.userScore;
 
             var userRScore = data.userScore;
 
             if (userRScore <= 7) {
-                document.getElementById("celScore").innerHTML = "M";
-                return;
+              document.getElementById("celScore").innerHTML = "M";
+              return;
+            } else if (userRScore <= 11) {
+              document.getElementById("celScore").innerHTML = "3";
+              return;
+            } else if (userRScore <= 16) {
+              document.getElementById("celScore").innerHTML = "4";
+              return;
+            } else if (userRScore <= 20) {
+              document.getElementById("celScore").innerHTML = "5";
+              return;
+            } else if (userRScore <= 25) {
+              document.getElementById("celScore").innerHTML = "6";
+              return;
+            } else if (userRScore <= 28) {
+              document.getElementById("celScore").innerHTML = "7";
+              return;
+            } else if (userRScore <= 31) {
+              document.getElementById("celScore").innerHTML = "8";
+              return;
+            } else if (userRScore <= 33) {
+              document.getElementById("celScore").innerHTML = "9";
+              return;
+            } else {
+              document.getElementById("celScore").innerHTML = "10-12";
             }
-            else if (userRScore <= 11) {
-                document.getElementById("celScore").innerHTML = "3";
-                return;
-            }
-            else if (userRScore <= 16) {
-                document.getElementById("celScore").innerHTML = "4";
-                return;
-            }
-            else if (userRScore <= 20) {
-                document.getElementById("celScore").innerHTML = "5";
-                return;
-            }
-            else if (userRScore <= 25) {
-                document.getElementById("celScore").innerHTML = "6";
-                return;
-            }
-            else if (userRScore <= 28) {
-                document.getElementById("celScore").innerHTML = "7";
-                return;
-            }
-            else if (userRScore <= 31) {
-                document.getElementById("celScore").innerHTML = "8";
-                return;
-            }
-            else if (userRScore <= 33) {
-                document.getElementById("celScore").innerHTML = "9";
-                return;
-            }
-            else {
-                document.getElementById("celScore").innerHTML = "10-12";
-            }
-
-        });
-
-    }
-    paragon.pt.calcReadScoreOnYourScore = function (sectionScore, sectionCell) {
-
+          }
+        );
+      };
+      paragon.pt.calcReadScoreOnYourScore = function (
+        sectionScore,
+        sectionCell
+      ) {
         var userRScore = sectionScore;
 
         if (userRScore <= 7) {
-            document.getElementById(sectionCell).innerHTML = "M";
-            return;
+          document.getElementById(sectionCell).innerHTML = "M";
+          return;
+        } else if (userRScore <= 11) {
+          document.getElementById(sectionCell).innerHTML = "3";
+          return;
+        } else if (userRScore <= 16) {
+          document.getElementById(sectionCell).innerHTML = "4";
+          return;
+        } else if (userRScore <= 20) {
+          document.getElementById(sectionCell).innerHTML = "5";
+          return;
+        } else if (userRScore <= 25) {
+          document.getElementById(sectionCell).innerHTML = "6";
+          return;
+        } else if (userRScore <= 28) {
+          document.getElementById(sectionCell).innerHTML = "7";
+          return;
+        } else if (userRScore <= 31) {
+          document.getElementById(sectionCell).innerHTML = "8";
+          return;
+        } else if (userRScore <= 33) {
+          document.getElementById(sectionCell).innerHTML = "9";
+          return;
+        } else {
+          document.getElementById(sectionCell).innerHTML = "10-12";
         }
-        else if (userRScore <= 11) {
-            document.getElementById(sectionCell).innerHTML = "3";
-            return;
-        }
-        else if (userRScore <= 16) {
-            document.getElementById(sectionCell).innerHTML = "4";
-            return;
-        }
-        else if (userRScore <= 20) {
-            document.getElementById(sectionCell).innerHTML = "5";
-            return;
-        }
-        else if (userRScore <= 25) {
-            document.getElementById(sectionCell).innerHTML = "6";
-            return;
-        }
-        else if (userRScore <= 28) {
-            document.getElementById(sectionCell).innerHTML = "7";
-            return;
-        }
-        else if (userRScore <= 31) {
-            document.getElementById(sectionCell).innerHTML = "8";
-            return;
-        }
-        else if (userRScore <= 33) {
-            document.getElementById(sectionCell).innerHTML = "9";
-            return;
-        }
-        else {
-            document.getElementById(sectionCell).innerHTML = "10-12";
-        }
-    }
+      };
 
-
-    //HARDCODED
-    paragon.pt.showListeningAnswerKeyBtn = function (sectionId) {
-
+      //HARDCODED
+      paragon.pt.showListeningAnswerKeyBtn = function (sectionId) {
         //G Listening Test 1
         if (sectionId == "9b78de6f-08e3-42a9-818a-258221051ff3") {
-            $('#leftBtn').html("<a href='45a3224e-c476-46c1-a5f4-1719c980590b' id='backToResultbtn' class='btn'>Answer Key</a>");
+          $("#leftBtn").html(
+            "<a href='45a3224e-c476-46c1-a5f4-1719c980590b' id='backToResultbtn' class='btn'>Answer Key</a>"
+          );
         }
         //G Listening Test 2
         if (sectionId == "0f595e41-39bf-45af-bdbb-e68fb269c2b5") {
-            $('#leftBtn').html("<a href='c763a59b-f4cd-4c7d-b27a-58d77ccb5ac6' id='backToResultbtn' class='btn'>Answer Key</a>");
+          $("#leftBtn").html(
+            "<a href='c763a59b-f4cd-4c7d-b27a-58d77ccb5ac6' id='backToResultbtn' class='btn'>Answer Key</a>"
+          );
         }
         //LS Listening Test 1
         if (sectionId == "b12af51d-4247-4566-850d-4cb5d2f9ee9f") {
-            $('#leftBtn').html("<a href='f6cf3792-24da-4f5b-8294-97cbda63416f' id='backToResultbtn' class='btn'>Answer Key</a>");
+          $("#leftBtn").html(
+            "<a href='f6cf3792-24da-4f5b-8294-97cbda63416f' id='backToResultbtn' class='btn'>Answer Key</a>"
+          );
         }
         //LS Listening Test 2
         if (sectionId == "efd7741d-eab2-4ae9-85c8-ee6088750682") {
-            $('#leftBtn').html("<a href='d2112974-7746-4ccd-bd9b-edb37dda98d9' id='backToResultbtn' class='btn'>Answer Key</a>");
+          $("#leftBtn").html(
+            "<a href='d2112974-7746-4ccd-bd9b-edb37dda98d9' id='backToResultbtn' class='btn'>Answer Key</a>"
+          );
         }
-    }
-    //G Reading Test 1, Test 2
-    paragon.pt.showReadingAnswerKeyBtn = function (sectionId) {
+      };
+      //G Reading Test 1, Test 2
+      paragon.pt.showReadingAnswerKeyBtn = function (sectionId) {
         if (sectionId == "724ee614-579a-483f-a025-b76e8bcd8361") {
-            $('#leftBtn').html("<a href='ad883222-1383-460b-94b0-f71c5e425696' id='backToResultbtn' class='btn'>Answer Key</a>");
+          $("#leftBtn").html(
+            "<a href='ad883222-1383-460b-94b0-f71c5e425696' id='backToResultbtn' class='btn'>Answer Key</a>"
+          );
         }
 
         if (sectionId == "e9485ed3-f0a3-497b-a519-abcc6d5a2112") {
-            $('#leftBtn').html("<a href='ca4192a9-8e5d-4bf1-a5c0-4d0a7154f1d5' id='backToResultbtn' class='btn'>Answer Key</a>");
+          $("#leftBtn").html(
+            "<a href='ca4192a9-8e5d-4bf1-a5c0-4d0a7154f1d5' id='backToResultbtn' class='btn'>Answer Key</a>"
+          );
         }
-    }
+      };
 
-    paragon.pt.nextItem = function (url, itemId, canvasId, sectionId, activityTypeId) {
+      paragon.pt.nextItem = function (
+        url,
+        itemId,
+        canvasId,
+        sectionId,
+        activityTypeId
+      ) {
         $.post(
-            url,
-            {
-                itemId: itemId,
-                canvasId: canvasId,
-                sectionId: sectionId,
-                activityTypeId: activityTypeId
-            },
-            function (data) {
-                console.log(data);
-            }
+          url,
+          {
+            itemId: itemId,
+            canvasId: canvasId,
+            sectionId: sectionId,
+            activityTypeId: activityTypeId,
+          },
+          function (data) {
+            console.log(data);
+          }
         );
-    }
+      };
 
-    paragon.pt.countUnansweredQuestionsFromDb = function (canvasTypeId, sectionId, url) {
+      paragon.pt.countUnansweredQuestionsFromDb = function (
+        canvasTypeId,
+        sectionId,
+        url
+      ) {
         switch (canvasTypeId) {
-            case 24: //PT04
-            case 25: // PT05
-                return paragon.pt.countSingleUnansweredItemFromDb(sectionId, url);
-                break;
+          case 24: //PT04
+          case 25: // PT05
+            return paragon.pt.countSingleUnansweredItemFromDb(sectionId, url);
+            break;
 
-            case 26: //PT06
-            case 27: //PT07
-                if ($("#panelLeft").css('display') != 'none') {
-                    return 0;
-                }
-                else {
-                    return paragon.pt.countAllUnansweredItemsFromDb(sectionId, url);
-                }
-                break;
+          case 26: //PT06
+          case 27: //PT07
+            if ($("#panelLeft").css("display") != "none") {
+              return 0;
+            } else {
+              return paragon.pt.countAllUnansweredItemsFromDb(sectionId, url);
+            }
+            break;
 
-            default:
-                return paragon.pt.countAllUnansweredItemsFromDb(sectionId, url);
+          default:
+            return paragon.pt.countAllUnansweredItemsFromDb(sectionId, url);
         }
-    }
+      };
 
-    paragon.pt.countAllUnansweredItemsFromDb = function (sectionId, url) {
+      paragon.pt.countAllUnansweredItemsFromDb = function (sectionId, url) {
         var unanswered = 0;
         $.ajax({
-            type: "POST",
-            url: url,
-            data: { 'sectionId': sectionId, 'items': JSON.stringify(paragon.pt.items) },
-            async: false,
-            success: function (data) {
-                var responses = data.responses;
-                for (var i = 0; i < responses.length; i++) {
-                    var currentResponse = responses[i];
-                    if (!currentResponse) {
-                        unanswered++;
-                    }
-                }
+          type: "POST",
+          url: url,
+          data: {
+            sectionId: sectionId,
+            items: JSON.stringify(paragon.pt.items),
+          },
+          async: false,
+          success: function (data) {
+            var responses = data.responses;
+            for (var i = 0; i < responses.length; i++) {
+              var currentResponse = responses[i];
+              if (!currentResponse) {
+                unanswered++;
+              }
             }
+          },
         });
         return unanswered;
-    }
+      };
 
-    paragon.pt.countSingleUnansweredItemFromDb = function (sectionId, url) {
+      paragon.pt.countSingleUnansweredItemFromDb = function (sectionId, url) {
         var unanswered = 0;
 
         var index = paragon.pt.itemIndex;
         if (index > 0) {
-            index = index - 1;
-        }
-        else {
-            return unanswered;
+          index = index - 1;
+        } else {
+          return unanswered;
         }
 
         var item = paragon.pt.items[index];
         $.ajax({
-            type: "POST",
-            url: url,
-            data: { "sectionId": sectionId, "itemId": item.Id },
-            async: false,
-            success: function (data) {
-                if (!data.response) {
-                    unanswered++;
-                }
+          type: "POST",
+          url: url,
+          data: { sectionId: sectionId, itemId: item.Id },
+          async: false,
+          success: function (data) {
+            if (!data.response) {
+              unanswered++;
             }
+          },
         });
 
         return unanswered;
-    }
-
-</script>
+      };
+    </script>
 
     <script src="./10-2-1_files/soundjs-0.6.0.min.js.下載"></script>
-
-
 
     <script src="./10-2-1_files/audio.min.js.下載"></script>
 
@@ -801,1042 +887,1389 @@
 
     <script src="./10-2-1_files/jquery.cookie.js.下載"></script>
 
-
-    <link href="./10-2-1_files/font-awesome.css" rel="stylesheet">
-</head>
-<body data-new-gr-c-s-check-loaded="14.1229.0" data-gr-ext-installed="" style="">
+    <link href="./10-2-1_files/font-awesome.css" rel="stylesheet" />
+  </head>
+  <body
+    data-new-gr-c-s-check-loaded="14.1229.0"
+    data-gr-ext-installed=""
+    style=""
+  >
     <noscript>
-        <div id="noscript">
-            <div>Please turn on javascript to continue.</div>
-        </div>
+      <div id="noscript">
+        <div>Please turn on javascript to continue.</div>
+      </div>
     </noscript>
     <header>
-        <div class="navbar">
-            <div class="navbar-inner">
-                <a class="brand" href="https://www.celpip.ca/" target="_blank"> <img src="./10-2-1_files/CELPIP_H_Web.png"></a>
+      <div class="navbar">
+        <div class="navbar-inner">
+          <a class="brand" href="https://www.celpip.ca/" target="_blank">
+            <img src="./10-2-1_files/CELPIP_H_Web.png"
+          /></a>
 
-                <div class="brand" style="margin-top:15px;">
-                    Study Materials
+          <div class="brand" style="margin-top: 15px">Study Materials</div>
+
+          <ul class="nav" style="margin-top: 8px">
+            <li class="dropdown">
+              <a
+                class="dropdown-toggle"
+                data-toggle="dropdown"
+                style="margin-top: 10px"
+              >
+                Selected Product:
+                <span id="selected-product"
+                  >CELPIP-General Practice Tests, Set 10</span
+                >
+                <b class="caret"></b>
+              </a>
+              <ul class="dropdown-menu">
+                <li>
+                  <a
+                    href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/FreeOnlineSampleTest/FOST"
+                    >Free CELPIP-General Practice Tests (Starter Set)</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/FreeOnlineSampleTest/FOST2"
+                    >Free CELPIP-General LS Practice Tests (Starter Set)</a
+                  >
+                </li>
+
+                <li>
+                  <a
+                    href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest/PT"
+                    >CELPIP-General Practice Tests, Set 1</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest2/OPT2"
+                    >CELPIP-General Practice Tests, Set 2</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest3/OPT3"
+                    >CELPIP-General Practice Tests, Set 3</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest4/OPT4"
+                    >CELPIP-General Practice Tests, Set 4</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest5/OPT5"
+                    >CELPIP-General Practice Tests, Set 5</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest6/OPT6"
+                    >CELPIP-General Practice Tests, Set 6</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest7/OPT7"
+                    >CELPIP-General Practice Tests, Set 7</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest8/OPT8"
+                    >CELPIP-General Practice Tests, Set 8</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest9/OPT9"
+                    >CELPIP-General Practice Tests, Set 9</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest10/OPT10"
+                    >CELPIP-General Practice Tests, Set 10</a
+                  >
+                </li>
+                <li>
+                  <a
+                    target="_blank"
+                    href="https://testprep.paragontesting.ca/api/sso/v2/sso/jwt?jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6Imh5cDIyMThAZ21haWwuY29tIiwiZmlyc3RfbmFtZSI6IllpLVBpbmciLCJsYXN0X25hbWUiOiJIbyIsIm5hbWVpZCI6IjIyMzc0ODgiLCJpYXQiOjE3NDMwMTI3NTcsImp0aSI6MTk0NjYzNzU4LCJuYmYiOjE3NDMwMTI0NTd9._tIVO62eNDMPJpi9-0Hq9bGJLuuyFFZyvfeuZzeZw6c&amp;return_to=https%3A%2F%2Ftestprep.paragontesting.ca%2Fbundles%2Fcelpip-accelerate-starter-celpip-general"
+                    >CELPIP Accelerate Starter - Reading and Writing</a
+                  >
+                </li>
+                <li>
+                  <a
+                    target="_blank"
+                    href="https://testprep.paragontesting.ca/api/sso/v2/sso/jwt?jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6Imh5cDIyMThAZ21haWwuY29tIiwiZmlyc3RfbmFtZSI6IllpLVBpbmciLCJsYXN0X25hbWUiOiJIbyIsIm5hbWVpZCI6IjIyMzc0ODgiLCJpYXQiOjE3NDMwMTI3NTcsImp0aSI6ODg4MjkwNDExLCJuYmYiOjE3NDMwMTI0NTd9.V3bYFrFbgsplBDSBOI1uz0ZpNn4oJWhA5sQrvYRZp_0&amp;return_to=https%3A%2F%2Ftestprep.paragontesting.ca%2Fbundles%2Fcelpip-accelerate-starter-celpip-general-ls"
+                    >CELPIP Accelerate Starter - Listening and Speaking</a
+                  >
+                </li>
+              </ul>
+            </li>
+
+            <li>
+              <div style="margin-left: 19px">
+                <ul class="nav nav-pills header-buttons"></ul>
+              </div>
+            </li>
+          </ul>
+
+          <ul class="nav pull-right" style="margin-top: 17px">
+            <li class="dropdown">
+              <a class="dropdown-toggle dropdown-email" data-toggle="dropdown">
+                <img
+                  src="./10-2-1_files/fa_cog.png"
+                  style="width: 18px; height: 18px; margin-top: -5px"
+                />
+
+                <b class="caret"></b>
+              </a>
+              <ul class="dropdown-menu">
+                <li>
+                  <a
+                    href="javascript:document.getElementById(&#39;logoutForm&#39;).submit()"
+                    >Sign out</a
+                  >
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <form
+        action="https://instructionalproducts.paragontesting.ca/InstructionalProducts/Account/LogOff"
+        id="logoutForm"
+        method="post"
+      ></form>
+    </header>
+
+    <div class="container" id="main-container" style="height: 582.8px">
+      <link
+        href="./10-2-1_files/ptStyle.css"
+        rel="stylesheet"
+        type="text/css"
+      />
+      <link href="./10-2-1_files/video-js.css" rel="stylesheet" />
+      <script src="./10-2-1_files/video.js.下載"></script>
+      <script>
+        paragon.pt.backUrl =
+          "/InstructionalProducts/PracticeTest10/OPT10/View/108b7485-6c42-472f-9e0b-85c1bce3cd54";
+        paragon.pt.nextUrl =
+          "/InstructionalProducts/PracticeTest10/OPT10/View/ec492971-f300-4205-b7ea-fc97c7e40e34";
+        if (paragon.pt.backUrl.length > 0 || paragon.pt.nextUrl.length > 0) {
+          paragon.footerVisible = true;
+        }
+
+        paragon.pt.items = [
+          {
+            Id: "2698f0de-9a42-4598-86b9-79c6513dcc38",
+            ContentId: "d2e563de-2646-4d60-8477-bb99536bf805",
+            Num: 1,
+            Text: "1. Alex wrote this letter to",
+            ExtraField1: "",
+            Choices: [
+              {
+                Id: "26da76d5-afda-4be8-a505-a8a8379fa7b2",
+                ItemId: "2698f0de-9a42-4598-86b9-79c6513dcc38",
+                ChoiceData: null,
+                Num: 1,
+                Text: "apologize for cancelling the trip.",
+              },
+              {
+                Id: "7ae02cde-8be9-4427-80c3-e05f862b6828",
+                ItemId: "2698f0de-9a42-4598-86b9-79c6513dcc38",
+                ChoiceData: null,
+                Num: 2,
+                Text: "purchase train tickets.",
+              },
+              {
+                Id: "73fd32dc-ba6a-419a-b06d-eb51426957aa",
+                ItemId: "2698f0de-9a42-4598-86b9-79c6513dcc38",
+                ChoiceData: null,
+                Num: 3,
+                Text: "comment on some beautiful flowers.",
+              },
+              {
+                Id: "7060e001-7a58-4c24-9fbb-05b72288456e",
+                ItemId: "2698f0de-9a42-4598-86b9-79c6513dcc38",
+                ChoiceData: null,
+                Num: 4,
+                Text: "set a tentative travel schedule.",
+              },
+            ],
+          },
+          {
+            Id: "abe49924-6a05-415c-8d78-0a45ae1dea54",
+            ContentId: "d2e563de-2646-4d60-8477-bb99536bf805",
+            Num: 2,
+            Text: "2. Which city has Kristin been to at least two times?",
+            ExtraField1: "",
+            Choices: [
+              {
+                Id: "3109a243-b030-4b43-959e-b993bad2a439",
+                ItemId: "abe49924-6a05-415c-8d78-0a45ae1dea54",
+                ChoiceData: null,
+                Num: 1,
+                Text: "Amsterdam",
+              },
+              {
+                Id: "16951686-76b8-4085-81ab-045f620d7942",
+                ItemId: "abe49924-6a05-415c-8d78-0a45ae1dea54",
+                ChoiceData: null,
+                Num: 2,
+                Text: "Vancouver",
+              },
+              {
+                Id: "a393dd18-72d7-485f-b2ef-e055e86c9e8b",
+                ItemId: "abe49924-6a05-415c-8d78-0a45ae1dea54",
+                ChoiceData: null,
+                Num: 3,
+                Text: "Oslo",
+              },
+              {
+                Id: "e7fcc1e8-ba60-4ff0-bde2-060f71b5985d",
+                ItemId: "abe49924-6a05-415c-8d78-0a45ae1dea54",
+                ChoiceData: null,
+                Num: 4,
+                Text: "Paris",
+              },
+            ],
+          },
+          {
+            Id: "68e06c2a-ba0c-4160-bf15-89e4cddd374d",
+            ContentId: "d2e563de-2646-4d60-8477-bb99536bf805",
+            Num: 3,
+            Text: "3. Kristin lives",
+            ExtraField1: "",
+            Choices: [
+              {
+                Id: "85631029-f8e3-4636-88ff-06d7973b8f9d",
+                ItemId: "68e06c2a-ba0c-4160-bf15-89e4cddd374d",
+                ChoiceData: null,
+                Num: 1,
+                Text: "on a farm with her parents.",
+              },
+              {
+                Id: "ef7d5432-e154-41ea-bc0c-ccc0abd93acb",
+                ItemId: "68e06c2a-ba0c-4160-bf15-89e4cddd374d",
+                ChoiceData: null,
+                Num: 2,
+                Text: "in Vancouver.",
+              },
+              {
+                Id: "21b5e20b-8972-4be2-a0c7-5bbc1d8e0663",
+                ItemId: "68e06c2a-ba0c-4160-bf15-89e4cddd374d",
+                ChoiceData: null,
+                Num: 3,
+                Text: "in Amsterdam.",
+              },
+              {
+                Id: "d487f04e-1776-459c-aa55-be5046cc6e02",
+                ItemId: "68e06c2a-ba0c-4160-bf15-89e4cddd374d",
+                ChoiceData: null,
+                Num: 4,
+                Text: "in an apartment in Oslo.",
+              },
+            ],
+          },
+          {
+            Id: "54302c20-cfc8-40a6-a571-e7bce84f218a",
+            ContentId: "d2e563de-2646-4d60-8477-bb99536bf805",
+            Num: 4,
+            Text: "4. After spending time in Norway, Alex wants to",
+            ExtraField1: "",
+            Choices: [
+              {
+                Id: "70217a4d-6e9c-4567-b132-481719639c5f",
+                ItemId: "54302c20-cfc8-40a6-a571-e7bce84f218a",
+                ChoiceData: null,
+                Num: 1,
+                Text: "head back to Vancouver.",
+              },
+              {
+                Id: "25411d6c-e88f-47f6-8e2c-b548fd7590b6",
+                ItemId: "54302c20-cfc8-40a6-a571-e7bce84f218a",
+                ChoiceData: null,
+                Num: 2,
+                Text: "check out Brussels.",
+              },
+              {
+                Id: "ebc4fc53-e612-498d-8d7d-ebdb9a609405",
+                ItemId: "54302c20-cfc8-40a6-a571-e7bce84f218a",
+                ChoiceData: null,
+                Num: 3,
+                Text: "steer clear of Paris.",
+              },
+              {
+                Id: "d927cecb-5858-4658-8b3d-b23ffe6a522e",
+                ItemId: "54302c20-cfc8-40a6-a571-e7bce84f218a",
+                ChoiceData: null,
+                Num: 4,
+                Text: "hop on a plane to Amsterdam.",
+              },
+            ],
+          },
+          {
+            Id: "8817b808-45d4-4363-ae7d-5f62cc77f544",
+            ContentId: "d2e563de-2646-4d60-8477-bb99536bf805",
+            Num: 5,
+            Text: "5. Alex would prefer to",
+            ExtraField1: "",
+            Choices: [
+              {
+                Id: "90e17064-5460-476d-9da3-6de013eac64b",
+                ItemId: "8817b808-45d4-4363-ae7d-5f62cc77f544",
+                ChoiceData: null,
+                Num: 1,
+                Text: "travel Comfort class.",
+              },
+              {
+                Id: "b269104c-0ced-407b-9337-e98b7524a969",
+                ItemId: "8817b808-45d4-4363-ae7d-5f62cc77f544",
+                ChoiceData: null,
+                Num: 2,
+                Text: "travel Economy class.",
+              },
+              {
+                Id: "5f441d01-ee52-4109-9a0c-7a1c97ce9516",
+                ItemId: "8817b808-45d4-4363-ae7d-5f62cc77f544",
+                ChoiceData: null,
+                Num: 3,
+                Text: "rent a car.",
+              },
+              {
+                Id: "fad6a06e-68ac-455a-afa0-7d14a1d01e54",
+                ItemId: "8817b808-45d4-4363-ae7d-5f62cc77f544",
+                ChoiceData: null,
+                Num: 4,
+                Text: "rent a bike.",
+              },
+            ],
+          },
+          {
+            Id: "1fe4d90c-ce2d-42ca-9b16-9df03d1e91bd",
+            ContentId: "d2e563de-2646-4d60-8477-bb99536bf805",
+            Num: 6,
+            Text: "6. Alex has already",
+            ExtraField1: "",
+            Choices: [
+              {
+                Id: "132f6cfb-b756-43f7-b1b1-f30e6ab8afdd",
+                ItemId: "1fe4d90c-ce2d-42ca-9b16-9df03d1e91bd",
+                ChoiceData: null,
+                Num: 1,
+                Text: "explored Amsterdam.",
+              },
+              {
+                Id: "8663686f-bc63-46c7-becf-12061aa13c3d",
+                ItemId: "1fe4d90c-ce2d-42ca-9b16-9df03d1e91bd",
+                ChoiceData: null,
+                Num: 2,
+                Text: "bought train tickets.",
+              },
+              {
+                Id: "7410ace5-3b13-4762-8ada-e7718fd38b3f",
+                ItemId: "1fe4d90c-ce2d-42ca-9b16-9df03d1e91bd",
+                ChoiceData: null,
+                Num: 3,
+                Text: "booked a flight back to Vancouver.",
+              },
+              {
+                Id: "a08b4913-1ab6-43f1-93ba-38c0e183e432",
+                ItemId: "1fe4d90c-ce2d-42ca-9b16-9df03d1e91bd",
+                ChoiceData: null,
+                Num: 4,
+                Text: "called Kristin with the flight details.",
+              },
+            ],
+          },
+          {
+            Id: "0d5273f4-65c7-4da8-ad4a-6b75bd034d72",
+            ContentId: "d2e563de-2646-4d60-8477-bb99536bf805",
+            Num: 7,
+            Text: "",
+            ExtraField1: "",
+            Choices: [
+              {
+                Id: "8b98e1b2-27aa-4b6a-9c76-fce4147a32a1",
+                ItemId: "0d5273f4-65c7-4da8-ad4a-6b75bd034d72",
+                ChoiceData: null,
+                Num: 1,
+                Text: "flexibility with",
+              },
+              {
+                Id: "4dba0118-9bae-4dfd-8525-bc51daecdd27",
+                ItemId: "0d5273f4-65c7-4da8-ad4a-6b75bd034d72",
+                ChoiceData: null,
+                Num: 2,
+                Text: "low cost",
+              },
+              {
+                Id: "8eec7490-e68e-4d80-9ede-7512ab8b5155",
+                ItemId: "0d5273f4-65c7-4da8-ad4a-6b75bd034d72",
+                ChoiceData: null,
+                Num: 3,
+                Text: "uncertainty about",
+              },
+              {
+                Id: "1ef9fdaa-c12b-499a-98ba-7b8a5263841e",
+                ItemId: "0d5273f4-65c7-4da8-ad4a-6b75bd034d72",
+                ChoiceData: null,
+                Num: 4,
+                Text: "worrying about",
+              },
+            ],
+          },
+          {
+            Id: "0a80a7f8-95e8-4b80-9cec-12644a32d264",
+            ContentId: "d2e563de-2646-4d60-8477-bb99536bf805",
+            Num: 8,
+            Text: "",
+            ExtraField1: "",
+            Choices: [
+              {
+                Id: "a5b05b9e-27d2-45c9-b1e1-d4ff616ac9e1",
+                ItemId: "0a80a7f8-95e8-4b80-9cec-12644a32d264",
+                ChoiceData: null,
+                Num: 1,
+                Text: "place in the country\t",
+              },
+              {
+                Id: "bd5c7554-084c-44d8-9579-fbc6fbcf1ca1",
+                ItemId: "0a80a7f8-95e8-4b80-9cec-12644a32d264",
+                ChoiceData: null,
+                Num: 2,
+                Text: "apartment downtown",
+              },
+              {
+                Id: "4d1dd8a3-d2b8-464d-b078-f41790f36b18",
+                ItemId: "0a80a7f8-95e8-4b80-9cec-12644a32d264",
+                ChoiceData: null,
+                Num: 3,
+                Text: "condo in Oslo",
+              },
+              {
+                Id: "805b7191-f52b-4a43-be2a-2dec2dbbd2cf",
+                ItemId: "0a80a7f8-95e8-4b80-9cec-12644a32d264",
+                ChoiceData: null,
+                Num: 4,
+                Text: "cabin by the lake",
+              },
+            ],
+          },
+          {
+            Id: "ae30b10a-a71b-4d2d-b593-17d3f4fc6807",
+            ContentId: "d2e563de-2646-4d60-8477-bb99536bf805",
+            Num: 9,
+            Text: "",
+            ExtraField1: "",
+            Choices: [
+              {
+                Id: "51d47f70-6395-420a-854a-aa1e2184698e",
+                ItemId: "ae30b10a-a71b-4d2d-b593-17d3f4fc6807",
+                ChoiceData: null,
+                Num: 1,
+                Text: "prettier",
+              },
+              {
+                Id: "6f319df0-2b52-4d2a-9b28-0d8772c8a42f",
+                ItemId: "ae30b10a-a71b-4d2d-b593-17d3f4fc6807",
+                ChoiceData: null,
+                Num: 2,
+                Text: "roomier",
+              },
+              {
+                Id: "78a12237-d717-4786-9272-6cc9d38063cc",
+                ItemId: "ae30b10a-a71b-4d2d-b593-17d3f4fc6807",
+                ChoiceData: null,
+                Num: 3,
+                Text: "softer",
+              },
+              {
+                Id: "1c0fecf7-2303-4b2a-9f9c-d88bcd2b580f",
+                ItemId: "ae30b10a-a71b-4d2d-b593-17d3f4fc6807",
+                ChoiceData: null,
+                Num: 4,
+                Text: "fancier",
+              },
+            ],
+          },
+          {
+            Id: "535af40f-5217-46a4-9d4e-59c6d0962e64",
+            ContentId: "d2e563de-2646-4d60-8477-bb99536bf805",
+            Num: 10,
+            Text: "",
+            ExtraField1: "",
+            Choices: [
+              {
+                Id: "fe7e43e8-e2b8-4c02-b2db-219253003d44",
+                ItemId: "535af40f-5217-46a4-9d4e-59c6d0962e64",
+                ChoiceData: null,
+                Num: 1,
+                Text: "visit the Van Gogh Museum",
+              },
+              {
+                Id: "3c5436c1-128f-4da1-9383-070c90b49c9a",
+                ItemId: "535af40f-5217-46a4-9d4e-59c6d0962e64",
+                ChoiceData: null,
+                Num: 2,
+                Text: "get a flight to Paris",
+              },
+              {
+                Id: "658fcbac-5d03-4e40-ac5f-4bbf4043c1a6",
+                ItemId: "535af40f-5217-46a4-9d4e-59c6d0962e64",
+                ChoiceData: null,
+                Num: 3,
+                Text: "attend the business conference",
+              },
+              {
+                Id: "5dd7f58a-a33f-431b-966b-4616df3a58aa",
+                ItemId: "535af40f-5217-46a4-9d4e-59c6d0962e64",
+                ChoiceData: null,
+                Num: 4,
+                Text: "then head back home",
+              },
+            ],
+          },
+          {
+            Id: "0035f65a-21ec-4014-a744-d9a92176a56c",
+            ContentId: "d2e563de-2646-4d60-8477-bb99536bf805",
+            Num: 11,
+            Text: "",
+            ExtraField1: "",
+            Choices: [
+              {
+                Id: "7db579e6-b43d-40d3-9791-b7ea75e2b244",
+                ItemId: "0035f65a-21ec-4014-a744-d9a92176a56c",
+                ChoiceData: null,
+                Num: 1,
+                Text: "more organised",
+              },
+              {
+                Id: "206666d1-c1f0-407d-9f29-a3900fee4567",
+                ItemId: "0035f65a-21ec-4014-a744-d9a92176a56c",
+                ChoiceData: null,
+                Num: 2,
+                Text: "more spontaneous",
+              },
+              {
+                Id: "c76eb0e1-169c-43f2-a189-73a8c71986f0",
+                ItemId: "0035f65a-21ec-4014-a744-d9a92176a56c",
+                ChoiceData: null,
+                Num: 3,
+                Text: "less busy",
+              },
+              {
+                Id: "643cb310-d762-49e9-92d3-5c641d86aab6",
+                ItemId: "0035f65a-21ec-4014-a744-d9a92176a56c",
+                ChoiceData: null,
+                Num: 4,
+                Text: "less casual",
+              },
+            ],
+          },
+        ];
+      </script>
+
+      <div id="panelTop">
+        <div
+          id="canvasName"
+          style="float: left; font-size: 16px; font-weight: bold"
+        >
+          Practice Test 2 - Reading Part 1: Reading Correspondence
+        </div>
+
+        <div style="float: right" class="btnNext span1 pull-right">
+          <a
+            href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest10/OPT10/View/ac5276a6-1cdb-4e8b-84ce-653ddff20c89#"
+            id="btnNext"
+            class="btn btn-primary"
+            >NEXT</a
+          >
+        </div>
+
+        <div style="float: right; display: block" id="timer" class="hide">
+          Time remaining: <strong>10 minutes</strong>
+        </div>
+      </div>
+
+      <div id="mainContent">
+        <script id="dropDownListTemplate" type="text/template">
+          {{#each this}}
+              <div class="ddrow">
+                  {{Text}}
+                  <div class='dd'>
+                      <div class='ddToggle'>▾</div>
+                      <div class='ddMenu'>
+                          <ul data-id="{{Id}}">
+                          {{#each Choices}}
+                              <li data-id="{{Id}}">{{Text}}</li>
+                          {{/each}}
+                          </ul>
+                      </div>
+                  </div>
+              </div>
+          {{/each}}
+        </script>
+
+        <script id="dropDownListInlineTemplate" type="text/template">
+          <div class='dd'>
+              <div class='ddToggle'>▾</div>
+              <div class='ddMenu'>
+                  <ul data-id="{{Id}}">
+                  {{#each Choices}}
+                      <li data-id="{{Id}}">{{Text}}</li>
+                  {{/each}}
+                  </ul>
+              </div>
+          </div>
+        </script>
+
+        <script id="dropDownListInFrontTemplate" type="text/template">
+          {{#each this}}
+          <div class="ddrow">
+              <div class='dd'>
+                  <div class='ddToggle'>▾</div>
+                  <div class='ddMenu'>
+                      <ul data-id="{{Id}}">
+                          {{#each Choices}}
+                          <li data-id="{{Id}}">{{Text}}</li>
+                          {{/each}}
+                      </ul>
+                  </div>
+              </div>
+              &nbsp;-
+              {{Text}}
+          </div>
+          {{/each}}
+        </script>
+
+        <div id="panelLeft" style="width: 50%; height: 539.2px" class="graybg">
+          <div class="row1">
+            <div class="instruction" style="margin-bottom: 30px">
+              Read the following message.
+            </div>
+            <div>
+              <p>Dear Kristin,</p>
+              <p>
+                I can't believe I'm going to be visiting you in only three
+                weeks! Since you moved away, you've already come back to
+                Vancouver to visit. It's about time I repaid the favour. I can't
+                wait to see Norway at last. Although I know you recently moved
+                to an apartment in Oslo, I'd love to visit your parents' farm
+                that you've told me so much about, especially since I'll be
+                there in spring. The pictures you showed me of the flowers
+                blooming in the hills were incredible.
+              </p>
+              <p>
+                As we discussed before, I'm still up for traveling around Europe
+                for a week after you show me around Norway. I agree with you
+                that buying a train pass and stopping off at various cities
+                would be fun, and also the least expensive way of getting
+                around. I looked into my budget and I've been able to save a lot
+                more than I expected, so we could even travel in the Comfort
+                class rather than the Economy class which we had originally
+                intended. For a 3-hour train ride, Comfort class tickets are
+                around $90, and Economy tickets are $60. I don't mind either
+                way, but wider seats sound a lot more luxurious. It is up to
+                you. Just let me know what you decide.
+              </p>
+              <p>
+                I propose we fly to Amsterdam to start off and then take the
+                train from there. I'd like to spend at least a few days
+                exploring Amsterdam. My mother attended a business conference
+                there last year and she said I'd love it. I'm interested in
+                visiting the museum of Van Gogh, as he's always been my
+                favourite artist. The museum has the biggest collection in the
+                world of Van Gogh's art, with some 200 paintings and over 550
+                sketches. That would be amazing to see.
+              </p>
+              <p>
+                After Amsterdam, I'm not picky where we go with the train pass.
+                I'd love to visit Paris and Brussels, but we could also just not
+                plan anything and decide in the moment. As long as I'm back in
+                Oslo on Aug 27th for my flight back to Vancouver, I'm up for
+                anything.
+              </p>
+              <p>
+                I'll call you in a few days to give you my flight details. I'm
+                so excited to see you!
+              </p>
+              <p>Alex</p>
+            </div>
+
+            <div class="box hide" id="infoBox">
+              <div class="boxIcon">
+                <em class="info-icon"></em>
+              </div>
+              <div class="boxText">
+                <div>
+                  <p>Click "NEXT" to continue.</p>
                 </div>
+              </div>
+            </div>
 
-                <ul class="nav" style="margin-top:8px;">
+            <div class="box hide" id="playAudioBox">
+              <div class="boxIcon">
+                <em class="play-icon"></em>
+              </div>
+              <div class="boxText">
+                <div>Playing...</div>
+                <div class="progressbar">
+                  <span class="progressbar-value"
+                    ><em style="left: 0%" class="progressbar-cover"></em>
+                  </span>
+                </div>
+              </div>
+            </div>
 
-                    <li class="dropdown">
+            <div id="audioDiv"></div>
+          </div>
+        </div>
 
-                        <a class="dropdown-toggle" data-toggle="dropdown" style="margin-top: 10px;">
-                            Selected Product: <span id="selected-product">CELPIP-General Practice Tests, Set 10</span>
-                            <b class="caret"></b>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/FreeOnlineSampleTest/FOST">Free CELPIP-General Practice Tests (Starter Set)</a></li>
-                            <li><a href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/FreeOnlineSampleTest/FOST2">Free CELPIP-General LS Practice Tests (Starter Set)</a></li>
+        <div id="panelRight" style="width: 50%; height: 539.2px" class="bluebg">
+          <div class="row1">
+            <div class="instruction" style="margin-bottom: 15px">
+              Using the drop-down menu (
+              <span
+                class="caret"
+                style="margin-top: 7px; border-top: 4px solid #1a578a"
+              ></span>
+              ), choose the <span style="color: #4789ac">best</span> option
+              according to the information given in the message.
+            </div>
 
+            <div
+              id="multipleChoices"
+              class="wellBlueBG"
+              style="margin-bottom: 20px"
+            >
+              <div class="ddrow">
+                1. Alex wrote this letter to
+                <div class="dd">
+                  <div class="ddToggle ddToggle1">
+                    set a tentative travel schedule.
+                  </div>
+                  <div class="ddMenu">
+                    <ul data-id="2698f0de-9a42-4598-86b9-79c6513dcc38">
+                      <li data-id="26da76d5-afda-4be8-a505-a8a8379fa7b2">
+                        apologize for cancelling the trip.
+                      </li>
 
-                                    <li><a href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest/PT">CELPIP-General Practice Tests, Set 1</a></li>
-                                    <li><a href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest2/OPT2">CELPIP-General Practice Tests, Set 2</a></li>
-                                    <li><a href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest3/OPT3">CELPIP-General Practice Tests, Set 3</a></li>
-                                    <li><a href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest4/OPT4">CELPIP-General Practice Tests, Set 4</a></li>
-                                    <li><a href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest5/OPT5">CELPIP-General Practice Tests, Set 5</a></li>
-                                    <li><a href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest6/OPT6">CELPIP-General Practice Tests, Set 6</a></li>
-                                    <li><a href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest7/OPT7">CELPIP-General Practice Tests, Set 7</a></li>
-                                    <li><a href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest8/OPT8">CELPIP-General Practice Tests, Set 8</a></li>
-                                    <li><a href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest9/OPT9">CELPIP-General Practice Tests, Set 9</a></li>
-                                    <li><a href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest10/OPT10">CELPIP-General Practice Tests, Set 10</a></li>
-                                        <li><a target="_blank" href="https://testprep.paragontesting.ca/api/sso/v2/sso/jwt?jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6Imh5cDIyMThAZ21haWwuY29tIiwiZmlyc3RfbmFtZSI6IllpLVBpbmciLCJsYXN0X25hbWUiOiJIbyIsIm5hbWVpZCI6IjIyMzc0ODgiLCJpYXQiOjE3NDMwMTI3NTcsImp0aSI6MTk0NjYzNzU4LCJuYmYiOjE3NDMwMTI0NTd9._tIVO62eNDMPJpi9-0Hq9bGJLuuyFFZyvfeuZzeZw6c&amp;return_to=https%3A%2F%2Ftestprep.paragontesting.ca%2Fbundles%2Fcelpip-accelerate-starter-celpip-general">CELPIP Accelerate Starter - Reading and Writing</a></li>
-                                        <li><a target="_blank" href="https://testprep.paragontesting.ca/api/sso/v2/sso/jwt?jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6Imh5cDIyMThAZ21haWwuY29tIiwiZmlyc3RfbmFtZSI6IllpLVBpbmciLCJsYXN0X25hbWUiOiJIbyIsIm5hbWVpZCI6IjIyMzc0ODgiLCJpYXQiOjE3NDMwMTI3NTcsImp0aSI6ODg4MjkwNDExLCJuYmYiOjE3NDMwMTI0NTd9.V3bYFrFbgsplBDSBOI1uz0ZpNn4oJWhA5sQrvYRZp_0&amp;return_to=https%3A%2F%2Ftestprep.paragontesting.ca%2Fbundles%2Fcelpip-accelerate-starter-celpip-general-ls">CELPIP Accelerate Starter - Listening and Speaking</a></li>
-                        </ul>
+                      <li data-id="7ae02cde-8be9-4427-80c3-e05f862b6828">
+                        purchase train tickets.
+                      </li>
 
+                      <li data-id="73fd32dc-ba6a-419a-b06d-eb51426957aa">
+                        comment on some beautiful flowers.
+                      </li>
+
+                      <li
+                        data-id="7060e001-7a58-4c24-9fbb-05b72288456e"
+                        class="selected"
+                      >
+                        set a tentative travel schedule.
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <div class="ddrow">
+                2. Which city has Kristin been to at least two times?
+                <div class="dd">
+                  <div class="ddToggle ddToggle1">Vancouver</div>
+                  <div class="ddMenu">
+                    <ul data-id="abe49924-6a05-415c-8d78-0a45ae1dea54">
+                      <li data-id="3109a243-b030-4b43-959e-b993bad2a439">
+                        Amsterdam
+                      </li>
+
+                      <li
+                        data-id="16951686-76b8-4085-81ab-045f620d7942"
+                        class="selected"
+                      >
+                        Vancouver
+                      </li>
+
+                      <li data-id="a393dd18-72d7-485f-b2ef-e055e86c9e8b">
+                        Oslo
+                      </li>
+
+                      <li data-id="e7fcc1e8-ba60-4ff0-bde2-060f71b5985d">
+                        Paris
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <div class="ddrow">
+                3. Kristin lives
+                <div class="dd">
+                  <div class="ddToggle ddToggle1">in an apartment in Oslo.</div>
+                  <div class="ddMenu">
+                    <ul data-id="68e06c2a-ba0c-4160-bf15-89e4cddd374d">
+                      <li data-id="85631029-f8e3-4636-88ff-06d7973b8f9d">
+                        on a farm with her parents.
+                      </li>
+
+                      <li data-id="ef7d5432-e154-41ea-bc0c-ccc0abd93acb">
+                        in Vancouver.
+                      </li>
+
+                      <li data-id="21b5e20b-8972-4be2-a0c7-5bbc1d8e0663">
+                        in Amsterdam.
+                      </li>
+
+                      <li
+                        data-id="d487f04e-1776-459c-aa55-be5046cc6e02"
+                        class="selected"
+                      >
+                        in an apartment in Oslo.
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <div class="ddrow">
+                4. After spending time in Norway, Alex wants to
+                <div class="dd">
+                  <div class="ddToggle ddToggle1">
+                    hop on a plane to Amsterdam.
+                  </div>
+                  <div class="ddMenu">
+                    <ul data-id="54302c20-cfc8-40a6-a571-e7bce84f218a">
+                      <li data-id="70217a4d-6e9c-4567-b132-481719639c5f">
+                        head back to Vancouver.
+                      </li>
+
+                      <li data-id="25411d6c-e88f-47f6-8e2c-b548fd7590b6">
+                        check out Brussels.
+                      </li>
+
+                      <li data-id="ebc4fc53-e612-498d-8d7d-ebdb9a609405">
+                        steer clear of Paris.
+                      </li>
+
+                      <li
+                        data-id="d927cecb-5858-4658-8b3d-b23ffe6a522e"
+                        class="selected"
+                      >
+                        hop on a plane to Amsterdam.
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <div class="ddrow">
+                5. Alex would prefer to
+                <div class="dd">
+                  <div class="ddToggle ddToggle1">travel Comfort class.</div>
+                  <div class="ddMenu">
+                    <ul data-id="8817b808-45d4-4363-ae7d-5f62cc77f544">
+                      <li
+                        data-id="90e17064-5460-476d-9da3-6de013eac64b"
+                        class="selected"
+                      >
+                        travel Comfort class.
+                      </li>
+
+                      <li data-id="b269104c-0ced-407b-9337-e98b7524a969">
+                        travel Economy class.
+                      </li>
+
+                      <li data-id="5f441d01-ee52-4109-9a0c-7a1c97ce9516">
+                        rent a car.
+                      </li>
+
+                      <li data-id="fad6a06e-68ac-455a-afa0-7d14a1d01e54">
+                        rent a bike.
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <div class="ddrow">
+                6. Alex has already
+                <div class="dd">
+                  <div class="ddToggle ddToggle1">
+                    booked a flight back to Vancouver.
+                  </div>
+                  <div class="ddMenu">
+                    <ul data-id="1fe4d90c-ce2d-42ca-9b16-9df03d1e91bd">
+                      <li data-id="132f6cfb-b756-43f7-b1b1-f30e6ab8afdd">
+                        explored Amsterdam.
+                      </li>
+
+                      <li data-id="8663686f-bc63-46c7-becf-12061aa13c3d">
+                        bought train tickets.
+                      </li>
+
+                      <li
+                        data-id="7410ace5-3b13-4762-8ada-e7718fd38b3f"
+                        class="selected"
+                      >
+                        booked a flight back to Vancouver.
+                      </li>
+
+                      <li data-id="a08b4913-1ab6-43f1-93ba-38c0e183e432">
+                        called Kristin with the flight details.
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="instruction">
+              Here is a response to the message. Complete the response by
+              filling in the blanks. Select the
+              <span style="color: #4789ac">best</span> choice for each blank
+              from the drop-down
+              <br />
+              menu (
+              <span
+                class="caret"
+                style="margin-top: 7px; border-top: 4px solid #1a578a"
+              ></span>
+              ).
+            </div>
+
+            <div
+              id="inlineDropDown"
+              class="wellBlueBG"
+              style="margin-top: 20px; margin-bottom: 20px; line-height: 2em"
+            >
+              Dear Alex, <br /><br />
+              I was thrilled to get your letter, and I’m really looking forward
+              to seeing you again. I appreciate your 7.
+              <div class="dd">
+                <div class="ddToggle ddToggle1">flexibility with</div>
+                <div class="ddMenu">
+                  <ul data-id="0d5273f4-65c7-4da8-ad4a-6b75bd034d72">
+                    <li
+                      data-id="8b98e1b2-27aa-4b6a-9c76-fce4147a32a1"
+                      class="selected"
+                    >
+                      flexibility with
                     </li>
 
-                    <li>
-                        <div style="margin-left: 19px">
-                            <ul class="nav nav-pills header-buttons">
-                                
-                            </ul>
-                        </div>
+                    <li data-id="4dba0118-9bae-4dfd-8525-bc51daecdd27">
+                      low cost
                     </li>
-                </ul>
 
-                <ul class="nav pull-right" style="margin-top:17px">
-                        <li class="dropdown">
-                            <a class="dropdown-toggle dropdown-email" data-toggle="dropdown">
-                                <img src="./10-2-1_files/fa_cog.png" style="width:18px; height: 18px; margin-top:-5px">
-                                hyp2218@gmail.com
-                                <b class="caret"></b>
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li><a href="javascript:document.getElementById(&#39;logoutForm&#39;).submit()">Sign out</a></li>
-                            </ul>
-                        </li>
-                </ul>
+                    <li data-id="8eec7490-e68e-4d80-9ede-7512ab8b5155">
+                      uncertainty about
+                    </li>
+
+                    <li data-id="1ef9fdaa-c12b-499a-98ba-7b8a5263841e">
+                      worrying about
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              budgeting. However, I think I can go along with your budget.
+              <br /><br />
+              My brother is driving out to my parents’ 8.
+              <div class="dd">
+                <div class="ddToggle ddToggle1">place in the country</div>
+                <div class="ddMenu">
+                  <ul data-id="0a80a7f8-95e8-4b80-9cec-12644a32d264">
+                    <li
+                      data-id="a5b05b9e-27d2-45c9-b1e1-d4ff616ac9e1"
+                      class="selected"
+                    >
+                      place in the country
+                    </li>
+
+                    <li data-id="bd5c7554-084c-44d8-9579-fbc6fbcf1ca1">
+                      apartment downtown
+                    </li>
+
+                    <li data-id="4d1dd8a3-d2b8-464d-b078-f41790f36b18">
+                      condo in Oslo
+                    </li>
+
+                    <li data-id="805b7191-f52b-4a43-be2a-2dec2dbbd2cf">
+                      cabin by the lake
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              the day after you arrive, so we can get a ride with him. From
+              there we can get on the train and start our European adventure.
+              You’re right about spending a little more on the train tickets;
+              the seats are much 9.
+              <div class="dd">
+                <div class="ddToggle ddToggle1">roomier</div>
+                <div class="ddMenu">
+                  <ul data-id="ae30b10a-a71b-4d2d-b593-17d3f4fc6807">
+                    <li data-id="51d47f70-6395-420a-854a-aa1e2184698e">
+                      prettier
+                    </li>
+
+                    <li
+                      data-id="6f319df0-2b52-4d2a-9b28-0d8772c8a42f"
+                      class="selected"
+                    >
+                      roomier
+                    </li>
+
+                    <li data-id="78a12237-d717-4786-9272-6cc9d38063cc">
+                      softer
+                    </li>
+
+                    <li data-id="1c0fecf7-2303-4b2a-9f9c-d88bcd2b580f">
+                      fancier
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              , making the trip a lot more pleasant.
+              <br /><br />
+              Once we reach Amsterdam, I’d love to explore the area for a couple
+              of days and 10.
+              <div class="dd">
+                <div class="ddToggle ddToggle1">visit the Van Gogh Museum</div>
+                <div class="ddMenu">
+                  <ul data-id="535af40f-5217-46a4-9d4e-59c6d0962e64">
+                    <li
+                      data-id="fe7e43e8-e2b8-4c02-b2db-219253003d44"
+                      class="selected"
+                    >
+                      visit the Van Gogh Museum
+                    </li>
+
+                    <li data-id="3c5436c1-128f-4da1-9383-070c90b49c9a">
+                      get a flight to Paris
+                    </li>
+
+                    <li data-id="658fcbac-5d03-4e40-ac5f-4bbf4043c1a6">
+                      attend the business conference
+                    </li>
+
+                    <li data-id="5dd7f58a-a33f-431b-966b-4616df3a58aa">
+                      then head back home
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              , which sounds incredible. I also love your idea about being a bit
+              11.
+              <div class="dd">
+                <div class="ddToggle ddToggle1">more spontaneous</div>
+                <div class="ddMenu">
+                  <ul data-id="0035f65a-21ec-4014-a744-d9a92176a56c">
+                    <li data-id="7db579e6-b43d-40d3-9791-b7ea75e2b244">
+                      more organised
+                    </li>
+
+                    <li
+                      data-id="206666d1-c1f0-407d-9f29-a3900fee4567"
+                      class="selected"
+                    >
+                      more spontaneous
+                    </li>
+
+                    <li data-id="c76eb0e1-169c-43f2-a189-73a8c71986f0">
+                      less busy
+                    </li>
+
+                    <li data-id="643cb310-d762-49e9-92d3-5c641d86aab6">
+                      less casual
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              for the latter part of the trip.
+              <br /><br />
+              I’ll await your call with the travel details.
+              <br /><br />
+              Yours truly,
+              <br />
+              Kristin
             </div>
-        </div>
-<form action="https://instructionalproducts.paragontesting.ca/InstructionalProducts/Account/LogOff" id="logoutForm" method="post"></form>    </header>
-
-    <div class="container" id="main-container" style="height: 582.8px;">
-<link href="./10-2-1_files/ptStyle.css" rel="stylesheet" type="text/css">
-<link href="./10-2-1_files/video-js.css" rel="stylesheet">
-<script src="./10-2-1_files/video.js.下載"></script>
-<script>
-    paragon.pt.backUrl = "/InstructionalProducts/PracticeTest10/OPT10/View/108b7485-6c42-472f-9e0b-85c1bce3cd54";
-    paragon.pt.nextUrl = "/InstructionalProducts/PracticeTest10/OPT10/View/ec492971-f300-4205-b7ea-fc97c7e40e34";
-    if (paragon.pt.backUrl.length > 0 || paragon.pt.nextUrl.length > 0) {
-        paragon.footerVisible = true;
-    }
-
-    paragon.pt.items = [
-  {
-    "Id": "2698f0de-9a42-4598-86b9-79c6513dcc38",
-    "ContentId": "d2e563de-2646-4d60-8477-bb99536bf805",
-    "Num": 1,
-    "Text": "1. Alex wrote this letter to",
-    "ExtraField1": "",
-    "Choices": [
-      {
-        "Id": "26da76d5-afda-4be8-a505-a8a8379fa7b2",
-        "ItemId": "2698f0de-9a42-4598-86b9-79c6513dcc38",
-        "ChoiceData": null,
-        "Num": 1,
-        "Text": "apologize for cancelling the trip."
-      },
-      {
-        "Id": "7ae02cde-8be9-4427-80c3-e05f862b6828",
-        "ItemId": "2698f0de-9a42-4598-86b9-79c6513dcc38",
-        "ChoiceData": null,
-        "Num": 2,
-        "Text": "purchase train tickets."
-      },
-      {
-        "Id": "73fd32dc-ba6a-419a-b06d-eb51426957aa",
-        "ItemId": "2698f0de-9a42-4598-86b9-79c6513dcc38",
-        "ChoiceData": null,
-        "Num": 3,
-        "Text": "comment on some beautiful flowers."
-      },
-      {
-        "Id": "7060e001-7a58-4c24-9fbb-05b72288456e",
-        "ItemId": "2698f0de-9a42-4598-86b9-79c6513dcc38",
-        "ChoiceData": null,
-        "Num": 4,
-        "Text": "set a tentative travel schedule."
-      }
-    ]
-  },
-  {
-    "Id": "abe49924-6a05-415c-8d78-0a45ae1dea54",
-    "ContentId": "d2e563de-2646-4d60-8477-bb99536bf805",
-    "Num": 2,
-    "Text": "2. Which city has Kristin been to at least two times?",
-    "ExtraField1": "",
-    "Choices": [
-      {
-        "Id": "3109a243-b030-4b43-959e-b993bad2a439",
-        "ItemId": "abe49924-6a05-415c-8d78-0a45ae1dea54",
-        "ChoiceData": null,
-        "Num": 1,
-        "Text": "Amsterdam"
-      },
-      {
-        "Id": "16951686-76b8-4085-81ab-045f620d7942",
-        "ItemId": "abe49924-6a05-415c-8d78-0a45ae1dea54",
-        "ChoiceData": null,
-        "Num": 2,
-        "Text": "Vancouver"
-      },
-      {
-        "Id": "a393dd18-72d7-485f-b2ef-e055e86c9e8b",
-        "ItemId": "abe49924-6a05-415c-8d78-0a45ae1dea54",
-        "ChoiceData": null,
-        "Num": 3,
-        "Text": "Oslo"
-      },
-      {
-        "Id": "e7fcc1e8-ba60-4ff0-bde2-060f71b5985d",
-        "ItemId": "abe49924-6a05-415c-8d78-0a45ae1dea54",
-        "ChoiceData": null,
-        "Num": 4,
-        "Text": "Paris"
-      }
-    ]
-  },
-  {
-    "Id": "68e06c2a-ba0c-4160-bf15-89e4cddd374d",
-    "ContentId": "d2e563de-2646-4d60-8477-bb99536bf805",
-    "Num": 3,
-    "Text": "3. Kristin lives",
-    "ExtraField1": "",
-    "Choices": [
-      {
-        "Id": "85631029-f8e3-4636-88ff-06d7973b8f9d",
-        "ItemId": "68e06c2a-ba0c-4160-bf15-89e4cddd374d",
-        "ChoiceData": null,
-        "Num": 1,
-        "Text": "on a farm with her parents."
-      },
-      {
-        "Id": "ef7d5432-e154-41ea-bc0c-ccc0abd93acb",
-        "ItemId": "68e06c2a-ba0c-4160-bf15-89e4cddd374d",
-        "ChoiceData": null,
-        "Num": 2,
-        "Text": "in Vancouver."
-      },
-      {
-        "Id": "21b5e20b-8972-4be2-a0c7-5bbc1d8e0663",
-        "ItemId": "68e06c2a-ba0c-4160-bf15-89e4cddd374d",
-        "ChoiceData": null,
-        "Num": 3,
-        "Text": "in Amsterdam."
-      },
-      {
-        "Id": "d487f04e-1776-459c-aa55-be5046cc6e02",
-        "ItemId": "68e06c2a-ba0c-4160-bf15-89e4cddd374d",
-        "ChoiceData": null,
-        "Num": 4,
-        "Text": "in an apartment in Oslo."
-      }
-    ]
-  },
-  {
-    "Id": "54302c20-cfc8-40a6-a571-e7bce84f218a",
-    "ContentId": "d2e563de-2646-4d60-8477-bb99536bf805",
-    "Num": 4,
-    "Text": "4. After spending time in Norway, Alex wants to",
-    "ExtraField1": "",
-    "Choices": [
-      {
-        "Id": "70217a4d-6e9c-4567-b132-481719639c5f",
-        "ItemId": "54302c20-cfc8-40a6-a571-e7bce84f218a",
-        "ChoiceData": null,
-        "Num": 1,
-        "Text": "head back to Vancouver."
-      },
-      {
-        "Id": "25411d6c-e88f-47f6-8e2c-b548fd7590b6",
-        "ItemId": "54302c20-cfc8-40a6-a571-e7bce84f218a",
-        "ChoiceData": null,
-        "Num": 2,
-        "Text": "check out Brussels."
-      },
-      {
-        "Id": "ebc4fc53-e612-498d-8d7d-ebdb9a609405",
-        "ItemId": "54302c20-cfc8-40a6-a571-e7bce84f218a",
-        "ChoiceData": null,
-        "Num": 3,
-        "Text": "steer clear of Paris."
-      },
-      {
-        "Id": "d927cecb-5858-4658-8b3d-b23ffe6a522e",
-        "ItemId": "54302c20-cfc8-40a6-a571-e7bce84f218a",
-        "ChoiceData": null,
-        "Num": 4,
-        "Text": "hop on a plane to Amsterdam."
-      }
-    ]
-  },
-  {
-    "Id": "8817b808-45d4-4363-ae7d-5f62cc77f544",
-    "ContentId": "d2e563de-2646-4d60-8477-bb99536bf805",
-    "Num": 5,
-    "Text": "5. Alex would prefer to",
-    "ExtraField1": "",
-    "Choices": [
-      {
-        "Id": "90e17064-5460-476d-9da3-6de013eac64b",
-        "ItemId": "8817b808-45d4-4363-ae7d-5f62cc77f544",
-        "ChoiceData": null,
-        "Num": 1,
-        "Text": "travel Comfort class."
-      },
-      {
-        "Id": "b269104c-0ced-407b-9337-e98b7524a969",
-        "ItemId": "8817b808-45d4-4363-ae7d-5f62cc77f544",
-        "ChoiceData": null,
-        "Num": 2,
-        "Text": "travel Economy class."
-      },
-      {
-        "Id": "5f441d01-ee52-4109-9a0c-7a1c97ce9516",
-        "ItemId": "8817b808-45d4-4363-ae7d-5f62cc77f544",
-        "ChoiceData": null,
-        "Num": 3,
-        "Text": "rent a car."
-      },
-      {
-        "Id": "fad6a06e-68ac-455a-afa0-7d14a1d01e54",
-        "ItemId": "8817b808-45d4-4363-ae7d-5f62cc77f544",
-        "ChoiceData": null,
-        "Num": 4,
-        "Text": "rent a bike."
-      }
-    ]
-  },
-  {
-    "Id": "1fe4d90c-ce2d-42ca-9b16-9df03d1e91bd",
-    "ContentId": "d2e563de-2646-4d60-8477-bb99536bf805",
-    "Num": 6,
-    "Text": "6. Alex has already",
-    "ExtraField1": "",
-    "Choices": [
-      {
-        "Id": "132f6cfb-b756-43f7-b1b1-f30e6ab8afdd",
-        "ItemId": "1fe4d90c-ce2d-42ca-9b16-9df03d1e91bd",
-        "ChoiceData": null,
-        "Num": 1,
-        "Text": "explored Amsterdam."
-      },
-      {
-        "Id": "8663686f-bc63-46c7-becf-12061aa13c3d",
-        "ItemId": "1fe4d90c-ce2d-42ca-9b16-9df03d1e91bd",
-        "ChoiceData": null,
-        "Num": 2,
-        "Text": "bought train tickets."
-      },
-      {
-        "Id": "7410ace5-3b13-4762-8ada-e7718fd38b3f",
-        "ItemId": "1fe4d90c-ce2d-42ca-9b16-9df03d1e91bd",
-        "ChoiceData": null,
-        "Num": 3,
-        "Text": "booked a flight back to Vancouver."
-      },
-      {
-        "Id": "a08b4913-1ab6-43f1-93ba-38c0e183e432",
-        "ItemId": "1fe4d90c-ce2d-42ca-9b16-9df03d1e91bd",
-        "ChoiceData": null,
-        "Num": 4,
-        "Text": "called Kristin with the flight details."
-      }
-    ]
-  },
-  {
-    "Id": "0d5273f4-65c7-4da8-ad4a-6b75bd034d72",
-    "ContentId": "d2e563de-2646-4d60-8477-bb99536bf805",
-    "Num": 7,
-    "Text": "",
-    "ExtraField1": "",
-    "Choices": [
-      {
-        "Id": "8b98e1b2-27aa-4b6a-9c76-fce4147a32a1",
-        "ItemId": "0d5273f4-65c7-4da8-ad4a-6b75bd034d72",
-        "ChoiceData": null,
-        "Num": 1,
-        "Text": "flexibility with"
-      },
-      {
-        "Id": "4dba0118-9bae-4dfd-8525-bc51daecdd27",
-        "ItemId": "0d5273f4-65c7-4da8-ad4a-6b75bd034d72",
-        "ChoiceData": null,
-        "Num": 2,
-        "Text": "low cost"
-      },
-      {
-        "Id": "8eec7490-e68e-4d80-9ede-7512ab8b5155",
-        "ItemId": "0d5273f4-65c7-4da8-ad4a-6b75bd034d72",
-        "ChoiceData": null,
-        "Num": 3,
-        "Text": "uncertainty about"
-      },
-      {
-        "Id": "1ef9fdaa-c12b-499a-98ba-7b8a5263841e",
-        "ItemId": "0d5273f4-65c7-4da8-ad4a-6b75bd034d72",
-        "ChoiceData": null,
-        "Num": 4,
-        "Text": "worrying about"
-      }
-    ]
-  },
-  {
-    "Id": "0a80a7f8-95e8-4b80-9cec-12644a32d264",
-    "ContentId": "d2e563de-2646-4d60-8477-bb99536bf805",
-    "Num": 8,
-    "Text": "",
-    "ExtraField1": "",
-    "Choices": [
-      {
-        "Id": "a5b05b9e-27d2-45c9-b1e1-d4ff616ac9e1",
-        "ItemId": "0a80a7f8-95e8-4b80-9cec-12644a32d264",
-        "ChoiceData": null,
-        "Num": 1,
-        "Text": "place in the country\t"
-      },
-      {
-        "Id": "bd5c7554-084c-44d8-9579-fbc6fbcf1ca1",
-        "ItemId": "0a80a7f8-95e8-4b80-9cec-12644a32d264",
-        "ChoiceData": null,
-        "Num": 2,
-        "Text": "apartment downtown"
-      },
-      {
-        "Id": "4d1dd8a3-d2b8-464d-b078-f41790f36b18",
-        "ItemId": "0a80a7f8-95e8-4b80-9cec-12644a32d264",
-        "ChoiceData": null,
-        "Num": 3,
-        "Text": "condo in Oslo"
-      },
-      {
-        "Id": "805b7191-f52b-4a43-be2a-2dec2dbbd2cf",
-        "ItemId": "0a80a7f8-95e8-4b80-9cec-12644a32d264",
-        "ChoiceData": null,
-        "Num": 4,
-        "Text": "cabin by the lake"
-      }
-    ]
-  },
-  {
-    "Id": "ae30b10a-a71b-4d2d-b593-17d3f4fc6807",
-    "ContentId": "d2e563de-2646-4d60-8477-bb99536bf805",
-    "Num": 9,
-    "Text": "",
-    "ExtraField1": "",
-    "Choices": [
-      {
-        "Id": "51d47f70-6395-420a-854a-aa1e2184698e",
-        "ItemId": "ae30b10a-a71b-4d2d-b593-17d3f4fc6807",
-        "ChoiceData": null,
-        "Num": 1,
-        "Text": "prettier"
-      },
-      {
-        "Id": "6f319df0-2b52-4d2a-9b28-0d8772c8a42f",
-        "ItemId": "ae30b10a-a71b-4d2d-b593-17d3f4fc6807",
-        "ChoiceData": null,
-        "Num": 2,
-        "Text": "roomier"
-      },
-      {
-        "Id": "78a12237-d717-4786-9272-6cc9d38063cc",
-        "ItemId": "ae30b10a-a71b-4d2d-b593-17d3f4fc6807",
-        "ChoiceData": null,
-        "Num": 3,
-        "Text": "softer"
-      },
-      {
-        "Id": "1c0fecf7-2303-4b2a-9f9c-d88bcd2b580f",
-        "ItemId": "ae30b10a-a71b-4d2d-b593-17d3f4fc6807",
-        "ChoiceData": null,
-        "Num": 4,
-        "Text": "fancier"
-      }
-    ]
-  },
-  {
-    "Id": "535af40f-5217-46a4-9d4e-59c6d0962e64",
-    "ContentId": "d2e563de-2646-4d60-8477-bb99536bf805",
-    "Num": 10,
-    "Text": "",
-    "ExtraField1": "",
-    "Choices": [
-      {
-        "Id": "fe7e43e8-e2b8-4c02-b2db-219253003d44",
-        "ItemId": "535af40f-5217-46a4-9d4e-59c6d0962e64",
-        "ChoiceData": null,
-        "Num": 1,
-        "Text": "visit the Van Gogh Museum"
-      },
-      {
-        "Id": "3c5436c1-128f-4da1-9383-070c90b49c9a",
-        "ItemId": "535af40f-5217-46a4-9d4e-59c6d0962e64",
-        "ChoiceData": null,
-        "Num": 2,
-        "Text": "get a flight to Paris"
-      },
-      {
-        "Id": "658fcbac-5d03-4e40-ac5f-4bbf4043c1a6",
-        "ItemId": "535af40f-5217-46a4-9d4e-59c6d0962e64",
-        "ChoiceData": null,
-        "Num": 3,
-        "Text": "attend the business conference"
-      },
-      {
-        "Id": "5dd7f58a-a33f-431b-966b-4616df3a58aa",
-        "ItemId": "535af40f-5217-46a4-9d4e-59c6d0962e64",
-        "ChoiceData": null,
-        "Num": 4,
-        "Text": "then head back home"
-      }
-    ]
-  },
-  {
-    "Id": "0035f65a-21ec-4014-a744-d9a92176a56c",
-    "ContentId": "d2e563de-2646-4d60-8477-bb99536bf805",
-    "Num": 11,
-    "Text": "",
-    "ExtraField1": "",
-    "Choices": [
-      {
-        "Id": "7db579e6-b43d-40d3-9791-b7ea75e2b244",
-        "ItemId": "0035f65a-21ec-4014-a744-d9a92176a56c",
-        "ChoiceData": null,
-        "Num": 1,
-        "Text": "more organised"
-      },
-      {
-        "Id": "206666d1-c1f0-407d-9f29-a3900fee4567",
-        "ItemId": "0035f65a-21ec-4014-a744-d9a92176a56c",
-        "ChoiceData": null,
-        "Num": 2,
-        "Text": "more spontaneous"
-      },
-      {
-        "Id": "c76eb0e1-169c-43f2-a189-73a8c71986f0",
-        "ItemId": "0035f65a-21ec-4014-a744-d9a92176a56c",
-        "ChoiceData": null,
-        "Num": 3,
-        "Text": "less busy"
-      },
-      {
-        "Id": "643cb310-d762-49e9-92d3-5c641d86aab6",
-        "ItemId": "0035f65a-21ec-4014-a744-d9a92176a56c",
-        "ChoiceData": null,
-        "Num": 4,
-        "Text": "less casual"
-      }
-    ]
-  }
-]
-</script>
-
-<div id="panelTop">
-
-    <div id="canvasName" style="float: left; font-size: 16px; font-weight: bold;">
-        Practice Test 2 - Reading Part 1: Reading Correspondence
-    </div>
-
-    <div style="float: right;" class="btnNext span1 pull-right">
-                <a href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest10/OPT10/View/ac5276a6-1cdb-4e8b-84ce-653ddff20c89#" id="btnNext" class="btn btn-primary">NEXT</a>
-
-    </div>
-
-    <div style="float: right; display: block;" id="timer" class="hide">
-        Time remaining: <strong>10 minutes</strong>
-    </div>
-
-</div>
-
-<div id="mainContent">
-    
-
-<script id="dropDownListTemplate" type="text/template">
-{{#each this}}
-    <div class="ddrow">
-        {{Text}}
-        <div class='dd'>
-            <div class='ddToggle'>▾</div>
-            <div class='ddMenu'>
-                <ul data-id="{{Id}}">
-                {{#each Choices}}
-                    <li data-id="{{Id}}">{{Text}}</li>
-                {{/each}}
-                </ul>
-            </div>
-        </div>
-    </div>
-{{/each}}
-</script>
-
-<script id="dropDownListInlineTemplate" type="text/template">
-    <div class='dd'>
-        <div class='ddToggle'>▾</div>
-        <div class='ddMenu'>
-            <ul data-id="{{Id}}">
-            {{#each Choices}}
-                <li data-id="{{Id}}">{{Text}}</li>
-            {{/each}}
-            </ul>
-        </div>
-    </div>
-</script>
-
-<script id="dropDownListInFrontTemplate" type="text/template">
-    {{#each this}}
-    <div class="ddrow">
-        <div class='dd'>
-            <div class='ddToggle'>▾</div>
-            <div class='ddMenu'>
-                <ul data-id="{{Id}}">
-                    {{#each Choices}}
-                    <li data-id="{{Id}}">{{Text}}</li>
-                    {{/each}}
-                </ul>
-            </div>
-        </div>
-        &nbsp;-
-        {{Text}}
-    </div>
-    {{/each}}
-</script>
-
-<div id="panelLeft" style="width: 50%; height: 539.2px;" class="graybg">
-    <div class="row1">
-        <div class="instruction" style="margin-bottom: 30px;">Read the following message.  </div>
-        <div><p>Dear Kristin,
-</p>
-<p>I can't believe I'm going to be visiting you in only three weeks! Since you moved away, you've already come back to Vancouver to visit. It's about time I repaid the favour. I can't wait to see Norway at last. Although I know you recently moved to an apartment in Oslo, I'd love to visit your parents' farm that you've told me so much about, especially since I'll be there in spring. The pictures you showed me of the flowers blooming in the hills were incredible.
-</p>
-<p>As we discussed before, I'm still up for traveling around Europe for a week after you show me around Norway. I agree with you that buying a train pass and stopping off at various cities would be fun, and also the least expensive way of getting around. I looked into my budget and I've been able to save a lot more than I expected, so we could even travel in the Comfort class rather than the Economy class which we had originally intended. For a 3-hour train ride, Comfort class tickets are around $90, and Economy tickets are $60. I don't mind either way, but wider seats sound a lot more luxurious. It is up to you. Just let me know what you decide.
-</p>
-<p>I propose we fly to Amsterdam to start off and then take the train from there. I'd like to spend at least a few days exploring Amsterdam. My mother attended a business conference there last year and she said I'd love it. I'm interested in visiting the museum of Van Gogh, as he's always been my favourite artist. The museum has the biggest collection in the world of Van Gogh's art, with some 200 paintings and over 550 sketches. That would be amazing to see.
-</p>
-<p>After Amsterdam, I'm not picky where we go with the train pass. I'd love to visit Paris and Brussels, but we could also just not plan anything and decide in the moment. As long as I'm back in Oslo on Aug 27th for my flight back to Vancouver, I'm up for anything.
-</p>
-<p>I'll call you in a few days to give you my flight details. I'm so excited to see you!
-</p>
-<p>Alex
-</p></div>
-        
-        <div class="box hide" id="infoBox">
-    <div class="boxIcon">
-        <em class="info-icon"></em>
-    </div>
-    <div class="boxText">
-        <div>
-            <p>Click "NEXT" to continue.</p>
-        </div>
-    </div>
-</div>
-
-<div class="box hide" id="playAudioBox">
-    <div class="boxIcon">
-        <em class="play-icon"></em>
-    </div>
-    <div class="boxText">
-        <div>Playing...</div>
-        <div class="progressbar">
-            <span class="progressbar-value"><em style="left: 0%;" class="progressbar-cover"></em>
-            </span>
-        </div>
-    </div>
-</div>
-
-<div id="audioDiv"></div>
-
-
-    </div>
-</div>
-
-<div id="panelRight" style="width: 50%; height: 539.2px;" class="bluebg">
-    <div class="row1">
-        <div class="instruction" style="margin-bottom: 15px;">
-            Using the drop-down menu ( <span class="caret" style="margin-top:7px; border-top: 4px solid #1A578A"></span> ), choose the <span style="color: #4789AC;">best</span> option according to the information given in the message.
-        </div>
-        
-        <div id="multipleChoices" class="wellBlueBG" style="margin-bottom: 20px;">
-
-    <div class="ddrow">
-        1. Alex wrote this letter to
-        <div class="dd">
-            <div class="ddToggle ddToggle1">set a tentative travel schedule.</div>
-            <div class="ddMenu">
-                <ul data-id="2698f0de-9a42-4598-86b9-79c6513dcc38">
-                
-                    <li data-id="26da76d5-afda-4be8-a505-a8a8379fa7b2">apologize for cancelling the trip.</li>
-                
-                    <li data-id="7ae02cde-8be9-4427-80c3-e05f862b6828">purchase train tickets.</li>
-                
-                    <li data-id="73fd32dc-ba6a-419a-b06d-eb51426957aa">comment on some beautiful flowers.</li>
-                
-                    <li data-id="7060e001-7a58-4c24-9fbb-05b72288456e" class="selected">set a tentative travel schedule.</li>
-                
-                </ul>
-            </div>
-        </div>
-    </div>
-
-    <div class="ddrow">
-        2. Which city has Kristin been to at least two times?
-        <div class="dd">
-            <div class="ddToggle ddToggle1">Vancouver</div>
-            <div class="ddMenu">
-                <ul data-id="abe49924-6a05-415c-8d78-0a45ae1dea54">
-                
-                    <li data-id="3109a243-b030-4b43-959e-b993bad2a439">Amsterdam</li>
-                
-                    <li data-id="16951686-76b8-4085-81ab-045f620d7942" class="selected">Vancouver</li>
-                
-                    <li data-id="a393dd18-72d7-485f-b2ef-e055e86c9e8b">Oslo</li>
-                
-                    <li data-id="e7fcc1e8-ba60-4ff0-bde2-060f71b5985d">Paris</li>
-                
-                </ul>
-            </div>
-        </div>
-    </div>
-
-    <div class="ddrow">
-        3. Kristin lives
-        <div class="dd">
-            <div class="ddToggle ddToggle1">in an apartment in Oslo.</div>
-            <div class="ddMenu">
-                <ul data-id="68e06c2a-ba0c-4160-bf15-89e4cddd374d">
-                
-                    <li data-id="85631029-f8e3-4636-88ff-06d7973b8f9d">on a farm with her parents.</li>
-                
-                    <li data-id="ef7d5432-e154-41ea-bc0c-ccc0abd93acb">in Vancouver.</li>
-                
-                    <li data-id="21b5e20b-8972-4be2-a0c7-5bbc1d8e0663">in Amsterdam.</li>
-                
-                    <li data-id="d487f04e-1776-459c-aa55-be5046cc6e02" class="selected">in an apartment in Oslo.</li>
-                
-                </ul>
-            </div>
-        </div>
-    </div>
-
-    <div class="ddrow">
-        4. After spending time in Norway, Alex wants to
-        <div class="dd">
-            <div class="ddToggle ddToggle1">hop on a plane to Amsterdam.</div>
-            <div class="ddMenu">
-                <ul data-id="54302c20-cfc8-40a6-a571-e7bce84f218a">
-                
-                    <li data-id="70217a4d-6e9c-4567-b132-481719639c5f">head back to Vancouver.</li>
-                
-                    <li data-id="25411d6c-e88f-47f6-8e2c-b548fd7590b6">check out Brussels.</li>
-                
-                    <li data-id="ebc4fc53-e612-498d-8d7d-ebdb9a609405">steer clear of Paris.</li>
-                
-                    <li data-id="d927cecb-5858-4658-8b3d-b23ffe6a522e" class="selected">hop on a plane to Amsterdam.</li>
-                
-                </ul>
-            </div>
-        </div>
-    </div>
-
-    <div class="ddrow">
-        5. Alex would prefer to
-        <div class="dd">
-            <div class="ddToggle ddToggle1">travel Comfort class.</div>
-            <div class="ddMenu">
-                <ul data-id="8817b808-45d4-4363-ae7d-5f62cc77f544">
-                
-                    <li data-id="90e17064-5460-476d-9da3-6de013eac64b" class="selected">travel Comfort class.</li>
-                
-                    <li data-id="b269104c-0ced-407b-9337-e98b7524a969">travel Economy class.</li>
-                
-                    <li data-id="5f441d01-ee52-4109-9a0c-7a1c97ce9516">rent a car.</li>
-                
-                    <li data-id="fad6a06e-68ac-455a-afa0-7d14a1d01e54">rent a bike.</li>
-                
-                </ul>
-            </div>
-        </div>
-    </div>
-
-    <div class="ddrow">
-        6. Alex has already
-        <div class="dd">
-            <div class="ddToggle ddToggle1">booked a flight back to Vancouver.</div>
-            <div class="ddMenu">
-                <ul data-id="1fe4d90c-ce2d-42ca-9b16-9df03d1e91bd">
-                
-                    <li data-id="132f6cfb-b756-43f7-b1b1-f30e6ab8afdd">explored Amsterdam.</li>
-                
-                    <li data-id="8663686f-bc63-46c7-becf-12061aa13c3d">bought train tickets.</li>
-                
-                    <li data-id="7410ace5-3b13-4762-8ada-e7718fd38b3f" class="selected">booked a flight back to Vancouver.</li>
-                
-                    <li data-id="a08b4913-1ab6-43f1-93ba-38c0e183e432">called Kristin with the flight details.</li>
-                
-                </ul>
-            </div>
-        </div>
-    </div>
-
-</div>
-
-        <div class="instruction">
-            Here is a response to the message. Complete the response by filling in the blanks. Select the <span style="color: #4789AC;">best</span> choice for each blank from the drop-down 
-            <br>
-            menu ( <span class="caret" style="margin-top:7px; border-top: 4px solid #1A578A"></span> ). 
+          </div>
         </div>
 
-        <div id="inlineDropDown" class="wellBlueBG" style="margin-top: 20px; margin-bottom: 20px; line-height: 2em;">Dear Alex,
-<br><br>
-I was thrilled to get your letter, and I’m really looking forward to seeing you again. I appreciate your 7.
-    <div class="dd">
-        <div class="ddToggle ddToggle1">flexibility with</div>
-        <div class="ddMenu">
-            <ul data-id="0d5273f4-65c7-4da8-ad4a-6b75bd034d72">
-            
-                <li data-id="8b98e1b2-27aa-4b6a-9c76-fce4147a32a1" class="selected">flexibility with</li>
-            
-                <li data-id="4dba0118-9bae-4dfd-8525-bc51daecdd27">low cost</li>
-            
-                <li data-id="8eec7490-e68e-4d80-9ede-7512ab8b5155">uncertainty about</li>
-            
-                <li data-id="1ef9fdaa-c12b-499a-98ba-7b8a5263841e">worrying about</li>
-            
-            </ul>
+        <script>
+          $(function () {
+            paragon.pt.timer.start(660);
+
+            var items1 = paragon.pt.items.slice(0, 6);
+            var items2 = paragon.pt.items.slice(6);
+
+            if (items2.length === 0) {
+              $(".instruction")[2].hidden = true;
+              $("#inlineDropDown").hide();
+            }
+
+            paragon.pt.dropDown.renderTemplate(
+              "/InstructionalProducts/PracticeTest10/OPT10/SaveUserResponse/",
+              "e9485ed3-f0a3-497b-a519-abcc6d5a2112",
+              $("#dropDownListTemplate").html(),
+              $("#multipleChoices"),
+              items1
+            );
+            paragon.pt.dropDown.renderInline(
+              "/InstructionalProducts/PracticeTest10/OPT10/SaveUserResponse/",
+              "e9485ed3-f0a3-497b-a519-abcc6d5a2112",
+              items2,
+              0,
+              items2.length - 1,
+              $("#inlineDropDown")
+            );
+
+            paragon.pt.dropDown.activate(
+              "/InstructionalProducts/PracticeTest10/OPT10/SaveUserResponse/",
+              "e9485ed3-f0a3-497b-a519-abcc6d5a2112"
+            );
+
+            $.ajax({
+              type: "POST",
+              url: "/InstructionalProducts/PracticeTest10/OPT10/GetUserResponses",
+              data: {
+                sectionId: "e9485ed3-f0a3-497b-a519-abcc6d5a2112",
+                items: JSON.stringify(paragon.pt.items),
+              },
+              success: function (data) {
+                var responses = data.responses;
+                for (var i = 0; i < responses.length; i++) {
+                  var currentResponse = responses[i];
+                  if (currentResponse != null) {
+                    var selected = $("ul").find(
+                      "[data-id=" + currentResponse.Answer + "]"
+                    );
+                    if (selected != null) {
+                      var toggle = $(selected).parent().parent().prev();
+                      $(toggle).addClass("ddToggle1");
+                      $(toggle).html(selected.html());
+                      $(selected).addClass("selected");
+                    }
+                  }
+                }
+              },
+            });
+
+            //show scroll bar
+            if (
+              document.getElementById("multipleChoices").childElementCount > 1
+            ) {
+              paragon.pt.showScrollBar($("#panelLeft"), $("#panelRight"));
+            }
+
+            paragon.pt.showReadingAnswerKeyBtn(
+              "e9485ed3-f0a3-497b-a519-abcc6d5a2112"
+            );
+          });
+        </script>
+      </div>
+
+      <div
+        id="dlgTest"
+        class="modal hide fade"
+        tabindex="-1"
+        role="dialog"
+        aria-hidden="true"
+      >
+        <div class="modal-header">
+          <h4>Test</h4>
         </div>
-    </div>
- budgeting. However, I think I can go along with your budget.
-<br><br>
-My brother is driving out to my parents’ 8.
-    <div class="dd">
-        <div class="ddToggle ddToggle1">place in the country	</div>
-        <div class="ddMenu">
-            <ul data-id="0a80a7f8-95e8-4b80-9cec-12644a32d264">
-            
-                <li data-id="a5b05b9e-27d2-45c9-b1e1-d4ff616ac9e1" class="selected">place in the country	</li>
-            
-                <li data-id="bd5c7554-084c-44d8-9579-fbc6fbcf1ca1">apartment downtown</li>
-            
-                <li data-id="4d1dd8a3-d2b8-464d-b078-f41790f36b18">condo in Oslo</li>
-            
-                <li data-id="805b7191-f52b-4a43-be2a-2dec2dbbd2cf">cabin by the lake</li>
-            
-            </ul>
+        <div class="modal-body">
+          <p>test</p>
         </div>
-    </div>
- the day after you arrive, so we can get a ride with him. From there we can get on the train and start our European adventure. You’re right about spending a little more on the train tickets; the seats are much 9.
-    <div class="dd">
-        <div class="ddToggle ddToggle1">roomier</div>
-        <div class="ddMenu">
-            <ul data-id="ae30b10a-a71b-4d2d-b593-17d3f4fc6807">
-            
-                <li data-id="51d47f70-6395-420a-854a-aa1e2184698e">prettier</li>
-            
-                <li data-id="6f319df0-2b52-4d2a-9b28-0d8772c8a42f" class="selected">roomier</li>
-            
-                <li data-id="78a12237-d717-4786-9272-6cc9d38063cc">softer</li>
-            
-                <li data-id="1c0fecf7-2303-4b2a-9f9c-d88bcd2b580f">fancier</li>
-            
-            </ul>
+        <div class="modal-footer">
+          <button class="btn" data-dismiss="modal" aria-hidden="true">
+            Close
+          </button>
         </div>
-    </div>
-, making the trip a lot more pleasant.
-<br><br>
-Once we reach Amsterdam, I’d love to explore the area for a couple of days and 10.
-    <div class="dd">
-        <div class="ddToggle ddToggle1">visit the Van Gogh Museum</div>
-        <div class="ddMenu">
-            <ul data-id="535af40f-5217-46a4-9d4e-59c6d0962e64">
-            
-                <li data-id="fe7e43e8-e2b8-4c02-b2db-219253003d44" class="selected">visit the Van Gogh Museum</li>
-            
-                <li data-id="3c5436c1-128f-4da1-9383-070c90b49c9a">get a flight to Paris</li>
-            
-                <li data-id="658fcbac-5d03-4e40-ac5f-4bbf4043c1a6">attend the business conference</li>
-            
-                <li data-id="5dd7f58a-a33f-431b-966b-4616df3a58aa">then head back home</li>
-            
-            </ul>
+      </div>
+
+      <div
+        id="dlgUnansweredWarning"
+        class="modal hide fade"
+        tabindex="-1"
+        role="dialog"
+      >
+        <div class="modal-body">
+          <p>
+            No answer(s) selected. On the official test, if you go to the next
+            page, you will no longer be able to answer the question(s) on this
+            page.
+          </p>
         </div>
-    </div>
-, which sounds incredible. I also love your idea about being a bit 11.
-    <div class="dd">
-        <div class="ddToggle ddToggle1">more spontaneous</div>
-        <div class="ddMenu">
-            <ul data-id="0035f65a-21ec-4014-a744-d9a92176a56c">
-            
-                <li data-id="7db579e6-b43d-40d3-9791-b7ea75e2b244">more organised</li>
-            
-                <li data-id="206666d1-c1f0-407d-9f29-a3900fee4567" class="selected">more spontaneous</li>
-            
-                <li data-id="c76eb0e1-169c-43f2-a189-73a8c71986f0">less busy</li>
-            
-                <li data-id="643cb310-d762-49e9-92d3-5c641d86aab6">less casual</li>
-            
-            </ul>
+        <div class="modal-footer">
+          <button
+            class="btn btn-primary"
+            data-dismiss="modal"
+            style="color: white"
+          >
+            Keep working on this page
+          </button>
+          <button
+            class="btn"
+            data-dismiss="modal"
+            onclick="paragon.pt.skipToNext()"
+          >
+            Skip and go to the next page
+          </button>
         </div>
+      </div>
     </div>
- for the latter part of the trip.
-<br><br>
-I’ll await your call with the travel details.
-<br><br>
-Yours truly,
-<br>
-Kristin</div>
+    <div class="container hide" id="footer" style="display: block">
+      <div class="row">
+        <div id="leftBtn" class="span7" align="left">
+          <a
+            href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest10/OPT10/View/ca4192a9-8e5d-4bf1-a5c0-4d0a7154f1d5"
+            id="backToResultbtn"
+            class="btn"
+            >Answer Key</a
+          >
+        </div>
+        <div class="span5">
+          <a
+            href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest10/OPT10/View/ac5276a6-1cdb-4e8b-84ce-653ddff20c89#"
+            id="btnBack"
+            class="btn btn1 hide btn-danger"
+            style="display: inline"
+            >BACK</a
+          >
+        </div>
+      </div>
     </div>
-</div>
-
-<script>
-    $(function () {
-
-
-        paragon.pt.timer.start(660);
-
-        var items1 = paragon.pt.items.slice(0, 6);
-        var items2 = paragon.pt.items.slice(6);
-
-        if (items2.length === 0) {
-            $('.instruction')[2].hidden = true;
-            $('#inlineDropDown').hide();
-        }
-        
-        paragon.pt.dropDown.renderTemplate("/InstructionalProducts/PracticeTest10/OPT10/SaveUserResponse/", "e9485ed3-f0a3-497b-a519-abcc6d5a2112", $('#dropDownListTemplate').html(), $('#multipleChoices'), items1);
-        paragon.pt.dropDown.renderInline("/InstructionalProducts/PracticeTest10/OPT10/SaveUserResponse/", "e9485ed3-f0a3-497b-a519-abcc6d5a2112", items2, 0, items2.length - 1, $("#inlineDropDown"));
-
-        paragon.pt.dropDown.activate("/InstructionalProducts/PracticeTest10/OPT10/SaveUserResponse/", "e9485ed3-f0a3-497b-a519-abcc6d5a2112");
-
-        $.ajax({
-            type: "POST",
-            url: "/InstructionalProducts/PracticeTest10/OPT10/GetUserResponses",
-                data: { 'sectionId': 'e9485ed3-f0a3-497b-a519-abcc6d5a2112', 'items': JSON.stringify(paragon.pt.items) },
-                       success: function (data) {
-                           var responses = data.responses;
-                           for (var i = 0; i < responses.length; i++) {
-                               var currentResponse = responses[i];
-                               if (currentResponse != null) {
-                                   var selected = $('ul').find('[data-id=' + currentResponse.Answer + ']');
-                                   if (selected != null) {
-                                       var toggle = $(selected).parent().parent().prev();
-                                       $(toggle).addClass('ddToggle1');
-                                       $(toggle).html(selected.html());
-                                       $(selected).addClass('selected');
-                                   }
-                               }
-                           }
-                       }
-        });
-
-        //show scroll bar
-        if (document.getElementById("multipleChoices").childElementCount > 1) {
-            paragon.pt.showScrollBar($('#panelLeft'), $('#panelRight'));
-        }
-
-        paragon.pt.showReadingAnswerKeyBtn("e9485ed3-f0a3-497b-a519-abcc6d5a2112");
-
-
-    });
-</script>
-
-</div>
-
-<div id="dlgTest" class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-header">
-        <h4>Test</h4>
-    </div>
-    <div class="modal-body">
-        <p>test</p>
-    </div>
-    <div class="modal-footer">
-        <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
-    </div>
-</div>
-
-<div id="dlgUnansweredWarning" class="modal hide fade" tabindex="-1" role="dialog">
-    <div class="modal-body">
-        <p>No answer(s) selected. On the official test, if you go to the next page, you will no longer be able to answer the question(s) on this page.</p>
-    </div>
-    <div class="modal-footer">
-        <button class="btn btn-primary" data-dismiss="modal" style="color: white;">Keep working on this page</button>
-        <button class="btn" data-dismiss="modal" onclick="paragon.pt.skipToNext()">Skip and go to the next page</button>
-    </div>
-</div>
-
-</div>
-    <div class="container hide" id="footer" style="display: block;">
-        <div class="row">
-    <div id="leftBtn" class="span7" align="left"><a href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest10/OPT10/View/ca4192a9-8e5d-4bf1-a5c0-4d0a7154f1d5" id="backToResultbtn" class="btn">Answer Key</a></div>
-    <div class="span5">
-        <a href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest10/OPT10/View/ac5276a6-1cdb-4e8b-84ce-653ddff20c89#" id="btnBack" class="btn btn1 hide btn-danger" style="display: inline;">BACK</a>
-        
-    </div>
-</div>
-
-    </div>
-    <div class="container" style="text-align: center; font-size: 0.9em; color: #53565A; padding-top: 20px;">
-        <p>Copyright 2025 - Paragon Testing Enterprises   |    <a href="https://www.celpip.ca/" target="_blank">www.celpip.ca</a>    |    <a href="https://www.celpip.ca/contact/" target="_blank">Contact Us</a></p>
+    <div
+      class="container"
+      style="
+        text-align: center;
+        font-size: 0.9em;
+        color: #53565a;
+        padding-top: 20px;
+      "
+    >
+      <p>
+        Copyright 2025 - Paragon Testing Enterprises |
+        <a href="https://www.celpip.ca/" target="_blank">www.celpip.ca</a> |
+        <a href="https://www.celpip.ca/contact/" target="_blank">Contact Us</a>
+      </p>
     </div>
 
     <div id="block" class="modal-backdrop hide"></div>
     <div id="unsupported" class="modal hide" tabindex="-1">
-        <div class="modal-body">
-            <h3>Unsupported screen resolution</h3>
-            <p>This product requires a minimum screen resolution of 1024 x 768.</p>
-        </div>
+      <div class="modal-body">
+        <h3>Unsupported screen resolution</h3>
+        <p>This product requires a minimum screen resolution of 1024 x 768.</p>
+      </div>
     </div>
 
-
     <script>
-        $(function () {
-            paragon.verifyDisplaySize();
+      $(function () {
+        paragon.verifyDisplaySize();
 
-            $(window).resize(function () {
-                paragon.verifyDisplaySize();
-            });
+        $(window).resize(function () {
+          paragon.verifyDisplaySize();
         });
+      });
     </script>
 
-
-    
     <script>
-        paragon.pt.showAlert = function (msg) {
-            $('#dlgTest .modal-body p').html(msg);
-            $('#dlgTest').modal();
+      paragon.pt.showAlert = function (msg) {
+        $("#dlgTest .modal-body p").html(msg);
+        $("#dlgTest").modal();
+      };
+
+      paragon.pt.skipToNext = function () {
+        paragon.pt.nextItem(
+          "/InstructionalProducts/PracticeTest10/OPT10/SaveCanvasData",
+          "",
+          "ac5276a6-1cdb-4e8b-84ce-653ddff20c89",
+          "e9485ed3-f0a3-497b-a519-abcc6d5a2112",
+          2
+        );
+        paragon.pt.goNext();
+      };
+
+      $(function () {
+        if (paragon.footerVisible == true) {
+          paragon.showFooter();
         }
 
-        paragon.pt.skipToNext = function () {
-            paragon.pt.nextItem("/InstructionalProducts/PracticeTest10/OPT10/SaveCanvasData",'', "ac5276a6-1cdb-4e8b-84ce-653ddff20c89", "e9485ed3-f0a3-497b-a519-abcc6d5a2112", 2);
-            paragon.pt.goNext();
+        if (paragon.pt.backUrl.length > 0) {
+          $("#btnBack").click(function () {
+            paragon.pt.goBack();
+          });
+          paragon.pt.showBackButton();
         }
 
-        $(function () {
-            if (paragon.footerVisible == true) {
-                paragon.showFooter();
-            }
-
-            if (paragon.pt.backUrl.length > 0) {
-                $("#btnBack").click(function () {
-                    paragon.pt.goBack();
-                });
-                paragon.pt.showBackButton();
-            }
-
-
-            $("#btnNext").click(function () {
-                var url = "";
-                if (29  == 24 || 29  == 25) {
-                    url = "/InstructionalProducts/PracticeTest10/OPT10/GetUserResponse/";
-                }
-                else {
-                    url = "/InstructionalProducts/PracticeTest10/OPT10/GetUserResponses/";
-                }
-                var unanswered = paragon.pt.countUnansweredQuestionsFromDb(29, "e9485ed3-f0a3-497b-a519-abcc6d5a2112", url);
-                if (unanswered > 0) {
-                    $('#dlgUnansweredWarning').modal();
-                }
-                else {
-                    paragon.pt.skipToNext();
-                }
-            });
-
-            if (paragon.pt.nextUrl.length > 0) {
-                paragon.pt.showNextButton();
-            }
-
-
+        $("#btnNext").click(function () {
+          var url = "";
+          if (29 == 24 || 29 == 25) {
+            url =
+              "/InstructionalProducts/PracticeTest10/OPT10/GetUserResponse/";
+          } else {
+            url =
+              "/InstructionalProducts/PracticeTest10/OPT10/GetUserResponses/";
+          }
+          var unanswered = paragon.pt.countUnansweredQuestionsFromDb(
+            29,
+            "e9485ed3-f0a3-497b-a519-abcc6d5a2112",
+            url
+          );
+          if (unanswered > 0) {
+            $("#dlgUnansweredWarning").modal();
+          } else {
+            paragon.pt.skipToNext();
+          }
         });
 
-        $(".links-main").click(function () {
-            var href = "/InstructionalProducts/PracticeTest10/OPT10/";
-            window.location = href;
+        if (paragon.pt.nextUrl.length > 0) {
+          paragon.pt.showNextButton();
+        }
+      });
 
-        });
-
+      $(".links-main").click(function () {
+        var href = "/InstructionalProducts/PracticeTest10/OPT10/";
+        window.location = href;
+      });
     </script>
+  </body>
+  <grammarly-desktop-integration data-grammarly-shadow-root="true"
+    ><template shadowrootmode="open"
+      ><style>
+        div.grammarly-desktop-integration {
+          position: absolute;
+          width: 1px;
+          height: 1px;
+          padding: 0;
+          margin: -1px;
+          overflow: hidden;
+          clip: rect(0, 0, 0, 0);
+          white-space: nowrap;
+          border: 0;
+          -moz-user-select: none;
+          -webkit-user-select: none;
+          -ms-user-select: none;
+          user-select: none;
+        }
 
-
-
-</body><grammarly-desktop-integration data-grammarly-shadow-root="true"><template shadowrootmode="open"><style>
-      div.grammarly-desktop-integration {
-        position: absolute;
-        width: 1px;
-        height: 1px;
-        padding: 0;
-        margin: -1px;
-        overflow: hidden;
-        clip: rect(0, 0, 0, 0);
-        white-space: nowrap;
-        border: 0;
-        -moz-user-select: none;
-        -webkit-user-select: none;
-        -ms-user-select:none;
-        user-select:none;
-      }
-
-      div.grammarly-desktop-integration:before {
-        content: attr(data-content);
-      }
-    </style><div aria-label="grammarly-integration" role="group" tabindex="-1" class="grammarly-desktop-integration" data-content="{&quot;mode&quot;:&quot;full&quot;,&quot;isActive&quot;:true,&quot;isUserDisabled&quot;:false}"></div></template></grammarly-desktop-integration></html>
+        div.grammarly-desktop-integration:before {
+          content: attr(data-content);
+        }
+      </style>
+      <div
+        aria-label="grammarly-integration"
+        role="group"
+        tabindex="-1"
+        class="grammarly-desktop-integration"
+        data-content='{"mode":"full","isActive":true,"isUserDisabled":false}'
+      ></div></template
+  ></grammarly-desktop-integration>
+</html>

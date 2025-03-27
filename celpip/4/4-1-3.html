@@ -1,0 +1,1767 @@
+<!DOCTYPE html>
+<!-- saved from url=(0130)https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest4/OPT4/View/032d6205-6133-4e03-9b44-1cafce834bb8 -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><style>
+    a {
+        outline: 0;
+    }
+</style>
+
+
+
+    
+    <title>Practice Test</title>
+    <meta name="description">
+    <link href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/favicon.ico" rel="shortcut icon" type="image/x-icon">
+    <meta name="viewport" content="width=device-width">
+    <link href="./4-1-3_files/bootstrap.css" rel="stylesheet">
+<link href="./4-1-3_files/Site.css" rel="stylesheet">
+
+    <script src="./4-1-3_files/399283786078546" async=""></script><script async="" src="./4-1-3_files/fbevents.js.下載"></script><script src="./4-1-3_files/jquery-1.9.1.min.js.下載"></script>
+
+    <script src="./4-1-3_files/jquery.unobtrusive-ajax.min.js.下載"></script>
+
+    <script src="./4-1-3_files/bootstrap.js.下載"></script>
+
+    <script src="./4-1-3_files/handlebars.min.js.下載"></script>
+
+    <script src="./4-1-3_files/instructional-product.js.下載"></script>
+
+    <script src="./4-1-3_files/facebook-pixel.js.下載"></script>
+
+    <script>
+    paragon.pt = paragon.pt || {};
+    paragon.pt.backUrl = "";
+    paragon.pt.nextUrl = "";
+    paragon.pt.speakingPrepTimeLeft = 0;
+    paragon.pt.speakingRecordingTimeLeft = 0;
+    paragon.pt.itemIndex = 0;
+
+    paragon.pt.showAlert = function (msg) {
+        alert(msg);
+    }
+
+    paragon.pt.showBackButton = function () {
+        $("#btnBack").show();
+    }
+
+    paragon.pt.showNextButton = function () {
+        $("#btnNext").show();
+    }
+
+    paragon.pt.hideBackButton = function () {
+        $("#btnBack").hide();
+    }
+
+    paragon.pt.hideNextButton = function () {
+        $("#btnNext").hide();
+    }
+
+    paragon.pt.goNext = function () {
+        window.location = paragon.pt.nextUrl;
+    }
+
+    paragon.pt.goBack = function () {
+        window.location = paragon.pt.backUrl;
+    }
+
+    //Timer For Listening, Reading and Writing
+    paragon.pt.timer = paragon.pt.timer || {};
+    paragon.pt.timer.totalTime = 0;
+    paragon.pt.timer.timeLeft = 0;
+    paragon.pt.timer.interval = null;
+    paragon.pt.timer.start = function (timeLeft) {
+        paragon.pt.timer.timeLeft = timeLeft;
+        paragon.pt.timer.totalTime = timeLeft
+        var minutes = Math.floor(timeLeft / 60);
+        var seconds = timeLeft - minutes * 60;
+
+        if (minutes < 1) {
+            $("#timer strong").html(seconds + " seconds");
+            $("#timer strong").attr("style", "color:red");
+        }
+        else if (minutes == 1) {
+            $("#timer strong").html(minutes + " minute");
+        }
+        else {
+            $("#timer strong").html(minutes + " minutes");
+        }
+
+        $("#timer").show();
+
+        if (paragon.pt.timer.interval)
+            window.clearInterval(paragon.pt.timer.interval);
+
+        paragon.pt.timer.interval = window.setInterval(function () { paragon.pt.timer.deductTime() }, 1000);
+
+        paragon.showFooter();
+    }
+
+    paragon.pt.timer.deductTime = function () {
+        if (paragon.pt.timer.timeLeft > 0) {
+            paragon.pt.timer.timeLeft -= 1;
+
+            var minutes = Math.floor(paragon.pt.timer.timeLeft / 60);
+            var seconds = paragon.pt.timer.timeLeft - minutes * 60;
+
+            if (minutes < 1) {
+                $("#timer strong").html(seconds + " seconds");
+                $("#timer strong").attr("style", "color:red");
+            }
+            else if (minutes == 1) {
+                $("#timer strong").html(minutes + " minute");
+            }
+            else {
+                $("#timer strong").html(minutes + " minutes");
+            }
+        }
+        else {
+            window.clearInterval(paragon.pt.timer.interval);
+            $("#timer strong").html("None");
+        }
+    }
+
+    //Timer For Speaking, work in progress
+    paragon.pt.showTimerSpeaking = function (prepTime, recordingTime) {
+        paragon.pt.speakingPrepTimeLeft = prepTime;
+        paragon.pt.speakingRecordingTimeLeft = recordingTime;
+        $("#timerSpeaking strong:first-child").html(prepTime + " seconds");
+        $("#timerSpeaking strong:last-child").html(recordingTime + " seconds");
+        $("#timerSpeaking").show();
+        paragon.showFooter();
+    }
+
+    paragon.pt.userResponse = paragon.pt.userResponse || {};
+
+    paragon.pt.uploadMultipleChoicesValue = function (url, sectionId, itemId, choiceId) {
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: { sectionId: sectionId, itemId: itemId, choiceId: choiceId },
+            dataType: "json",
+            cache: false,
+            success: function (json) {
+                console.log(json);
+                console.log("ItemId: " + itemId + ", " + "ChoiceId: " + choiceId);
+            }
+        });
+    }
+
+    paragon.pt.activateMultipleChoices = function (url, sectionId) {
+        $(document).delegate(".multipleChoices li", "click", function () {
+            var ul = $(this).parent();
+            ul.find("li").removeClass("selected");
+            $(this).addClass("selected");
+
+            paragon.pt.uploadMultipleChoicesValue(url, sectionId, ul.data("id"), $(this).data("id"));
+        });
+    }
+
+    paragon.pt.renderMultipleChoices = function (url, sectionId, item, renderItemText, hasImage, renderChoiceText) {
+        var template;
+        if (renderItemText == true) {
+            if (hasImage == true) {
+                template = Handlebars.compile($("#multipleChoicesTemplateWithItemTextAndImage").html());
+            }
+            else {
+                template = Handlebars.compile($("#multipleChoicesTemplateWithItemText").html());
+            }
+        }
+        else {
+            if (hasImage == true) {
+
+                if (renderChoiceText == true) {
+                    template = Handlebars.compile($("#multipleChoicesTemplateWithImage").html());
+                }
+                else {
+                    template = Handlebars.compile($("#multipleChoicesTemplateWithImageNoText").html());
+                }
+            }
+            else {
+                template = Handlebars.compile($("#multipleChoicesTemplate").html());
+            }
+        }
+
+        $("#multipleChoices").html(template(item));
+
+        paragon.pt.activateMultipleChoices(url, sectionId);
+    }
+
+    //Drop down list
+    paragon.pt.dropDown = paragon.pt.dropDown || {};
+    paragon.pt.dropDown.activeMenu = null;
+    paragon.pt.dropDown.renderTemplate = function (url, sectionId, templateToRender, elementToRender, items) {
+        var template = Handlebars.compile(templateToRender);
+        $(elementToRender).html(template(items));
+    }
+
+    paragon.pt.dropDown.renderInline = function (url, sectionId, items, startIndex, endIndex, elementToRender) {
+
+        var template = Handlebars.compile($("#dropDownListInlineTemplate").html());
+        var text = elementToRender[0].innerHTML;
+        for (var i = startIndex; i <= endIndex; i++) {
+            text = text.replace("{" + items[i].Num + "}", template(items[i]));
+        }
+        //Handlebars.registerHelper('renderInline', function (src, items, startIndex, endIndex, options) {
+        //    var template = Handlebars.compile($("#dropDownListInlineTemplate").html());
+        //    for (var i = startIndex; i <= endIndex; i++) {
+        //        src = src.replace("{" + (i + 1) + "}", template(items[i]));
+        //    }
+        //    return src;
+        //});
+        $(elementToRender).html(text);
+    }
+
+    paragon.pt.dropDown.activate = function (url, sectionId) {
+
+        $(document.body).click(function () {
+            $(".dd").each(function (i) {
+                if (i != paragon.pt.dropDown.activeMenu) {
+                    $(this).find(".ddMenu").hide();
+                    $(this).removeClass('active');
+                }
+            });
+        });
+
+        $(".dd").mouseover(function () {
+            paragon.pt.dropDown.activeMenu = $(".dd").index(this);
+        }).mouseout(function () {
+            paragon.pt.dropDown.activeMenu = null;
+        });
+
+        $(".ddToggle").click(function () {
+            var parent = $(this).parent();
+            parent.toggleClass("active");
+            var ddMenu = parent.find(".ddMenu");
+            ddMenu.animate({ height: 'toggle', opacity: 'toggle' }, 100);
+            var left = $(this).position().left;
+            ddMenu.css("left", Math.round(left) + "px");
+
+            //place the dropDown menu 20px below the box
+            var top = parent.position().top;
+            ddMenu.css("top", Math.round(top) + 20 + "px");
+
+        });
+
+        $('.dd li').click(function () {
+            $(this).parent().find("li").removeClass("selected");
+            $(this).addClass("selected");
+            var parent = $(this).parent().parent().parent();
+            var ddToggle = parent.find(".ddToggle");
+            ddToggle.html($(this).html());
+            ddToggle.addClass("ddToggle1");
+            parent.find(".ddMenu").animate({ height: 'toggle', opacity: 'toggle' }, 400);
+            parent.removeClass('active');
+            var ul = $(this).parent();
+            paragon.pt.uploadMultipleChoicesValue(url, sectionId, ul.data("id"), $(this).data("id"));
+        });
+    }
+
+    paragon.pt.showInfoBox = function (message) {
+        var infoBox = $("#infoBox");
+        if (message)
+            $("#infoBox .boxText p").html(message);
+        infoBox.show();
+    }
+
+    paragon.pt.hideInfoBox = function () {
+        $("#infoBox").hide();
+    }
+
+    //Audio Playback for the Listening Component
+    paragon.pt.playAudio = paragon.pt.playAudio || {};
+    paragon.pt.playAudio.player = null;
+    paragon.pt.playAudio.totalTime = 0;
+    paragon.pt.playAudio.timeLeft = 0;
+    paragon.pt.playAudio.interval = null;
+    paragon.pt.playAudio.onDone = null;
+
+    paragon.pt.playAudio.start = function (playAudioTime) {
+		paragon.pt.hideInfoBox();
+        paragon.pt.playAudio.totalTime = playAudioTime;
+        paragon.pt.playAudio.timeLeft = playAudioTime;
+        if (paragon.pt.playAudio.interval)
+            window.clearInterval(paragon.pt.playAudio.interval);
+
+        $("#playAudioBox").fadeIn(1000);
+    }
+
+
+    //recording functions
+
+    paragon.pt.recording = paragon.pt.recording || {};
+    paragon.pt.recording.totalTime = 0;
+    paragon.pt.recording.timeLeft = 0;
+    paragon.pt.recording.interval = null;
+    paragon.pt.recording.onDone = null;
+
+    paragon.pt.recording.updateProgressBar = function () {
+        var percentage = 100 - (paragon.pt.recording.timeLeft / paragon.pt.recording.totalTime) * 100;
+        $("#startRecTime .progressbar-cover").css("left", percentage + "%");
+    }
+
+    paragon.pt.recording.deductTime = function () {
+        if (paragon.pt.recording.timeLeft > 0) {
+            paragon.pt.recording.timeLeft -= 1;
+            paragon.pt.recording.updateProgressBar();
+        }
+        else {
+            window.clearInterval(paragon.pt.recording.interval);
+            $("#startRecTime").hide();
+            paragon.pt.showNextButton();
+            if (paragon.pt.recording.onDone) {
+                paragon.pt.recording.onDone();
+            }
+        }
+    }
+
+    paragon.pt.recording.start = function (playAudioTime) {
+        paragon.pt.recording.totalTime = playAudioTime;
+        paragon.pt.recording.timeLeft = playAudioTime;
+        if (paragon.pt.recording.interval)
+            window.clearInterval(paragon.pt.recording.interval);
+
+        paragon.pt.recording.interval = window.setInterval(function () { paragon.pt.recording.deductTime() }, 1000);
+        paragon.pt.recording.updateProgressBar();
+        $("#startRecTime").fadeIn(1000);
+    }
+
+    //end recording
+
+    //preperation functions
+
+    paragon.pt.preparation = paragon.pt.preparation || {};
+    paragon.pt.preparation.totalTime = 0;
+    paragon.pt.preparation.timeLeft = 0;
+    paragon.pt.preparation.interval = null;
+    paragon.pt.preparation.onDone = null;
+    paragon.pt.preparation.startRecording = null;
+
+    paragon.pt.preparation.updateProgressBar = function () {
+        $("#startPrepTime #progressTimer").html(paragon.pt.preparation.timeLeft);
+    }
+
+    paragon.pt.preparation.deductTime = function () {
+        if (paragon.pt.preparation.timeLeft > 0) {
+            paragon.pt.preparation.timeLeft -= 1;
+            paragon.pt.preparation.updateProgressBar();
+        }
+        else {
+            window.clearInterval(paragon.pt.preparation.interval);
+            $("#startPrepTime").hide();
+            paragon.pt.showNextButton();
+            if (paragon.pt.preparation.onDone) {
+                paragon.pt.preparation.onDone();
+            }
+        }
+    }
+
+    paragon.pt.preparation.start = function (playAudioTime) {
+        paragon.pt.preparation.totalTime = playAudioTime;
+        paragon.pt.preparation.timeLeft = playAudioTime;
+        if (paragon.pt.preparation.interval)
+            window.clearInterval(paragon.pt.preparation.interval);
+
+        paragon.pt.preparation.interval = window.setInterval(function () { paragon.pt.preparation.deductTime() }, 1000);
+        paragon.pt.preparation.updateProgressBar();
+        $("#startPrepTime").fadeIn(1000);
+    }
+
+    //end prep functinos
+
+    paragon.pt.createAudioPlayer = function (contentUrl, audiofile) {
+        //create player if not exists
+        if (!paragon.pt.playAudio.player) {
+            paragon.pt.playAudio.player = document.createElement('audio');
+			
+			paragon.pt.playAudio.player.controls = true;
+			paragon.pt.playAudio.player.controlsList = "nodownload";
+            paragon.pt.playAudio.player.oggSrc = document.createElement('source');
+            paragon.pt.playAudio.player.oggSrc.setAttribute('type', 'audio/ogg');
+            paragon.pt.playAudio.player.appendChild(paragon.pt.playAudio.player.oggSrc);
+
+            paragon.pt.playAudio.player.mp3Src = document.createElement('source');
+            paragon.pt.playAudio.player.mp3Src.setAttribute('type', 'audio/mp3');
+            paragon.pt.playAudio.player.appendChild(paragon.pt.playAudio.player.mp3Src);
+			
+			paragon.pt.playAudio.player.ontimeupdate = function () {
+                var duration = paragon.pt.playAudio.player.duration;
+                var currentTime = paragon.pt.playAudio.player.currentTime;
+                if (duration) {
+                    var progress = (currentTime / duration) * 100;
+                    $("#playAudioBox .progressbar-cover").css("left", progress + "%");
+                    if (progress >= 100) {
+                        $("#playAudioBox").hide();
+                        paragon.pt.showInfoBox();
+                        paragon.pt.showNextButton();
+                        if (paragon.pt.playAudio.onDone) {
+                            paragon.pt.playAudio.onDone();
+                        }                        
+                    }                    
+                }
+            };
+
+            paragon.pt.playAudio.player.onplay = function () {
+                paragon.pt.playAudio.start(paragon.pt.playAudio.player.duration);
+            };
+        }
+
+        paragon.pt.playAudio.player.addEventListener("loadedmetadata", function (e) {
+            if (e.target) {
+                paragon.pt.playAudio.player.play();
+                paragon.pt.playAudio.start(e.target.duration);
+            }
+        });
+
+        paragon.pt.playAudio.player.oggSrc.setAttribute('src', contentUrl + audiofile + ".ogg");
+        paragon.pt.playAudio.player.mp3Src.setAttribute('src', contentUrl + audiofile + ".mp3");
+
+        paragon.pt.playAudio.player.load();
+        return paragon.pt.playAudio.player;
+    }
+
+
+    paragon.pt.moveScrollBar = function (div, scrollSize) {
+        div.animate({
+            scrollTop: scrollSize
+        }, 1200, function () {
+            div.animate({ scrollTop: 0 }, 300, function () {
+            });
+        });
+    }
+
+    paragon.pt.showScrollBar = function (leftDiv, rightDiv) {
+
+        if (rightDiv.length && rightDiv.is(":visible") && leftDiv.length && leftDiv.is(":visible")) {
+            $.blockUI({
+                message: "Scroll up and down to see everything.",
+                css: { width: '400px', border: '2px solid #000', top: '35%', padding: '50px', color: '#1A578A', fontWeight: 'bold' },
+                showOverlay: false
+            });
+
+            var rightScrollSize = rightDiv[0].scrollHeight;
+            var leftScrollSize = leftDiv[0].scrollHeight;
+            window.setTimeout(function () {
+                paragon.pt.moveScrollBar(rightDiv, rightScrollSize);
+                paragon.pt.moveScrollBar(leftDiv, leftScrollSize);
+
+                window.setTimeout(function () { $.unblockUI(); }, 2300);
+            }, 1400);
+
+
+        }
+
+    }
+
+    paragon.pt.wordCount = function () {
+        $(".writtenTextAreaBox").keyup(countWords);
+
+        function countWords() {
+            var text = " ";
+            if (this.value != "") {
+                var wordCount = this.value.match(/\S+/g).length;
+                if (wordCount == 1) { 
+                    text = wordCount + " word"; 
+                } else { 
+                    text = wordCount + " words";
+                }
+            }
+            document.getElementById("wordCount").innerHTML = text;
+        }
+    }
+
+    paragon.pt.calcSectionNumQuestion = function (sectionID) {
+        var pt1lpSection = sectionID;
+        $.post("/InstructionalProducts/PracticeTest4/OPT4/GetNumberOfQuestions", { sectionId: pt1lpSection }, function (data) { console.log(data); document.getElementById("numQuestion").innerHTML = data.totalQuestions-1 });
+    }
+
+    paragon.pt.calcSectionNumQuestionLS = function (sectionID) {
+        var pt1lpSection = sectionID;
+        $.post("/InstructionalProducts/PracticeTest4/OPT4LS/GetNumberOfQuestions", { sectionId: pt1lpSection }, function (data) { console.log(data); document.getElementById("numQuestion").innerHTML = data.totalQuestions-1 });
+    }
+
+    paragon.pt.calcListScoreGeneral = function (sectionID) {
+
+        $.post("/InstructionalProducts/PracticeTest4/OPT4/GetScoreOnSection", { sectionId: sectionID }, function (data) {
+            console.log(data); document.getElementById("yourScore").innerHTML = data.userScore;
+
+            var userLScore = data.userScore;
+
+            paragon.pt.findListScore(userLScore);
+
+        });
+    }
+
+    paragon.pt.calcListScoreLS = function (sectionID) {
+
+        $.post("/InstructionalProducts/PracticeTest4/OPT4LS/GetScoreOnSection", { sectionId: sectionID }, function (data) {
+            console.log(data); document.getElementById("yourScore").innerHTML = data.userScore;
+
+            var userLScore = data.userScore;
+
+            paragon.pt.findListScore(userLScore);
+
+        });
+    }
+
+    paragon.pt.findListScore = function (userLScore) {
+        if (userLScore <= 7) {
+            document.getElementById("celScore").innerHTML = "M";
+            return;
+        }
+        else if (userLScore <= 12) {
+            document.getElementById("celScore").innerHTML = "3";
+            return;
+        }
+        else if (userLScore <= 18) {
+            document.getElementById("celScore").innerHTML = "4";
+            return;
+        }
+        else if (userLScore <= 23) {
+            document.getElementById("celScore").innerHTML = "5";
+            return;
+        }
+        else if (userLScore <= 28) {
+            document.getElementById("celScore").innerHTML = "6";
+            return;
+        }
+        else if (userLScore <= 31) {
+            document.getElementById("celScore").innerHTML = "7";
+            return;
+        }
+        else if (userLScore <= 33) {
+            document.getElementById("celScore").innerHTML = "8";
+            return;
+        }
+        else if (userLScore <= 35) {
+          document.getElementById("celScore").innerHTML = "9";
+          return;
+          }
+          else {
+          document.getElementById("celScore").innerHTML = "10-12";
+          }
+          }
+
+          paragon.pt.calcListScoreOnYourScore = function (sectionScore, sectionCell) {
+
+          var userLScore = sectionScore;
+
+          if (userLScore <= 7) {
+                document.getElementById(sectionCell).innerHTML = "M";
+                return;
+            }
+            else if (userLScore <= 12) {
+                document.getElementById(sectionCell).innerHTML = "3";
+                return;
+            }
+            else if (userLScore <= 18) {
+                document.getElementById(sectionCell).innerHTML = "4";
+                return;
+            }
+            else if (userLScore <= 23) {
+                document.getElementById(sectionCell).innerHTML = "5";
+                return;
+            }
+            else if (userLScore <= 28) {
+                document.getElementById(sectionCell).innerHTML = "6";
+                return;
+            }
+            else if (userLScore <= 31) {
+                document.getElementById(sectionCell).innerHTML = "7";
+                return;
+            }
+            else if (userLScore <= 33) {
+                document.getElementById(sectionCell).innerHTML = "8";
+                return;
+            }
+            else if (userLScore <= 35) {
+                document.getElementById(sectionCell).innerHTML = "9";
+                return;
+            }
+            else {
+                document.getElementById(sectionCell).innerHTML = "10-12";
+            }
+
+
+    }
+
+    paragon.pt.calcReadScore = function (sectionID) {
+
+        $.post("/InstructionalProducts/PracticeTest4/OPT4/GetScoreOnSection", { sectionId: sectionID }, function (data) {
+            console.log(data); document.getElementById("yourScore").innerHTML = data.userScore;
+
+            var userRScore = data.userScore;
+
+            if (userRScore <= 7) {
+                document.getElementById("celScore").innerHTML = "M";
+                return;
+            }
+            else if (userRScore <= 11) {
+                document.getElementById("celScore").innerHTML = "3";
+                return;
+            }
+            else if (userRScore <= 16) {
+                document.getElementById("celScore").innerHTML = "4";
+                return;
+            }
+            else if (userRScore <= 20) {
+                document.getElementById("celScore").innerHTML = "5";
+                return;
+            }
+            else if (userRScore <= 25) {
+                document.getElementById("celScore").innerHTML = "6";
+                return;
+            }
+            else if (userRScore <= 28) {
+                document.getElementById("celScore").innerHTML = "7";
+                return;
+            }
+            else if (userRScore <= 31) {
+                document.getElementById("celScore").innerHTML = "8";
+                return;
+            }
+            else if (userRScore <= 33) {
+                document.getElementById("celScore").innerHTML = "9";
+                return;
+            }
+            else {
+                document.getElementById("celScore").innerHTML = "10-12";
+            }
+
+        });
+
+    }
+    paragon.pt.calcReadScoreOnYourScore = function (sectionScore, sectionCell) {
+
+        var userRScore = sectionScore;
+
+        if (userRScore <= 7) {
+            document.getElementById(sectionCell).innerHTML = "M";
+            return;
+        }
+        else if (userRScore <= 11) {
+            document.getElementById(sectionCell).innerHTML = "3";
+            return;
+        }
+        else if (userRScore <= 16) {
+            document.getElementById(sectionCell).innerHTML = "4";
+            return;
+        }
+        else if (userRScore <= 20) {
+            document.getElementById(sectionCell).innerHTML = "5";
+            return;
+        }
+        else if (userRScore <= 25) {
+            document.getElementById(sectionCell).innerHTML = "6";
+            return;
+        }
+        else if (userRScore <= 28) {
+            document.getElementById(sectionCell).innerHTML = "7";
+            return;
+        }
+        else if (userRScore <= 31) {
+            document.getElementById(sectionCell).innerHTML = "8";
+            return;
+        }
+        else if (userRScore <= 33) {
+            document.getElementById(sectionCell).innerHTML = "9";
+            return;
+        }
+        else {
+            document.getElementById(sectionCell).innerHTML = "10-12";
+        }
+    }
+
+
+    //HARDCODED
+    paragon.pt.showListeningAnswerKeyBtn = function (sectionId) {
+        if (sectionId == "75cdd828-66cb-44fb-a5eb-16dce6d38236") {
+            $('#leftBtn').html("<a href='2469231e-bf62-493f-a2f4-840e82a22deb' id='backToResultbtn' class='btn'>Answer Key</a>");
+        }
+
+        if (sectionId == "82298b13-1d63-4be7-ba4c-3794ebe32141") {
+            $('#leftBtn').html("<a href='c70f0381-11d0-4345-9d12-342cf87328c5' id='backToResultbtn' class='btn'>Answer Key</a>");
+        }
+        if (sectionId == "7fd84834-4736-462e-a736-1fd7ecd5c4c9") {
+            $('#leftBtn').html("<a href='837ef473-9459-4e86-a85b-8bc8278a5a52' id='backToResultbtn' class='btn'>Answer Key</a>");
+        }
+
+        if (sectionId == "1ed7b681-6b52-4b7a-b635-ec2330af8f1e") {
+            $('#leftBtn').html("<a href='65970a64-cbd0-4188-891d-b8121ea95bba' id='backToResultbtn' class='btn'>Answer Key</a>");
+        }
+    }
+
+    paragon.pt.showReadingAnswerKeyBtn = function (sectionId) {
+        if (sectionId == "01ccd576-75a9-4ab4-b4de-73fd5e11f744") {
+            $('#leftBtn').html("<a href='ebccede3-dba8-46f1-a8f3-58a21105da56' id='backToResultbtn' class='btn'>Answer Key</a>");
+        }
+
+        if (sectionId == "d8908dc7-90c8-4aad-83b1-d666003f6db7") {
+            $('#leftBtn').html("<a href='f9f46350-d763-456a-a46b-307e6f1408d2' id='backToResultbtn' class='btn'>Answer Key</a>");
+        }
+    }
+
+    paragon.pt.nextItem = function (url, itemId, canvasId, sectionId, activityTypeId) {
+        $.post(
+            url,
+            {
+                itemId: itemId,
+                canvasId: canvasId,
+                sectionId: sectionId,
+                activityTypeId: activityTypeId
+            },
+            function (data) {
+                console.log(data);
+            }
+        );
+    }
+
+    paragon.pt.countUnansweredQuestionsFromDb = function (canvasTypeId, sectionId, url) {
+        switch (canvasTypeId) {
+            case 24: //PT04
+            case 25: // PT05
+                return paragon.pt.countSingleUnansweredItemFromDb(sectionId, url);
+                break;
+
+            case 26: //PT06
+            case 27: //PT07
+                if ($("#panelLeft").css('display') != 'none') {
+                    return 0;
+                }
+                else {
+                    return paragon.pt.countAllUnansweredItemsFromDb(sectionId, url);
+                }
+                break;
+
+            default:
+                return paragon.pt.countAllUnansweredItemsFromDb(sectionId, url);
+        }
+    }
+
+    paragon.pt.countAllUnansweredItemsFromDb = function (sectionId, url) {
+        var unanswered = 0;
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: { 'sectionId': sectionId, 'items': JSON.stringify(paragon.pt.items) },
+            async: false,
+            success: function (data) {
+                var responses = data.responses;
+                for (var i = 0; i < responses.length; i++) {
+                    var currentResponse = responses[i];
+                    if (!currentResponse) {
+                        unanswered++;
+                    }
+                }
+            }
+        });
+        return unanswered;
+    }
+
+    paragon.pt.countSingleUnansweredItemFromDb = function (sectionId, url) {
+        var unanswered = 0;
+
+        var index = paragon.pt.itemIndex;
+        if (index > 0) {
+            index = index - 1;
+        }
+        else {
+            return unanswered;
+        }
+
+        var item = paragon.pt.items[index];
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: { "sectionId": sectionId, "itemId": item.Id },
+            async: false,
+            success: function (data) {
+                if (!data.response) {
+                    unanswered++;
+                }
+            }
+        });
+
+        return unanswered;
+    }
+
+</script>
+
+    <script src="./4-1-3_files/soundjs-0.6.0.min.js.下載"></script>
+
+
+
+    <script src="./4-1-3_files/audio.min.js.下載"></script>
+
+    <script src="./4-1-3_files/jquery.blockUI.js.下載"></script>
+
+    <script src="./4-1-3_files/jquery-ui-1.10.4.custom.min.js.下載"></script>
+
+    <script src="./4-1-3_files/jquery.cookie.js.下載"></script>
+
+
+    <link href="./4-1-3_files/font-awesome.css" rel="stylesheet">
+</head>
+<body data-new-gr-c-s-check-loaded="14.1229.0" data-gr-ext-installed="" style="">
+    <noscript>
+        <div id="noscript">
+            <div>Please turn on javascript to continue.</div>
+        </div>
+    </noscript>
+    <header>
+        <div class="navbar">
+            <div class="navbar-inner">
+                <a class="brand" href="https://www.celpip.ca/" target="_blank"> <img src="./4-1-3_files/CELPIP_H_Web.png"></a>
+
+                <div class="brand" style="margin-top:15px;">
+                    Study Materials
+                </div>
+
+                <ul class="nav" style="margin-top:8px;">
+
+                    <li class="dropdown">
+
+                        <a class="dropdown-toggle" data-toggle="dropdown" style="margin-top: 10px;">
+                            Selected Product: <span id="selected-product">CELPIP-General Practice Tests, Set 4</span>
+                            <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/FreeOnlineSampleTest/FOST">Free CELPIP-General Practice Tests (Starter Set)</a></li>
+                            <li><a href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/FreeOnlineSampleTest/FOST2">Free CELPIP-General LS Practice Tests (Starter Set)</a></li>
+
+
+                                    <li><a href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest/PT">CELPIP-General Practice Tests, Set 1</a></li>
+                                    <li><a href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest2/OPT2">CELPIP-General Practice Tests, Set 2</a></li>
+                                    <li><a href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest3/OPT3">CELPIP-General Practice Tests, Set 3</a></li>
+                                    <li><a href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest4/OPT4">CELPIP-General Practice Tests, Set 4</a></li>
+                                    <li><a href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest5/OPT5">CELPIP-General Practice Tests, Set 5</a></li>
+                                    <li><a href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest6/OPT6">CELPIP-General Practice Tests, Set 6</a></li>
+                                    <li><a href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest7/OPT7">CELPIP-General Practice Tests, Set 7</a></li>
+                                    <li><a href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest8/OPT8">CELPIP-General Practice Tests, Set 8</a></li>
+                                    <li><a href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest9/OPT9">CELPIP-General Practice Tests, Set 9</a></li>
+                                    <li><a href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest10/OPT10">CELPIP-General Practice Tests, Set 10</a></li>
+                                        <li><a target="_blank" href="https://testprep.paragontesting.ca/api/sso/v2/sso/jwt?jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6Imh5cDIyMThAZ21haWwuY29tIiwiZmlyc3RfbmFtZSI6IllpLVBpbmciLCJsYXN0X25hbWUiOiJIbyIsIm5hbWVpZCI6IjIyMzc0ODgiLCJpYXQiOjE3NDMwODU2MjYsImp0aSI6OTg3MTI3MjAzLCJuYmYiOjE3NDMwODUzMjZ9.OObZhnuDqBSIHY1PGx4ZQHsg6SPClkK1gGZEP5Tb3ik&amp;return_to=https%3A%2F%2Ftestprep.paragontesting.ca%2Fbundles%2Fcelpip-accelerate-starter-celpip-general">CELPIP Accelerate Starter - Reading and Writing</a></li>
+                                        <li><a target="_blank" href="https://testprep.paragontesting.ca/api/sso/v2/sso/jwt?jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6Imh5cDIyMThAZ21haWwuY29tIiwiZmlyc3RfbmFtZSI6IllpLVBpbmciLCJsYXN0X25hbWUiOiJIbyIsIm5hbWVpZCI6IjIyMzc0ODgiLCJpYXQiOjE3NDMwODU2MjYsImp0aSI6MTc1NzY1NTEzMSwibmJmIjoxNzQzMDg1MzI2fQ.Kokhc-I13Qew6w98XVinK64sUBB5NZzznd6emh34-KM&amp;return_to=https%3A%2F%2Ftestprep.paragontesting.ca%2Fbundles%2Fcelpip-accelerate-starter-celpip-general-ls">CELPIP Accelerate Starter - Listening and Speaking</a></li>
+                        </ul>
+
+                    </li>
+
+                    <li>
+                        <div style="margin-left: 19px">
+                            <ul class="nav nav-pills header-buttons">
+                                
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+
+                <ul class="nav pull-right" style="margin-top:17px">
+                        <li class="dropdown">
+                            <a class="dropdown-toggle dropdown-email" data-toggle="dropdown">
+                                <img src="./4-1-3_files/fa_cog.png" style="width:18px; height: 18px; margin-top:-5px">
+                                
+                                <b class="caret"></b>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="javascript:document.getElementById(&#39;logoutForm&#39;).submit()">Sign out</a></li>
+                            </ul>
+                        </li>
+                </ul>
+            </div>
+        </div>
+<form action="https://instructionalproducts.paragontesting.ca/InstructionalProducts/Account/LogOff" id="logoutForm" method="post"></form>    </header>
+
+    <div class="container" id="main-container" style="height: 739px;">
+<link href="./4-1-3_files/ptStyle.css" rel="stylesheet" type="text/css">
+<link href="./4-1-3_files/video-js.css" rel="stylesheet">
+<script src="./4-1-3_files/video.js.下載"></script>
+<script>
+    paragon.pt.backUrl = "/InstructionalProducts/PracticeTest4/OPT4/View/1dbb90cc-b530-41c8-8ab5-a7c0ff9f359f";
+    paragon.pt.nextUrl = "/InstructionalProducts/PracticeTest4/OPT4/View/a65d8418-a92e-4b82-9341-fe50cef31f37";
+    if (paragon.pt.backUrl.length > 0 || paragon.pt.nextUrl.length > 0) {
+        paragon.footerVisible = true;
+    }
+
+    paragon.pt.items = [
+  {
+    "Id": "89230060-78a0-40da-a06f-227b4f5157da",
+    "ContentId": "b519225d-16b6-463a-8cb5-34008a4e587e",
+    "Num": 1,
+    "Text": "1. Sentinelese isolation is surprising because travellers have long known about their island.",
+    "ExtraField1": "",
+    "Choices": [
+      {
+        "Id": "b89d8f36-5a1d-4436-be93-c72f1dd49052",
+        "ItemId": "89230060-78a0-40da-a06f-227b4f5157da",
+        "ChoiceData": null,
+        "Num": 1,
+        "Text": "A"
+      },
+      {
+        "Id": "510d5370-577c-457a-8b96-41358d2b349d",
+        "ItemId": "89230060-78a0-40da-a06f-227b4f5157da",
+        "ChoiceData": null,
+        "Num": 2,
+        "Text": "B"
+      },
+      {
+        "Id": "edcf1b54-7770-4c6f-8f96-b8041f0f0a05",
+        "ItemId": "89230060-78a0-40da-a06f-227b4f5157da",
+        "ChoiceData": null,
+        "Num": 3,
+        "Text": "C"
+      },
+      {
+        "Id": "953a1cba-8a39-40ee-9deb-e470f8a16cd3",
+        "ItemId": "89230060-78a0-40da-a06f-227b4f5157da",
+        "ChoiceData": null,
+        "Num": 4,
+        "Text": "D"
+      },
+      {
+        "Id": "236a6ce6-8e31-4193-8495-b3d4d8c7412d",
+        "ItemId": "89230060-78a0-40da-a06f-227b4f5157da",
+        "ChoiceData": null,
+        "Num": 5,
+        "Text": "E"
+      }
+    ]
+  },
+  {
+    "Id": "2c0df1eb-5489-4df4-a900-ac990335996a",
+    "ContentId": "b519225d-16b6-463a-8cb5-34008a4e587e",
+    "Num": 2,
+    "Text": "2. The Indian government used to leave food offerings for the Sentinelese.",
+    "ExtraField1": "",
+    "Choices": [
+      {
+        "Id": "8953aaa9-082d-4afa-81da-5cfc06c2b85a",
+        "ItemId": "2c0df1eb-5489-4df4-a900-ac990335996a",
+        "ChoiceData": null,
+        "Num": 1,
+        "Text": "A"
+      },
+      {
+        "Id": "b7526719-7b2c-4fb9-926c-3e952aa21337",
+        "ItemId": "2c0df1eb-5489-4df4-a900-ac990335996a",
+        "ChoiceData": null,
+        "Num": 2,
+        "Text": "B"
+      },
+      {
+        "Id": "85f74bea-3952-4020-a0bb-e49d390cdba8",
+        "ItemId": "2c0df1eb-5489-4df4-a900-ac990335996a",
+        "ChoiceData": null,
+        "Num": 3,
+        "Text": "C"
+      },
+      {
+        "Id": "3e126d72-4645-4da5-a645-1d89db8c8401",
+        "ItemId": "2c0df1eb-5489-4df4-a900-ac990335996a",
+        "ChoiceData": null,
+        "Num": 4,
+        "Text": "D"
+      },
+      {
+        "Id": "92f08b98-e97a-4fea-9e1b-656c0e673300",
+        "ItemId": "2c0df1eb-5489-4df4-a900-ac990335996a",
+        "ChoiceData": null,
+        "Num": 5,
+        "Text": "E"
+      }
+    ]
+  },
+  {
+    "Id": "5d19c9d4-94dd-4373-b87e-6133a602b7f3",
+    "ContentId": "b519225d-16b6-463a-8cb5-34008a4e587e",
+    "Num": 3,
+    "Text": "3. The government is passing a bill to protect the Sentinelese community from modern diseases.",
+    "ExtraField1": "",
+    "Choices": [
+      {
+        "Id": "95195f25-250b-46e5-85be-8f6219887482",
+        "ItemId": "5d19c9d4-94dd-4373-b87e-6133a602b7f3",
+        "ChoiceData": null,
+        "Num": 1,
+        "Text": "A"
+      },
+      {
+        "Id": "c37d15fc-d4a6-4290-909b-6cb86fe8b893",
+        "ItemId": "5d19c9d4-94dd-4373-b87e-6133a602b7f3",
+        "ChoiceData": null,
+        "Num": 2,
+        "Text": "B"
+      },
+      {
+        "Id": "d2875ee9-7ba5-4af5-82ae-9f84099eed79",
+        "ItemId": "5d19c9d4-94dd-4373-b87e-6133a602b7f3",
+        "ChoiceData": null,
+        "Num": 3,
+        "Text": "C"
+      },
+      {
+        "Id": "1fa87f29-2cb5-4564-b922-f21144f64ca8",
+        "ItemId": "5d19c9d4-94dd-4373-b87e-6133a602b7f3",
+        "ChoiceData": null,
+        "Num": 4,
+        "Text": "D"
+      },
+      {
+        "Id": "6be08446-d62b-4e61-97ca-4ab0420b6502",
+        "ItemId": "5d19c9d4-94dd-4373-b87e-6133a602b7f3",
+        "ChoiceData": null,
+        "Num": 5,
+        "Text": "E"
+      }
+    ]
+  },
+  {
+    "Id": "9714568a-c16a-4676-b26b-7c7505261d7d",
+    "ContentId": "b519225d-16b6-463a-8cb5-34008a4e587e",
+    "Num": 4,
+    "Text": "4. Census data on the Sentinelese have been collected by indirect observation.",
+    "ExtraField1": "",
+    "Choices": [
+      {
+        "Id": "923abc1a-f231-4c4d-a4d4-dc9a11179eca",
+        "ItemId": "9714568a-c16a-4676-b26b-7c7505261d7d",
+        "ChoiceData": null,
+        "Num": 1,
+        "Text": "A"
+      },
+      {
+        "Id": "f27cdafd-3afe-4c3f-840f-78b8aee82274",
+        "ItemId": "9714568a-c16a-4676-b26b-7c7505261d7d",
+        "ChoiceData": null,
+        "Num": 2,
+        "Text": "B"
+      },
+      {
+        "Id": "b877984d-d436-41d0-b2db-aaadff45424e",
+        "ItemId": "9714568a-c16a-4676-b26b-7c7505261d7d",
+        "ChoiceData": null,
+        "Num": 3,
+        "Text": "C"
+      },
+      {
+        "Id": "109a2fd7-9c63-440e-ba6b-357e113d872e",
+        "ItemId": "9714568a-c16a-4676-b26b-7c7505261d7d",
+        "ChoiceData": null,
+        "Num": 4,
+        "Text": "D"
+      },
+      {
+        "Id": "d5c74203-e26f-4ead-bf25-a6fef9586756",
+        "ItemId": "9714568a-c16a-4676-b26b-7c7505261d7d",
+        "ChoiceData": null,
+        "Num": 5,
+        "Text": "E"
+      }
+    ]
+  },
+  {
+    "Id": "d6fb4bcb-d15a-4277-976d-7aae0f3cab66",
+    "ContentId": "b519225d-16b6-463a-8cb5-34008a4e587e",
+    "Num": 5,
+    "Text": "5. The Indian government stopped visiting the Sentinelese for fear of contagion. ",
+    "ExtraField1": "",
+    "Choices": [
+      {
+        "Id": "33178aaa-ed3a-4a21-bac3-0b81afd44236",
+        "ItemId": "d6fb4bcb-d15a-4277-976d-7aae0f3cab66",
+        "ChoiceData": null,
+        "Num": 1,
+        "Text": "A"
+      },
+      {
+        "Id": "3cdf3a28-97f7-483b-b641-ea71c8e7ddf0",
+        "ItemId": "d6fb4bcb-d15a-4277-976d-7aae0f3cab66",
+        "ChoiceData": null,
+        "Num": 2,
+        "Text": "B"
+      },
+      {
+        "Id": "00b429ce-97a3-42af-a59e-403b202fef42",
+        "ItemId": "d6fb4bcb-d15a-4277-976d-7aae0f3cab66",
+        "ChoiceData": null,
+        "Num": 3,
+        "Text": "C"
+      },
+      {
+        "Id": "1af91088-32bf-4d46-9c53-41358208623e",
+        "ItemId": "d6fb4bcb-d15a-4277-976d-7aae0f3cab66",
+        "ChoiceData": null,
+        "Num": 4,
+        "Text": "D"
+      },
+      {
+        "Id": "1975baa9-4189-4d97-9fa7-9906aa6e6737",
+        "ItemId": "d6fb4bcb-d15a-4277-976d-7aae0f3cab66",
+        "ChoiceData": null,
+        "Num": 5,
+        "Text": "E"
+      }
+    ]
+  },
+  {
+    "Id": "ec438239-d28f-424b-9063-48e633528ad6",
+    "ContentId": "b519225d-16b6-463a-8cb5-34008a4e587e",
+    "Num": 6,
+    "Text": "6. The Sentinelese aggressively reject any outside technology that washes ashore.",
+    "ExtraField1": "",
+    "Choices": [
+      {
+        "Id": "b8462196-4f00-4746-aa54-56f6b8f669f4",
+        "ItemId": "ec438239-d28f-424b-9063-48e633528ad6",
+        "ChoiceData": null,
+        "Num": 1,
+        "Text": "A"
+      },
+      {
+        "Id": "55ee7f09-6319-47ce-bf8d-7c614b88c7b0",
+        "ItemId": "ec438239-d28f-424b-9063-48e633528ad6",
+        "ChoiceData": null,
+        "Num": 2,
+        "Text": "B"
+      },
+      {
+        "Id": "1d118206-1d16-468e-b340-a9488d95a315",
+        "ItemId": "ec438239-d28f-424b-9063-48e633528ad6",
+        "ChoiceData": null,
+        "Num": 3,
+        "Text": "C"
+      },
+      {
+        "Id": "a0c68def-d208-40a6-bc04-2d59cb8afd3f",
+        "ItemId": "ec438239-d28f-424b-9063-48e633528ad6",
+        "ChoiceData": null,
+        "Num": 4,
+        "Text": "D"
+      },
+      {
+        "Id": "3f76a9f8-1bf8-41a0-990c-0cf3f9330d16",
+        "ItemId": "ec438239-d28f-424b-9063-48e633528ad6",
+        "ChoiceData": null,
+        "Num": 5,
+        "Text": "E"
+      }
+    ]
+  },
+  {
+    "Id": "2e8ea0c8-2750-4337-a494-b3707006a74a",
+    "ContentId": "b519225d-16b6-463a-8cb5-34008a4e587e",
+    "Num": 7,
+    "Text": "7. Food production on North Sentinel Island has remained very basic.",
+    "ExtraField1": "",
+    "Choices": [
+      {
+        "Id": "34f2f844-94d5-4001-a078-c27c4f04a697",
+        "ItemId": "2e8ea0c8-2750-4337-a494-b3707006a74a",
+        "ChoiceData": null,
+        "Num": 1,
+        "Text": "A"
+      },
+      {
+        "Id": "9742df3f-4d96-45f6-b8d2-a668629522f9",
+        "ItemId": "2e8ea0c8-2750-4337-a494-b3707006a74a",
+        "ChoiceData": null,
+        "Num": 2,
+        "Text": "B"
+      },
+      {
+        "Id": "350d06e7-2218-4e03-abf6-8035e0693099",
+        "ItemId": "2e8ea0c8-2750-4337-a494-b3707006a74a",
+        "ChoiceData": null,
+        "Num": 3,
+        "Text": "C"
+      },
+      {
+        "Id": "889fd2ac-a8dd-407c-b74a-888e62ba5fef",
+        "ItemId": "2e8ea0c8-2750-4337-a494-b3707006a74a",
+        "ChoiceData": null,
+        "Num": 4,
+        "Text": "D"
+      },
+      {
+        "Id": "dfb306c1-5d02-4fdd-a40a-f1daf3531a03",
+        "ItemId": "2e8ea0c8-2750-4337-a494-b3707006a74a",
+        "ChoiceData": null,
+        "Num": 5,
+        "Text": "E"
+      }
+    ]
+  },
+  {
+    "Id": "3a629d3a-38bb-4328-b80b-d9f926980552",
+    "ContentId": "b519225d-16b6-463a-8cb5-34008a4e587e",
+    "Num": 8,
+    "Text": "8. The floors in Sentinelese huts may be elevated or covered with foliage.",
+    "ExtraField1": "",
+    "Choices": [
+      {
+        "Id": "b2ac0425-fa62-435d-9a8b-a6b100da81a6",
+        "ItemId": "3a629d3a-38bb-4328-b80b-d9f926980552",
+        "ChoiceData": null,
+        "Num": 1,
+        "Text": "A"
+      },
+      {
+        "Id": "ad8ca8b8-024e-4cc6-a623-df9f3893a842",
+        "ItemId": "3a629d3a-38bb-4328-b80b-d9f926980552",
+        "ChoiceData": null,
+        "Num": 2,
+        "Text": "B"
+      },
+      {
+        "Id": "f1c499c4-5b9f-4d40-ba15-0f95bd40f1b5",
+        "ItemId": "3a629d3a-38bb-4328-b80b-d9f926980552",
+        "ChoiceData": null,
+        "Num": 3,
+        "Text": "C"
+      },
+      {
+        "Id": "2915f198-bf04-48f9-a61d-623762ab83ba",
+        "ItemId": "3a629d3a-38bb-4328-b80b-d9f926980552",
+        "ChoiceData": null,
+        "Num": 4,
+        "Text": "D"
+      },
+      {
+        "Id": "26361f3f-befa-4b79-ba9d-beac20a8cc6b",
+        "ItemId": "3a629d3a-38bb-4328-b80b-d9f926980552",
+        "ChoiceData": null,
+        "Num": 5,
+        "Text": "E"
+      }
+    ]
+  },
+  {
+    "Id": "14ccf5a6-312f-4200-b16c-8fa6ccda4357",
+    "ContentId": "b519225d-16b6-463a-8cb5-34008a4e587e",
+    "Num": 9,
+    "Text": "9. The Sentinelese are the last remaining tribe on the Andaman Islands.",
+    "ExtraField1": "",
+    "Choices": [
+      {
+        "Id": "2bcb5af8-5357-41ee-9f90-2a88ffd1738c",
+        "ItemId": "14ccf5a6-312f-4200-b16c-8fa6ccda4357",
+        "ChoiceData": null,
+        "Num": 1,
+        "Text": "A"
+      },
+      {
+        "Id": "00d769f5-ef32-4710-99ba-c8621cb2e930",
+        "ItemId": "14ccf5a6-312f-4200-b16c-8fa6ccda4357",
+        "ChoiceData": null,
+        "Num": 2,
+        "Text": "B"
+      },
+      {
+        "Id": "224868f7-9d80-4ebe-bc6e-1bc28606479b",
+        "ItemId": "14ccf5a6-312f-4200-b16c-8fa6ccda4357",
+        "ChoiceData": null,
+        "Num": 3,
+        "Text": "C"
+      },
+      {
+        "Id": "b2bd5dd4-9345-42f9-a386-267ee53eaa37",
+        "ItemId": "14ccf5a6-312f-4200-b16c-8fa6ccda4357",
+        "ChoiceData": null,
+        "Num": 4,
+        "Text": "D"
+      },
+      {
+        "Id": "b9772a8f-35df-42e9-93b6-607403735f3f",
+        "ItemId": "14ccf5a6-312f-4200-b16c-8fa6ccda4357",
+        "ChoiceData": null,
+        "Num": 5,
+        "Text": "E"
+      }
+    ]
+  }
+]
+</script>
+
+<div id="panelTop">
+
+    <div id="canvasName" style="float: left; font-size: 16px; font-weight: bold;">
+        Practice Test 1 - Reading Part 3: Reading for Information
+    </div>
+
+    <div style="float: right;" class="btnNext span1 pull-right">
+                <a href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest4/OPT4/View/032d6205-6133-4e03-9b44-1cafce834bb8#" id="btnNext" class="btn btn-primary">NEXT</a>
+
+    </div>
+
+    <div style="float: right; display: block;" id="timer" class="hide">
+        Time remaining: <strong>9 minutes</strong>
+    </div>
+
+</div>
+
+<div id="mainContent">
+    
+
+<script id="dropDownListTemplate" type="text/template">
+{{#each this}}
+    <div class="ddrow">
+        {{Text}}
+        <div class='dd'>
+            <div class='ddToggle'>▾</div>
+            <div class='ddMenu'>
+                <ul data-id="{{Id}}">
+                {{#each Choices}}
+                    <li data-id="{{Id}}">{{Text}}</li>
+                {{/each}}
+                </ul>
+            </div>
+        </div>
+    </div>
+{{/each}}
+</script>
+
+<script id="dropDownListInlineTemplate" type="text/template">
+    <div class='dd'>
+        <div class='ddToggle'>▾</div>
+        <div class='ddMenu'>
+            <ul data-id="{{Id}}">
+            {{#each Choices}}
+                <li data-id="{{Id}}">{{Text}}</li>
+            {{/each}}
+            </ul>
+        </div>
+    </div>
+</script>
+
+<script id="dropDownListInFrontTemplate" type="text/template">
+    {{#each this}}
+    <div class="ddrow">
+        <div class='dd'>
+            <div class='ddToggle'>▾</div>
+            <div class='ddMenu'>
+                <ul data-id="{{Id}}">
+                    {{#each Choices}}
+                    <li data-id="{{Id}}">{{Text}}</li>
+                    {{/each}}
+                </ul>
+            </div>
+        </div>
+        &nbsp;-
+        {{Text}}
+    </div>
+    {{/each}}
+</script>
+
+<div id="panelLeft" style="width: 50%; height: 696px;" class="graybg">
+    <div class="row1">
+        <div class="instruction" style="margin-bottom: 30px;">Read the following passage.</div>
+        <div><strong>A.</strong> In this age of global connectedness and social networking, it is hard to imagine that lost tribes still exist. However, the Sentinelese tribe of the Andaman Islands are just that. This indigenous group has been living on North Sentinel Island in the Indian Ocean’s Bay of Bengal for thousands of years. Living on a sea route that has been travelled since ancient times, the Sentinelese have impressively managed to avoid influence from outside civilizations. They are the last tribe of the Andaman Islands to maintain their isolation, mainly because of their hostile resistance to outsiders’ attempts at contact.<br><br>
+
+<strong>B.</strong> Due to lack of access, little is known about the Sentinelese people. What knowledge exists comes either from observation from a distance or is based on comparison with other Andaman tribes. A hunter-gatherer society, the Sentinelese subsist mainly by hunting, fishing, and collecting wild plants, and do not appear to have developed any agricultural practices. The majority of their tools and weapons are made from stone and animal bones; however, there is some evidence that they make use of metal fragments that wash ashore. They use javelins and flatbows as weapons, in addition to a variety of arrows. Canoes, nets, and harpoons serve as fishing gear.<br><br>
+
+<strong>C.</strong> Because contact with the Sentinelese tribe is nearly impossible, it is difficult to estimate the size of their population. Based on a limited number of encounters by outsiders and attempts by census officials to infer numbers by counting from a distance, it is estimated that there could be anywhere between 20 and 60 individuals. The island’s inhabitants tend to live in two types of dwellings. There are shelter-style huts that can house a group of three or four people. These huts have no walls, and their floors are covered in palm leaves. Additionally, there are more elaborate communal huts with raised floors and specific areas for fire.<br><br>
+
+<strong>D.</strong> Starting in 1967, attempts at peaceful contact were made by the Indian government with the support of anthropologists. During these contact expeditions, gifts of coconuts were left on the shore on several occasions in an effort to diminish the aggressiveness the Sentinelese demonstrated toward strangers. The Indian authorities had limited success before finally discontinuing the expeditions out of concern for the tribe. Due to their isolation from the outside world, it was decided that contact with the tribe only put them at risk of contracting diseases. Since then, the government policy has been to leave the tribe alone.<br><br>
+
+<strong>E. Not given in any of the above paragraphs.</strong></div>
+      
+    </div>
+</div>
+
+<div id="panelRight" style="width: 50%; height: 696px;" class="bluebg">
+    <div class="row1">
+        <div class="instruction" style="margin-bottom: 15px;">Decide which paragraph, A to D, has the information given in each statement below. Select E if the information is not given in any of the paragraphs.</div>
+        
+        <div id="multipleChoices" class="wellBlueBG" style="margin-bottom: 20px;">
+    
+    <div class="ddrow">
+        <div class="dd">
+            <div class="ddToggle">▾</div>
+            <div class="ddMenu">
+                <ul data-id="89230060-78a0-40da-a06f-227b4f5157da">
+                    
+                    <li data-id="b89d8f36-5a1d-4436-be93-c72f1dd49052">A</li>
+                    
+                    <li data-id="510d5370-577c-457a-8b96-41358d2b349d">B</li>
+                    
+                    <li data-id="edcf1b54-7770-4c6f-8f96-b8041f0f0a05">C</li>
+                    
+                    <li data-id="953a1cba-8a39-40ee-9deb-e470f8a16cd3">D</li>
+                    
+                    <li data-id="236a6ce6-8e31-4193-8495-b3d4d8c7412d">E</li>
+                    
+                </ul>
+            </div>
+        </div>
+        &nbsp;-
+        1. Sentinelese isolation is surprising because travellers have long known about their island.
+    </div>
+    
+    <div class="ddrow">
+        <div class="dd">
+            <div class="ddToggle">▾</div>
+            <div class="ddMenu">
+                <ul data-id="2c0df1eb-5489-4df4-a900-ac990335996a">
+                    
+                    <li data-id="8953aaa9-082d-4afa-81da-5cfc06c2b85a">A</li>
+                    
+                    <li data-id="b7526719-7b2c-4fb9-926c-3e952aa21337">B</li>
+                    
+                    <li data-id="85f74bea-3952-4020-a0bb-e49d390cdba8">C</li>
+                    
+                    <li data-id="3e126d72-4645-4da5-a645-1d89db8c8401">D</li>
+                    
+                    <li data-id="92f08b98-e97a-4fea-9e1b-656c0e673300">E</li>
+                    
+                </ul>
+            </div>
+        </div>
+        &nbsp;-
+        2. The Indian government used to leave food offerings for the Sentinelese.
+    </div>
+    
+    <div class="ddrow">
+        <div class="dd">
+            <div class="ddToggle">▾</div>
+            <div class="ddMenu">
+                <ul data-id="5d19c9d4-94dd-4373-b87e-6133a602b7f3">
+                    
+                    <li data-id="95195f25-250b-46e5-85be-8f6219887482">A</li>
+                    
+                    <li data-id="c37d15fc-d4a6-4290-909b-6cb86fe8b893">B</li>
+                    
+                    <li data-id="d2875ee9-7ba5-4af5-82ae-9f84099eed79">C</li>
+                    
+                    <li data-id="1fa87f29-2cb5-4564-b922-f21144f64ca8">D</li>
+                    
+                    <li data-id="6be08446-d62b-4e61-97ca-4ab0420b6502">E</li>
+                    
+                </ul>
+            </div>
+        </div>
+        &nbsp;-
+        3. The government is passing a bill to protect the Sentinelese community from modern diseases.
+    </div>
+    
+    <div class="ddrow">
+        <div class="dd">
+            <div class="ddToggle">▾</div>
+            <div class="ddMenu">
+                <ul data-id="9714568a-c16a-4676-b26b-7c7505261d7d">
+                    
+                    <li data-id="923abc1a-f231-4c4d-a4d4-dc9a11179eca">A</li>
+                    
+                    <li data-id="f27cdafd-3afe-4c3f-840f-78b8aee82274">B</li>
+                    
+                    <li data-id="b877984d-d436-41d0-b2db-aaadff45424e">C</li>
+                    
+                    <li data-id="109a2fd7-9c63-440e-ba6b-357e113d872e">D</li>
+                    
+                    <li data-id="d5c74203-e26f-4ead-bf25-a6fef9586756">E</li>
+                    
+                </ul>
+            </div>
+        </div>
+        &nbsp;-
+        4. Census data on the Sentinelese have been collected by indirect observation.
+    </div>
+    
+    <div class="ddrow">
+        <div class="dd">
+            <div class="ddToggle">▾</div>
+            <div class="ddMenu">
+                <ul data-id="d6fb4bcb-d15a-4277-976d-7aae0f3cab66">
+                    
+                    <li data-id="33178aaa-ed3a-4a21-bac3-0b81afd44236">A</li>
+                    
+                    <li data-id="3cdf3a28-97f7-483b-b641-ea71c8e7ddf0">B</li>
+                    
+                    <li data-id="00b429ce-97a3-42af-a59e-403b202fef42">C</li>
+                    
+                    <li data-id="1af91088-32bf-4d46-9c53-41358208623e">D</li>
+                    
+                    <li data-id="1975baa9-4189-4d97-9fa7-9906aa6e6737">E</li>
+                    
+                </ul>
+            </div>
+        </div>
+        &nbsp;-
+        5. The Indian government stopped visiting the Sentinelese for fear of contagion. 
+    </div>
+    
+    <div class="ddrow">
+        <div class="dd">
+            <div class="ddToggle">▾</div>
+            <div class="ddMenu">
+                <ul data-id="ec438239-d28f-424b-9063-48e633528ad6">
+                    
+                    <li data-id="b8462196-4f00-4746-aa54-56f6b8f669f4">A</li>
+                    
+                    <li data-id="55ee7f09-6319-47ce-bf8d-7c614b88c7b0">B</li>
+                    
+                    <li data-id="1d118206-1d16-468e-b340-a9488d95a315">C</li>
+                    
+                    <li data-id="a0c68def-d208-40a6-bc04-2d59cb8afd3f">D</li>
+                    
+                    <li data-id="3f76a9f8-1bf8-41a0-990c-0cf3f9330d16">E</li>
+                    
+                </ul>
+            </div>
+        </div>
+        &nbsp;-
+        6. The Sentinelese aggressively reject any outside technology that washes ashore.
+    </div>
+    
+    <div class="ddrow">
+        <div class="dd">
+            <div class="ddToggle">▾</div>
+            <div class="ddMenu">
+                <ul data-id="2e8ea0c8-2750-4337-a494-b3707006a74a">
+                    
+                    <li data-id="34f2f844-94d5-4001-a078-c27c4f04a697">A</li>
+                    
+                    <li data-id="9742df3f-4d96-45f6-b8d2-a668629522f9">B</li>
+                    
+                    <li data-id="350d06e7-2218-4e03-abf6-8035e0693099">C</li>
+                    
+                    <li data-id="889fd2ac-a8dd-407c-b74a-888e62ba5fef">D</li>
+                    
+                    <li data-id="dfb306c1-5d02-4fdd-a40a-f1daf3531a03">E</li>
+                    
+                </ul>
+            </div>
+        </div>
+        &nbsp;-
+        7. Food production on North Sentinel Island has remained very basic.
+    </div>
+    
+    <div class="ddrow">
+        <div class="dd">
+            <div class="ddToggle">▾</div>
+            <div class="ddMenu">
+                <ul data-id="3a629d3a-38bb-4328-b80b-d9f926980552">
+                    
+                    <li data-id="b2ac0425-fa62-435d-9a8b-a6b100da81a6">A</li>
+                    
+                    <li data-id="ad8ca8b8-024e-4cc6-a623-df9f3893a842">B</li>
+                    
+                    <li data-id="f1c499c4-5b9f-4d40-ba15-0f95bd40f1b5">C</li>
+                    
+                    <li data-id="2915f198-bf04-48f9-a61d-623762ab83ba">D</li>
+                    
+                    <li data-id="26361f3f-befa-4b79-ba9d-beac20a8cc6b">E</li>
+                    
+                </ul>
+            </div>
+        </div>
+        &nbsp;-
+        8. The floors in Sentinelese huts may be elevated or covered with foliage.
+    </div>
+    
+    <div class="ddrow">
+        <div class="dd">
+            <div class="ddToggle">▾</div>
+            <div class="ddMenu">
+                <ul data-id="14ccf5a6-312f-4200-b16c-8fa6ccda4357">
+                    
+                    <li data-id="2bcb5af8-5357-41ee-9f90-2a88ffd1738c">A</li>
+                    
+                    <li data-id="00d769f5-ef32-4710-99ba-c8621cb2e930">B</li>
+                    
+                    <li data-id="224868f7-9d80-4ebe-bc6e-1bc28606479b">C</li>
+                    
+                    <li data-id="b2bd5dd4-9345-42f9-a386-267ee53eaa37">D</li>
+                    
+                    <li data-id="b9772a8f-35df-42e9-93b6-607403735f3f">E</li>
+                    
+                </ul>
+            </div>
+        </div>
+        &nbsp;-
+        9. The Sentinelese are the last remaining tribe on the Andaman Islands.
+    </div>
+    
+</div>
+
+    </div>
+</div>
+
+<script>
+    $(function () {
+        paragon.pt.timer.start(600);
+
+
+        paragon.pt.dropDown.renderTemplate("/InstructionalProducts/PracticeTest4/OPT4/SaveUserResponse/", "01ccd576-75a9-4ab4-b4de-73fd5e11f744", $('#dropDownListInFrontTemplate').html(), $('#multipleChoices'), paragon.pt.items);
+
+
+        paragon.pt.dropDown.activate("/InstructionalProducts/PracticeTest4/OPT4/SaveUserResponse/", "01ccd576-75a9-4ab4-b4de-73fd5e11f744");
+
+        $.ajax({
+            type: "POST",
+            url: "/InstructionalProducts/PracticeTest4/OPT4/GetUserResponses",
+            data: { 'sectionId': '01ccd576-75a9-4ab4-b4de-73fd5e11f744', 'items': JSON.stringify(paragon.pt.items) },
+                       success: function (data) {
+                           var responses = data.responses;
+                           for (var i = 0; i < responses.length; i++) {
+                               var currentResponse = responses[i];
+                               if (currentResponse != null) {
+                                   var selected = $('ul').find('[data-id=' + currentResponse.Answer + ']');
+                                   if (selected != null) {
+                                       var toggle = $(selected).parent().parent().prev();
+                                       $(toggle).addClass('ddToggle1');
+                                       $(toggle).html(selected.html());
+                                       $(selected).addClass('selected');
+                                   }
+                               }
+                           }
+                       }
+                   });
+        //show scrollbar
+        paragon.pt.showScrollBar($('#panelLeft'), $('#panelRight'));
+        paragon.pt.showReadingAnswerKeyBtn("01ccd576-75a9-4ab4-b4de-73fd5e11f744");
+
+
+    });
+
+
+
+</script>
+
+</div>
+
+<div id="dlgTest" class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-header">
+        <h4>Test</h4>
+    </div>
+    <div class="modal-body">
+        <p>test</p>
+    </div>
+    <div class="modal-footer">
+        <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+    </div>
+</div>
+
+<div id="dlgUnansweredWarning" class="modal hide fade" tabindex="-1" role="dialog">
+    <div class="modal-body">
+        <p>No answer(s) selected. On the official test, if you go to the next page, you will no longer be able to answer the question(s) on this page.</p>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" data-dismiss="modal" style="color: white;">Keep working on this page</button>
+        <button class="btn" data-dismiss="modal" onclick="paragon.pt.skipToNext()">Skip and go to the next page</button>
+    </div>
+</div>
+
+</div>
+    <div class="container hide" id="footer" style="display: block;">
+        <div class="row">
+    <div id="leftBtn" class="span7" align="left"><a href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest4/OPT4/View/ebccede3-dba8-46f1-a8f3-58a21105da56" id="backToResultbtn" class="btn">Answer Key</a></div>
+    <div class="span5">
+        <a href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest4/OPT4/View/032d6205-6133-4e03-9b44-1cafce834bb8#" id="btnBack" class="btn btn1 hide btn-danger" style="display: inline;">BACK</a>
+        
+    </div>
+</div>
+
+    </div>
+    <div class="container" style="text-align: center; font-size: 0.9em; color: #53565A; padding-top: 20px;">
+        <p>Copyright 2025 - Paragon Testing Enterprises   |    <a href="https://www.celpip.ca/" target="_blank">www.celpip.ca</a>    |    <a href="https://www.celpip.ca/contact/" target="_blank">Contact Us</a></p>
+    </div>
+
+    <div id="block" class="modal-backdrop hide"></div>
+    <div id="unsupported" class="modal hide" tabindex="-1">
+        <div class="modal-body">
+            <h3>Unsupported screen resolution</h3>
+            <p>This product requires a minimum screen resolution of 1024 x 768.</p>
+        </div>
+    </div>
+
+
+    <script>
+        $(function () {
+            paragon.verifyDisplaySize();
+
+            $(window).resize(function () {
+                paragon.verifyDisplaySize();
+            });
+        });
+    </script>
+
+
+    
+    <script>
+        paragon.pt.showAlert = function (msg) {
+            $('#dlgTest .modal-body p').html(msg);
+            $('#dlgTest').modal();
+        }
+
+        paragon.pt.skipToNext = function () {
+            paragon.pt.nextItem("/InstructionalProducts/PracticeTest4/OPT4/SaveCanvasData",'', "032d6205-6133-4e03-9b44-1cafce834bb8", "01ccd576-75a9-4ab4-b4de-73fd5e11f744", 2);
+            paragon.pt.goNext();
+        }
+
+        $(function () {
+            if (paragon.footerVisible == true) {
+                paragon.showFooter();
+            }
+
+            if (paragon.pt.backUrl.length > 0) {
+                $("#btnBack").click(function () {
+                    paragon.pt.goBack();
+                });
+                paragon.pt.showBackButton();
+            }
+
+
+            $("#btnNext").click(function () {
+                var url = "";
+                if (31  == 24 || 31  == 25) {
+                    url = "/InstructionalProducts/PracticeTest4/OPT4/GetUserResponse/";
+                }
+                else {
+                    url = "/InstructionalProducts/PracticeTest4/OPT4/GetUserResponses/";
+                }
+                var unanswered = paragon.pt.countUnansweredQuestionsFromDb(31, "01ccd576-75a9-4ab4-b4de-73fd5e11f744", url);
+                if (unanswered > 0) {
+                    $('#dlgUnansweredWarning').modal();
+                }
+                else {
+                    paragon.pt.skipToNext();
+                }
+            });
+
+            if (paragon.pt.nextUrl.length > 0) {
+                paragon.pt.showNextButton();
+            }
+
+
+        });
+
+        $(".links-main").click(function () {
+            var href = "/InstructionalProducts/PracticeTest4/OPT4/";
+            window.location = href;
+
+        });
+
+    </script>
+
+
+
+</body><grammarly-desktop-integration data-grammarly-shadow-root="true"><template shadowrootmode="open"><style>
+      div.grammarly-desktop-integration {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+        -moz-user-select: none;
+        -webkit-user-select: none;
+        -ms-user-select:none;
+        user-select:none;
+      }
+
+      div.grammarly-desktop-integration:before {
+        content: attr(data-content);
+      }
+    </style><div aria-label="grammarly-integration" role="group" tabindex="-1" class="grammarly-desktop-integration" data-content="{&quot;mode&quot;:&quot;full&quot;,&quot;isActive&quot;:true,&quot;isUserDisabled&quot;:false}"></div></template></grammarly-desktop-integration></html>

@@ -1,22 +1,28 @@
 <!DOCTYPE html>
 <!-- saved from url=(0130)https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest6/OPT6/View/f2fbe267-8eb0-4e72-a552-791197b5b500 -->
-<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><style>
-    a {
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <style>
+      a {
         outline: 0;
-    }
-</style>
+      }
+    </style>
 
-
-
-    
     <title>Practice Test</title>
-    <meta name="description">
-    <link href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/favicon.ico" rel="shortcut icon" type="image/x-icon">
-    <meta name="viewport" content="width=device-width">
-    <link href="./6-2-4_files/bootstrap.css" rel="stylesheet">
-<link href="./6-2-4_files/Site.css" rel="stylesheet">
+    <meta name="description" />
+    <link
+      href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/favicon.ico"
+      rel="shortcut icon"
+      type="image/x-icon"
+    />
+    <meta name="viewport" content="width=device-width" />
+    <link href="./6-2-4_files/bootstrap.css" rel="stylesheet" />
+    <link href="./6-2-4_files/Site.css" rel="stylesheet" />
 
-    <script src="./6-2-4_files/399283786078546" async=""></script><script async="" src="./6-2-4_files/fbevents.js.下載"></script><script src="./6-2-4_files/jquery-1.9.1.min.js.下載"></script>
+    <script src="./6-2-4_files/399283786078546" async=""></script>
+    <script async="" src="./6-2-4_files/fbevents.js.下載"></script>
+    <script src="./6-2-4_files/jquery-1.9.1.min.js.下載"></script>
 
     <script src="./6-2-4_files/jquery.unobtrusive-ajax.min.js.下載"></script>
 
@@ -29,177 +35,208 @@
     <script src="./6-2-4_files/facebook-pixel.js.下載"></script>
 
     <script>
-    paragon.pt = paragon.pt || {};
-    paragon.pt.backUrl = "";
-    paragon.pt.nextUrl = "";
-    paragon.pt.speakingPrepTimeLeft = 0;
-    paragon.pt.speakingRecordingTimeLeft = 0;
-    paragon.pt.itemIndex = 0;
+      paragon.pt = paragon.pt || {};
+      paragon.pt.backUrl = "";
+      paragon.pt.nextUrl = "";
+      paragon.pt.speakingPrepTimeLeft = 0;
+      paragon.pt.speakingRecordingTimeLeft = 0;
+      paragon.pt.itemIndex = 0;
 
-    paragon.pt.showAlert = function (msg) {
+      paragon.pt.showAlert = function (msg) {
         alert(msg);
-    }
+      };
 
-    paragon.pt.showBackButton = function () {
+      paragon.pt.showBackButton = function () {
         $("#btnBack").show();
-    }
+      };
 
-    paragon.pt.showNextButton = function () {
+      paragon.pt.showNextButton = function () {
         $("#btnNext").show();
-    }
+      };
 
-    paragon.pt.hideBackButton = function () {
+      paragon.pt.hideBackButton = function () {
         $("#btnBack").hide();
-    }
+      };
 
-    paragon.pt.hideNextButton = function () {
+      paragon.pt.hideNextButton = function () {
         $("#btnNext").hide();
-    }
+      };
 
-    paragon.pt.goNext = function () {
+      paragon.pt.goNext = function () {
         window.location = paragon.pt.nextUrl;
-    }
+      };
 
-    paragon.pt.goBack = function () {
+      paragon.pt.goBack = function () {
         window.location = paragon.pt.backUrl;
-    }
+      };
 
-    //Timer For Listening, Reading and Writing
-    paragon.pt.timer = paragon.pt.timer || {};
-    paragon.pt.timer.totalTime = 0;
-    paragon.pt.timer.timeLeft = 0;
-    paragon.pt.timer.interval = null;
-    paragon.pt.timer.start = function (timeLeft) {
+      //Timer For Listening, Reading and Writing
+      paragon.pt.timer = paragon.pt.timer || {};
+      paragon.pt.timer.totalTime = 0;
+      paragon.pt.timer.timeLeft = 0;
+      paragon.pt.timer.interval = null;
+      paragon.pt.timer.start = function (timeLeft) {
         paragon.pt.timer.timeLeft = timeLeft;
-        paragon.pt.timer.totalTime = timeLeft
+        paragon.pt.timer.totalTime = timeLeft;
         var minutes = Math.floor(timeLeft / 60);
         var seconds = timeLeft - minutes * 60;
 
         if (minutes < 1) {
-            $("#timer strong").html(seconds + " seconds");
-            $("#timer strong").attr("style", "color:red");
-        }
-        else if (minutes == 1) {
-            $("#timer strong").html(minutes + " minute");
-        }
-        else {
-            $("#timer strong").html(minutes + " minutes");
+          $("#timer strong").html(seconds + " seconds");
+          $("#timer strong").attr("style", "color:red");
+        } else if (minutes == 1) {
+          $("#timer strong").html(minutes + " minute");
+        } else {
+          $("#timer strong").html(minutes + " minutes");
         }
 
         $("#timer").show();
 
         if (paragon.pt.timer.interval)
-            window.clearInterval(paragon.pt.timer.interval);
+          window.clearInterval(paragon.pt.timer.interval);
 
-        paragon.pt.timer.interval = window.setInterval(function () { paragon.pt.timer.deductTime() }, 1000);
+        paragon.pt.timer.interval = window.setInterval(function () {
+          paragon.pt.timer.deductTime();
+        }, 1000);
 
         paragon.showFooter();
-    }
+      };
 
-    paragon.pt.timer.deductTime = function () {
+      paragon.pt.timer.deductTime = function () {
         if (paragon.pt.timer.timeLeft > 0) {
-            paragon.pt.timer.timeLeft -= 1;
+          paragon.pt.timer.timeLeft -= 1;
 
-            var minutes = Math.floor(paragon.pt.timer.timeLeft / 60);
-            var seconds = paragon.pt.timer.timeLeft - minutes * 60;
+          var minutes = Math.floor(paragon.pt.timer.timeLeft / 60);
+          var seconds = paragon.pt.timer.timeLeft - minutes * 60;
 
-            if (minutes < 1) {
-                $("#timer strong").html(seconds + " seconds");
-                $("#timer strong").attr("style", "color:red");
-            }
-            else if (minutes == 1) {
-                $("#timer strong").html(minutes + " minute");
-            }
-            else {
-                $("#timer strong").html(minutes + " minutes");
-            }
+          if (minutes < 1) {
+            $("#timer strong").html(seconds + " seconds");
+            $("#timer strong").attr("style", "color:red");
+          } else if (minutes == 1) {
+            $("#timer strong").html(minutes + " minute");
+          } else {
+            $("#timer strong").html(minutes + " minutes");
+          }
+        } else {
+          window.clearInterval(paragon.pt.timer.interval);
+          $("#timer strong").html("None");
         }
-        else {
-            window.clearInterval(paragon.pt.timer.interval);
-            $("#timer strong").html("None");
-        }
-    }
+      };
 
-    //Timer For Speaking, work in progress
-    paragon.pt.showTimerSpeaking = function (prepTime, recordingTime) {
+      //Timer For Speaking, work in progress
+      paragon.pt.showTimerSpeaking = function (prepTime, recordingTime) {
         paragon.pt.speakingPrepTimeLeft = prepTime;
         paragon.pt.speakingRecordingTimeLeft = recordingTime;
         $("#timerSpeaking strong:first-child").html(prepTime + " seconds");
         $("#timerSpeaking strong:last-child").html(recordingTime + " seconds");
         $("#timerSpeaking").show();
         paragon.showFooter();
-    }
+      };
 
-    paragon.pt.userResponse = paragon.pt.userResponse || {};
+      paragon.pt.userResponse = paragon.pt.userResponse || {};
 
-    paragon.pt.uploadMultipleChoicesValue = function (url, sectionId, itemId, choiceId) {
+      paragon.pt.uploadMultipleChoicesValue = function (
+        url,
+        sectionId,
+        itemId,
+        choiceId
+      ) {
         $.ajax({
-            type: "POST",
-            url: url,
-            data: { sectionId: sectionId, itemId: itemId, choiceId: choiceId },
-            dataType: "json",
-            cache: false,
-            success: function (json) {
-                console.log(json);
-                console.log("ItemId: " + itemId + ", " + "ChoiceId: " + choiceId);
-            }
+          type: "POST",
+          url: url,
+          data: { sectionId: sectionId, itemId: itemId, choiceId: choiceId },
+          dataType: "json",
+          cache: false,
+          success: function (json) {
+            console.log(json);
+            console.log("ItemId: " + itemId + ", " + "ChoiceId: " + choiceId);
+          },
         });
-    }
+      };
 
-    paragon.pt.activateMultipleChoices = function (url, sectionId) {
+      paragon.pt.activateMultipleChoices = function (url, sectionId) {
         $(document).delegate(".multipleChoices li", "click", function () {
-            var ul = $(this).parent();
-            ul.find("li").removeClass("selected");
-            $(this).addClass("selected");
+          var ul = $(this).parent();
+          ul.find("li").removeClass("selected");
+          $(this).addClass("selected");
 
-            paragon.pt.uploadMultipleChoicesValue(url, sectionId, ul.data("id"), $(this).data("id"));
+          paragon.pt.uploadMultipleChoicesValue(
+            url,
+            sectionId,
+            ul.data("id"),
+            $(this).data("id")
+          );
         });
-    }
+      };
 
-    paragon.pt.renderMultipleChoices = function (url, sectionId, item, renderItemText, hasImage, renderChoiceText) {
+      paragon.pt.renderMultipleChoices = function (
+        url,
+        sectionId,
+        item,
+        renderItemText,
+        hasImage,
+        renderChoiceText
+      ) {
         var template;
         if (renderItemText == true) {
-            if (hasImage == true) {
-                template = Handlebars.compile($("#multipleChoicesTemplateWithItemTextAndImage").html());
+          if (hasImage == true) {
+            template = Handlebars.compile(
+              $("#multipleChoicesTemplateWithItemTextAndImage").html()
+            );
+          } else {
+            template = Handlebars.compile(
+              $("#multipleChoicesTemplateWithItemText").html()
+            );
+          }
+        } else {
+          if (hasImage == true) {
+            if (renderChoiceText == true) {
+              template = Handlebars.compile(
+                $("#multipleChoicesTemplateWithImage").html()
+              );
+            } else {
+              template = Handlebars.compile(
+                $("#multipleChoicesTemplateWithImageNoText").html()
+              );
             }
-            else {
-                template = Handlebars.compile($("#multipleChoicesTemplateWithItemText").html());
-            }
-        }
-        else {
-            if (hasImage == true) {
-
-                if (renderChoiceText == true) {
-                    template = Handlebars.compile($("#multipleChoicesTemplateWithImage").html());
-                }
-                else {
-                    template = Handlebars.compile($("#multipleChoicesTemplateWithImageNoText").html());
-                }
-            }
-            else {
-                template = Handlebars.compile($("#multipleChoicesTemplate").html());
-            }
+          } else {
+            template = Handlebars.compile($("#multipleChoicesTemplate").html());
+          }
         }
 
         $("#multipleChoices").html(template(item));
 
         paragon.pt.activateMultipleChoices(url, sectionId);
-    }
+      };
 
-    //Drop down list
-    paragon.pt.dropDown = paragon.pt.dropDown || {};
-    paragon.pt.dropDown.activeMenu = null;
-    paragon.pt.dropDown.renderTemplate = function (url, sectionId, templateToRender, elementToRender, items) {
+      //Drop down list
+      paragon.pt.dropDown = paragon.pt.dropDown || {};
+      paragon.pt.dropDown.activeMenu = null;
+      paragon.pt.dropDown.renderTemplate = function (
+        url,
+        sectionId,
+        templateToRender,
+        elementToRender,
+        items
+      ) {
         var template = Handlebars.compile(templateToRender);
         $(elementToRender).html(template(items));
-    }
+      };
 
-    paragon.pt.dropDown.renderInline = function (url, sectionId, items, startIndex, endIndex, elementToRender) {
-
-        var template = Handlebars.compile($("#dropDownListInlineTemplate").html());
+      paragon.pt.dropDown.renderInline = function (
+        url,
+        sectionId,
+        items,
+        startIndex,
+        endIndex,
+        elementToRender
+      ) {
+        var template = Handlebars.compile(
+          $("#dropDownListInlineTemplate").html()
+        );
         var text = elementToRender[0].innerHTML;
         for (var i = startIndex; i <= endIndex; i++) {
-            text = text.replace("{" + items[i].Num + "}", template(items[i]));
+          text = text.replace("{" + items[i].Num + "}", template(items[i]));
         }
         //Handlebars.registerHelper('renderInline', function (src, items, startIndex, endIndex, options) {
         //    var template = Handlebars.compile($("#dropDownListInlineTemplate").html());
@@ -209,586 +246,636 @@
         //    return src;
         //});
         $(elementToRender).html(text);
-    }
+      };
 
-    paragon.pt.dropDown.activate = function (url, sectionId) {
-
+      paragon.pt.dropDown.activate = function (url, sectionId) {
         $(document.body).click(function () {
-            $(".dd").each(function (i) {
-                if (i != paragon.pt.dropDown.activeMenu) {
-                    $(this).find(".ddMenu").hide();
-                    $(this).removeClass('active');
-                }
-            });
+          $(".dd").each(function (i) {
+            if (i != paragon.pt.dropDown.activeMenu) {
+              $(this).find(".ddMenu").hide();
+              $(this).removeClass("active");
+            }
+          });
         });
 
-        $(".dd").mouseover(function () {
+        $(".dd")
+          .mouseover(function () {
             paragon.pt.dropDown.activeMenu = $(".dd").index(this);
-        }).mouseout(function () {
+          })
+          .mouseout(function () {
             paragon.pt.dropDown.activeMenu = null;
-        });
+          });
 
         $(".ddToggle").click(function () {
-            var parent = $(this).parent();
-            parent.toggleClass("active");
-            var ddMenu = parent.find(".ddMenu");
-            ddMenu.animate({ height: 'toggle', opacity: 'toggle' }, 100);
-            var left = $(this).position().left;
-            ddMenu.css("left", Math.round(left) + "px");
+          var parent = $(this).parent();
+          parent.toggleClass("active");
+          var ddMenu = parent.find(".ddMenu");
+          ddMenu.animate({ height: "toggle", opacity: "toggle" }, 100);
+          var left = $(this).position().left;
+          ddMenu.css("left", Math.round(left) + "px");
 
-            //place the dropDown menu 20px below the box
-            var top = parent.position().top;
-            ddMenu.css("top", Math.round(top) + 20 + "px");
-
+          //place the dropDown menu 20px below the box
+          var top = parent.position().top;
+          ddMenu.css("top", Math.round(top) + 20 + "px");
         });
 
-        $('.dd li').click(function () {
-            $(this).parent().find("li").removeClass("selected");
-            $(this).addClass("selected");
-            var parent = $(this).parent().parent().parent();
-            var ddToggle = parent.find(".ddToggle");
-            ddToggle.html($(this).html());
-            ddToggle.addClass("ddToggle1");
-            parent.find(".ddMenu").animate({ height: 'toggle', opacity: 'toggle' }, 400);
-            parent.removeClass('active');
-            var ul = $(this).parent();
-            paragon.pt.uploadMultipleChoicesValue(url, sectionId, ul.data("id"), $(this).data("id"));
+        $(".dd li").click(function () {
+          $(this).parent().find("li").removeClass("selected");
+          $(this).addClass("selected");
+          var parent = $(this).parent().parent().parent();
+          var ddToggle = parent.find(".ddToggle");
+          ddToggle.html($(this).html());
+          ddToggle.addClass("ddToggle1");
+          parent
+            .find(".ddMenu")
+            .animate({ height: "toggle", opacity: "toggle" }, 400);
+          parent.removeClass("active");
+          var ul = $(this).parent();
+          paragon.pt.uploadMultipleChoicesValue(
+            url,
+            sectionId,
+            ul.data("id"),
+            $(this).data("id")
+          );
         });
-    }
+      };
 
-    paragon.pt.showInfoBox = function (message) {
+      paragon.pt.showInfoBox = function (message) {
         var infoBox = $("#infoBox");
-        if (message)
-            $("#infoBox .boxText p").html(message);
+        if (message) $("#infoBox .boxText p").html(message);
         infoBox.show();
-    }
+      };
 
-    paragon.pt.hideInfoBox = function () {
+      paragon.pt.hideInfoBox = function () {
         $("#infoBox").hide();
-    }
+      };
 
-    //Audio Playback for the Listening Component
-    paragon.pt.playAudio = paragon.pt.playAudio || {};
-    paragon.pt.playAudio.player = null;
-    paragon.pt.playAudio.totalTime = 0;
-    paragon.pt.playAudio.timeLeft = 0;
-    paragon.pt.playAudio.interval = null;
-    paragon.pt.playAudio.onDone = null;
+      //Audio Playback for the Listening Component
+      paragon.pt.playAudio = paragon.pt.playAudio || {};
+      paragon.pt.playAudio.player = null;
+      paragon.pt.playAudio.totalTime = 0;
+      paragon.pt.playAudio.timeLeft = 0;
+      paragon.pt.playAudio.interval = null;
+      paragon.pt.playAudio.onDone = null;
 
-    paragon.pt.playAudio.start = function (playAudioTime) {
+      paragon.pt.playAudio.start = function (playAudioTime) {
         paragon.pt.hideInfoBox();
         paragon.pt.playAudio.totalTime = playAudioTime;
         paragon.pt.playAudio.timeLeft = playAudioTime;
         if (paragon.pt.playAudio.interval)
-            window.clearInterval(paragon.pt.playAudio.interval);
+          window.clearInterval(paragon.pt.playAudio.interval);
 
         $("#playAudioBox").fadeIn(1000);
-    }
+      };
 
+      //recording functions
 
-    //recording functions
+      paragon.pt.recording = paragon.pt.recording || {};
+      paragon.pt.recording.totalTime = 0;
+      paragon.pt.recording.timeLeft = 0;
+      paragon.pt.recording.interval = null;
+      paragon.pt.recording.onDone = null;
 
-    paragon.pt.recording = paragon.pt.recording || {};
-    paragon.pt.recording.totalTime = 0;
-    paragon.pt.recording.timeLeft = 0;
-    paragon.pt.recording.interval = null;
-    paragon.pt.recording.onDone = null;
-
-    paragon.pt.recording.updateProgressBar = function () {
-        var percentage = 100 - (paragon.pt.recording.timeLeft / paragon.pt.recording.totalTime) * 100;
+      paragon.pt.recording.updateProgressBar = function () {
+        var percentage =
+          100 -
+          (paragon.pt.recording.timeLeft / paragon.pt.recording.totalTime) *
+            100;
         $("#startRecTime .progressbar-cover").css("left", percentage + "%");
-    }
+      };
 
-    paragon.pt.recording.deductTime = function () {
+      paragon.pt.recording.deductTime = function () {
         if (paragon.pt.recording.timeLeft > 0) {
-            paragon.pt.recording.timeLeft -= 1;
-            paragon.pt.recording.updateProgressBar();
+          paragon.pt.recording.timeLeft -= 1;
+          paragon.pt.recording.updateProgressBar();
+        } else {
+          window.clearInterval(paragon.pt.recording.interval);
+          $("#startRecTime").hide();
+          paragon.pt.showNextButton();
+          if (paragon.pt.recording.onDone) {
+            paragon.pt.recording.onDone();
+          }
         }
-        else {
-            window.clearInterval(paragon.pt.recording.interval);
-            $("#startRecTime").hide();
-            paragon.pt.showNextButton();
-            if (paragon.pt.recording.onDone) {
-                paragon.pt.recording.onDone();
-            }
-        }
-    }
+      };
 
-    paragon.pt.recording.start = function (playAudioTime) {
+      paragon.pt.recording.start = function (playAudioTime) {
         paragon.pt.recording.totalTime = playAudioTime;
         paragon.pt.recording.timeLeft = playAudioTime;
         if (paragon.pt.recording.interval)
-            window.clearInterval(paragon.pt.recording.interval);
+          window.clearInterval(paragon.pt.recording.interval);
 
-        paragon.pt.recording.interval = window.setInterval(function () { paragon.pt.recording.deductTime() }, 1000);
+        paragon.pt.recording.interval = window.setInterval(function () {
+          paragon.pt.recording.deductTime();
+        }, 1000);
         paragon.pt.recording.updateProgressBar();
         $("#startRecTime").fadeIn(1000);
-    }
+      };
 
-    //end recording
+      //end recording
 
-    //preperation functions
+      //preperation functions
 
-    paragon.pt.preparation = paragon.pt.preparation || {};
-    paragon.pt.preparation.totalTime = 0;
-    paragon.pt.preparation.timeLeft = 0;
-    paragon.pt.preparation.interval = null;
-    paragon.pt.preparation.onDone = null;
-    paragon.pt.preparation.startRecording = null;
+      paragon.pt.preparation = paragon.pt.preparation || {};
+      paragon.pt.preparation.totalTime = 0;
+      paragon.pt.preparation.timeLeft = 0;
+      paragon.pt.preparation.interval = null;
+      paragon.pt.preparation.onDone = null;
+      paragon.pt.preparation.startRecording = null;
 
-    paragon.pt.preparation.updateProgressBar = function () {
-        $("#startPrepTime #progressTimer").html(paragon.pt.preparation.timeLeft);
-    }
+      paragon.pt.preparation.updateProgressBar = function () {
+        $("#startPrepTime #progressTimer").html(
+          paragon.pt.preparation.timeLeft
+        );
+      };
 
-    paragon.pt.preparation.deductTime = function () {
+      paragon.pt.preparation.deductTime = function () {
         if (paragon.pt.preparation.timeLeft > 0) {
-            paragon.pt.preparation.timeLeft -= 1;
-            paragon.pt.preparation.updateProgressBar();
+          paragon.pt.preparation.timeLeft -= 1;
+          paragon.pt.preparation.updateProgressBar();
+        } else {
+          window.clearInterval(paragon.pt.preparation.interval);
+          $("#startPrepTime").hide();
+          paragon.pt.showNextButton();
+          if (paragon.pt.preparation.onDone) {
+            paragon.pt.preparation.onDone();
+          }
         }
-        else {
-            window.clearInterval(paragon.pt.preparation.interval);
-            $("#startPrepTime").hide();
-            paragon.pt.showNextButton();
-            if (paragon.pt.preparation.onDone) {
-                paragon.pt.preparation.onDone();
-            }
-        }
-    }
+      };
 
-    paragon.pt.preparation.start = function (playAudioTime) {
+      paragon.pt.preparation.start = function (playAudioTime) {
         paragon.pt.preparation.totalTime = playAudioTime;
         paragon.pt.preparation.timeLeft = playAudioTime;
         if (paragon.pt.preparation.interval)
-            window.clearInterval(paragon.pt.preparation.interval);
+          window.clearInterval(paragon.pt.preparation.interval);
 
-        paragon.pt.preparation.interval = window.setInterval(function () { paragon.pt.preparation.deductTime() }, 1000);
+        paragon.pt.preparation.interval = window.setInterval(function () {
+          paragon.pt.preparation.deductTime();
+        }, 1000);
         paragon.pt.preparation.updateProgressBar();
         $("#startPrepTime").fadeIn(1000);
-    }
+      };
 
-    //end prep functinos
+      //end prep functinos
 
-    paragon.pt.createAudioPlayer = function (contentUrl, audiofile) {
+      paragon.pt.createAudioPlayer = function (contentUrl, audiofile) {
         //create player if not exists
         if (!paragon.pt.playAudio.player) {
-            paragon.pt.playAudio.player = document.createElement('audio');
+          paragon.pt.playAudio.player = document.createElement("audio");
 
-            paragon.pt.playAudio.player.controls = true;
-            paragon.pt.playAudio.player.controlsList = "nodownload";
-            paragon.pt.playAudio.player.oggSrc = document.createElement('source');
-            paragon.pt.playAudio.player.oggSrc.setAttribute('type', 'audio/ogg');
-            paragon.pt.playAudio.player.appendChild(paragon.pt.playAudio.player.oggSrc);
+          paragon.pt.playAudio.player.controls = true;
+          paragon.pt.playAudio.player.controlsList = "nodownload";
+          paragon.pt.playAudio.player.oggSrc = document.createElement("source");
+          paragon.pt.playAudio.player.oggSrc.setAttribute("type", "audio/ogg");
+          paragon.pt.playAudio.player.appendChild(
+            paragon.pt.playAudio.player.oggSrc
+          );
 
-            paragon.pt.playAudio.player.mp3Src = document.createElement('source');
-            paragon.pt.playAudio.player.mp3Src.setAttribute('type', 'audio/mp3');
-            paragon.pt.playAudio.player.appendChild(paragon.pt.playAudio.player.mp3Src);
+          paragon.pt.playAudio.player.mp3Src = document.createElement("source");
+          paragon.pt.playAudio.player.mp3Src.setAttribute("type", "audio/mp3");
+          paragon.pt.playAudio.player.appendChild(
+            paragon.pt.playAudio.player.mp3Src
+          );
 
-            paragon.pt.playAudio.player.ontimeupdate = function () {
-                var duration = paragon.pt.playAudio.player.duration;
-                var currentTime = paragon.pt.playAudio.player.currentTime;
-                if (duration) {
-                    var progress = (currentTime / duration) * 100;
-                    $("#playAudioBox .progressbar-cover").css("left", progress + "%");
-                    if (progress >= 100) {
-                        $("#playAudioBox").hide();
-                        paragon.pt.showInfoBox();
-                        paragon.pt.showNextButton();
-                        if (paragon.pt.playAudio.onDone) {
-                            paragon.pt.playAudio.onDone();
-                        }
-                    }
+          paragon.pt.playAudio.player.ontimeupdate = function () {
+            var duration = paragon.pt.playAudio.player.duration;
+            var currentTime = paragon.pt.playAudio.player.currentTime;
+            if (duration) {
+              var progress = (currentTime / duration) * 100;
+              $("#playAudioBox .progressbar-cover").css("left", progress + "%");
+              if (progress >= 100) {
+                $("#playAudioBox").hide();
+                paragon.pt.showInfoBox();
+                paragon.pt.showNextButton();
+                if (paragon.pt.playAudio.onDone) {
+                  paragon.pt.playAudio.onDone();
                 }
-            };
+              }
+            }
+          };
 
-            paragon.pt.playAudio.player.onplay = function () {
-                paragon.pt.playAudio.start(paragon.pt.playAudio.player.duration);
-            };
+          paragon.pt.playAudio.player.onplay = function () {
+            paragon.pt.playAudio.start(paragon.pt.playAudio.player.duration);
+          };
         }
 
-        paragon.pt.playAudio.player.addEventListener("loadedmetadata", function (e) {
+        paragon.pt.playAudio.player.addEventListener(
+          "loadedmetadata",
+          function (e) {
             if (e.target) {
-                paragon.pt.playAudio.player.play();
-                paragon.pt.playAudio.start(e.target.duration);
+              paragon.pt.playAudio.player.play();
+              paragon.pt.playAudio.start(e.target.duration);
             }
-        });
+          }
+        );
 
-        paragon.pt.playAudio.player.oggSrc.setAttribute('src', contentUrl + audiofile + ".ogg");
-        paragon.pt.playAudio.player.mp3Src.setAttribute('src', contentUrl + audiofile + ".mp3");
+        paragon.pt.playAudio.player.oggSrc.setAttribute(
+          "src",
+          contentUrl + audiofile + ".ogg"
+        );
+        paragon.pt.playAudio.player.mp3Src.setAttribute(
+          "src",
+          contentUrl + audiofile + ".mp3"
+        );
 
         paragon.pt.playAudio.player.load();
         return paragon.pt.playAudio.player;
-    }
+      };
 
+      paragon.pt.moveScrollBar = function (div, scrollSize) {
+        div.animate(
+          {
+            scrollTop: scrollSize,
+          },
+          1200,
+          function () {
+            div.animate({ scrollTop: 0 }, 300, function () {});
+          }
+        );
+      };
 
-    paragon.pt.moveScrollBar = function (div, scrollSize) {
-        div.animate({
-            scrollTop: scrollSize
-        }, 1200, function () {
-            div.animate({ scrollTop: 0 }, 300, function () {
-            });
-        });
-    }
+      paragon.pt.showScrollBar = function (leftDiv, rightDiv) {
+        if (
+          rightDiv.length &&
+          rightDiv.is(":visible") &&
+          leftDiv.length &&
+          leftDiv.is(":visible")
+        ) {
+          $.blockUI({
+            message: "Scroll up and down to see everything.",
+            css: {
+              width: "400px",
+              border: "2px solid #000",
+              top: "35%",
+              padding: "50px",
+              color: "#1A578A",
+              fontWeight: "bold",
+            },
+            showOverlay: false,
+          });
 
-    paragon.pt.showScrollBar = function (leftDiv, rightDiv) {
+          var rightScrollSize = rightDiv[0].scrollHeight;
+          var leftScrollSize = leftDiv[0].scrollHeight;
+          window.setTimeout(function () {
+            paragon.pt.moveScrollBar(rightDiv, rightScrollSize);
+            paragon.pt.moveScrollBar(leftDiv, leftScrollSize);
 
-        if (rightDiv.length && rightDiv.is(":visible") && leftDiv.length && leftDiv.is(":visible")) {
-            $.blockUI({
-                message: "Scroll up and down to see everything.",
-                css: { width: '400px', border: '2px solid #000', top: '35%', padding: '50px', color: '#1A578A', fontWeight: 'bold' },
-                showOverlay: false
-            });
-
-            var rightScrollSize = rightDiv[0].scrollHeight;
-            var leftScrollSize = leftDiv[0].scrollHeight;
             window.setTimeout(function () {
-                paragon.pt.moveScrollBar(rightDiv, rightScrollSize);
-                paragon.pt.moveScrollBar(leftDiv, leftScrollSize);
-
-                window.setTimeout(function () { $.unblockUI(); }, 2300);
-            }, 1400);
-
-
+              $.unblockUI();
+            }, 2300);
+          }, 1400);
         }
+      };
 
-    }
-
-    paragon.pt.wordCount = function () {
+      paragon.pt.wordCount = function () {
         $(".writtenTextAreaBox").keyup(countWords);
 
         function countWords() {
-            var text = " ";
-            if (this.value != "") {
-                var wordCount = this.value.match(/\S+/g).length;
-                if (wordCount == 1) { 
-                    text = wordCount + " word"; 
-                } else { 
-                    text = wordCount + " words";
-                }
+          var text = " ";
+          if (this.value != "") {
+            var wordCount = this.value.match(/\S+/g).length;
+            if (wordCount == 1) {
+              text = wordCount + " word";
+            } else {
+              text = wordCount + " words";
             }
-            document.getElementById("wordCount").innerHTML = text;
+          }
+          document.getElementById("wordCount").innerHTML = text;
         }
-    }
+      };
 
-    paragon.pt.calcSectionNumQuestion = function (sectionID) {
+      paragon.pt.calcSectionNumQuestion = function (sectionID) {
         var pt1lpSection = sectionID;
-        $.post("/InstructionalProducts/PracticeTest6/OPT6/GetNumberOfQuestions", { sectionId: pt1lpSection }, function (data) { console.log(data); document.getElementById("numQuestion").innerHTML = data.totalQuestions-1 });
-    }
+        $.post(
+          "/InstructionalProducts/PracticeTest6/OPT6/GetNumberOfQuestions",
+          { sectionId: pt1lpSection },
+          function (data) {
+            console.log(data);
+            document.getElementById("numQuestion").innerHTML =
+              data.totalQuestions - 1;
+          }
+        );
+      };
 
-    paragon.pt.calcSectionNumQuestionLS = function (sectionID) {
+      paragon.pt.calcSectionNumQuestionLS = function (sectionID) {
         var pt1lpSection = sectionID;
-        $.post("/InstructionalProducts/PracticeTest6/OPT6LS/GetNumberOfQuestions", { sectionId: pt1lpSection }, function (data) { console.log(data); document.getElementById("numQuestion").innerHTML = data.totalQuestions-1 });
-    }
+        $.post(
+          "/InstructionalProducts/PracticeTest6/OPT6LS/GetNumberOfQuestions",
+          { sectionId: pt1lpSection },
+          function (data) {
+            console.log(data);
+            document.getElementById("numQuestion").innerHTML =
+              data.totalQuestions - 1;
+          }
+        );
+      };
 
-    paragon.pt.calcListScoreGeneral = function (sectionID) {
-
-        $.post("/InstructionalProducts/PracticeTest6/OPT6/GetScoreOnSection", { sectionId: sectionID }, function (data) {
-            console.log(data); document.getElementById("yourScore").innerHTML = data.userScore;
+      paragon.pt.calcListScoreGeneral = function (sectionID) {
+        $.post(
+          "/InstructionalProducts/PracticeTest6/OPT6/GetScoreOnSection",
+          { sectionId: sectionID },
+          function (data) {
+            console.log(data);
+            document.getElementById("yourScore").innerHTML = data.userScore;
 
             var userLScore = data.userScore;
 
             paragon.pt.findListScore(userLScore);
+          }
+        );
+      };
 
-        });
-    }
-
-    paragon.pt.calcListScoreLS = function (sectionID) {
-
-        $.post("/InstructionalProducts/PracticeTest6/OPT6LS/GetScoreOnSection", { sectionId: sectionID }, function (data) {
-            console.log(data); document.getElementById("yourScore").innerHTML = data.userScore;
+      paragon.pt.calcListScoreLS = function (sectionID) {
+        $.post(
+          "/InstructionalProducts/PracticeTest6/OPT6LS/GetScoreOnSection",
+          { sectionId: sectionID },
+          function (data) {
+            console.log(data);
+            document.getElementById("yourScore").innerHTML = data.userScore;
 
             var userLScore = data.userScore;
 
             paragon.pt.findListScore(userLScore);
+          }
+        );
+      };
 
-        });
-    }
-
-    paragon.pt.findListScore = function (userLScore) {
+      paragon.pt.findListScore = function (userLScore) {
         if (userLScore <= 7) {
-            document.getElementById("celScore").innerHTML = "M";
-            return;
-        }
-        else if (userLScore <= 12) {
-            document.getElementById("celScore").innerHTML = "3";
-            return;
-        }
-        else if (userLScore <= 18) {
-            document.getElementById("celScore").innerHTML = "4";
-            return;
-        }
-        else if (userLScore <= 23) {
-            document.getElementById("celScore").innerHTML = "5";
-            return;
-        }
-        else if (userLScore <= 28) {
-            document.getElementById("celScore").innerHTML = "6";
-            return;
-        }
-        else if (userLScore <= 31) {
-            document.getElementById("celScore").innerHTML = "7";
-            return;
-        }
-        else if (userLScore <= 33) {
-            document.getElementById("celScore").innerHTML = "8";
-            return;
-        }
-        else if (userLScore <= 35) {
+          document.getElementById("celScore").innerHTML = "M";
+          return;
+        } else if (userLScore <= 12) {
+          document.getElementById("celScore").innerHTML = "3";
+          return;
+        } else if (userLScore <= 18) {
+          document.getElementById("celScore").innerHTML = "4";
+          return;
+        } else if (userLScore <= 23) {
+          document.getElementById("celScore").innerHTML = "5";
+          return;
+        } else if (userLScore <= 28) {
+          document.getElementById("celScore").innerHTML = "6";
+          return;
+        } else if (userLScore <= 31) {
+          document.getElementById("celScore").innerHTML = "7";
+          return;
+        } else if (userLScore <= 33) {
+          document.getElementById("celScore").innerHTML = "8";
+          return;
+        } else if (userLScore <= 35) {
           document.getElementById("celScore").innerHTML = "9";
           return;
-          }
-          else {
+        } else {
           document.getElementById("celScore").innerHTML = "10-12";
-          }
-          }
+        }
+      };
 
-          paragon.pt.calcListScoreOnYourScore = function (sectionScore, sectionCell) {
+      paragon.pt.calcListScoreOnYourScore = function (
+        sectionScore,
+        sectionCell
+      ) {
+        var userLScore = sectionScore;
 
-          var userLScore = sectionScore;
+        if (userLScore <= 7) {
+          document.getElementById(sectionCell).innerHTML = "M";
+          return;
+        } else if (userLScore <= 12) {
+          document.getElementById(sectionCell).innerHTML = "3";
+          return;
+        } else if (userLScore <= 18) {
+          document.getElementById(sectionCell).innerHTML = "4";
+          return;
+        } else if (userLScore <= 23) {
+          document.getElementById(sectionCell).innerHTML = "5";
+          return;
+        } else if (userLScore <= 28) {
+          document.getElementById(sectionCell).innerHTML = "6";
+          return;
+        } else if (userLScore <= 31) {
+          document.getElementById(sectionCell).innerHTML = "7";
+          return;
+        } else if (userLScore <= 33) {
+          document.getElementById(sectionCell).innerHTML = "8";
+          return;
+        } else if (userLScore <= 35) {
+          document.getElementById(sectionCell).innerHTML = "9";
+          return;
+        } else {
+          document.getElementById(sectionCell).innerHTML = "10-12";
+        }
+      };
 
-          if (userLScore <= 7) {
-                document.getElementById(sectionCell).innerHTML = "M";
-                return;
-            }
-            else if (userLScore <= 12) {
-                document.getElementById(sectionCell).innerHTML = "3";
-                return;
-            }
-            else if (userLScore <= 18) {
-                document.getElementById(sectionCell).innerHTML = "4";
-                return;
-            }
-            else if (userLScore <= 23) {
-                document.getElementById(sectionCell).innerHTML = "5";
-                return;
-            }
-            else if (userLScore <= 28) {
-                document.getElementById(sectionCell).innerHTML = "6";
-                return;
-            }
-            else if (userLScore <= 31) {
-                document.getElementById(sectionCell).innerHTML = "7";
-                return;
-            }
-            else if (userLScore <= 33) {
-                document.getElementById(sectionCell).innerHTML = "8";
-                return;
-            }
-            else if (userLScore <= 35) {
-                document.getElementById(sectionCell).innerHTML = "9";
-                return;
-            }
-            else {
-                document.getElementById(sectionCell).innerHTML = "10-12";
-            }
-
-
-    }
-
-    paragon.pt.calcReadScore = function (sectionID) {
-
-        $.post("/InstructionalProducts/PracticeTest6/OPT6/GetScoreOnSection", { sectionId: sectionID }, function (data) {
-            console.log(data); document.getElementById("yourScore").innerHTML = data.userScore;
+      paragon.pt.calcReadScore = function (sectionID) {
+        $.post(
+          "/InstructionalProducts/PracticeTest6/OPT6/GetScoreOnSection",
+          { sectionId: sectionID },
+          function (data) {
+            console.log(data);
+            document.getElementById("yourScore").innerHTML = data.userScore;
 
             var userRScore = data.userScore;
 
             if (userRScore <= 7) {
-                document.getElementById("celScore").innerHTML = "M";
-                return;
+              document.getElementById("celScore").innerHTML = "M";
+              return;
+            } else if (userRScore <= 11) {
+              document.getElementById("celScore").innerHTML = "3";
+              return;
+            } else if (userRScore <= 16) {
+              document.getElementById("celScore").innerHTML = "4";
+              return;
+            } else if (userRScore <= 20) {
+              document.getElementById("celScore").innerHTML = "5";
+              return;
+            } else if (userRScore <= 25) {
+              document.getElementById("celScore").innerHTML = "6";
+              return;
+            } else if (userRScore <= 28) {
+              document.getElementById("celScore").innerHTML = "7";
+              return;
+            } else if (userRScore <= 31) {
+              document.getElementById("celScore").innerHTML = "8";
+              return;
+            } else if (userRScore <= 33) {
+              document.getElementById("celScore").innerHTML = "9";
+              return;
+            } else {
+              document.getElementById("celScore").innerHTML = "10-12";
             }
-            else if (userRScore <= 11) {
-                document.getElementById("celScore").innerHTML = "3";
-                return;
-            }
-            else if (userRScore <= 16) {
-                document.getElementById("celScore").innerHTML = "4";
-                return;
-            }
-            else if (userRScore <= 20) {
-                document.getElementById("celScore").innerHTML = "5";
-                return;
-            }
-            else if (userRScore <= 25) {
-                document.getElementById("celScore").innerHTML = "6";
-                return;
-            }
-            else if (userRScore <= 28) {
-                document.getElementById("celScore").innerHTML = "7";
-                return;
-            }
-            else if (userRScore <= 31) {
-                document.getElementById("celScore").innerHTML = "8";
-                return;
-            }
-            else if (userRScore <= 33) {
-                document.getElementById("celScore").innerHTML = "9";
-                return;
-            }
-            else {
-                document.getElementById("celScore").innerHTML = "10-12";
-            }
-
-        });
-
-    }
-    paragon.pt.calcReadScoreOnYourScore = function (sectionScore, sectionCell) {
-
+          }
+        );
+      };
+      paragon.pt.calcReadScoreOnYourScore = function (
+        sectionScore,
+        sectionCell
+      ) {
         var userRScore = sectionScore;
 
         if (userRScore <= 7) {
-            document.getElementById(sectionCell).innerHTML = "M";
-            return;
+          document.getElementById(sectionCell).innerHTML = "M";
+          return;
+        } else if (userRScore <= 11) {
+          document.getElementById(sectionCell).innerHTML = "3";
+          return;
+        } else if (userRScore <= 16) {
+          document.getElementById(sectionCell).innerHTML = "4";
+          return;
+        } else if (userRScore <= 20) {
+          document.getElementById(sectionCell).innerHTML = "5";
+          return;
+        } else if (userRScore <= 25) {
+          document.getElementById(sectionCell).innerHTML = "6";
+          return;
+        } else if (userRScore <= 28) {
+          document.getElementById(sectionCell).innerHTML = "7";
+          return;
+        } else if (userRScore <= 31) {
+          document.getElementById(sectionCell).innerHTML = "8";
+          return;
+        } else if (userRScore <= 33) {
+          document.getElementById(sectionCell).innerHTML = "9";
+          return;
+        } else {
+          document.getElementById(sectionCell).innerHTML = "10-12";
         }
-        else if (userRScore <= 11) {
-            document.getElementById(sectionCell).innerHTML = "3";
-            return;
-        }
-        else if (userRScore <= 16) {
-            document.getElementById(sectionCell).innerHTML = "4";
-            return;
-        }
-        else if (userRScore <= 20) {
-            document.getElementById(sectionCell).innerHTML = "5";
-            return;
-        }
-        else if (userRScore <= 25) {
-            document.getElementById(sectionCell).innerHTML = "6";
-            return;
-        }
-        else if (userRScore <= 28) {
-            document.getElementById(sectionCell).innerHTML = "7";
-            return;
-        }
-        else if (userRScore <= 31) {
-            document.getElementById(sectionCell).innerHTML = "8";
-            return;
-        }
-        else if (userRScore <= 33) {
-            document.getElementById(sectionCell).innerHTML = "9";
-            return;
-        }
-        else {
-            document.getElementById(sectionCell).innerHTML = "10-12";
-        }
-    }
+      };
 
-
-    //HARDCODED
-    paragon.pt.showListeningAnswerKeyBtn = function (sectionId) {
+      //HARDCODED
+      paragon.pt.showListeningAnswerKeyBtn = function (sectionId) {
         if (sectionId == "7599ac11-fe94-4fd4-9a50-899e5c45d588") {
-            $('#leftBtn').html("<a href='de99db1e-4b36-45e2-bb8b-e3f73a52bb98' id='backToResultbtn' class='btn'>Answer Key</a>");
+          $("#leftBtn").html(
+            "<a href='de99db1e-4b36-45e2-bb8b-e3f73a52bb98' id='backToResultbtn' class='btn'>Answer Key</a>"
+          );
         }
 
         if (sectionId == "56e78b5b-aad5-46b7-9195-2f0a47cc9d54") {
-            $('#leftBtn').html("<a href='76937ada-5bd2-4094-9b35-49dfcdc044db' id='backToResultbtn' class='btn'>Answer Key</a>");
+          $("#leftBtn").html(
+            "<a href='76937ada-5bd2-4094-9b35-49dfcdc044db' id='backToResultbtn' class='btn'>Answer Key</a>"
+          );
         }
         if (sectionId == "fb9d6d12-9d28-4298-9033-84a5a2f17776") {
-            $('#leftBtn').html("<a href='e1cbf8ea-d29d-4956-ab85-5f95f6f6d221' id='backToResultbtn' class='btn'>Answer Key</a>");
+          $("#leftBtn").html(
+            "<a href='e1cbf8ea-d29d-4956-ab85-5f95f6f6d221' id='backToResultbtn' class='btn'>Answer Key</a>"
+          );
         }
 
         if (sectionId == "065cbf21-c231-49f7-803c-063a6ebb9723") {
-            $('#leftBtn').html("<a href='3cf00fc9-1d9e-49fe-9355-3b6b4eeca8e8' id='backToResultbtn' class='btn'>Answer Key</a>");
+          $("#leftBtn").html(
+            "<a href='3cf00fc9-1d9e-49fe-9355-3b6b4eeca8e8' id='backToResultbtn' class='btn'>Answer Key</a>"
+          );
         }
-    }
+      };
 
-    paragon.pt.showReadingAnswerKeyBtn = function (sectionId) {
+      paragon.pt.showReadingAnswerKeyBtn = function (sectionId) {
         if (sectionId == "b40b8146-fc41-4f05-b0d9-07803ce40204") {
-            $('#leftBtn').html("<a href='b4da3a8b-6f8e-4458-a511-d76ea6f6f08d' id='backToResultbtn' class='btn'>Answer Key</a>");
+          $("#leftBtn").html(
+            "<a href='b4da3a8b-6f8e-4458-a511-d76ea6f6f08d' id='backToResultbtn' class='btn'>Answer Key</a>"
+          );
         }
 
         if (sectionId == "1c4dde52-2c06-4fa8-8692-5bec0bcf9c5f") {
-            $('#leftBtn').html("<a href='d70498c9-7612-4931-b2ef-01cb2888208c' id='backToResultbtn' class='btn'>Answer Key</a>");
+          $("#leftBtn").html(
+            "<a href='d70498c9-7612-4931-b2ef-01cb2888208c' id='backToResultbtn' class='btn'>Answer Key</a>"
+          );
         }
-    }
+      };
 
-    paragon.pt.nextItem = function (url, itemId, canvasId, sectionId, activityTypeId) {
+      paragon.pt.nextItem = function (
+        url,
+        itemId,
+        canvasId,
+        sectionId,
+        activityTypeId
+      ) {
         $.post(
-            url,
-            {
-                itemId: itemId,
-                canvasId: canvasId,
-                sectionId: sectionId,
-                activityTypeId: activityTypeId
-            },
-            function (data) {
-                console.log(data);
-            }
+          url,
+          {
+            itemId: itemId,
+            canvasId: canvasId,
+            sectionId: sectionId,
+            activityTypeId: activityTypeId,
+          },
+          function (data) {
+            console.log(data);
+          }
         );
-    }
+      };
 
-    paragon.pt.countUnansweredQuestionsFromDb = function (canvasTypeId, sectionId, url) {
+      paragon.pt.countUnansweredQuestionsFromDb = function (
+        canvasTypeId,
+        sectionId,
+        url
+      ) {
         switch (canvasTypeId) {
-            case 24: //PT04
-            case 25: // PT05
-                return paragon.pt.countSingleUnansweredItemFromDb(sectionId, url);
-                break;
+          case 24: //PT04
+          case 25: // PT05
+            return paragon.pt.countSingleUnansweredItemFromDb(sectionId, url);
+            break;
 
-            case 26: //PT06
-            case 27: //PT07
-                if ($("#panelLeft").css('display') != 'none') {
-                    return 0;
-                }
-                else {
-                    return paragon.pt.countAllUnansweredItemsFromDb(sectionId, url);
-                }
-                break;
+          case 26: //PT06
+          case 27: //PT07
+            if ($("#panelLeft").css("display") != "none") {
+              return 0;
+            } else {
+              return paragon.pt.countAllUnansweredItemsFromDb(sectionId, url);
+            }
+            break;
 
-            default:
-                return paragon.pt.countAllUnansweredItemsFromDb(sectionId, url);
+          default:
+            return paragon.pt.countAllUnansweredItemsFromDb(sectionId, url);
         }
-    }
+      };
 
-    paragon.pt.countAllUnansweredItemsFromDb = function (sectionId, url) {
+      paragon.pt.countAllUnansweredItemsFromDb = function (sectionId, url) {
         var unanswered = 0;
         $.ajax({
-            type: "POST",
-            url: url,
-            data: { 'sectionId': sectionId, 'items': JSON.stringify(paragon.pt.items) },
-            async: false,
-            success: function (data) {
-                var responses = data.responses;
-                for (var i = 0; i < responses.length; i++) {
-                    var currentResponse = responses[i];
-                    if (!currentResponse) {
-                        unanswered++;
-                    }
-                }
+          type: "POST",
+          url: url,
+          data: {
+            sectionId: sectionId,
+            items: JSON.stringify(paragon.pt.items),
+          },
+          async: false,
+          success: function (data) {
+            var responses = data.responses;
+            for (var i = 0; i < responses.length; i++) {
+              var currentResponse = responses[i];
+              if (!currentResponse) {
+                unanswered++;
+              }
             }
+          },
         });
         return unanswered;
-    }
+      };
 
-    paragon.pt.countSingleUnansweredItemFromDb = function (sectionId, url) {
+      paragon.pt.countSingleUnansweredItemFromDb = function (sectionId, url) {
         var unanswered = 0;
 
         var index = paragon.pt.itemIndex;
         if (index > 0) {
-            index = index - 1;
-        }
-        else {
-            return unanswered;
+          index = index - 1;
+        } else {
+          return unanswered;
         }
 
         var item = paragon.pt.items[index];
         $.ajax({
-            type: "POST",
-            url: url,
-            data: { "sectionId": sectionId, "itemId": item.Id },
-            async: false,
-            success: function (data) {
-                if (!data.response) {
-                    unanswered++;
-                }
+          type: "POST",
+          url: url,
+          data: { sectionId: sectionId, itemId: item.Id },
+          async: false,
+          success: function (data) {
+            if (!data.response) {
+              unanswered++;
             }
+          },
         });
 
         return unanswered;
-    }
-
-</script>
+      };
+    </script>
 
     <script src="./6-2-4_files/soundjs-0.6.0.min.js.下載"></script>
-
-
 
     <script src="./6-2-4_files/audio.min.js.下載"></script>
 
@@ -798,957 +885,1262 @@
 
     <script src="./6-2-4_files/jquery.cookie.js.下載"></script>
 
-
-    <link href="./6-2-4_files/font-awesome.css" rel="stylesheet">
-</head>
-<body data-new-gr-c-s-check-loaded="14.1229.0" data-gr-ext-installed="" style="">
+    <link href="./6-2-4_files/font-awesome.css" rel="stylesheet" />
+  </head>
+  <body
+    data-new-gr-c-s-check-loaded="14.1229.0"
+    data-gr-ext-installed=""
+    style=""
+  >
     <noscript>
-        <div id="noscript">
-            <div>Please turn on javascript to continue.</div>
-        </div>
+      <div id="noscript">
+        <div>Please turn on javascript to continue.</div>
+      </div>
     </noscript>
     <header>
-        <div class="navbar">
-            <div class="navbar-inner">
-                <a class="brand" href="https://www.celpip.ca/" target="_blank"> <img src="./6-2-4_files/CELPIP_H_Web.png"></a>
+      <div class="navbar">
+        <div class="navbar-inner">
+          <a class="brand" href="https://www.celpip.ca/" target="_blank">
+            <img src="./6-2-4_files/CELPIP_H_Web.png"
+          /></a>
 
-                <div class="brand" style="margin-top:15px;">
-                    Study Materials
+          <div class="brand" style="margin-top: 15px">Study Materials</div>
+
+          <ul class="nav" style="margin-top: 8px">
+            <li class="dropdown">
+              <a
+                class="dropdown-toggle"
+                data-toggle="dropdown"
+                style="margin-top: 10px"
+              >
+                Selected Product:
+                <span id="selected-product"
+                  >CELPIP-General Practice Tests, Set 6</span
+                >
+                <b class="caret"></b>
+              </a>
+              <ul class="dropdown-menu">
+                <li>
+                  <a
+                    href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/FreeOnlineSampleTest/FOST"
+                    >Free CELPIP-General Practice Tests (Starter Set)</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/FreeOnlineSampleTest/FOST2"
+                    >Free CELPIP-General LS Practice Tests (Starter Set)</a
+                  >
+                </li>
+
+                <li>
+                  <a
+                    href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest/PT"
+                    >CELPIP-General Practice Tests, Set 1</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest2/OPT2"
+                    >CELPIP-General Practice Tests, Set 2</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest3/OPT3"
+                    >CELPIP-General Practice Tests, Set 3</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest4/OPT4"
+                    >CELPIP-General Practice Tests, Set 4</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest5/OPT5"
+                    >CELPIP-General Practice Tests, Set 5</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest6/OPT6"
+                    >CELPIP-General Practice Tests, Set 6</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest7/OPT7"
+                    >CELPIP-General Practice Tests, Set 7</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest8/OPT8"
+                    >CELPIP-General Practice Tests, Set 8</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest9/OPT9"
+                    >CELPIP-General Practice Tests, Set 9</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest10/OPT10"
+                    >CELPIP-General Practice Tests, Set 10</a
+                  >
+                </li>
+                <li>
+                  <a
+                    target="_blank"
+                    href="https://testprep.paragontesting.ca/api/sso/v2/sso/jwt?jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6Imh5cDIyMThAZ21haWwuY29tIiwiZmlyc3RfbmFtZSI6IllpLVBpbmciLCJsYXN0X25hbWUiOiJIbyIsIm5hbWVpZCI6IjIyMzc0ODgiLCJpYXQiOjE3NDMwMTQ1OTIsImp0aSI6Mjg2NjQwNDU1LCJuYmYiOjE3NDMwMTQyOTJ9.DJKuh0nK4GA6r2AFP4lACNvD360yxElRtTX-vYRM9HQ&amp;return_to=https%3A%2F%2Ftestprep.paragontesting.ca%2Fbundles%2Fcelpip-accelerate-starter-celpip-general"
+                    >CELPIP Accelerate Starter - Reading and Writing</a
+                  >
+                </li>
+                <li>
+                  <a
+                    target="_blank"
+                    href="https://testprep.paragontesting.ca/api/sso/v2/sso/jwt?jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6Imh5cDIyMThAZ21haWwuY29tIiwiZmlyc3RfbmFtZSI6IllpLVBpbmciLCJsYXN0X25hbWUiOiJIbyIsIm5hbWVpZCI6IjIyMzc0ODgiLCJpYXQiOjE3NDMwMTQ1OTIsImp0aSI6MTA1NzE2ODM4MywibmJmIjoxNzQzMDE0MjkyfQ.498h3Y5Oc8ZgU43JdbUpNhE5ksSrvzpOenXg4PKPPqY&amp;return_to=https%3A%2F%2Ftestprep.paragontesting.ca%2Fbundles%2Fcelpip-accelerate-starter-celpip-general-ls"
+                    >CELPIP Accelerate Starter - Listening and Speaking</a
+                  >
+                </li>
+              </ul>
+            </li>
+
+            <li>
+              <div style="margin-left: 19px">
+                <ul class="nav nav-pills header-buttons"></ul>
+              </div>
+            </li>
+          </ul>
+
+          <ul class="nav pull-right" style="margin-top: 17px">
+            <li class="dropdown">
+              <a class="dropdown-toggle dropdown-email" data-toggle="dropdown">
+                <img
+                  src="./6-2-4_files/fa_cog.png"
+                  style="width: 18px; height: 18px; margin-top: -5px"
+                />
+
+                <b class="caret"></b>
+              </a>
+              <ul class="dropdown-menu">
+                <li>
+                  <a
+                    href="javascript:document.getElementById(&#39;logoutForm&#39;).submit()"
+                    >Sign out</a
+                  >
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <form
+        action="https://instructionalproducts.paragontesting.ca/InstructionalProducts/Account/LogOff"
+        id="logoutForm"
+        method="post"
+      ></form>
+    </header>
+
+    <div class="container" id="main-container" style="height: 773px">
+      <link href="./6-2-4_files/ptStyle.css" rel="stylesheet" type="text/css" />
+      <link href="./6-2-4_files/video-js.css" rel="stylesheet" />
+      <script src="./6-2-4_files/video.js.下載"></script>
+      <script>
+        paragon.pt.backUrl =
+          "/InstructionalProducts/PracticeTest6/OPT6/View/2d0e9f7b-65d1-4c36-8268-1ccb86057a57";
+        paragon.pt.nextUrl =
+          "/InstructionalProducts/PracticeTest6/OPT6/View/d70498c9-7612-4931-b2ef-01cb2888208c";
+        if (paragon.pt.backUrl.length > 0 || paragon.pt.nextUrl.length > 0) {
+          paragon.footerVisible = true;
+        }
+
+        paragon.pt.items = [
+          {
+            Id: "58885e73-2dd0-4a0c-8c26-8fc7369d6b39",
+            ContentId: "ae0735cd-c6a5-43c6-8bf6-2228d0a37aa9",
+            Num: 1,
+            Text: "1. Annalisa Ducharme most likely objects to ",
+            ExtraField1: "",
+            Choices: [
+              {
+                Id: "2821ffd3-5ff4-4ec9-b9e9-d86423944e39",
+                ItemId: "58885e73-2dd0-4a0c-8c26-8fc7369d6b39",
+                ChoiceData: null,
+                Num: 1,
+                Text: "inflated claims about language preservation outcomes. ",
+              },
+              {
+                Id: "cbbd9caf-34a0-4f51-9584-49ffafe96823",
+                ItemId: "58885e73-2dd0-4a0c-8c26-8fc7369d6b39",
+                ChoiceData: null,
+                Num: 2,
+                Text: "public programs to revitalize dying languages for political reasons.",
+              },
+              {
+                Id: "9067ca85-f1c2-4ed9-93a3-def14a4eec6f",
+                ItemId: "58885e73-2dd0-4a0c-8c26-8fc7369d6b39",
+                ChoiceData: null,
+                Num: 3,
+                Text: "denials about the rate of language extinction.",
+              },
+              {
+                Id: "8a472895-d39f-4a4c-ac77-adcd6371c77f",
+                ItemId: "58885e73-2dd0-4a0c-8c26-8fc7369d6b39",
+                ChoiceData: null,
+                Num: 4,
+                Text: "a simplistic categorization or definition of a language.",
+              },
+            ],
+          },
+          {
+            Id: "da50e5b9-583f-4d00-ac98-27ebb30c1917",
+            ContentId: "ae0735cd-c6a5-43c6-8bf6-2228d0a37aa9",
+            Num: 2,
+            Text: "2. Marianne Houseman thinks language preservation programs should be",
+            ExtraField1: "",
+            Choices: [
+              {
+                Id: "d8122bad-57a5-4745-90d5-1005c45b1b8e",
+                ItemId: "da50e5b9-583f-4d00-ac98-27ebb30c1917",
+                ChoiceData: null,
+                Num: 1,
+                Text: "modified.",
+              },
+              {
+                Id: "bbebee06-3de0-4a60-871e-02004ca6dbb7",
+                ItemId: "da50e5b9-583f-4d00-ac98-27ebb30c1917",
+                ChoiceData: null,
+                Num: 2,
+                Text: "continued.",
+              },
+              {
+                Id: "3cf998c0-1c58-478b-992e-965185604ea5",
+                ItemId: "da50e5b9-583f-4d00-ac98-27ebb30c1917",
+                ChoiceData: null,
+                Num: 3,
+                Text: "consolidated.",
+              },
+              {
+                Id: "8081b1dd-63d0-4517-8a34-c49ec8ca5b63",
+                ItemId: "da50e5b9-583f-4d00-ac98-27ebb30c1917",
+                ChoiceData: null,
+                Num: 4,
+                Text: "abandoned.",
+              },
+            ],
+          },
+          {
+            Id: "a36811f6-26d5-45f1-b7d4-510643af3503",
+            ContentId: "ae0735cd-c6a5-43c6-8bf6-2228d0a37aa9",
+            Num: 3,
+            Text: "3. Who holds directly opposing viewpoints?",
+            ExtraField1: "",
+            Choices: [
+              {
+                Id: "3b312f03-9c74-43cf-bf5c-a823087eecf6",
+                ItemId: "a36811f6-26d5-45f1-b7d4-510643af3503",
+                ChoiceData: null,
+                Num: 1,
+                Text: "Ducharme and UNESCO",
+              },
+              {
+                Id: "b13eb60f-9bc1-4d56-8695-7449eaa5a57c",
+                ItemId: "a36811f6-26d5-45f1-b7d4-510643af3503",
+                ChoiceData: null,
+                Num: 2,
+                Text: "Houseman and Reideger",
+              },
+              {
+                Id: "55db94ba-2781-4186-b1d5-bdee9f8b7c81",
+                ItemId: "a36811f6-26d5-45f1-b7d4-510643af3503",
+                ChoiceData: null,
+                Num: 3,
+                Text: "Reideger and Ducharme",
+              },
+              {
+                Id: "9e1bba25-9a83-4369-8d5b-d2fd5477d8b2",
+                ItemId: "a36811f6-26d5-45f1-b7d4-510643af3503",
+                ChoiceData: null,
+                Num: 4,
+                Text: "Ducharme and Houseman",
+              },
+            ],
+          },
+          {
+            Id: "10c7804c-9e92-4eb0-9723-3852dbfc5789",
+            ContentId: "ae0735cd-c6a5-43c6-8bf6-2228d0a37aa9",
+            Num: 4,
+            Text: "4. Marianne Houseman would most likely agree that ",
+            ExtraField1: "",
+            Choices: [
+              {
+                Id: "4f7299c9-6a92-4633-9631-c50e4a1a4ebc",
+                ItemId: "10c7804c-9e92-4eb0-9723-3852dbfc5789",
+                ChoiceData: null,
+                Num: 1,
+                Text: "investments in language immersion schools are defensible.",
+              },
+              {
+                Id: "75fcd01a-f4de-410b-b9ff-c9ac7e522252",
+                ItemId: "10c7804c-9e92-4eb0-9723-3852dbfc5789",
+                ChoiceData: null,
+                Num: 2,
+                Text: "language preservation policies deserve public attention.",
+              },
+              {
+                Id: "57b40073-f790-4dce-830b-1ec689a7bbe0",
+                ItemId: "10c7804c-9e92-4eb0-9723-3852dbfc5789",
+                ChoiceData: null,
+                Num: 3,
+                Text: "people stand to gain from speaking a lingua franca.",
+              },
+              {
+                Id: "25d70b05-d599-41ae-8aa2-c484d99a59b9",
+                ItemId: "10c7804c-9e92-4eb0-9723-3852dbfc5789",
+                ChoiceData: null,
+                Num: 4,
+                Text: "dying languages are a priceless cultural resource.",
+              },
+            ],
+          },
+          {
+            Id: "c812e4cf-2f70-410c-9a47-13e87ad63af7",
+            ContentId: "ae0735cd-c6a5-43c6-8bf6-2228d0a37aa9",
+            Num: 5,
+            Text: "5. Overall, the article suggests that efforts to preserve dying languages are ",
+            ExtraField1: "",
+            Choices: [
+              {
+                Id: "3eafc526-6b40-4637-bc99-0ce77773379c",
+                ItemId: "c812e4cf-2f70-410c-9a47-13e87ad63af7",
+                ChoiceData: null,
+                Num: 1,
+                Text: "hampered by the link between language and identity.",
+              },
+              {
+                Id: "546cd34f-9afe-462a-a8ba-d24a85789311",
+                ItemId: "c812e4cf-2f70-410c-9a47-13e87ad63af7",
+                ChoiceData: null,
+                Num: 2,
+                Text: "fraught with an array of sociopolitical complications.",
+              },
+              {
+                Id: "6ef1cd5d-24da-4c93-971f-a43bccc7a816",
+                ItemId: "c812e4cf-2f70-410c-9a47-13e87ad63af7",
+                ChoiceData: null,
+                Num: 3,
+                Text: "warranted on the basis of disturbing global statistics.",
+              },
+              {
+                Id: "3e5212b9-80fa-4707-a33b-52a2eef7dec7",
+                ItemId: "c812e4cf-2f70-410c-9a47-13e87ad63af7",
+                ChoiceData: null,
+                Num: 4,
+                Text: "essential for the sake of preserving indigenous cultures.",
+              },
+            ],
+          },
+          {
+            Id: "eed9d52f-5d99-4b5c-989d-621be16feaa2",
+            ContentId: "ae0735cd-c6a5-43c6-8bf6-2228d0a37aa9",
+            Num: 6,
+            Text: "6. Question_Text",
+            ExtraField1: "",
+            Choices: [
+              {
+                Id: "cdc6acc8-ade6-4b96-9fe4-3b956ad814a8",
+                ItemId: "eed9d52f-5d99-4b5c-989d-621be16feaa2",
+                ChoiceData: null,
+                Num: 1,
+                Text: "the next generation",
+              },
+              {
+                Id: "e7c98dd1-e346-455e-b98a-ade433b56af0",
+                ItemId: "eed9d52f-5d99-4b5c-989d-621be16feaa2",
+                ChoiceData: null,
+                Num: 2,
+                Text: "linguistic researchers",
+              },
+              {
+                Id: "49673789-c044-49d4-8523-dd8e204b1fe5",
+                ItemId: "eed9d52f-5d99-4b5c-989d-621be16feaa2",
+                ChoiceData: null,
+                Num: 3,
+                Text: "a range of First Nation groups",
+              },
+              {
+                Id: "abc7f52b-9db8-4ec3-8a7b-3a2d6c13fb85",
+                ItemId: "eed9d52f-5d99-4b5c-989d-621be16feaa2",
+                ChoiceData: null,
+                Num: 4,
+                Text: "Michif speakers",
+              },
+            ],
+          },
+          {
+            Id: "f0e87d30-b488-469a-8449-04b03a0484f9",
+            ContentId: "ae0735cd-c6a5-43c6-8bf6-2228d0a37aa9",
+            Num: 7,
+            Text: "",
+            ExtraField1: "",
+            Choices: [
+              {
+                Id: "653a0ba5-8ff8-4f15-916d-c34d35e4ecea",
+                ItemId: "f0e87d30-b488-469a-8449-04b03a0484f9",
+                ChoiceData: null,
+                Num: 1,
+                Text: "professor",
+              },
+              {
+                Id: "953d4035-2443-4030-b690-d50115308af7",
+                ItemId: "f0e87d30-b488-469a-8449-04b03a0484f9",
+                ChoiceData: null,
+                Num: 2,
+                Text: "graduate student",
+              },
+              {
+                Id: "782d6ca2-1c75-4616-852a-6451963a843a",
+                ItemId: "f0e87d30-b488-469a-8449-04b03a0484f9",
+                ChoiceData: null,
+                Num: 3,
+                Text: "CALD representative",
+              },
+              {
+                Id: "6e23f1ca-edad-4585-b94d-4204f98fa55f",
+                ItemId: "f0e87d30-b488-469a-8449-04b03a0484f9",
+                ChoiceData: null,
+                Num: 4,
+                Text: "United Nations",
+              },
+            ],
+          },
+          {
+            Id: "f375b720-0676-4937-a903-e52f40e1db3b",
+            ContentId: "ae0735cd-c6a5-43c6-8bf6-2228d0a37aa9",
+            Num: 8,
+            Text: "",
+            ExtraField1: "",
+            Choices: [
+              {
+                Id: "549e41eb-ee67-4786-8b28-0981d39e024c",
+                ItemId: "f375b720-0676-4937-a903-e52f40e1db3b",
+                ChoiceData: null,
+                Num: 1,
+                Text: "continue evolving",
+              },
+              {
+                Id: "44dfb854-cc2d-41c4-b4c8-d03ef1748f9e",
+                ItemId: "f375b720-0676-4937-a903-e52f40e1db3b",
+                ChoiceData: null,
+                Num: 2,
+                Text: "grow more diverse",
+              },
+              {
+                Id: "a77510e8-96a5-4c3e-a7c7-c08ab5c05bac",
+                ItemId: "f375b720-0676-4937-a903-e52f40e1db3b",
+                ChoiceData: null,
+                Num: 3,
+                Text: "make a comeback",
+              },
+              {
+                Id: "0f78f989-1fa1-48db-a491-3f1da10dde11",
+                ItemId: "f375b720-0676-4937-a903-e52f40e1db3b",
+                ChoiceData: null,
+                Num: 4,
+                Text: "become official",
+              },
+            ],
+          },
+          {
+            Id: "6e6825cf-6308-422f-8063-0100b5b1873e",
+            ContentId: "ae0735cd-c6a5-43c6-8bf6-2228d0a37aa9",
+            Num: 9,
+            Text: "",
+            ExtraField1: "",
+            Choices: [
+              {
+                Id: "b9218c27-8769-43a4-9b65-2484ee4fb8cc",
+                ItemId: "6e6825cf-6308-422f-8063-0100b5b1873e",
+                ChoiceData: null,
+                Num: 1,
+                Text: "language standardization efforts",
+              },
+              {
+                Id: "18bfa55f-938f-41d2-b7b8-9bced657ec2e",
+                ItemId: "6e6825cf-6308-422f-8063-0100b5b1873e",
+                ChoiceData: null,
+                Num: 2,
+                Text: "aggressive nationalist agendas",
+              },
+              {
+                Id: "fa0f3349-d135-4c32-ad20-2249c866ea17",
+                ItemId: "6e6825cf-6308-422f-8063-0100b5b1873e",
+                ChoiceData: null,
+                Num: 3,
+                Text: "likely to proliferate",
+              },
+              {
+                Id: "f22cbf0e-edf9-4138-b415-1e9b5822c052",
+                ItemId: "6e6825cf-6308-422f-8063-0100b5b1873e",
+                ChoiceData: null,
+                Num: 4,
+                Text: "indulgent charity campaigns",
+              },
+            ],
+          },
+          {
+            Id: "92799e9b-92a4-4153-805d-102c8fc8b9f5",
+            ContentId: "ae0735cd-c6a5-43c6-8bf6-2228d0a37aa9",
+            Num: 10,
+            Text: "",
+            ExtraField1: "",
+            Choices: [
+              {
+                Id: "d0b670f8-bb8b-4948-9d04-9c4c7e851e74",
+                ItemId: "92799e9b-92a4-4153-805d-102c8fc8b9f5",
+                ChoiceData: null,
+                Num: 1,
+                Text: "unnecessary",
+              },
+              {
+                Id: "c314d294-89e8-4727-8e81-aba25f9da491",
+                ItemId: "92799e9b-92a4-4153-805d-102c8fc8b9f5",
+                ChoiceData: null,
+                Num: 2,
+                Text: "linguistic",
+              },
+              {
+                Id: "8b9c1125-cf68-4393-94f8-429be7769eba",
+                ItemId: "92799e9b-92a4-4153-805d-102c8fc8b9f5",
+                ChoiceData: null,
+                Num: 3,
+                Text: "essential",
+              },
+              {
+                Id: "dfa01661-c86a-4495-b4d9-45e5f0a111a3",
+                ItemId: "92799e9b-92a4-4153-805d-102c8fc8b9f5",
+                ChoiceData: null,
+                Num: 4,
+                Text: "arbitrary",
+              },
+            ],
+          },
+        ];
+      </script>
+
+      <div id="panelTop">
+        <div
+          id="canvasName"
+          style="float: left; font-size: 16px; font-weight: bold"
+        >
+          Practice Test 2 - Reading Part 4: Reading for Viewpoints
+        </div>
+
+        <div style="float: right" class="btnNext span1 pull-right">
+          <a
+            href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest6/OPT6/View/f2fbe267-8eb0-4e72-a552-791197b5b500#"
+            id="btnNext"
+            class="btn btn-primary"
+            >NEXT</a
+          >
+        </div>
+
+        <div style="float: right; display: block" id="timer" class="hide">
+          Time remaining: <strong>12 minutes</strong>
+        </div>
+      </div>
+
+      <div id="mainContent">
+        <script id="dropDownListTemplate" type="text/template">
+          {{#each this}}
+              <div class="ddrow">
+                  {{Text}}
+                  <div class='dd'>
+                      <div class='ddToggle'>▾</div>
+                      <div class='ddMenu'>
+                          <ul data-id="{{Id}}">
+                          {{#each Choices}}
+                              <li data-id="{{Id}}">{{Text}}</li>
+                          {{/each}}
+                          </ul>
+                      </div>
+                  </div>
+              </div>
+          {{/each}}
+        </script>
+
+        <script id="dropDownListInlineTemplate" type="text/template">
+          <div class='dd'>
+              <div class='ddToggle'>▾</div>
+              <div class='ddMenu'>
+                  <ul data-id="{{Id}}">
+                  {{#each Choices}}
+                      <li data-id="{{Id}}">{{Text}}</li>
+                  {{/each}}
+                  </ul>
+              </div>
+          </div>
+        </script>
+
+        <script id="dropDownListInFrontTemplate" type="text/template">
+          {{#each this}}
+          <div class="ddrow">
+              <div class='dd'>
+                  <div class='ddToggle'>▾</div>
+                  <div class='ddMenu'>
+                      <ul data-id="{{Id}}">
+                          {{#each Choices}}
+                          <li data-id="{{Id}}">{{Text}}</li>
+                          {{/each}}
+                      </ul>
+                  </div>
+              </div>
+              &nbsp;-
+              {{Text}}
+          </div>
+          {{/each}}
+        </script>
+
+        <div id="panelLeft" style="width: 50%; height: 730px" class="graybg">
+          <div class="row1">
+            <div>
+              <div class="instruction" style="margin-bottom: 30px">
+                Read the following article from a website.
+              </div>
+
+              <p><strong>Language Decline</strong></p>
+
+              The numbers are in, and they're grim: Three thousand of the
+              world's seven thousand languages are in decline and expected to
+              perish by around 2100. While the most prevalent languages are
+              taking a firmer hold across the globe, the extinction rate for
+              languages is 25 per year. Charting language demise, UNESCO ranks
+              dwindling languages on a scale ranging from “vulnerable” to
+              “critically endangered.” The question is how, or whether, UNESCO
+              or sovereign governments should intervene?
+              <br /><br />
+
+              Concerned language preservation organizations include the Canadian
+              Association for Language Diversity (CALD), a charity whose goal is
+              to prevent language extinctions. IALD spokesperson Norman Reideger
+              says all endangered languages should be saved. “For individuals,
+              language fosters a sense of personal identity. Language extinction
+              means loss of priceless, irreplaceable cultural knowledge—the
+              grammar, music, narratives, and even medical knowledge embedded in
+              a language. A linguistically diverse planet is a healthy planet.”
+              <br /><br />
+
+              Concordia University linguistics professor Marianne Houseman
+              deplores such use of biodiversity rhetoric in linguistics
+              discourse. “Life is life, and language is language,” she
+              clarifies. Houseman is skeptical about whether speakers of
+              endangered languages benefit from linguistic preservation, noting
+              that those who abandon their language may be acting in their own
+              best interests by adapting to a naturally evolving socio-economic
+              climate. “Whose needs are served by government-funded social—or
+              socio-linguistic—engineering schemes?” asks Houseman, “Their
+              proponents are typically nationalist regimes advancing their own
+              territorial, political and economic agendas.”
+              <br /><br />
+
+              Annalisa Ducharme, a Memorial University doctoral candidate,
+              points out that a confounding factor is variation within a
+              language. “One language can have multiple dialects—regional
+              varieties,” says Ducharme, “If an endangered language is to be
+              artificially propped up with government funded schools and
+              preschools, as they do with some First Nation languages in Canada,
+              then which—whose—version of the language should be deemed
+              “essential” and therefore worth saving?”As well as First Nation
+              languages, Duchenne points to French, which “has many dialects
+              worth sustaining. Globally, France, Louisiana, and Africa have
+              their own versions. In New Brunswick, French dialects include
+              Quebecois, Acadian, and Chiac, a sub-dialect that blends Acadian
+              French, English, and [aboriginal] Mi'kmaq.”
+              <br /><br />
+            </div>
+
+            <div class="box hide" id="infoBox">
+              <div class="boxIcon">
+                <em class="info-icon"></em>
+              </div>
+              <div class="boxText">
+                <div>
+                  <p>Click "NEXT" to continue.</p>
                 </div>
+              </div>
+            </div>
 
-                <ul class="nav" style="margin-top:8px;">
+            <div class="box hide" id="playAudioBox">
+              <div class="boxIcon">
+                <em class="play-icon"></em>
+              </div>
+              <div class="boxText">
+                <div>Playing...</div>
+                <div class="progressbar">
+                  <span class="progressbar-value"
+                    ><em style="left: 0%" class="progressbar-cover"></em>
+                  </span>
+                </div>
+              </div>
+            </div>
 
-                    <li class="dropdown">
+            <div id="audioDiv"></div>
+          </div>
+        </div>
 
-                        <a class="dropdown-toggle" data-toggle="dropdown" style="margin-top: 10px;">
-                            Selected Product: <span id="selected-product">CELPIP-General Practice Tests, Set 6</span>
-                            <b class="caret"></b>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/FreeOnlineSampleTest/FOST">Free CELPIP-General Practice Tests (Starter Set)</a></li>
-                            <li><a href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/FreeOnlineSampleTest/FOST2">Free CELPIP-General LS Practice Tests (Starter Set)</a></li>
+        <div id="panelRight" style="width: 50%; height: 730px" class="bluebg">
+          <div class="row1">
+            <div class="instruction" style="margin-bottom: 15px">
+              Using the drop-down menu (
+              <span
+                class="caret"
+                style="margin-top: 7px; border-top: 4px solid #1a578a"
+              ></span>
+              ), choose the <span style="color: #4789ac">best</span> option
+              according to the information given on the website.
+            </div>
 
+            <div
+              id="multipleChoices"
+              class="wellBlueBG"
+              style="margin-bottom: 20px"
+            >
+              <div class="ddrow">
+                1. Annalisa Ducharme most likely objects to
+                <div class="dd">
+                  <div class="ddToggle">▾</div>
+                  <div class="ddMenu">
+                    <ul data-id="58885e73-2dd0-4a0c-8c26-8fc7369d6b39">
+                      <li data-id="2821ffd3-5ff4-4ec9-b9e9-d86423944e39">
+                        inflated claims about language preservation outcomes.
+                      </li>
 
-                                    <li><a href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest/PT">CELPIP-General Practice Tests, Set 1</a></li>
-                                    <li><a href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest2/OPT2">CELPIP-General Practice Tests, Set 2</a></li>
-                                    <li><a href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest3/OPT3">CELPIP-General Practice Tests, Set 3</a></li>
-                                    <li><a href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest4/OPT4">CELPIP-General Practice Tests, Set 4</a></li>
-                                    <li><a href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest5/OPT5">CELPIP-General Practice Tests, Set 5</a></li>
-                                    <li><a href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest6/OPT6">CELPIP-General Practice Tests, Set 6</a></li>
-                                    <li><a href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest7/OPT7">CELPIP-General Practice Tests, Set 7</a></li>
-                                    <li><a href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest8/OPT8">CELPIP-General Practice Tests, Set 8</a></li>
-                                    <li><a href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest9/OPT9">CELPIP-General Practice Tests, Set 9</a></li>
-                                    <li><a href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest10/OPT10">CELPIP-General Practice Tests, Set 10</a></li>
-                                        <li><a target="_blank" href="https://testprep.paragontesting.ca/api/sso/v2/sso/jwt?jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6Imh5cDIyMThAZ21haWwuY29tIiwiZmlyc3RfbmFtZSI6IllpLVBpbmciLCJsYXN0X25hbWUiOiJIbyIsIm5hbWVpZCI6IjIyMzc0ODgiLCJpYXQiOjE3NDMwMTQ1OTIsImp0aSI6Mjg2NjQwNDU1LCJuYmYiOjE3NDMwMTQyOTJ9.DJKuh0nK4GA6r2AFP4lACNvD360yxElRtTX-vYRM9HQ&amp;return_to=https%3A%2F%2Ftestprep.paragontesting.ca%2Fbundles%2Fcelpip-accelerate-starter-celpip-general">CELPIP Accelerate Starter - Reading and Writing</a></li>
-                                        <li><a target="_blank" href="https://testprep.paragontesting.ca/api/sso/v2/sso/jwt?jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6Imh5cDIyMThAZ21haWwuY29tIiwiZmlyc3RfbmFtZSI6IllpLVBpbmciLCJsYXN0X25hbWUiOiJIbyIsIm5hbWVpZCI6IjIyMzc0ODgiLCJpYXQiOjE3NDMwMTQ1OTIsImp0aSI6MTA1NzE2ODM4MywibmJmIjoxNzQzMDE0MjkyfQ.498h3Y5Oc8ZgU43JdbUpNhE5ksSrvzpOenXg4PKPPqY&amp;return_to=https%3A%2F%2Ftestprep.paragontesting.ca%2Fbundles%2Fcelpip-accelerate-starter-celpip-general-ls">CELPIP Accelerate Starter - Listening and Speaking</a></li>
-                        </ul>
+                      <li data-id="cbbd9caf-34a0-4f51-9584-49ffafe96823">
+                        public programs to revitalize dying languages for
+                        political reasons.
+                      </li>
 
+                      <li data-id="9067ca85-f1c2-4ed9-93a3-def14a4eec6f">
+                        denials about the rate of language extinction.
+                      </li>
+
+                      <li data-id="8a472895-d39f-4a4c-ac77-adcd6371c77f">
+                        a simplistic categorization or definition of a language.
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <div class="ddrow">
+                2. Marianne Houseman thinks language preservation programs
+                should be
+                <div class="dd">
+                  <div class="ddToggle">▾</div>
+                  <div class="ddMenu">
+                    <ul data-id="da50e5b9-583f-4d00-ac98-27ebb30c1917">
+                      <li data-id="d8122bad-57a5-4745-90d5-1005c45b1b8e">
+                        modified.
+                      </li>
+
+                      <li data-id="bbebee06-3de0-4a60-871e-02004ca6dbb7">
+                        continued.
+                      </li>
+
+                      <li data-id="3cf998c0-1c58-478b-992e-965185604ea5">
+                        consolidated.
+                      </li>
+
+                      <li data-id="8081b1dd-63d0-4517-8a34-c49ec8ca5b63">
+                        abandoned.
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <div class="ddrow">
+                3. Who holds directly opposing viewpoints?
+                <div class="dd">
+                  <div class="ddToggle">▾</div>
+                  <div class="ddMenu">
+                    <ul data-id="a36811f6-26d5-45f1-b7d4-510643af3503">
+                      <li data-id="3b312f03-9c74-43cf-bf5c-a823087eecf6">
+                        Ducharme and UNESCO
+                      </li>
+
+                      <li data-id="b13eb60f-9bc1-4d56-8695-7449eaa5a57c">
+                        Houseman and Reideger
+                      </li>
+
+                      <li data-id="55db94ba-2781-4186-b1d5-bdee9f8b7c81">
+                        Reideger and Ducharme
+                      </li>
+
+                      <li data-id="9e1bba25-9a83-4369-8d5b-d2fd5477d8b2">
+                        Ducharme and Houseman
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <div class="ddrow">
+                4. Marianne Houseman would most likely agree that
+                <div class="dd">
+                  <div class="ddToggle">▾</div>
+                  <div class="ddMenu">
+                    <ul data-id="10c7804c-9e92-4eb0-9723-3852dbfc5789">
+                      <li data-id="4f7299c9-6a92-4633-9631-c50e4a1a4ebc">
+                        investments in language immersion schools are
+                        defensible.
+                      </li>
+
+                      <li data-id="75fcd01a-f4de-410b-b9ff-c9ac7e522252">
+                        language preservation policies deserve public attention.
+                      </li>
+
+                      <li data-id="57b40073-f790-4dce-830b-1ec689a7bbe0">
+                        people stand to gain from speaking a lingua franca.
+                      </li>
+
+                      <li data-id="25d70b05-d599-41ae-8aa2-c484d99a59b9">
+                        dying languages are a priceless cultural resource.
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <div class="ddrow">
+                5. Overall, the article suggests that efforts to preserve dying
+                languages are
+                <div class="dd">
+                  <div class="ddToggle">▾</div>
+                  <div class="ddMenu">
+                    <ul data-id="c812e4cf-2f70-410c-9a47-13e87ad63af7">
+                      <li data-id="3eafc526-6b40-4637-bc99-0ce77773379c">
+                        hampered by the link between language and identity.
+                      </li>
+
+                      <li data-id="546cd34f-9afe-462a-a8ba-d24a85789311">
+                        fraught with an array of sociopolitical complications.
+                      </li>
+
+                      <li data-id="6ef1cd5d-24da-4c93-971f-a43bccc7a816">
+                        warranted on the basis of disturbing global statistics.
+                      </li>
+
+                      <li data-id="3e5212b9-80fa-4707-a33b-52a2eef7dec7">
+                        essential for the sake of preserving indigenous
+                        cultures.
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="instruction">
+              The following is a comment by a visitor to the website page.
+              Complete the comment by choosing the
+              <span style="color: #4789ac">best</span> option to fill in each
+              blank.
+            </div>
+
+            <div
+              id="inlineDropDown"
+              class="wellBlueBG"
+              style="margin-top: 20px; margin-bottom: 20px; line-height: 2em"
+            >
+              I'm Metis, of French and Cree descent. Having just 1,000 remaining
+              speakers, Michif, the language of my people, is being sustained
+              through Canadian federal government funded programs like those
+              described in the article. The goal is to save it through
+              transmission to 6.
+              <div class="dd">
+                <div class="ddToggle">▾</div>
+                <div class="ddMenu">
+                  <ul data-id="eed9d52f-5d99-4b5c-989d-621be16feaa2">
+                    <li data-id="cdc6acc8-ade6-4b96-9fe4-3b956ad814a8">
+                      the next generation
                     </li>
 
-                    <li>
-                        <div style="margin-left: 19px">
-                            <ul class="nav nav-pills header-buttons">
-                                
-                            </ul>
-                        </div>
+                    <li data-id="e7c98dd1-e346-455e-b98a-ade433b56af0">
+                      linguistic researchers
                     </li>
-                </ul>
 
-                <ul class="nav pull-right" style="margin-top:17px">
-                        <li class="dropdown">
-                            <a class="dropdown-toggle dropdown-email" data-toggle="dropdown">
-                                <img src="./6-2-4_files/fa_cog.png" style="width:18px; height: 18px; margin-top:-5px">
-                                hyp2218@gmail.com
-                                <b class="caret"></b>
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li><a href="javascript:document.getElementById(&#39;logoutForm&#39;).submit()">Sign out</a></li>
-                            </ul>
-                        </li>
-                </ul>
+                    <li data-id="49673789-c044-49d4-8523-dd8e204b1fe5">
+                      a range of First Nation groups
+                    </li>
+
+                    <li data-id="abc7f52b-9db8-4ec3-8a7b-3a2d6c13fb85">
+                      Michif speakers
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              . I have two points. First, I remind the 7.
+              <div class="dd">
+                <div class="ddToggle">▾</div>
+                <div class="ddMenu">
+                  <ul data-id="f0e87d30-b488-469a-8449-04b03a0484f9">
+                    <li data-id="653a0ba5-8ff8-4f15-916d-c34d35e4ecea">
+                      professor
+                    </li>
+
+                    <li data-id="953d4035-2443-4030-b690-d50115308af7">
+                      graduate student
+                    </li>
+
+                    <li data-id="782d6ca2-1c75-4616-852a-6451963a843a">
+                      CALD representative
+                    </li>
+
+                    <li data-id="6e23f1ca-edad-4585-b94d-4204f98fa55f">
+                      United Nations
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              that historically, the demise of Michif was anything but an
+              organic process; Michif endured systematic government efforts to
+              erase it. Michif therefore merits government efforts to help it 8.
+              <div class="dd">
+                <div class="ddToggle">▾</div>
+                <div class="ddMenu">
+                  <ul data-id="f375b720-0676-4937-a903-e52f40e1db3b">
+                    <li data-id="549e41eb-ee67-4786-8b28-0981d39e024c">
+                      continue evolving
+                    </li>
+
+                    <li data-id="44dfb854-cc2d-41c4-b4c8-d03ef1748f9e">
+                      grow more diverse
+                    </li>
+
+                    <li data-id="a77510e8-96a5-4c3e-a7c7-c08ab5c05bac">
+                      make a comeback
+                    </li>
+
+                    <li data-id="0f78f989-1fa1-48db-a491-3f1da10dde11">
+                      become official
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              . I strongly disagree with the notion that language-targeted
+              government redress and reconciliation programs are 9.
+              <div class="dd">
+                <div class="ddToggle">▾</div>
+                <div class="ddMenu">
+                  <ul data-id="6e6825cf-6308-422f-8063-0100b5b1873e">
+                    <li data-id="b9218c27-8769-43a4-9b65-2484ee4fb8cc">
+                      language standardization efforts
+                    </li>
+
+                    <li data-id="18bfa55f-938f-41d2-b7b8-9bced657ec2e">
+                      aggressive nationalist agendas
+                    </li>
+
+                    <li data-id="fa0f3349-d135-4c32-ad20-2249c866ea17">
+                      likely to proliferate
+                    </li>
+
+                    <li data-id="f22cbf0e-edf9-4138-b415-1e9b5822c052">
+                      indulgent charity campaigns
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              . Second, Michif has several dialects; we chose to revitalize two.
+              While Ms Ducharme may think targeting languages for revival is 10.
+              <div class="dd">
+                <div class="ddToggle">▾</div>
+                <div class="ddMenu">
+                  <ul data-id="92799e9b-92a4-4153-805d-102c8fc8b9f5">
+                    <li data-id="d0b670f8-bb8b-4948-9d04-9c4c7e851e74">
+                      unnecessary
+                    </li>
+
+                    <li data-id="c314d294-89e8-4727-8e81-aba25f9da491">
+                      linguistic
+                    </li>
+
+                    <li data-id="8b9c1125-cf68-4393-94f8-429be7769eba">
+                      essential
+                    </li>
+
+                    <li data-id="dfa01661-c86a-4495-b4d9-45e5f0a111a3">
+                      arbitrary
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              , we think Michif is worth reviving.
             </div>
+          </div>
         </div>
-<form action="https://instructionalproducts.paragontesting.ca/InstructionalProducts/Account/LogOff" id="logoutForm" method="post"></form>    </header>
 
-    <div class="container" id="main-container" style="height: 773px;">
-<link href="./6-2-4_files/ptStyle.css" rel="stylesheet" type="text/css">
-<link href="./6-2-4_files/video-js.css" rel="stylesheet">
-<script src="./6-2-4_files/video.js.下載"></script>
-<script>
-    paragon.pt.backUrl = "/InstructionalProducts/PracticeTest6/OPT6/View/2d0e9f7b-65d1-4c36-8268-1ccb86057a57";
-    paragon.pt.nextUrl = "/InstructionalProducts/PracticeTest6/OPT6/View/d70498c9-7612-4931-b2ef-01cb2888208c";
-    if (paragon.pt.backUrl.length > 0 || paragon.pt.nextUrl.length > 0) {
-        paragon.footerVisible = true;
-    }
+        <script>
+          $(function () {
+            paragon.pt.timer.start(780);
 
-    paragon.pt.items = [
-  {
-    "Id": "58885e73-2dd0-4a0c-8c26-8fc7369d6b39",
-    "ContentId": "ae0735cd-c6a5-43c6-8bf6-2228d0a37aa9",
-    "Num": 1,
-    "Text": "1. Annalisa Ducharme most likely objects to ",
-    "ExtraField1": "",
-    "Choices": [
-      {
-        "Id": "2821ffd3-5ff4-4ec9-b9e9-d86423944e39",
-        "ItemId": "58885e73-2dd0-4a0c-8c26-8fc7369d6b39",
-        "ChoiceData": null,
-        "Num": 1,
-        "Text": "inflated claims about language preservation outcomes. "
-      },
-      {
-        "Id": "cbbd9caf-34a0-4f51-9584-49ffafe96823",
-        "ItemId": "58885e73-2dd0-4a0c-8c26-8fc7369d6b39",
-        "ChoiceData": null,
-        "Num": 2,
-        "Text": "public programs to revitalize dying languages for political reasons."
-      },
-      {
-        "Id": "9067ca85-f1c2-4ed9-93a3-def14a4eec6f",
-        "ItemId": "58885e73-2dd0-4a0c-8c26-8fc7369d6b39",
-        "ChoiceData": null,
-        "Num": 3,
-        "Text": "denials about the rate of language extinction."
-      },
-      {
-        "Id": "8a472895-d39f-4a4c-ac77-adcd6371c77f",
-        "ItemId": "58885e73-2dd0-4a0c-8c26-8fc7369d6b39",
-        "ChoiceData": null,
-        "Num": 4,
-        "Text": "a simplistic categorization or definition of a language."
-      }
-    ]
-  },
-  {
-    "Id": "da50e5b9-583f-4d00-ac98-27ebb30c1917",
-    "ContentId": "ae0735cd-c6a5-43c6-8bf6-2228d0a37aa9",
-    "Num": 2,
-    "Text": "2. Marianne Houseman thinks language preservation programs should be",
-    "ExtraField1": "",
-    "Choices": [
-      {
-        "Id": "d8122bad-57a5-4745-90d5-1005c45b1b8e",
-        "ItemId": "da50e5b9-583f-4d00-ac98-27ebb30c1917",
-        "ChoiceData": null,
-        "Num": 1,
-        "Text": "modified."
-      },
-      {
-        "Id": "bbebee06-3de0-4a60-871e-02004ca6dbb7",
-        "ItemId": "da50e5b9-583f-4d00-ac98-27ebb30c1917",
-        "ChoiceData": null,
-        "Num": 2,
-        "Text": "continued."
-      },
-      {
-        "Id": "3cf998c0-1c58-478b-992e-965185604ea5",
-        "ItemId": "da50e5b9-583f-4d00-ac98-27ebb30c1917",
-        "ChoiceData": null,
-        "Num": 3,
-        "Text": "consolidated."
-      },
-      {
-        "Id": "8081b1dd-63d0-4517-8a34-c49ec8ca5b63",
-        "ItemId": "da50e5b9-583f-4d00-ac98-27ebb30c1917",
-        "ChoiceData": null,
-        "Num": 4,
-        "Text": "abandoned."
-      }
-    ]
-  },
-  {
-    "Id": "a36811f6-26d5-45f1-b7d4-510643af3503",
-    "ContentId": "ae0735cd-c6a5-43c6-8bf6-2228d0a37aa9",
-    "Num": 3,
-    "Text": "3. Who holds directly opposing viewpoints?",
-    "ExtraField1": "",
-    "Choices": [
-      {
-        "Id": "3b312f03-9c74-43cf-bf5c-a823087eecf6",
-        "ItemId": "a36811f6-26d5-45f1-b7d4-510643af3503",
-        "ChoiceData": null,
-        "Num": 1,
-        "Text": "Ducharme and UNESCO"
-      },
-      {
-        "Id": "b13eb60f-9bc1-4d56-8695-7449eaa5a57c",
-        "ItemId": "a36811f6-26d5-45f1-b7d4-510643af3503",
-        "ChoiceData": null,
-        "Num": 2,
-        "Text": "Houseman and Reideger"
-      },
-      {
-        "Id": "55db94ba-2781-4186-b1d5-bdee9f8b7c81",
-        "ItemId": "a36811f6-26d5-45f1-b7d4-510643af3503",
-        "ChoiceData": null,
-        "Num": 3,
-        "Text": "Reideger and Ducharme"
-      },
-      {
-        "Id": "9e1bba25-9a83-4369-8d5b-d2fd5477d8b2",
-        "ItemId": "a36811f6-26d5-45f1-b7d4-510643af3503",
-        "ChoiceData": null,
-        "Num": 4,
-        "Text": "Ducharme and Houseman"
-      }
-    ]
-  },
-  {
-    "Id": "10c7804c-9e92-4eb0-9723-3852dbfc5789",
-    "ContentId": "ae0735cd-c6a5-43c6-8bf6-2228d0a37aa9",
-    "Num": 4,
-    "Text": "4. Marianne Houseman would most likely agree that ",
-    "ExtraField1": "",
-    "Choices": [
-      {
-        "Id": "4f7299c9-6a92-4633-9631-c50e4a1a4ebc",
-        "ItemId": "10c7804c-9e92-4eb0-9723-3852dbfc5789",
-        "ChoiceData": null,
-        "Num": 1,
-        "Text": "investments in language immersion schools are defensible."
-      },
-      {
-        "Id": "75fcd01a-f4de-410b-b9ff-c9ac7e522252",
-        "ItemId": "10c7804c-9e92-4eb0-9723-3852dbfc5789",
-        "ChoiceData": null,
-        "Num": 2,
-        "Text": "language preservation policies deserve public attention."
-      },
-      {
-        "Id": "57b40073-f790-4dce-830b-1ec689a7bbe0",
-        "ItemId": "10c7804c-9e92-4eb0-9723-3852dbfc5789",
-        "ChoiceData": null,
-        "Num": 3,
-        "Text": "people stand to gain from speaking a lingua franca."
-      },
-      {
-        "Id": "25d70b05-d599-41ae-8aa2-c484d99a59b9",
-        "ItemId": "10c7804c-9e92-4eb0-9723-3852dbfc5789",
-        "ChoiceData": null,
-        "Num": 4,
-        "Text": "dying languages are a priceless cultural resource."
-      }
-    ]
-  },
-  {
-    "Id": "c812e4cf-2f70-410c-9a47-13e87ad63af7",
-    "ContentId": "ae0735cd-c6a5-43c6-8bf6-2228d0a37aa9",
-    "Num": 5,
-    "Text": "5. Overall, the article suggests that efforts to preserve dying languages are ",
-    "ExtraField1": "",
-    "Choices": [
-      {
-        "Id": "3eafc526-6b40-4637-bc99-0ce77773379c",
-        "ItemId": "c812e4cf-2f70-410c-9a47-13e87ad63af7",
-        "ChoiceData": null,
-        "Num": 1,
-        "Text": "hampered by the link between language and identity."
-      },
-      {
-        "Id": "546cd34f-9afe-462a-a8ba-d24a85789311",
-        "ItemId": "c812e4cf-2f70-410c-9a47-13e87ad63af7",
-        "ChoiceData": null,
-        "Num": 2,
-        "Text": "fraught with an array of sociopolitical complications."
-      },
-      {
-        "Id": "6ef1cd5d-24da-4c93-971f-a43bccc7a816",
-        "ItemId": "c812e4cf-2f70-410c-9a47-13e87ad63af7",
-        "ChoiceData": null,
-        "Num": 3,
-        "Text": "warranted on the basis of disturbing global statistics."
-      },
-      {
-        "Id": "3e5212b9-80fa-4707-a33b-52a2eef7dec7",
-        "ItemId": "c812e4cf-2f70-410c-9a47-13e87ad63af7",
-        "ChoiceData": null,
-        "Num": 4,
-        "Text": "essential for the sake of preserving indigenous cultures."
-      }
-    ]
-  },
-  {
-    "Id": "eed9d52f-5d99-4b5c-989d-621be16feaa2",
-    "ContentId": "ae0735cd-c6a5-43c6-8bf6-2228d0a37aa9",
-    "Num": 6,
-    "Text": "6. Question_Text",
-    "ExtraField1": "",
-    "Choices": [
-      {
-        "Id": "cdc6acc8-ade6-4b96-9fe4-3b956ad814a8",
-        "ItemId": "eed9d52f-5d99-4b5c-989d-621be16feaa2",
-        "ChoiceData": null,
-        "Num": 1,
-        "Text": "the next generation"
-      },
-      {
-        "Id": "e7c98dd1-e346-455e-b98a-ade433b56af0",
-        "ItemId": "eed9d52f-5d99-4b5c-989d-621be16feaa2",
-        "ChoiceData": null,
-        "Num": 2,
-        "Text": "linguistic researchers"
-      },
-      {
-        "Id": "49673789-c044-49d4-8523-dd8e204b1fe5",
-        "ItemId": "eed9d52f-5d99-4b5c-989d-621be16feaa2",
-        "ChoiceData": null,
-        "Num": 3,
-        "Text": "a range of First Nation groups"
-      },
-      {
-        "Id": "abc7f52b-9db8-4ec3-8a7b-3a2d6c13fb85",
-        "ItemId": "eed9d52f-5d99-4b5c-989d-621be16feaa2",
-        "ChoiceData": null,
-        "Num": 4,
-        "Text": "Michif speakers"
-      }
-    ]
-  },
-  {
-    "Id": "f0e87d30-b488-469a-8449-04b03a0484f9",
-    "ContentId": "ae0735cd-c6a5-43c6-8bf6-2228d0a37aa9",
-    "Num": 7,
-    "Text": "",
-    "ExtraField1": "",
-    "Choices": [
-      {
-        "Id": "653a0ba5-8ff8-4f15-916d-c34d35e4ecea",
-        "ItemId": "f0e87d30-b488-469a-8449-04b03a0484f9",
-        "ChoiceData": null,
-        "Num": 1,
-        "Text": "professor"
-      },
-      {
-        "Id": "953d4035-2443-4030-b690-d50115308af7",
-        "ItemId": "f0e87d30-b488-469a-8449-04b03a0484f9",
-        "ChoiceData": null,
-        "Num": 2,
-        "Text": "graduate student"
-      },
-      {
-        "Id": "782d6ca2-1c75-4616-852a-6451963a843a",
-        "ItemId": "f0e87d30-b488-469a-8449-04b03a0484f9",
-        "ChoiceData": null,
-        "Num": 3,
-        "Text": "CALD representative"
-      },
-      {
-        "Id": "6e23f1ca-edad-4585-b94d-4204f98fa55f",
-        "ItemId": "f0e87d30-b488-469a-8449-04b03a0484f9",
-        "ChoiceData": null,
-        "Num": 4,
-        "Text": "United Nations"
-      }
-    ]
-  },
-  {
-    "Id": "f375b720-0676-4937-a903-e52f40e1db3b",
-    "ContentId": "ae0735cd-c6a5-43c6-8bf6-2228d0a37aa9",
-    "Num": 8,
-    "Text": "",
-    "ExtraField1": "",
-    "Choices": [
-      {
-        "Id": "549e41eb-ee67-4786-8b28-0981d39e024c",
-        "ItemId": "f375b720-0676-4937-a903-e52f40e1db3b",
-        "ChoiceData": null,
-        "Num": 1,
-        "Text": "continue evolving"
-      },
-      {
-        "Id": "44dfb854-cc2d-41c4-b4c8-d03ef1748f9e",
-        "ItemId": "f375b720-0676-4937-a903-e52f40e1db3b",
-        "ChoiceData": null,
-        "Num": 2,
-        "Text": "grow more diverse"
-      },
-      {
-        "Id": "a77510e8-96a5-4c3e-a7c7-c08ab5c05bac",
-        "ItemId": "f375b720-0676-4937-a903-e52f40e1db3b",
-        "ChoiceData": null,
-        "Num": 3,
-        "Text": "make a comeback"
-      },
-      {
-        "Id": "0f78f989-1fa1-48db-a491-3f1da10dde11",
-        "ItemId": "f375b720-0676-4937-a903-e52f40e1db3b",
-        "ChoiceData": null,
-        "Num": 4,
-        "Text": "become official"
-      }
-    ]
-  },
-  {
-    "Id": "6e6825cf-6308-422f-8063-0100b5b1873e",
-    "ContentId": "ae0735cd-c6a5-43c6-8bf6-2228d0a37aa9",
-    "Num": 9,
-    "Text": "",
-    "ExtraField1": "",
-    "Choices": [
-      {
-        "Id": "b9218c27-8769-43a4-9b65-2484ee4fb8cc",
-        "ItemId": "6e6825cf-6308-422f-8063-0100b5b1873e",
-        "ChoiceData": null,
-        "Num": 1,
-        "Text": "language standardization efforts"
-      },
-      {
-        "Id": "18bfa55f-938f-41d2-b7b8-9bced657ec2e",
-        "ItemId": "6e6825cf-6308-422f-8063-0100b5b1873e",
-        "ChoiceData": null,
-        "Num": 2,
-        "Text": "aggressive nationalist agendas"
-      },
-      {
-        "Id": "fa0f3349-d135-4c32-ad20-2249c866ea17",
-        "ItemId": "6e6825cf-6308-422f-8063-0100b5b1873e",
-        "ChoiceData": null,
-        "Num": 3,
-        "Text": "likely to proliferate"
-      },
-      {
-        "Id": "f22cbf0e-edf9-4138-b415-1e9b5822c052",
-        "ItemId": "6e6825cf-6308-422f-8063-0100b5b1873e",
-        "ChoiceData": null,
-        "Num": 4,
-        "Text": "indulgent charity campaigns"
-      }
-    ]
-  },
-  {
-    "Id": "92799e9b-92a4-4153-805d-102c8fc8b9f5",
-    "ContentId": "ae0735cd-c6a5-43c6-8bf6-2228d0a37aa9",
-    "Num": 10,
-    "Text": "",
-    "ExtraField1": "",
-    "Choices": [
-      {
-        "Id": "d0b670f8-bb8b-4948-9d04-9c4c7e851e74",
-        "ItemId": "92799e9b-92a4-4153-805d-102c8fc8b9f5",
-        "ChoiceData": null,
-        "Num": 1,
-        "Text": "unnecessary"
-      },
-      {
-        "Id": "c314d294-89e8-4727-8e81-aba25f9da491",
-        "ItemId": "92799e9b-92a4-4153-805d-102c8fc8b9f5",
-        "ChoiceData": null,
-        "Num": 2,
-        "Text": "linguistic"
-      },
-      {
-        "Id": "8b9c1125-cf68-4393-94f8-429be7769eba",
-        "ItemId": "92799e9b-92a4-4153-805d-102c8fc8b9f5",
-        "ChoiceData": null,
-        "Num": 3,
-        "Text": "essential"
-      },
-      {
-        "Id": "dfa01661-c86a-4495-b4d9-45e5f0a111a3",
-        "ItemId": "92799e9b-92a4-4153-805d-102c8fc8b9f5",
-        "ChoiceData": null,
-        "Num": 4,
-        "Text": "arbitrary"
-      }
-    ]
-  }
-]
-</script>
+            var items1 = paragon.pt.items.slice(0, 5);
 
-<div id="panelTop">
+            paragon.pt.dropDown.renderTemplate(
+              "/InstructionalProducts/PracticeTest6/OPT6/SaveUserResponse/",
+              "1c4dde52-2c06-4fa8-8692-5bec0bcf9c5f",
+              $("#dropDownListTemplate").html(),
+              $("#multipleChoices"),
+              items1
+            );
+            paragon.pt.dropDown.renderInline(
+              "/InstructionalProducts/PracticeTest6/OPT6/SaveUserResponse/",
+              "1c4dde52-2c06-4fa8-8692-5bec0bcf9c5f",
+              paragon.pt.items,
+              5,
+              9,
+              $("#inlineDropDown")
+            );
 
-    <div id="canvasName" style="float: left; font-size: 16px; font-weight: bold;">
-        Practice Test 2 - Reading Part 4: Reading for Viewpoints
-    </div>
+            paragon.pt.dropDown.activate(
+              "/InstructionalProducts/PracticeTest6/OPT6/SaveUserResponse/",
+              "1c4dde52-2c06-4fa8-8692-5bec0bcf9c5f"
+            );
 
-    <div style="float: right;" class="btnNext span1 pull-right">
-                <a href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest6/OPT6/View/f2fbe267-8eb0-4e72-a552-791197b5b500#" id="btnNext" class="btn btn-primary">NEXT</a>
+            $.ajax({
+              type: "POST",
+              url: "/InstructionalProducts/PracticeTest6/OPT6/GetUserResponses",
+              data: {
+                sectionId: "1c4dde52-2c06-4fa8-8692-5bec0bcf9c5f",
+                items: JSON.stringify(paragon.pt.items),
+              },
+              success: function (data) {
+                var responses = data.responses;
+                for (var i = 0; i < responses.length; i++) {
+                  var currentResponse = responses[i];
+                  if (currentResponse != null) {
+                    var selected = $("ul").find(
+                      "[data-id=" + currentResponse.Answer + "]"
+                    );
+                    if (selected != null) {
+                      var toggle = $(selected).parent().parent().prev();
+                      $(toggle).addClass("ddToggle1");
+                      $(toggle).html(selected.html());
+                      $(selected).addClass("selected");
+                    }
+                  }
+                }
+              },
+            });
+            //show scrollbar
+            paragon.pt.showScrollBar($("#panelLeft"), $("#panelRight"));
+            paragon.pt.showReadingAnswerKeyBtn(
+              "1c4dde52-2c06-4fa8-8692-5bec0bcf9c5f"
+            );
+          });
+        </script>
+      </div>
 
-    </div>
-
-    <div style="float: right; display: block;" id="timer" class="hide">
-        Time remaining: <strong>12 minutes</strong>
-    </div>
-
-</div>
-
-<div id="mainContent">
-    
-
-<script id="dropDownListTemplate" type="text/template">
-{{#each this}}
-    <div class="ddrow">
-        {{Text}}
-        <div class='dd'>
-            <div class='ddToggle'>▾</div>
-            <div class='ddMenu'>
-                <ul data-id="{{Id}}">
-                {{#each Choices}}
-                    <li data-id="{{Id}}">{{Text}}</li>
-                {{/each}}
-                </ul>
-            </div>
+      <div
+        id="dlgTest"
+        class="modal hide fade"
+        tabindex="-1"
+        role="dialog"
+        aria-hidden="true"
+      >
+        <div class="modal-header">
+          <h4>Test</h4>
         </div>
-    </div>
-{{/each}}
-</script>
-
-<script id="dropDownListInlineTemplate" type="text/template">
-    <div class='dd'>
-        <div class='ddToggle'>▾</div>
-        <div class='ddMenu'>
-            <ul data-id="{{Id}}">
-            {{#each Choices}}
-                <li data-id="{{Id}}">{{Text}}</li>
-            {{/each}}
-            </ul>
+        <div class="modal-body">
+          <p>test</p>
         </div>
-    </div>
-</script>
-
-<script id="dropDownListInFrontTemplate" type="text/template">
-    {{#each this}}
-    <div class="ddrow">
-        <div class='dd'>
-            <div class='ddToggle'>▾</div>
-            <div class='ddMenu'>
-                <ul data-id="{{Id}}">
-                    {{#each Choices}}
-                    <li data-id="{{Id}}">{{Text}}</li>
-                    {{/each}}
-                </ul>
-            </div>
+        <div class="modal-footer">
+          <button class="btn" data-dismiss="modal" aria-hidden="true">
+            Close
+          </button>
         </div>
-        &nbsp;-
-        {{Text}}
-    </div>
-    {{/each}}
-</script>
+      </div>
 
-<div id="panelLeft" style="width: 50%; height: 730px;" class="graybg">
-    <div class="row1">
-        <div><div class="instruction" style="margin-bottom: 30px;">Read the following article from a website.</div>
-
-<p><strong>Language Decline</strong></p>
-
-The numbers are in, and they're grim: Three thousand of the world's seven thousand languages are in decline and expected to perish by around 2100. While the most prevalent languages are taking a firmer hold across the globe, the extinction rate for languages is 25 per year. Charting language demise, UNESCO ranks dwindling languages on a scale ranging from “vulnerable” to “critically endangered.” The question is how, or whether, UNESCO or sovereign governments should intervene?
-<br><br>
-
-Concerned language preservation organizations include the Canadian Association for Language Diversity (CALD), a charity whose goal is to prevent language extinctions. IALD spokesperson Norman Reideger says all endangered languages should be saved. “For individuals, language fosters a sense of personal identity. Language extinction means loss of priceless, irreplaceable cultural knowledge—the grammar, music, narratives, and even medical knowledge embedded in a language. A linguistically diverse planet is a healthy planet.”
-<br><br>
-
-Concordia University linguistics professor Marianne Houseman deplores such use of biodiversity rhetoric in linguistics discourse. “Life is life, and language is language,” she clarifies. Houseman is skeptical about whether speakers of endangered languages benefit from linguistic preservation, noting that those who abandon their language may be acting in their own best interests by adapting to a naturally evolving socio-economic climate. “Whose needs are served by government-funded social—or socio-linguistic—engineering schemes?” asks Houseman, “Their proponents are typically nationalist regimes advancing their own territorial, political and economic agendas.”
-<br><br>
-
-Annalisa Ducharme, a Memorial University doctoral candidate, points out that a confounding factor is variation within a language. “One language can have multiple dialects—regional varieties,” says Ducharme, “If an endangered language is to be artificially propped up with government funded schools and preschools, as they do with some First Nation languages in Canada, then which—whose—version of the language should be deemed “essential” and therefore worth saving?”As well as First Nation languages, Duchenne points to French, which “has many dialects worth sustaining. Globally, France, Louisiana, and Africa have their own versions. In New Brunswick, French dialects include Quebecois, Acadian, and Chiac, a sub-dialect that blends Acadian French, English, and [aboriginal] Mi'kmaq.”
-<br><br></div>
-        
-        <div class="box hide" id="infoBox">
-    <div class="boxIcon">
-        <em class="info-icon"></em>
-    </div>
-    <div class="boxText">
-        <div>
-            <p>Click "NEXT" to continue.</p>
+      <div
+        id="dlgUnansweredWarning"
+        class="modal hide fade"
+        tabindex="-1"
+        role="dialog"
+      >
+        <div class="modal-body">
+          <p>
+            No answer(s) selected. On the official test, if you go to the next
+            page, you will no longer be able to answer the question(s) on this
+            page.
+          </p>
         </div>
-    </div>
-</div>
-
-<div class="box hide" id="playAudioBox">
-    <div class="boxIcon">
-        <em class="play-icon"></em>
-    </div>
-    <div class="boxText">
-        <div>Playing...</div>
-        <div class="progressbar">
-            <span class="progressbar-value"><em style="left: 0%;" class="progressbar-cover"></em>
-            </span>
+        <div class="modal-footer">
+          <button
+            class="btn btn-primary"
+            data-dismiss="modal"
+            style="color: white"
+          >
+            Keep working on this page
+          </button>
+          <button
+            class="btn"
+            data-dismiss="modal"
+            onclick="paragon.pt.skipToNext()"
+          >
+            Skip and go to the next page
+          </button>
         </div>
+      </div>
     </div>
-</div>
-
-<div id="audioDiv"></div>
-
-
-    </div>
-</div>
-
-<div id="panelRight" style="width: 50%; height: 730px;" class="bluebg">
-    <div class="row1">
-        <div class="instruction" style="margin-bottom: 15px;">Using the drop-down menu ( <span class="caret" style="margin-top:7px; border-top: 4px solid #1A578A"></span> ), choose the <span style="color: #4789AC;">best</span> option according to the information given on the website.</div>
-        
-        <div id="multipleChoices" class="wellBlueBG" style="margin-bottom: 20px;">
-
-    <div class="ddrow">
-        1. Annalisa Ducharme most likely objects to 
-        <div class="dd">
-            <div class="ddToggle">▾</div>
-            <div class="ddMenu">
-                <ul data-id="58885e73-2dd0-4a0c-8c26-8fc7369d6b39">
-                
-                    <li data-id="2821ffd3-5ff4-4ec9-b9e9-d86423944e39">inflated claims about language preservation outcomes. </li>
-                
-                    <li data-id="cbbd9caf-34a0-4f51-9584-49ffafe96823">public programs to revitalize dying languages for political reasons.</li>
-                
-                    <li data-id="9067ca85-f1c2-4ed9-93a3-def14a4eec6f">denials about the rate of language extinction.</li>
-                
-                    <li data-id="8a472895-d39f-4a4c-ac77-adcd6371c77f">a simplistic categorization or definition of a language.</li>
-                
-                </ul>
-            </div>
+    <div class="container hide" id="footer" style="display: block">
+      <div class="row">
+        <div id="leftBtn" class="span7" align="left">
+          <a
+            href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest6/OPT6/View/d70498c9-7612-4931-b2ef-01cb2888208c"
+            id="backToResultbtn"
+            class="btn"
+            >Answer Key</a
+          >
         </div>
-    </div>
-
-    <div class="ddrow">
-        2. Marianne Houseman thinks language preservation programs should be
-        <div class="dd">
-            <div class="ddToggle">▾</div>
-            <div class="ddMenu">
-                <ul data-id="da50e5b9-583f-4d00-ac98-27ebb30c1917">
-                
-                    <li data-id="d8122bad-57a5-4745-90d5-1005c45b1b8e">modified.</li>
-                
-                    <li data-id="bbebee06-3de0-4a60-871e-02004ca6dbb7">continued.</li>
-                
-                    <li data-id="3cf998c0-1c58-478b-992e-965185604ea5">consolidated.</li>
-                
-                    <li data-id="8081b1dd-63d0-4517-8a34-c49ec8ca5b63">abandoned.</li>
-                
-                </ul>
-            </div>
+        <div class="span5">
+          <a
+            href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest6/OPT6/View/f2fbe267-8eb0-4e72-a552-791197b5b500#"
+            id="btnBack"
+            class="btn btn1 hide btn-danger"
+            style="display: inline"
+            >BACK</a
+          >
         </div>
+      </div>
     </div>
-
-    <div class="ddrow">
-        3. Who holds directly opposing viewpoints?
-        <div class="dd">
-            <div class="ddToggle">▾</div>
-            <div class="ddMenu">
-                <ul data-id="a36811f6-26d5-45f1-b7d4-510643af3503">
-                
-                    <li data-id="3b312f03-9c74-43cf-bf5c-a823087eecf6">Ducharme and UNESCO</li>
-                
-                    <li data-id="b13eb60f-9bc1-4d56-8695-7449eaa5a57c">Houseman and Reideger</li>
-                
-                    <li data-id="55db94ba-2781-4186-b1d5-bdee9f8b7c81">Reideger and Ducharme</li>
-                
-                    <li data-id="9e1bba25-9a83-4369-8d5b-d2fd5477d8b2">Ducharme and Houseman</li>
-                
-                </ul>
-            </div>
-        </div>
-    </div>
-
-    <div class="ddrow">
-        4. Marianne Houseman would most likely agree that 
-        <div class="dd">
-            <div class="ddToggle">▾</div>
-            <div class="ddMenu">
-                <ul data-id="10c7804c-9e92-4eb0-9723-3852dbfc5789">
-                
-                    <li data-id="4f7299c9-6a92-4633-9631-c50e4a1a4ebc">investments in language immersion schools are defensible.</li>
-                
-                    <li data-id="75fcd01a-f4de-410b-b9ff-c9ac7e522252">language preservation policies deserve public attention.</li>
-                
-                    <li data-id="57b40073-f790-4dce-830b-1ec689a7bbe0">people stand to gain from speaking a lingua franca.</li>
-                
-                    <li data-id="25d70b05-d599-41ae-8aa2-c484d99a59b9">dying languages are a priceless cultural resource.</li>
-                
-                </ul>
-            </div>
-        </div>
-    </div>
-
-    <div class="ddrow">
-        5. Overall, the article suggests that efforts to preserve dying languages are 
-        <div class="dd">
-            <div class="ddToggle">▾</div>
-            <div class="ddMenu">
-                <ul data-id="c812e4cf-2f70-410c-9a47-13e87ad63af7">
-                
-                    <li data-id="3eafc526-6b40-4637-bc99-0ce77773379c">hampered by the link between language and identity.</li>
-                
-                    <li data-id="546cd34f-9afe-462a-a8ba-d24a85789311">fraught with an array of sociopolitical complications.</li>
-                
-                    <li data-id="6ef1cd5d-24da-4c93-971f-a43bccc7a816">warranted on the basis of disturbing global statistics.</li>
-                
-                    <li data-id="3e5212b9-80fa-4707-a33b-52a2eef7dec7">essential for the sake of preserving indigenous cultures.</li>
-                
-                </ul>
-            </div>
-        </div>
-    </div>
-
-</div>
-
-        <div class="instruction">The following is a comment by a visitor to the website page. Complete the comment by choosing the <span style="color: #4789AC;">best</span> option to fill in each blank.</div>
-
-        <div id="inlineDropDown" class="wellBlueBG" style="margin-top: 20px; margin-bottom: 20px; line-height: 2em;">I'm Metis, of French and Cree descent. Having just 1,000 remaining speakers, Michif, the language of my people, is being sustained through Canadian federal government funded programs like those described in the article. The goal is to save it through transmission to 6.
-    <div class="dd">
-        <div class="ddToggle">▾</div>
-        <div class="ddMenu">
-            <ul data-id="eed9d52f-5d99-4b5c-989d-621be16feaa2">
-            
-                <li data-id="cdc6acc8-ade6-4b96-9fe4-3b956ad814a8">the next generation</li>
-            
-                <li data-id="e7c98dd1-e346-455e-b98a-ade433b56af0">linguistic researchers</li>
-            
-                <li data-id="49673789-c044-49d4-8523-dd8e204b1fe5">a range of First Nation groups</li>
-            
-                <li data-id="abc7f52b-9db8-4ec3-8a7b-3a2d6c13fb85">Michif speakers</li>
-            
-            </ul>
-        </div>
-    </div>
-. I have two points. First, I remind the 7.
-    <div class="dd">
-        <div class="ddToggle">▾</div>
-        <div class="ddMenu">
-            <ul data-id="f0e87d30-b488-469a-8449-04b03a0484f9">
-            
-                <li data-id="653a0ba5-8ff8-4f15-916d-c34d35e4ecea">professor</li>
-            
-                <li data-id="953d4035-2443-4030-b690-d50115308af7">graduate student</li>
-            
-                <li data-id="782d6ca2-1c75-4616-852a-6451963a843a">CALD representative</li>
-            
-                <li data-id="6e23f1ca-edad-4585-b94d-4204f98fa55f">United Nations</li>
-            
-            </ul>
-        </div>
-    </div>
- that historically, the demise of Michif was anything but an organic process; Michif endured systematic government efforts to erase it. Michif therefore merits government efforts to help it 8.
-    <div class="dd">
-        <div class="ddToggle">▾</div>
-        <div class="ddMenu">
-            <ul data-id="f375b720-0676-4937-a903-e52f40e1db3b">
-            
-                <li data-id="549e41eb-ee67-4786-8b28-0981d39e024c">continue evolving</li>
-            
-                <li data-id="44dfb854-cc2d-41c4-b4c8-d03ef1748f9e">grow more diverse</li>
-            
-                <li data-id="a77510e8-96a5-4c3e-a7c7-c08ab5c05bac">make a comeback</li>
-            
-                <li data-id="0f78f989-1fa1-48db-a491-3f1da10dde11">become official</li>
-            
-            </ul>
-        </div>
-    </div>
-. I strongly disagree with the notion that language-targeted government redress and reconciliation programs are 9.
-    <div class="dd">
-        <div class="ddToggle">▾</div>
-        <div class="ddMenu">
-            <ul data-id="6e6825cf-6308-422f-8063-0100b5b1873e">
-            
-                <li data-id="b9218c27-8769-43a4-9b65-2484ee4fb8cc">language standardization efforts</li>
-            
-                <li data-id="18bfa55f-938f-41d2-b7b8-9bced657ec2e">aggressive nationalist agendas</li>
-            
-                <li data-id="fa0f3349-d135-4c32-ad20-2249c866ea17">likely to proliferate</li>
-            
-                <li data-id="f22cbf0e-edf9-4138-b415-1e9b5822c052">indulgent charity campaigns</li>
-            
-            </ul>
-        </div>
-    </div>
-. Second, Michif has several dialects; we chose to revitalize two. While Ms Ducharme may think targeting languages for revival is 10.
-    <div class="dd">
-        <div class="ddToggle">▾</div>
-        <div class="ddMenu">
-            <ul data-id="92799e9b-92a4-4153-805d-102c8fc8b9f5">
-            
-                <li data-id="d0b670f8-bb8b-4948-9d04-9c4c7e851e74">unnecessary</li>
-            
-                <li data-id="c314d294-89e8-4727-8e81-aba25f9da491">linguistic</li>
-            
-                <li data-id="8b9c1125-cf68-4393-94f8-429be7769eba">essential</li>
-            
-                <li data-id="dfa01661-c86a-4495-b4d9-45e5f0a111a3">arbitrary</li>
-            
-            </ul>
-        </div>
-    </div>
-, we think Michif is worth reviving.</div>
-    </div>
-</div>
-
-<script>
-    $(function () {
-        paragon.pt.timer.start(780);
-
-        var items1 = paragon.pt.items.slice(0, 5);
-
-        paragon.pt.dropDown.renderTemplate("/InstructionalProducts/PracticeTest6/OPT6/SaveUserResponse/", "1c4dde52-2c06-4fa8-8692-5bec0bcf9c5f", $('#dropDownListTemplate').html(), $('#multipleChoices'), items1);
-        paragon.pt.dropDown.renderInline("/InstructionalProducts/PracticeTest6/OPT6/SaveUserResponse/", "1c4dde52-2c06-4fa8-8692-5bec0bcf9c5f", paragon.pt.items, 5, 9, $("#inlineDropDown"));
-
-        paragon.pt.dropDown.activate("/InstructionalProducts/PracticeTest6/OPT6/SaveUserResponse/", "1c4dde52-2c06-4fa8-8692-5bec0bcf9c5f");
-
-        $.ajax({
-            type: "POST",
-            url: "/InstructionalProducts/PracticeTest6/OPT6/GetUserResponses",
-            data: { 'sectionId': '1c4dde52-2c06-4fa8-8692-5bec0bcf9c5f', 'items': JSON.stringify(paragon.pt.items) },
-                       success: function (data) {
-                           var responses = data.responses;
-                           for (var i = 0; i < responses.length; i++) {
-                               var currentResponse = responses[i];
-                               if (currentResponse != null) {
-                                   var selected = $('ul').find('[data-id=' + currentResponse.Answer + ']');
-                                   if (selected != null) {
-                                       var toggle = $(selected).parent().parent().prev();
-                                       $(toggle).addClass('ddToggle1');
-                                       $(toggle).html(selected.html());
-                                       $(selected).addClass('selected');
-                                   }
-                               }
-                           }
-                       }
-        });
-        //show scrollbar
-        paragon.pt.showScrollBar($('#panelLeft'), $('#panelRight'));
-        paragon.pt.showReadingAnswerKeyBtn("1c4dde52-2c06-4fa8-8692-5bec0bcf9c5f");
-
-
-
-    });
-
-</script>
-
-</div>
-
-<div id="dlgTest" class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-header">
-        <h4>Test</h4>
-    </div>
-    <div class="modal-body">
-        <p>test</p>
-    </div>
-    <div class="modal-footer">
-        <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
-    </div>
-</div>
-
-<div id="dlgUnansweredWarning" class="modal hide fade" tabindex="-1" role="dialog">
-    <div class="modal-body">
-        <p>No answer(s) selected. On the official test, if you go to the next page, you will no longer be able to answer the question(s) on this page.</p>
-    </div>
-    <div class="modal-footer">
-        <button class="btn btn-primary" data-dismiss="modal" style="color: white;">Keep working on this page</button>
-        <button class="btn" data-dismiss="modal" onclick="paragon.pt.skipToNext()">Skip and go to the next page</button>
-    </div>
-</div>
-
-</div>
-    <div class="container hide" id="footer" style="display: block;">
-        <div class="row">
-    <div id="leftBtn" class="span7" align="left"><a href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest6/OPT6/View/d70498c9-7612-4931-b2ef-01cb2888208c" id="backToResultbtn" class="btn">Answer Key</a></div>
-    <div class="span5">
-        <a href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest6/OPT6/View/f2fbe267-8eb0-4e72-a552-791197b5b500#" id="btnBack" class="btn btn1 hide btn-danger" style="display: inline;">BACK</a>
-        
-    </div>
-</div>
-
-    </div>
-    <div class="container" style="text-align: center; font-size: 0.9em; color: #53565A; padding-top: 20px;">
-        <p>Copyright 2025 - Paragon Testing Enterprises   |    <a href="https://www.celpip.ca/" target="_blank">www.celpip.ca</a>    |    <a href="https://www.celpip.ca/contact/" target="_blank">Contact Us</a></p>
+    <div
+      class="container"
+      style="
+        text-align: center;
+        font-size: 0.9em;
+        color: #53565a;
+        padding-top: 20px;
+      "
+    >
+      <p>
+        Copyright 2025 - Paragon Testing Enterprises |
+        <a href="https://www.celpip.ca/" target="_blank">www.celpip.ca</a> |
+        <a href="https://www.celpip.ca/contact/" target="_blank">Contact Us</a>
+      </p>
     </div>
 
     <div id="block" class="modal-backdrop hide"></div>
     <div id="unsupported" class="modal hide" tabindex="-1">
-        <div class="modal-body">
-            <h3>Unsupported screen resolution</h3>
-            <p>This product requires a minimum screen resolution of 1024 x 768.</p>
-        </div>
+      <div class="modal-body">
+        <h3>Unsupported screen resolution</h3>
+        <p>This product requires a minimum screen resolution of 1024 x 768.</p>
+      </div>
     </div>
 
-
     <script>
-        $(function () {
-            paragon.verifyDisplaySize();
+      $(function () {
+        paragon.verifyDisplaySize();
 
-            $(window).resize(function () {
-                paragon.verifyDisplaySize();
-            });
+        $(window).resize(function () {
+          paragon.verifyDisplaySize();
         });
+      });
     </script>
 
-
-    
     <script>
-        paragon.pt.showAlert = function (msg) {
-            $('#dlgTest .modal-body p').html(msg);
-            $('#dlgTest').modal();
+      paragon.pt.showAlert = function (msg) {
+        $("#dlgTest .modal-body p").html(msg);
+        $("#dlgTest").modal();
+      };
+
+      paragon.pt.skipToNext = function () {
+        paragon.pt.nextItem(
+          "/InstructionalProducts/PracticeTest6/OPT6/SaveCanvasData",
+          "",
+          "f2fbe267-8eb0-4e72-a552-791197b5b500",
+          "1c4dde52-2c06-4fa8-8692-5bec0bcf9c5f",
+          2
+        );
+        paragon.pt.goNext();
+      };
+
+      $(function () {
+        if (paragon.footerVisible == true) {
+          paragon.showFooter();
         }
 
-        paragon.pt.skipToNext = function () {
-            paragon.pt.nextItem("/InstructionalProducts/PracticeTest6/OPT6/SaveCanvasData",'', "f2fbe267-8eb0-4e72-a552-791197b5b500", "1c4dde52-2c06-4fa8-8692-5bec0bcf9c5f", 2);
-            paragon.pt.goNext();
+        if (paragon.pt.backUrl.length > 0) {
+          $("#btnBack").click(function () {
+            paragon.pt.goBack();
+          });
+          paragon.pt.showBackButton();
         }
 
-        $(function () {
-            if (paragon.footerVisible == true) {
-                paragon.showFooter();
-            }
-
-            if (paragon.pt.backUrl.length > 0) {
-                $("#btnBack").click(function () {
-                    paragon.pt.goBack();
-                });
-                paragon.pt.showBackButton();
-            }
-
-
-            $("#btnNext").click(function () {
-                var url = "";
-                if (32  == 24 || 32  == 25) {
-                    url = "/InstructionalProducts/PracticeTest6/OPT6/GetUserResponse/";
-                }
-                else {
-                    url = "/InstructionalProducts/PracticeTest6/OPT6/GetUserResponses/";
-                }
-                var unanswered = paragon.pt.countUnansweredQuestionsFromDb(32, "1c4dde52-2c06-4fa8-8692-5bec0bcf9c5f", url);
-                if (unanswered > 0) {
-                    $('#dlgUnansweredWarning').modal();
-                }
-                else {
-                    paragon.pt.skipToNext();
-                }
-            });
-
-            if (paragon.pt.nextUrl.length > 0) {
-                paragon.pt.showNextButton();
-            }
-
-
+        $("#btnNext").click(function () {
+          var url = "";
+          if (32 == 24 || 32 == 25) {
+            url = "/InstructionalProducts/PracticeTest6/OPT6/GetUserResponse/";
+          } else {
+            url = "/InstructionalProducts/PracticeTest6/OPT6/GetUserResponses/";
+          }
+          var unanswered = paragon.pt.countUnansweredQuestionsFromDb(
+            32,
+            "1c4dde52-2c06-4fa8-8692-5bec0bcf9c5f",
+            url
+          );
+          if (unanswered > 0) {
+            $("#dlgUnansweredWarning").modal();
+          } else {
+            paragon.pt.skipToNext();
+          }
         });
 
-        $(".links-main").click(function () {
-            var href = "/InstructionalProducts/PracticeTest6/OPT6/";
-            window.location = href;
+        if (paragon.pt.nextUrl.length > 0) {
+          paragon.pt.showNextButton();
+        }
+      });
 
-        });
-
+      $(".links-main").click(function () {
+        var href = "/InstructionalProducts/PracticeTest6/OPT6/";
+        window.location = href;
+      });
     </script>
+  </body>
+  <grammarly-desktop-integration data-grammarly-shadow-root="true"
+    ><template shadowrootmode="open"
+      ><style>
+        div.grammarly-desktop-integration {
+          position: absolute;
+          width: 1px;
+          height: 1px;
+          padding: 0;
+          margin: -1px;
+          overflow: hidden;
+          clip: rect(0, 0, 0, 0);
+          white-space: nowrap;
+          border: 0;
+          -moz-user-select: none;
+          -webkit-user-select: none;
+          -ms-user-select: none;
+          user-select: none;
+        }
 
-
-
-</body><grammarly-desktop-integration data-grammarly-shadow-root="true"><template shadowrootmode="open"><style>
-      div.grammarly-desktop-integration {
-        position: absolute;
-        width: 1px;
-        height: 1px;
-        padding: 0;
-        margin: -1px;
-        overflow: hidden;
-        clip: rect(0, 0, 0, 0);
-        white-space: nowrap;
-        border: 0;
-        -moz-user-select: none;
-        -webkit-user-select: none;
-        -ms-user-select:none;
-        user-select:none;
-      }
-
-      div.grammarly-desktop-integration:before {
-        content: attr(data-content);
-      }
-    </style><div aria-label="grammarly-integration" role="group" tabindex="-1" class="grammarly-desktop-integration" data-content="{&quot;mode&quot;:&quot;full&quot;,&quot;isActive&quot;:true,&quot;isUserDisabled&quot;:false}"></div></template></grammarly-desktop-integration></html>
+        div.grammarly-desktop-integration:before {
+          content: attr(data-content);
+        }
+      </style>
+      <div
+        aria-label="grammarly-integration"
+        role="group"
+        tabindex="-1"
+        class="grammarly-desktop-integration"
+        data-content='{"mode":"full","isActive":true,"isUserDisabled":false}'
+      ></div></template
+  ></grammarly-desktop-integration>
+</html>

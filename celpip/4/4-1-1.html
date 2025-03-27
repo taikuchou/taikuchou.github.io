@@ -1,0 +1,1838 @@
+<!DOCTYPE html>
+<!-- saved from url=(0130)https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest4/OPT4/View/4a6e54e5-f6b5-4a1d-8e53-f9f6365f9ffe -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><style>
+    a {
+        outline: 0;
+    }
+</style>
+
+
+
+    
+    <title>Practice Test</title>
+    <meta name="description">
+    <link href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/favicon.ico" rel="shortcut icon" type="image/x-icon">
+    <meta name="viewport" content="width=device-width">
+    <link href="./4-1-1_files/bootstrap.css" rel="stylesheet">
+<link href="./4-1-1_files/Site.css" rel="stylesheet">
+
+    <script src="./4-1-1_files/399283786078546" async=""></script><script async="" src="./4-1-1_files/fbevents.js.下載"></script><script src="./4-1-1_files/jquery-1.9.1.min.js.下載"></script>
+
+    <script src="./4-1-1_files/jquery.unobtrusive-ajax.min.js.下載"></script>
+
+    <script src="./4-1-1_files/bootstrap.js.下載"></script>
+
+    <script src="./4-1-1_files/handlebars.min.js.下載"></script>
+
+    <script src="./4-1-1_files/instructional-product.js.下載"></script>
+
+    <script src="./4-1-1_files/facebook-pixel.js.下載"></script>
+
+    <script>
+    paragon.pt = paragon.pt || {};
+    paragon.pt.backUrl = "";
+    paragon.pt.nextUrl = "";
+    paragon.pt.speakingPrepTimeLeft = 0;
+    paragon.pt.speakingRecordingTimeLeft = 0;
+    paragon.pt.itemIndex = 0;
+
+    paragon.pt.showAlert = function (msg) {
+        alert(msg);
+    }
+
+    paragon.pt.showBackButton = function () {
+        $("#btnBack").show();
+    }
+
+    paragon.pt.showNextButton = function () {
+        $("#btnNext").show();
+    }
+
+    paragon.pt.hideBackButton = function () {
+        $("#btnBack").hide();
+    }
+
+    paragon.pt.hideNextButton = function () {
+        $("#btnNext").hide();
+    }
+
+    paragon.pt.goNext = function () {
+        window.location = paragon.pt.nextUrl;
+    }
+
+    paragon.pt.goBack = function () {
+        window.location = paragon.pt.backUrl;
+    }
+
+    //Timer For Listening, Reading and Writing
+    paragon.pt.timer = paragon.pt.timer || {};
+    paragon.pt.timer.totalTime = 0;
+    paragon.pt.timer.timeLeft = 0;
+    paragon.pt.timer.interval = null;
+    paragon.pt.timer.start = function (timeLeft) {
+        paragon.pt.timer.timeLeft = timeLeft;
+        paragon.pt.timer.totalTime = timeLeft
+        var minutes = Math.floor(timeLeft / 60);
+        var seconds = timeLeft - minutes * 60;
+
+        if (minutes < 1) {
+            $("#timer strong").html(seconds + " seconds");
+            $("#timer strong").attr("style", "color:red");
+        }
+        else if (minutes == 1) {
+            $("#timer strong").html(minutes + " minute");
+        }
+        else {
+            $("#timer strong").html(minutes + " minutes");
+        }
+
+        $("#timer").show();
+
+        if (paragon.pt.timer.interval)
+            window.clearInterval(paragon.pt.timer.interval);
+
+        paragon.pt.timer.interval = window.setInterval(function () { paragon.pt.timer.deductTime() }, 1000);
+
+        paragon.showFooter();
+    }
+
+    paragon.pt.timer.deductTime = function () {
+        if (paragon.pt.timer.timeLeft > 0) {
+            paragon.pt.timer.timeLeft -= 1;
+
+            var minutes = Math.floor(paragon.pt.timer.timeLeft / 60);
+            var seconds = paragon.pt.timer.timeLeft - minutes * 60;
+
+            if (minutes < 1) {
+                $("#timer strong").html(seconds + " seconds");
+                $("#timer strong").attr("style", "color:red");
+            }
+            else if (minutes == 1) {
+                $("#timer strong").html(minutes + " minute");
+            }
+            else {
+                $("#timer strong").html(minutes + " minutes");
+            }
+        }
+        else {
+            window.clearInterval(paragon.pt.timer.interval);
+            $("#timer strong").html("None");
+        }
+    }
+
+    //Timer For Speaking, work in progress
+    paragon.pt.showTimerSpeaking = function (prepTime, recordingTime) {
+        paragon.pt.speakingPrepTimeLeft = prepTime;
+        paragon.pt.speakingRecordingTimeLeft = recordingTime;
+        $("#timerSpeaking strong:first-child").html(prepTime + " seconds");
+        $("#timerSpeaking strong:last-child").html(recordingTime + " seconds");
+        $("#timerSpeaking").show();
+        paragon.showFooter();
+    }
+
+    paragon.pt.userResponse = paragon.pt.userResponse || {};
+
+    paragon.pt.uploadMultipleChoicesValue = function (url, sectionId, itemId, choiceId) {
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: { sectionId: sectionId, itemId: itemId, choiceId: choiceId },
+            dataType: "json",
+            cache: false,
+            success: function (json) {
+                console.log(json);
+                console.log("ItemId: " + itemId + ", " + "ChoiceId: " + choiceId);
+            }
+        });
+    }
+
+    paragon.pt.activateMultipleChoices = function (url, sectionId) {
+        $(document).delegate(".multipleChoices li", "click", function () {
+            var ul = $(this).parent();
+            ul.find("li").removeClass("selected");
+            $(this).addClass("selected");
+
+            paragon.pt.uploadMultipleChoicesValue(url, sectionId, ul.data("id"), $(this).data("id"));
+        });
+    }
+
+    paragon.pt.renderMultipleChoices = function (url, sectionId, item, renderItemText, hasImage, renderChoiceText) {
+        var template;
+        if (renderItemText == true) {
+            if (hasImage == true) {
+                template = Handlebars.compile($("#multipleChoicesTemplateWithItemTextAndImage").html());
+            }
+            else {
+                template = Handlebars.compile($("#multipleChoicesTemplateWithItemText").html());
+            }
+        }
+        else {
+            if (hasImage == true) {
+
+                if (renderChoiceText == true) {
+                    template = Handlebars.compile($("#multipleChoicesTemplateWithImage").html());
+                }
+                else {
+                    template = Handlebars.compile($("#multipleChoicesTemplateWithImageNoText").html());
+                }
+            }
+            else {
+                template = Handlebars.compile($("#multipleChoicesTemplate").html());
+            }
+        }
+
+        $("#multipleChoices").html(template(item));
+
+        paragon.pt.activateMultipleChoices(url, sectionId);
+    }
+
+    //Drop down list
+    paragon.pt.dropDown = paragon.pt.dropDown || {};
+    paragon.pt.dropDown.activeMenu = null;
+    paragon.pt.dropDown.renderTemplate = function (url, sectionId, templateToRender, elementToRender, items) {
+        var template = Handlebars.compile(templateToRender);
+        $(elementToRender).html(template(items));
+    }
+
+    paragon.pt.dropDown.renderInline = function (url, sectionId, items, startIndex, endIndex, elementToRender) {
+
+        var template = Handlebars.compile($("#dropDownListInlineTemplate").html());
+        var text = elementToRender[0].innerHTML;
+        for (var i = startIndex; i <= endIndex; i++) {
+            text = text.replace("{" + items[i].Num + "}", template(items[i]));
+        }
+        //Handlebars.registerHelper('renderInline', function (src, items, startIndex, endIndex, options) {
+        //    var template = Handlebars.compile($("#dropDownListInlineTemplate").html());
+        //    for (var i = startIndex; i <= endIndex; i++) {
+        //        src = src.replace("{" + (i + 1) + "}", template(items[i]));
+        //    }
+        //    return src;
+        //});
+        $(elementToRender).html(text);
+    }
+
+    paragon.pt.dropDown.activate = function (url, sectionId) {
+
+        $(document.body).click(function () {
+            $(".dd").each(function (i) {
+                if (i != paragon.pt.dropDown.activeMenu) {
+                    $(this).find(".ddMenu").hide();
+                    $(this).removeClass('active');
+                }
+            });
+        });
+
+        $(".dd").mouseover(function () {
+            paragon.pt.dropDown.activeMenu = $(".dd").index(this);
+        }).mouseout(function () {
+            paragon.pt.dropDown.activeMenu = null;
+        });
+
+        $(".ddToggle").click(function () {
+            var parent = $(this).parent();
+            parent.toggleClass("active");
+            var ddMenu = parent.find(".ddMenu");
+            ddMenu.animate({ height: 'toggle', opacity: 'toggle' }, 100);
+            var left = $(this).position().left;
+            ddMenu.css("left", Math.round(left) + "px");
+
+            //place the dropDown menu 20px below the box
+            var top = parent.position().top;
+            ddMenu.css("top", Math.round(top) + 20 + "px");
+
+        });
+
+        $('.dd li').click(function () {
+            $(this).parent().find("li").removeClass("selected");
+            $(this).addClass("selected");
+            var parent = $(this).parent().parent().parent();
+            var ddToggle = parent.find(".ddToggle");
+            ddToggle.html($(this).html());
+            ddToggle.addClass("ddToggle1");
+            parent.find(".ddMenu").animate({ height: 'toggle', opacity: 'toggle' }, 400);
+            parent.removeClass('active');
+            var ul = $(this).parent();
+            paragon.pt.uploadMultipleChoicesValue(url, sectionId, ul.data("id"), $(this).data("id"));
+        });
+    }
+
+    paragon.pt.showInfoBox = function (message) {
+        var infoBox = $("#infoBox");
+        if (message)
+            $("#infoBox .boxText p").html(message);
+        infoBox.show();
+    }
+
+    paragon.pt.hideInfoBox = function () {
+        $("#infoBox").hide();
+    }
+
+    //Audio Playback for the Listening Component
+    paragon.pt.playAudio = paragon.pt.playAudio || {};
+    paragon.pt.playAudio.player = null;
+    paragon.pt.playAudio.totalTime = 0;
+    paragon.pt.playAudio.timeLeft = 0;
+    paragon.pt.playAudio.interval = null;
+    paragon.pt.playAudio.onDone = null;
+
+    paragon.pt.playAudio.start = function (playAudioTime) {
+		paragon.pt.hideInfoBox();
+        paragon.pt.playAudio.totalTime = playAudioTime;
+        paragon.pt.playAudio.timeLeft = playAudioTime;
+        if (paragon.pt.playAudio.interval)
+            window.clearInterval(paragon.pt.playAudio.interval);
+
+        $("#playAudioBox").fadeIn(1000);
+    }
+
+
+    //recording functions
+
+    paragon.pt.recording = paragon.pt.recording || {};
+    paragon.pt.recording.totalTime = 0;
+    paragon.pt.recording.timeLeft = 0;
+    paragon.pt.recording.interval = null;
+    paragon.pt.recording.onDone = null;
+
+    paragon.pt.recording.updateProgressBar = function () {
+        var percentage = 100 - (paragon.pt.recording.timeLeft / paragon.pt.recording.totalTime) * 100;
+        $("#startRecTime .progressbar-cover").css("left", percentage + "%");
+    }
+
+    paragon.pt.recording.deductTime = function () {
+        if (paragon.pt.recording.timeLeft > 0) {
+            paragon.pt.recording.timeLeft -= 1;
+            paragon.pt.recording.updateProgressBar();
+        }
+        else {
+            window.clearInterval(paragon.pt.recording.interval);
+            $("#startRecTime").hide();
+            paragon.pt.showNextButton();
+            if (paragon.pt.recording.onDone) {
+                paragon.pt.recording.onDone();
+            }
+        }
+    }
+
+    paragon.pt.recording.start = function (playAudioTime) {
+        paragon.pt.recording.totalTime = playAudioTime;
+        paragon.pt.recording.timeLeft = playAudioTime;
+        if (paragon.pt.recording.interval)
+            window.clearInterval(paragon.pt.recording.interval);
+
+        paragon.pt.recording.interval = window.setInterval(function () { paragon.pt.recording.deductTime() }, 1000);
+        paragon.pt.recording.updateProgressBar();
+        $("#startRecTime").fadeIn(1000);
+    }
+
+    //end recording
+
+    //preperation functions
+
+    paragon.pt.preparation = paragon.pt.preparation || {};
+    paragon.pt.preparation.totalTime = 0;
+    paragon.pt.preparation.timeLeft = 0;
+    paragon.pt.preparation.interval = null;
+    paragon.pt.preparation.onDone = null;
+    paragon.pt.preparation.startRecording = null;
+
+    paragon.pt.preparation.updateProgressBar = function () {
+        $("#startPrepTime #progressTimer").html(paragon.pt.preparation.timeLeft);
+    }
+
+    paragon.pt.preparation.deductTime = function () {
+        if (paragon.pt.preparation.timeLeft > 0) {
+            paragon.pt.preparation.timeLeft -= 1;
+            paragon.pt.preparation.updateProgressBar();
+        }
+        else {
+            window.clearInterval(paragon.pt.preparation.interval);
+            $("#startPrepTime").hide();
+            paragon.pt.showNextButton();
+            if (paragon.pt.preparation.onDone) {
+                paragon.pt.preparation.onDone();
+            }
+        }
+    }
+
+    paragon.pt.preparation.start = function (playAudioTime) {
+        paragon.pt.preparation.totalTime = playAudioTime;
+        paragon.pt.preparation.timeLeft = playAudioTime;
+        if (paragon.pt.preparation.interval)
+            window.clearInterval(paragon.pt.preparation.interval);
+
+        paragon.pt.preparation.interval = window.setInterval(function () { paragon.pt.preparation.deductTime() }, 1000);
+        paragon.pt.preparation.updateProgressBar();
+        $("#startPrepTime").fadeIn(1000);
+    }
+
+    //end prep functinos
+
+    paragon.pt.createAudioPlayer = function (contentUrl, audiofile) {
+        //create player if not exists
+        if (!paragon.pt.playAudio.player) {
+            paragon.pt.playAudio.player = document.createElement('audio');
+			
+			paragon.pt.playAudio.player.controls = true;
+			paragon.pt.playAudio.player.controlsList = "nodownload";
+            paragon.pt.playAudio.player.oggSrc = document.createElement('source');
+            paragon.pt.playAudio.player.oggSrc.setAttribute('type', 'audio/ogg');
+            paragon.pt.playAudio.player.appendChild(paragon.pt.playAudio.player.oggSrc);
+
+            paragon.pt.playAudio.player.mp3Src = document.createElement('source');
+            paragon.pt.playAudio.player.mp3Src.setAttribute('type', 'audio/mp3');
+            paragon.pt.playAudio.player.appendChild(paragon.pt.playAudio.player.mp3Src);
+			
+			paragon.pt.playAudio.player.ontimeupdate = function () {
+                var duration = paragon.pt.playAudio.player.duration;
+                var currentTime = paragon.pt.playAudio.player.currentTime;
+                if (duration) {
+                    var progress = (currentTime / duration) * 100;
+                    $("#playAudioBox .progressbar-cover").css("left", progress + "%");
+                    if (progress >= 100) {
+                        $("#playAudioBox").hide();
+                        paragon.pt.showInfoBox();
+                        paragon.pt.showNextButton();
+                        if (paragon.pt.playAudio.onDone) {
+                            paragon.pt.playAudio.onDone();
+                        }                        
+                    }                    
+                }
+            };
+
+            paragon.pt.playAudio.player.onplay = function () {
+                paragon.pt.playAudio.start(paragon.pt.playAudio.player.duration);
+            };
+        }
+
+        paragon.pt.playAudio.player.addEventListener("loadedmetadata", function (e) {
+            if (e.target) {
+                paragon.pt.playAudio.player.play();
+                paragon.pt.playAudio.start(e.target.duration);
+            }
+        });
+
+        paragon.pt.playAudio.player.oggSrc.setAttribute('src', contentUrl + audiofile + ".ogg");
+        paragon.pt.playAudio.player.mp3Src.setAttribute('src', contentUrl + audiofile + ".mp3");
+
+        paragon.pt.playAudio.player.load();
+        return paragon.pt.playAudio.player;
+    }
+
+
+    paragon.pt.moveScrollBar = function (div, scrollSize) {
+        div.animate({
+            scrollTop: scrollSize
+        }, 1200, function () {
+            div.animate({ scrollTop: 0 }, 300, function () {
+            });
+        });
+    }
+
+    paragon.pt.showScrollBar = function (leftDiv, rightDiv) {
+
+        if (rightDiv.length && rightDiv.is(":visible") && leftDiv.length && leftDiv.is(":visible")) {
+            $.blockUI({
+                message: "Scroll up and down to see everything.",
+                css: { width: '400px', border: '2px solid #000', top: '35%', padding: '50px', color: '#1A578A', fontWeight: 'bold' },
+                showOverlay: false
+            });
+
+            var rightScrollSize = rightDiv[0].scrollHeight;
+            var leftScrollSize = leftDiv[0].scrollHeight;
+            window.setTimeout(function () {
+                paragon.pt.moveScrollBar(rightDiv, rightScrollSize);
+                paragon.pt.moveScrollBar(leftDiv, leftScrollSize);
+
+                window.setTimeout(function () { $.unblockUI(); }, 2300);
+            }, 1400);
+
+
+        }
+
+    }
+
+    paragon.pt.wordCount = function () {
+        $(".writtenTextAreaBox").keyup(countWords);
+
+        function countWords() {
+            var text = " ";
+            if (this.value != "") {
+                var wordCount = this.value.match(/\S+/g).length;
+                if (wordCount == 1) { 
+                    text = wordCount + " word"; 
+                } else { 
+                    text = wordCount + " words";
+                }
+            }
+            document.getElementById("wordCount").innerHTML = text;
+        }
+    }
+
+    paragon.pt.calcSectionNumQuestion = function (sectionID) {
+        var pt1lpSection = sectionID;
+        $.post("/InstructionalProducts/PracticeTest4/OPT4/GetNumberOfQuestions", { sectionId: pt1lpSection }, function (data) { console.log(data); document.getElementById("numQuestion").innerHTML = data.totalQuestions-1 });
+    }
+
+    paragon.pt.calcSectionNumQuestionLS = function (sectionID) {
+        var pt1lpSection = sectionID;
+        $.post("/InstructionalProducts/PracticeTest4/OPT4LS/GetNumberOfQuestions", { sectionId: pt1lpSection }, function (data) { console.log(data); document.getElementById("numQuestion").innerHTML = data.totalQuestions-1 });
+    }
+
+    paragon.pt.calcListScoreGeneral = function (sectionID) {
+
+        $.post("/InstructionalProducts/PracticeTest4/OPT4/GetScoreOnSection", { sectionId: sectionID }, function (data) {
+            console.log(data); document.getElementById("yourScore").innerHTML = data.userScore;
+
+            var userLScore = data.userScore;
+
+            paragon.pt.findListScore(userLScore);
+
+        });
+    }
+
+    paragon.pt.calcListScoreLS = function (sectionID) {
+
+        $.post("/InstructionalProducts/PracticeTest4/OPT4LS/GetScoreOnSection", { sectionId: sectionID }, function (data) {
+            console.log(data); document.getElementById("yourScore").innerHTML = data.userScore;
+
+            var userLScore = data.userScore;
+
+            paragon.pt.findListScore(userLScore);
+
+        });
+    }
+
+    paragon.pt.findListScore = function (userLScore) {
+        if (userLScore <= 7) {
+            document.getElementById("celScore").innerHTML = "M";
+            return;
+        }
+        else if (userLScore <= 12) {
+            document.getElementById("celScore").innerHTML = "3";
+            return;
+        }
+        else if (userLScore <= 18) {
+            document.getElementById("celScore").innerHTML = "4";
+            return;
+        }
+        else if (userLScore <= 23) {
+            document.getElementById("celScore").innerHTML = "5";
+            return;
+        }
+        else if (userLScore <= 28) {
+            document.getElementById("celScore").innerHTML = "6";
+            return;
+        }
+        else if (userLScore <= 31) {
+            document.getElementById("celScore").innerHTML = "7";
+            return;
+        }
+        else if (userLScore <= 33) {
+            document.getElementById("celScore").innerHTML = "8";
+            return;
+        }
+        else if (userLScore <= 35) {
+          document.getElementById("celScore").innerHTML = "9";
+          return;
+          }
+          else {
+          document.getElementById("celScore").innerHTML = "10-12";
+          }
+          }
+
+          paragon.pt.calcListScoreOnYourScore = function (sectionScore, sectionCell) {
+
+          var userLScore = sectionScore;
+
+          if (userLScore <= 7) {
+                document.getElementById(sectionCell).innerHTML = "M";
+                return;
+            }
+            else if (userLScore <= 12) {
+                document.getElementById(sectionCell).innerHTML = "3";
+                return;
+            }
+            else if (userLScore <= 18) {
+                document.getElementById(sectionCell).innerHTML = "4";
+                return;
+            }
+            else if (userLScore <= 23) {
+                document.getElementById(sectionCell).innerHTML = "5";
+                return;
+            }
+            else if (userLScore <= 28) {
+                document.getElementById(sectionCell).innerHTML = "6";
+                return;
+            }
+            else if (userLScore <= 31) {
+                document.getElementById(sectionCell).innerHTML = "7";
+                return;
+            }
+            else if (userLScore <= 33) {
+                document.getElementById(sectionCell).innerHTML = "8";
+                return;
+            }
+            else if (userLScore <= 35) {
+                document.getElementById(sectionCell).innerHTML = "9";
+                return;
+            }
+            else {
+                document.getElementById(sectionCell).innerHTML = "10-12";
+            }
+
+
+    }
+
+    paragon.pt.calcReadScore = function (sectionID) {
+
+        $.post("/InstructionalProducts/PracticeTest4/OPT4/GetScoreOnSection", { sectionId: sectionID }, function (data) {
+            console.log(data); document.getElementById("yourScore").innerHTML = data.userScore;
+
+            var userRScore = data.userScore;
+
+            if (userRScore <= 7) {
+                document.getElementById("celScore").innerHTML = "M";
+                return;
+            }
+            else if (userRScore <= 11) {
+                document.getElementById("celScore").innerHTML = "3";
+                return;
+            }
+            else if (userRScore <= 16) {
+                document.getElementById("celScore").innerHTML = "4";
+                return;
+            }
+            else if (userRScore <= 20) {
+                document.getElementById("celScore").innerHTML = "5";
+                return;
+            }
+            else if (userRScore <= 25) {
+                document.getElementById("celScore").innerHTML = "6";
+                return;
+            }
+            else if (userRScore <= 28) {
+                document.getElementById("celScore").innerHTML = "7";
+                return;
+            }
+            else if (userRScore <= 31) {
+                document.getElementById("celScore").innerHTML = "8";
+                return;
+            }
+            else if (userRScore <= 33) {
+                document.getElementById("celScore").innerHTML = "9";
+                return;
+            }
+            else {
+                document.getElementById("celScore").innerHTML = "10-12";
+            }
+
+        });
+
+    }
+    paragon.pt.calcReadScoreOnYourScore = function (sectionScore, sectionCell) {
+
+        var userRScore = sectionScore;
+
+        if (userRScore <= 7) {
+            document.getElementById(sectionCell).innerHTML = "M";
+            return;
+        }
+        else if (userRScore <= 11) {
+            document.getElementById(sectionCell).innerHTML = "3";
+            return;
+        }
+        else if (userRScore <= 16) {
+            document.getElementById(sectionCell).innerHTML = "4";
+            return;
+        }
+        else if (userRScore <= 20) {
+            document.getElementById(sectionCell).innerHTML = "5";
+            return;
+        }
+        else if (userRScore <= 25) {
+            document.getElementById(sectionCell).innerHTML = "6";
+            return;
+        }
+        else if (userRScore <= 28) {
+            document.getElementById(sectionCell).innerHTML = "7";
+            return;
+        }
+        else if (userRScore <= 31) {
+            document.getElementById(sectionCell).innerHTML = "8";
+            return;
+        }
+        else if (userRScore <= 33) {
+            document.getElementById(sectionCell).innerHTML = "9";
+            return;
+        }
+        else {
+            document.getElementById(sectionCell).innerHTML = "10-12";
+        }
+    }
+
+
+    //HARDCODED
+    paragon.pt.showListeningAnswerKeyBtn = function (sectionId) {
+        if (sectionId == "75cdd828-66cb-44fb-a5eb-16dce6d38236") {
+            $('#leftBtn').html("<a href='2469231e-bf62-493f-a2f4-840e82a22deb' id='backToResultbtn' class='btn'>Answer Key</a>");
+        }
+
+        if (sectionId == "82298b13-1d63-4be7-ba4c-3794ebe32141") {
+            $('#leftBtn').html("<a href='c70f0381-11d0-4345-9d12-342cf87328c5' id='backToResultbtn' class='btn'>Answer Key</a>");
+        }
+        if (sectionId == "7fd84834-4736-462e-a736-1fd7ecd5c4c9") {
+            $('#leftBtn').html("<a href='837ef473-9459-4e86-a85b-8bc8278a5a52' id='backToResultbtn' class='btn'>Answer Key</a>");
+        }
+
+        if (sectionId == "1ed7b681-6b52-4b7a-b635-ec2330af8f1e") {
+            $('#leftBtn').html("<a href='65970a64-cbd0-4188-891d-b8121ea95bba' id='backToResultbtn' class='btn'>Answer Key</a>");
+        }
+    }
+
+    paragon.pt.showReadingAnswerKeyBtn = function (sectionId) {
+        if (sectionId == "01ccd576-75a9-4ab4-b4de-73fd5e11f744") {
+            $('#leftBtn').html("<a href='ebccede3-dba8-46f1-a8f3-58a21105da56' id='backToResultbtn' class='btn'>Answer Key</a>");
+        }
+
+        if (sectionId == "d8908dc7-90c8-4aad-83b1-d666003f6db7") {
+            $('#leftBtn').html("<a href='f9f46350-d763-456a-a46b-307e6f1408d2' id='backToResultbtn' class='btn'>Answer Key</a>");
+        }
+    }
+
+    paragon.pt.nextItem = function (url, itemId, canvasId, sectionId, activityTypeId) {
+        $.post(
+            url,
+            {
+                itemId: itemId,
+                canvasId: canvasId,
+                sectionId: sectionId,
+                activityTypeId: activityTypeId
+            },
+            function (data) {
+                console.log(data);
+            }
+        );
+    }
+
+    paragon.pt.countUnansweredQuestionsFromDb = function (canvasTypeId, sectionId, url) {
+        switch (canvasTypeId) {
+            case 24: //PT04
+            case 25: // PT05
+                return paragon.pt.countSingleUnansweredItemFromDb(sectionId, url);
+                break;
+
+            case 26: //PT06
+            case 27: //PT07
+                if ($("#panelLeft").css('display') != 'none') {
+                    return 0;
+                }
+                else {
+                    return paragon.pt.countAllUnansweredItemsFromDb(sectionId, url);
+                }
+                break;
+
+            default:
+                return paragon.pt.countAllUnansweredItemsFromDb(sectionId, url);
+        }
+    }
+
+    paragon.pt.countAllUnansweredItemsFromDb = function (sectionId, url) {
+        var unanswered = 0;
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: { 'sectionId': sectionId, 'items': JSON.stringify(paragon.pt.items) },
+            async: false,
+            success: function (data) {
+                var responses = data.responses;
+                for (var i = 0; i < responses.length; i++) {
+                    var currentResponse = responses[i];
+                    if (!currentResponse) {
+                        unanswered++;
+                    }
+                }
+            }
+        });
+        return unanswered;
+    }
+
+    paragon.pt.countSingleUnansweredItemFromDb = function (sectionId, url) {
+        var unanswered = 0;
+
+        var index = paragon.pt.itemIndex;
+        if (index > 0) {
+            index = index - 1;
+        }
+        else {
+            return unanswered;
+        }
+
+        var item = paragon.pt.items[index];
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: { "sectionId": sectionId, "itemId": item.Id },
+            async: false,
+            success: function (data) {
+                if (!data.response) {
+                    unanswered++;
+                }
+            }
+        });
+
+        return unanswered;
+    }
+
+</script>
+
+    <script src="./4-1-1_files/soundjs-0.6.0.min.js.下載"></script>
+
+
+
+    <script src="./4-1-1_files/audio.min.js.下載"></script>
+
+    <script src="./4-1-1_files/jquery.blockUI.js.下載"></script>
+
+    <script src="./4-1-1_files/jquery-ui-1.10.4.custom.min.js.下載"></script>
+
+    <script src="./4-1-1_files/jquery.cookie.js.下載"></script>
+
+
+    <link href="./4-1-1_files/font-awesome.css" rel="stylesheet">
+</head>
+<body data-new-gr-c-s-check-loaded="14.1229.0" data-gr-ext-installed="" style="">
+    <noscript>
+        <div id="noscript">
+            <div>Please turn on javascript to continue.</div>
+        </div>
+    </noscript>
+    <header>
+        <div class="navbar">
+            <div class="navbar-inner">
+                <a class="brand" href="https://www.celpip.ca/" target="_blank"> <img src="./4-1-1_files/CELPIP_H_Web.png"></a>
+
+                <div class="brand" style="margin-top:15px;">
+                    Study Materials
+                </div>
+
+                <ul class="nav" style="margin-top:8px;">
+
+                    <li class="dropdown">
+
+                        <a class="dropdown-toggle" data-toggle="dropdown" style="margin-top: 10px;">
+                            Selected Product: <span id="selected-product">CELPIP-General Practice Tests, Set 4</span>
+                            <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/FreeOnlineSampleTest/FOST">Free CELPIP-General Practice Tests (Starter Set)</a></li>
+                            <li><a href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/FreeOnlineSampleTest/FOST2">Free CELPIP-General LS Practice Tests (Starter Set)</a></li>
+
+
+                                    <li><a href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest/PT">CELPIP-General Practice Tests, Set 1</a></li>
+                                    <li><a href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest2/OPT2">CELPIP-General Practice Tests, Set 2</a></li>
+                                    <li><a href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest3/OPT3">CELPIP-General Practice Tests, Set 3</a></li>
+                                    <li><a href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest4/OPT4">CELPIP-General Practice Tests, Set 4</a></li>
+                                    <li><a href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest5/OPT5">CELPIP-General Practice Tests, Set 5</a></li>
+                                    <li><a href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest6/OPT6">CELPIP-General Practice Tests, Set 6</a></li>
+                                    <li><a href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest7/OPT7">CELPIP-General Practice Tests, Set 7</a></li>
+                                    <li><a href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest8/OPT8">CELPIP-General Practice Tests, Set 8</a></li>
+                                    <li><a href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest9/OPT9">CELPIP-General Practice Tests, Set 9</a></li>
+                                    <li><a href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest10/OPT10">CELPIP-General Practice Tests, Set 10</a></li>
+                                        <li><a target="_blank" href="https://testprep.paragontesting.ca/api/sso/v2/sso/jwt?jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6Imh5cDIyMThAZ21haWwuY29tIiwiZmlyc3RfbmFtZSI6IllpLVBpbmciLCJsYXN0X25hbWUiOiJIbyIsIm5hbWVpZCI6IjIyMzc0ODgiLCJpYXQiOjE3NDMwODU1NjgsImp0aSI6MTcwNjcwMzg4MywibmJmIjoxNzQzMDg1MjY4fQ.j0rPCr2HFqVOO-XGEmy49D9xve_wtMeUIOcw6YCCPFg&amp;return_to=https%3A%2F%2Ftestprep.paragontesting.ca%2Fbundles%2Fcelpip-accelerate-starter-celpip-general">CELPIP Accelerate Starter - Reading and Writing</a></li>
+                                        <li><a target="_blank" href="https://testprep.paragontesting.ca/api/sso/v2/sso/jwt?jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6Imh5cDIyMThAZ21haWwuY29tIiwiZmlyc3RfbmFtZSI6IllpLVBpbmciLCJsYXN0X25hbWUiOiJIbyIsIm5hbWVpZCI6IjIyMzc0ODgiLCJpYXQiOjE3NDMwODU1NjgsImp0aSI6MTQzNTQzOTkyMSwibmJmIjoxNzQzMDg1MjY4fQ.Ah2sXddmD_ZwCmv9kcjNLdPrxiXW-GC6U5iuUmbE8zk&amp;return_to=https%3A%2F%2Ftestprep.paragontesting.ca%2Fbundles%2Fcelpip-accelerate-starter-celpip-general-ls">CELPIP Accelerate Starter - Listening and Speaking</a></li>
+                        </ul>
+
+                    </li>
+
+                    <li>
+                        <div style="margin-left: 19px">
+                            <ul class="nav nav-pills header-buttons">
+                                
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+
+                <ul class="nav pull-right" style="margin-top:17px">
+                        <li class="dropdown">
+                            <a class="dropdown-toggle dropdown-email" data-toggle="dropdown">
+                                <img src="./4-1-1_files/fa_cog.png" style="width:18px; height: 18px; margin-top:-5px">
+                                
+                                <b class="caret"></b>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="javascript:document.getElementById(&#39;logoutForm&#39;).submit()">Sign out</a></li>
+                            </ul>
+                        </li>
+                </ul>
+            </div>
+        </div>
+<form action="https://instructionalproducts.paragontesting.ca/InstructionalProducts/Account/LogOff" id="logoutForm" method="post"></form>    </header>
+
+    <div class="container" id="main-container" style="height: 739px;">
+<link href="./4-1-1_files/ptStyle.css" rel="stylesheet" type="text/css">
+<link href="./4-1-1_files/video-js.css" rel="stylesheet">
+<script src="./4-1-1_files/video.js.下載"></script>
+<script>
+    paragon.pt.backUrl = "/InstructionalProducts/PracticeTest4/OPT4/View/059fce86-d5d7-4c06-81c1-5769d4d93798";
+    paragon.pt.nextUrl = "/InstructionalProducts/PracticeTest4/OPT4/View/1dbb90cc-b530-41c8-8ab5-a7c0ff9f359f";
+    if (paragon.pt.backUrl.length > 0 || paragon.pt.nextUrl.length > 0) {
+        paragon.footerVisible = true;
+    }
+
+    paragon.pt.items = [
+  {
+    "Id": "8925b93d-a3f6-4bc6-81e3-38092a40659f",
+    "ContentId": "f816b033-71b5-4e53-a7d6-ac96e96b1ec6",
+    "Num": 1,
+    "Text": "1. Brenda wrote Mrs. Johnson a",
+    "ExtraField1": "",
+    "Choices": [
+      {
+        "Id": "0651e720-9bb5-44a6-9ced-ee5a30620014",
+        "ItemId": "8925b93d-a3f6-4bc6-81e3-38092a40659f",
+        "ChoiceData": null,
+        "Num": 1,
+        "Text": "reference letter."
+      },
+      {
+        "Id": "8c9439ee-704e-42e3-8bff-d73b9c17b4ba",
+        "ItemId": "8925b93d-a3f6-4bc6-81e3-38092a40659f",
+        "ChoiceData": null,
+        "Num": 2,
+        "Text": "letter of request."
+      },
+      {
+        "Id": "761a0ac4-9f30-4fd8-b935-768b0cbda02b",
+        "ItemId": "8925b93d-a3f6-4bc6-81e3-38092a40659f",
+        "ChoiceData": null,
+        "Num": 3,
+        "Text": "letter of complaint."
+      },
+      {
+        "Id": "a7945a08-bc6d-476c-94cc-1cd8b6afe09a",
+        "ItemId": "8925b93d-a3f6-4bc6-81e3-38092a40659f",
+        "ChoiceData": null,
+        "Num": 4,
+        "Text": "cover letter."
+      }
+    ]
+  },
+  {
+    "Id": "096fbf9c-f6b7-498c-8099-d25390cc32fe",
+    "ContentId": "f816b033-71b5-4e53-a7d6-ac96e96b1ec6",
+    "Num": 2,
+    "Text": "2. Mrs. Johnson and Brenda are",
+    "ExtraField1": "",
+    "Choices": [
+      {
+        "Id": "210ca201-e974-4cdb-8f0c-396f11597351",
+        "ItemId": "096fbf9c-f6b7-498c-8099-d25390cc32fe",
+        "ChoiceData": null,
+        "Num": 1,
+        "Text": "employer and job seeker."
+      },
+      {
+        "Id": "e7e123c9-2f7c-4787-a861-8b3dd9d219d2",
+        "ItemId": "096fbf9c-f6b7-498c-8099-d25390cc32fe",
+        "ChoiceData": null,
+        "Num": 2,
+        "Text": "employee and client."
+      },
+      {
+        "Id": "42194362-1259-4548-bee1-a55ded33d5d4",
+        "ItemId": "096fbf9c-f6b7-498c-8099-d25390cc32fe",
+        "ChoiceData": null,
+        "Num": 3,
+        "Text": "manager and employee."
+      },
+      {
+        "Id": "175201f9-44a9-44fe-b87b-66dafe87c70a",
+        "ItemId": "096fbf9c-f6b7-498c-8099-d25390cc32fe",
+        "ChoiceData": null,
+        "Num": 4,
+        "Text": "employee and sales rep."
+      }
+    ]
+  },
+  {
+    "Id": "1bf3337b-be04-4176-bcd6-3fa43b66b999",
+    "ContentId": "f816b033-71b5-4e53-a7d6-ac96e96b1ec6",
+    "Num": 3,
+    "Text": "3. Brenda is responding to",
+    "ExtraField1": "",
+    "Choices": [
+      {
+        "Id": "0e9b8a92-fc41-4c84-af5d-f47193dda278",
+        "ItemId": "1bf3337b-be04-4176-bcd6-3fa43b66b999",
+        "ChoiceData": null,
+        "Num": 1,
+        "Text": "a letter from a co-worker."
+      },
+      {
+        "Id": "51df9ddc-7df3-4321-99dc-e3b9977fe7ca",
+        "ItemId": "1bf3337b-be04-4176-bcd6-3fa43b66b999",
+        "ChoiceData": null,
+        "Num": 2,
+        "Text": "a memo from an employment centre."
+      },
+      {
+        "Id": "5e0f2a10-ca2d-4097-94b7-d20c4b6d3472",
+        "ItemId": "1bf3337b-be04-4176-bcd6-3fa43b66b999",
+        "ChoiceData": null,
+        "Num": 3,
+        "Text": "a job advertisement."
+      },
+      {
+        "Id": "1f8274e0-9549-4af9-8a9e-a4531baa2bd1",
+        "ItemId": "1bf3337b-be04-4176-bcd6-3fa43b66b999",
+        "ChoiceData": null,
+        "Num": 4,
+        "Text": "a personal ad."
+      }
+    ]
+  },
+  {
+    "Id": "e2181aa9-1f87-421d-b60e-b36c8ba5369d",
+    "ContentId": "f816b033-71b5-4e53-a7d6-ac96e96b1ec6",
+    "Num": 4,
+    "Text": "4. Brenda has shown she is good at",
+    "ExtraField1": "",
+    "Choices": [
+      {
+        "Id": "eceed134-6ac3-44b2-a914-52eb1c15c877",
+        "ItemId": "e2181aa9-1f87-421d-b60e-b36c8ba5369d",
+        "ChoiceData": null,
+        "Num": 1,
+        "Text": "management."
+      },
+      {
+        "Id": "d87abb9b-33f3-43cd-9d0e-3907ddb4c9dd",
+        "ItemId": "e2181aa9-1f87-421d-b60e-b36c8ba5369d",
+        "ChoiceData": null,
+        "Num": 2,
+        "Text": "customer service."
+      },
+      {
+        "Id": "b131a32f-6467-4b2a-839a-ea8a11cd8f1b",
+        "ItemId": "e2181aa9-1f87-421d-b60e-b36c8ba5369d",
+        "ChoiceData": null,
+        "Num": 3,
+        "Text": "training others."
+      },
+      {
+        "Id": "dbda10ee-0522-407d-a1f1-3fdd4a9e55f2",
+        "ItemId": "e2181aa9-1f87-421d-b60e-b36c8ba5369d",
+        "ChoiceData": null,
+        "Num": 4,
+        "Text": "making a budget."
+      }
+    ]
+  },
+  {
+    "Id": "be03eecd-f6d6-4ce8-b26c-cef2e197e174",
+    "ContentId": "f816b033-71b5-4e53-a7d6-ac96e96b1ec6",
+    "Num": 5,
+    "Text": "5. By working in retail, Brenda learned how to",
+    "ExtraField1": "",
+    "Choices": [
+      {
+        "Id": "25616b11-ea38-4362-8158-187dff10350c",
+        "ItemId": "be03eecd-f6d6-4ce8-b26c-cef2e197e174",
+        "ChoiceData": null,
+        "Num": 1,
+        "Text": "trust others."
+      },
+      {
+        "Id": "8bd073c2-b0ea-4e95-990f-5e4e351e378d",
+        "ItemId": "be03eecd-f6d6-4ce8-b26c-cef2e197e174",
+        "ChoiceData": null,
+        "Num": 2,
+        "Text": "work as part of a team."
+      },
+      {
+        "Id": "832391fe-4299-4c23-bc80-d37ac48c719a",
+        "ItemId": "be03eecd-f6d6-4ce8-b26c-cef2e197e174",
+        "ChoiceData": null,
+        "Num": 3,
+        "Text": "write cheques."
+      },
+      {
+        "Id": "0a46477d-e891-4859-ad3d-a20608c6cd3f",
+        "ItemId": "be03eecd-f6d6-4ce8-b26c-cef2e197e174",
+        "ChoiceData": null,
+        "Num": 4,
+        "Text": "run sales meetings."
+      }
+    ]
+  },
+  {
+    "Id": "b163341a-c37b-4bde-a3aa-bb4dd7f828cd",
+    "ContentId": "f816b033-71b5-4e53-a7d6-ac96e96b1ec6",
+    "Num": 6,
+    "Text": "6. Because of her skills, experience, and training, Brenda will probably",
+    "ExtraField1": "",
+    "Choices": [
+      {
+        "Id": "dbca4e5e-2005-4c38-8b8f-5b263f98a8e1",
+        "ItemId": "b163341a-c37b-4bde-a3aa-bb4dd7f828cd",
+        "ChoiceData": null,
+        "Num": 1,
+        "Text": "hire Mrs. Johnson."
+      },
+      {
+        "Id": "f7406d5f-07c5-4dec-8af4-7a5e85934548",
+        "ItemId": "b163341a-c37b-4bde-a3aa-bb4dd7f828cd",
+        "ChoiceData": null,
+        "Num": 2,
+        "Text": "be called for an interview."
+      },
+      {
+        "Id": "f2b367bb-9f3a-4be0-bddd-9c7465df6422",
+        "ItemId": "b163341a-c37b-4bde-a3aa-bb4dd7f828cd",
+        "ChoiceData": null,
+        "Num": 3,
+        "Text": "get a promotion."
+      },
+      {
+        "Id": "64b64c06-20e3-4664-a31d-ac15c584470a",
+        "ItemId": "b163341a-c37b-4bde-a3aa-bb4dd7f828cd",
+        "ChoiceData": null,
+        "Num": 4,
+        "Text": "become ‘Employee of the Month.’"
+      }
+    ]
+  },
+  {
+    "Id": "ca473ecc-f29b-4378-a693-3f344d69c206",
+    "ContentId": "f816b033-71b5-4e53-a7d6-ac96e96b1ec6",
+    "Num": 7,
+    "Text": "",
+    "ExtraField1": "",
+    "Choices": [
+      {
+        "Id": "4e36dbdb-ecaf-4def-8458-28447257bebc",
+        "ItemId": "ca473ecc-f29b-4378-a693-3f344d69c206",
+        "ChoiceData": null,
+        "Num": 1,
+        "Text": "happy to be"
+      },
+      {
+        "Id": "8ddd7ca4-5ebf-45d0-bce3-25effe4336b4",
+        "ItemId": "ca473ecc-f29b-4378-a693-3f344d69c206",
+        "ChoiceData": null,
+        "Num": 2,
+        "Text": "not tired of"
+      },
+      {
+        "Id": "16881ed5-4cd1-4b35-89c2-d86a38750f7e",
+        "ItemId": "ca473ecc-f29b-4378-a693-3f344d69c206",
+        "ChoiceData": null,
+        "Num": 3,
+        "Text": "sure about"
+      },
+      {
+        "Id": "8ec07580-4577-424e-afe0-4d199afcb930",
+        "ItemId": "ca473ecc-f29b-4378-a693-3f344d69c206",
+        "ChoiceData": null,
+        "Num": 4,
+        "Text": "excited about"
+      }
+    ]
+  },
+  {
+    "Id": "88bb89dd-3b66-48dc-8d15-555361fb6b40",
+    "ContentId": "f816b033-71b5-4e53-a7d6-ac96e96b1ec6",
+    "Num": 8,
+    "Text": "",
+    "ExtraField1": "",
+    "Choices": [
+      {
+        "Id": "28409588-be09-4a80-8567-7a5d47cc95d0",
+        "ItemId": "88bb89dd-3b66-48dc-8d15-555361fb6b40",
+        "ChoiceData": null,
+        "Num": 1,
+        "Text": "sports store"
+      },
+      {
+        "Id": "2d20100b-efdf-496e-93f6-0402d7c2b795",
+        "ItemId": "88bb89dd-3b66-48dc-8d15-555361fb6b40",
+        "ChoiceData": null,
+        "Num": 2,
+        "Text": "boutique"
+      },
+      {
+        "Id": "d488c68e-e321-4183-986e-880f875e74b1",
+        "ItemId": "88bb89dd-3b66-48dc-8d15-555361fb6b40",
+        "ChoiceData": null,
+        "Num": 3,
+        "Text": "shoe store"
+      },
+      {
+        "Id": "23769979-2748-49dd-a70c-7d5a21239878",
+        "ItemId": "88bb89dd-3b66-48dc-8d15-555361fb6b40",
+        "ChoiceData": null,
+        "Num": 4,
+        "Text": "call centre"
+      }
+    ]
+  },
+  {
+    "Id": "4f9baef9-5f5f-4e11-9825-0c25ab62c3e4",
+    "ContentId": "f816b033-71b5-4e53-a7d6-ac96e96b1ec6",
+    "Num": 9,
+    "Text": "",
+    "ExtraField1": "",
+    "Choices": [
+      {
+        "Id": "517f8bc3-993a-4ef1-9f3b-99ea888e5d54",
+        "ItemId": "4f9baef9-5f5f-4e11-9825-0c25ab62c3e4",
+        "ChoiceData": null,
+        "Num": 1,
+        "Text": "the position is for a manager"
+      },
+      {
+        "Id": "89ab3699-4649-4776-8493-019d8b77138d",
+        "ItemId": "4f9baef9-5f5f-4e11-9825-0c25ab62c3e4",
+        "ChoiceData": null,
+        "Num": 2,
+        "Text": "we are not hiring anyone"
+      },
+      {
+        "Id": "8ed04aff-01af-4826-b2ec-a932ebb455c7",
+        "ItemId": "4f9baef9-5f5f-4e11-9825-0c25ab62c3e4",
+        "ChoiceData": null,
+        "Num": 3,
+        "Text": "the opening we have is"
+      },
+      {
+        "Id": "a4431f1b-32e7-474a-b8c5-1afbde79ee89",
+        "ItemId": "4f9baef9-5f5f-4e11-9825-0c25ab62c3e4",
+        "ChoiceData": null,
+        "Num": 4,
+        "Text": "the manager has experience"
+      }
+    ]
+  },
+  {
+    "Id": "777a0e82-44af-4c39-9941-246af640df6d",
+    "ContentId": "f816b033-71b5-4e53-a7d6-ac96e96b1ec6",
+    "Num": 10,
+    "Text": "",
+    "ExtraField1": "",
+    "Choices": [
+      {
+        "Id": "6e566e64-e9a5-49be-9fc8-7b0f8a751c08",
+        "ItemId": "777a0e82-44af-4c39-9941-246af640df6d",
+        "ChoiceData": null,
+        "Num": 1,
+        "Text": "targeting their needs"
+      },
+      {
+        "Id": "cade1def-bfe5-4d45-b19e-ee3c7719653c",
+        "ItemId": "777a0e82-44af-4c39-9941-246af640df6d",
+        "ChoiceData": null,
+        "Num": 2,
+        "Text": "finding someone to help them"
+      },
+      {
+        "Id": "d61ce6d2-98ca-48bf-b430-dd86cd6f22f3",
+        "ItemId": "777a0e82-44af-4c39-9941-246af640df6d",
+        "ChoiceData": null,
+        "Num": 3,
+        "Text": "selling them expensive items"
+      },
+      {
+        "Id": "ff91de99-8406-4ae6-ad11-7404c71694ee",
+        "ItemId": "777a0e82-44af-4c39-9941-246af640df6d",
+        "ChoiceData": null,
+        "Num": 4,
+        "Text": "giving them a discount"
+      }
+    ]
+  },
+  {
+    "Id": "ee9ed033-de07-4190-9881-0092011b9cdc",
+    "ContentId": "f816b033-71b5-4e53-a7d6-ac96e96b1ec6",
+    "Num": 11,
+    "Text": "",
+    "ExtraField1": "",
+    "Choices": [
+      {
+        "Id": "f750e16d-18f1-48dc-8c0e-d3da67ed3011",
+        "ItemId": "ee9ed033-de07-4190-9881-0092011b9cdc",
+        "ChoiceData": null,
+        "Num": 1,
+        "Text": "winning awards"
+      },
+      {
+        "Id": "f75737a3-ebc0-414e-9687-060a9ecd0501",
+        "ItemId": "ee9ed033-de07-4190-9881-0092011b9cdc",
+        "ChoiceData": null,
+        "Num": 2,
+        "Text": "processing purchases"
+      },
+      {
+        "Id": "209b3c2e-cf35-4550-8a61-f76221e719a5",
+        "ItemId": "ee9ed033-de07-4190-9881-0092011b9cdc",
+        "ChoiceData": null,
+        "Num": 3,
+        "Text": "training staff"
+      },
+      {
+        "Id": "6b66c5c3-bfc2-4aaf-8d64-10cac7358c3b",
+        "ItemId": "ee9ed033-de07-4190-9881-0092011b9cdc",
+        "ChoiceData": null,
+        "Num": 4,
+        "Text": "opening the store"
+      }
+    ]
+  }
+]
+</script>
+
+<div id="panelTop">
+
+    <div id="canvasName" style="float: left; font-size: 16px; font-weight: bold;">
+        Practice Test 1 - Reading Part 1: Reading Correspondence
+    </div>
+
+    <div style="float: right;" class="btnNext span1 pull-right">
+                <a href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest4/OPT4/View/4a6e54e5-f6b5-4a1d-8e53-f9f6365f9ffe#" id="btnNext" class="btn btn-primary">NEXT</a>
+
+    </div>
+
+    <div style="float: right; display: block;" id="timer" class="hide">
+        Time remaining: <strong>10 minutes</strong>
+    </div>
+
+</div>
+
+<div id="mainContent">
+    
+
+<script id="dropDownListTemplate" type="text/template">
+{{#each this}}
+    <div class="ddrow">
+        {{Text}}
+        <div class='dd'>
+            <div class='ddToggle'>▾</div>
+            <div class='ddMenu'>
+                <ul data-id="{{Id}}">
+                {{#each Choices}}
+                    <li data-id="{{Id}}">{{Text}}</li>
+                {{/each}}
+                </ul>
+            </div>
+        </div>
+    </div>
+{{/each}}
+</script>
+
+<script id="dropDownListInlineTemplate" type="text/template">
+    <div class='dd'>
+        <div class='ddToggle'>▾</div>
+        <div class='ddMenu'>
+            <ul data-id="{{Id}}">
+            {{#each Choices}}
+                <li data-id="{{Id}}">{{Text}}</li>
+            {{/each}}
+            </ul>
+        </div>
+    </div>
+</script>
+
+<script id="dropDownListInFrontTemplate" type="text/template">
+    {{#each this}}
+    <div class="ddrow">
+        <div class='dd'>
+            <div class='ddToggle'>▾</div>
+            <div class='ddMenu'>
+                <ul data-id="{{Id}}">
+                    {{#each Choices}}
+                    <li data-id="{{Id}}">{{Text}}</li>
+                    {{/each}}
+                </ul>
+            </div>
+        </div>
+        &nbsp;-
+        {{Text}}
+    </div>
+    {{/each}}
+</script>
+
+<div id="panelLeft" style="width: 50%; height: 696px;" class="graybg">
+    <div class="row1">
+        <div class="instruction" style="margin-bottom: 30px;">Read the following message.  </div>
+        <div><p>Dear Mrs. Johnson,</p>
+
+<p>Please accept my application for the position of sales clerk in your department store, as advertised on your website. I have had the pleasure of reviewing your company’s website and am very enthusiastic about the position advertised. I believe that my skills and abilities make me the perfect candidate for this position, and I would be an asset to your sales team.</p>
+
+<p>With four years of experience selling footwear, and having worked for two years in a women’s clothing store at a local mall, I have developed effective customer service techniques. I enjoy working with the public, assisting shoppers by inquiring about their needs, and suggesting suitable products to meet their tastes and budget. The management team in the clothing store where I worked recognized my strong customer service skills by choosing me as ‘Employee of the Month’ on more than one occasion. I completed a customer service course at a local college, and attended additional training offered by my employer.</p>
+
+<p>As a sales associate, not only did I assist customers, but I also handled cash, credit card, and debit transactions. I processed returns, as well as performed opening and closing procedures in the store. These responsibilities show the level of trust that my employers put in me and my abilities. Finally, the store environment required that the staff work as part of a team, which is one of my strengths. I am also comfortable working on my own. Other important skills I gained in that role include completing sales reports, meeting sales targets, and ordering stock.</p>
+
+<p>Please find attached a resume outlining my retail experience, skills, and training. I feel that these qualifications equip me to make a valuable contribution to your retail establishment. I would appreciate the opportunity to discuss the position with you. I will contact you in ten days time to answer any questions you may have and to see if you need any other information from me. Thank you for your consideration.</p>
+
+<p>Sincerely,
+<br><br>
+Brenda Ashburn</p></div>
+        
+        <div class="box hide" id="infoBox">
+    <div class="boxIcon">
+        <em class="info-icon"></em>
+    </div>
+    <div class="boxText">
+        <div>
+            <p>Click "NEXT" to continue.</p>
+        </div>
+    </div>
+</div>
+
+<div class="box hide" id="playAudioBox">
+    <div class="boxIcon">
+        <em class="play-icon"></em>
+    </div>
+    <div class="boxText">
+        <div>Playing...</div>
+        <div class="progressbar">
+            <span class="progressbar-value"><em style="left: 0%;" class="progressbar-cover"></em>
+            </span>
+        </div>
+    </div>
+</div>
+
+<div id="audioDiv"></div>
+
+
+    </div>
+</div>
+
+<div id="panelRight" style="width: 50%; height: 696px;" class="bluebg">
+    <div class="row1">
+        <div class="instruction" style="margin-bottom: 15px;">
+            Using the drop-down menu ( <span class="caret" style="margin-top:7px; border-top: 4px solid #1A578A"></span> ), choose the <span style="color: #4789AC;">best</span> option according to the information given in the message.
+        </div>
+        
+        <div id="multipleChoices" class="wellBlueBG" style="margin-bottom: 20px;">
+
+    <div class="ddrow">
+        1. Brenda wrote Mrs. Johnson a
+        <div class="dd">
+            <div class="ddToggle">▾</div>
+            <div class="ddMenu">
+                <ul data-id="8925b93d-a3f6-4bc6-81e3-38092a40659f">
+                
+                    <li data-id="0651e720-9bb5-44a6-9ced-ee5a30620014">reference letter.</li>
+                
+                    <li data-id="8c9439ee-704e-42e3-8bff-d73b9c17b4ba">letter of request.</li>
+                
+                    <li data-id="761a0ac4-9f30-4fd8-b935-768b0cbda02b">letter of complaint.</li>
+                
+                    <li data-id="a7945a08-bc6d-476c-94cc-1cd8b6afe09a">cover letter.</li>
+                
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="ddrow">
+        2. Mrs. Johnson and Brenda are
+        <div class="dd">
+            <div class="ddToggle">▾</div>
+            <div class="ddMenu">
+                <ul data-id="096fbf9c-f6b7-498c-8099-d25390cc32fe">
+                
+                    <li data-id="210ca201-e974-4cdb-8f0c-396f11597351">employer and job seeker.</li>
+                
+                    <li data-id="e7e123c9-2f7c-4787-a861-8b3dd9d219d2">employee and client.</li>
+                
+                    <li data-id="42194362-1259-4548-bee1-a55ded33d5d4">manager and employee.</li>
+                
+                    <li data-id="175201f9-44a9-44fe-b87b-66dafe87c70a">employee and sales rep.</li>
+                
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="ddrow">
+        3. Brenda is responding to
+        <div class="dd">
+            <div class="ddToggle">▾</div>
+            <div class="ddMenu">
+                <ul data-id="1bf3337b-be04-4176-bcd6-3fa43b66b999">
+                
+                    <li data-id="0e9b8a92-fc41-4c84-af5d-f47193dda278">a letter from a co-worker.</li>
+                
+                    <li data-id="51df9ddc-7df3-4321-99dc-e3b9977fe7ca">a memo from an employment centre.</li>
+                
+                    <li data-id="5e0f2a10-ca2d-4097-94b7-d20c4b6d3472">a job advertisement.</li>
+                
+                    <li data-id="1f8274e0-9549-4af9-8a9e-a4531baa2bd1">a personal ad.</li>
+                
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="ddrow">
+        4. Brenda has shown she is good at
+        <div class="dd">
+            <div class="ddToggle">▾</div>
+            <div class="ddMenu">
+                <ul data-id="e2181aa9-1f87-421d-b60e-b36c8ba5369d">
+                
+                    <li data-id="eceed134-6ac3-44b2-a914-52eb1c15c877">management.</li>
+                
+                    <li data-id="d87abb9b-33f3-43cd-9d0e-3907ddb4c9dd">customer service.</li>
+                
+                    <li data-id="b131a32f-6467-4b2a-839a-ea8a11cd8f1b">training others.</li>
+                
+                    <li data-id="dbda10ee-0522-407d-a1f1-3fdd4a9e55f2">making a budget.</li>
+                
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="ddrow">
+        5. By working in retail, Brenda learned how to
+        <div class="dd">
+            <div class="ddToggle">▾</div>
+            <div class="ddMenu">
+                <ul data-id="be03eecd-f6d6-4ce8-b26c-cef2e197e174">
+                
+                    <li data-id="25616b11-ea38-4362-8158-187dff10350c">trust others.</li>
+                
+                    <li data-id="8bd073c2-b0ea-4e95-990f-5e4e351e378d">work as part of a team.</li>
+                
+                    <li data-id="832391fe-4299-4c23-bc80-d37ac48c719a">write cheques.</li>
+                
+                    <li data-id="0a46477d-e891-4859-ad3d-a20608c6cd3f">run sales meetings.</li>
+                
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="ddrow">
+        6. Because of her skills, experience, and training, Brenda will probably
+        <div class="dd">
+            <div class="ddToggle">▾</div>
+            <div class="ddMenu">
+                <ul data-id="b163341a-c37b-4bde-a3aa-bb4dd7f828cd">
+                
+                    <li data-id="dbca4e5e-2005-4c38-8b8f-5b263f98a8e1">hire Mrs. Johnson.</li>
+                
+                    <li data-id="f7406d5f-07c5-4dec-8af4-7a5e85934548">be called for an interview.</li>
+                
+                    <li data-id="f2b367bb-9f3a-4be0-bddd-9c7465df6422">get a promotion.</li>
+                
+                    <li data-id="64b64c06-20e3-4664-a31d-ac15c584470a">become ‘Employee of the Month.’</li>
+                
+                </ul>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+        <div class="instruction">
+            Here is a response to the message. Complete the response by filling in the blanks. Select the <span style="color: #4789AC;">best</span> choice for each blank from the drop-down 
+            <br>
+            menu ( <span class="caret" style="margin-top:7px; border-top: 4px solid #1A578A"></span> ). 
+        </div>
+
+        <div id="inlineDropDown" class="wellBlueBG" style="margin-top: 20px; margin-bottom: 20px; line-height: 2em;">Dear Ms. Ashburn,
+<br><br>
+Thank you for your application and interest in our company. I am glad to hear that you are 7.
+    <div class="dd">
+        <div class="ddToggle">▾</div>
+        <div class="ddMenu">
+            <ul data-id="ca473ecc-f29b-4378-a693-3f344d69c206">
+            
+                <li data-id="4e36dbdb-ecaf-4def-8458-28447257bebc">happy to be</li>
+            
+                <li data-id="8ddd7ca4-5ebf-45d0-bce3-25effe4336b4">not tired of</li>
+            
+                <li data-id="16881ed5-4cd1-4b35-89c2-d86a38750f7e">sure about</li>
+            
+                <li data-id="8ec07580-4577-424e-afe0-4d199afcb930">excited about</li>
+            
+            </ul>
+        </div>
+    </div>
+ working at our store.
+<br><br>
+You mentioned that you worked in a 8.
+    <div class="dd">
+        <div class="ddToggle">▾</div>
+        <div class="ddMenu">
+            <ul data-id="88bb89dd-3b66-48dc-8d15-555361fb6b40">
+            
+                <li data-id="28409588-be09-4a80-8567-7a5d47cc95d0">sports store</li>
+            
+                <li data-id="2d20100b-efdf-496e-93f6-0402d7c2b795">boutique</li>
+            
+                <li data-id="d488c68e-e321-4183-986e-880f875e74b1">shoe store</li>
+            
+                <li data-id="23769979-2748-49dd-a70c-7d5a21239878">call centre</li>
+            
+            </ul>
+        </div>
+    </div>
+ and a women’s clothing store. However, 9.
+    <div class="dd">
+        <div class="ddToggle">▾</div>
+        <div class="ddMenu">
+            <ul data-id="4f9baef9-5f5f-4e11-9825-0c25ab62c3e4">
+            
+                <li data-id="517f8bc3-993a-4ef1-9f3b-99ea888e5d54">the position is for a manager</li>
+            
+                <li data-id="89ab3699-4649-4776-8493-019d8b77138d">we are not hiring anyone</li>
+            
+                <li data-id="8ed04aff-01af-4826-b2ec-a932ebb455c7">the opening we have is</li>
+            
+                <li data-id="a4431f1b-32e7-474a-b8c5-1afbde79ee89">the manager has experience</li>
+            
+            </ul>
+        </div>
+    </div>
+ in the housewares department. Do you have any experience in this area? We do offer some training, but it’s limited.
+<br><br>
+Your experience helping customers by 10.
+    <div class="dd">
+        <div class="ddToggle">▾</div>
+        <div class="ddMenu">
+            <ul data-id="777a0e82-44af-4c39-9941-246af640df6d">
+            
+                <li data-id="6e566e64-e9a5-49be-9fc8-7b0f8a751c08">targeting their needs</li>
+            
+                <li data-id="cade1def-bfe5-4d45-b19e-ee3c7719653c">finding someone to help them</li>
+            
+                <li data-id="d61ce6d2-98ca-48bf-b430-dd86cd6f22f3">selling them expensive items</li>
+            
+                <li data-id="ff91de99-8406-4ae6-ad11-7404c71694ee">giving them a discount</li>
+            
+            </ul>
+        </div>
+    </div>
+ and staying within their price range is exactly what we are looking for. The fact that you have experience 11.
+    <div class="dd">
+        <div class="ddToggle">▾</div>
+        <div class="ddMenu">
+            <ul data-id="ee9ed033-de07-4190-9881-0092011b9cdc">
+            
+                <li data-id="f750e16d-18f1-48dc-8c0e-d3da67ed3011">winning awards</li>
+            
+                <li data-id="f75737a3-ebc0-414e-9687-060a9ecd0501">processing purchases</li>
+            
+                <li data-id="209b3c2e-cf35-4550-8a61-f76221e719a5">training staff</li>
+            
+                <li data-id="6b66c5c3-bfc2-4aaf-8d64-10cac7358c3b">opening the store</li>
+            
+            </ul>
+        </div>
+    </div>
+ makes you a suitable candidate for the position, as this job requires a large volume of sales.
+<br><br>
+I would like to meet with you to discuss your resume and your skills. My assistant will be in touch in the next couple of days to schedule a meeting.
+<br><br>
+Sincerely,
+<br><br>
+Mrs. Johnson</div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+
+
+        paragon.pt.timer.start(660);
+
+        var items1 = paragon.pt.items.slice(0, 6);
+        var items2 = paragon.pt.items.slice(6);
+
+        if (items2.length === 0) {
+            $('.instruction')[2].hidden = true;
+            $('#inlineDropDown').hide();
+        }
+        
+        paragon.pt.dropDown.renderTemplate("/InstructionalProducts/PracticeTest4/OPT4/SaveUserResponse/", "01ccd576-75a9-4ab4-b4de-73fd5e11f744", $('#dropDownListTemplate').html(), $('#multipleChoices'), items1);
+        paragon.pt.dropDown.renderInline("/InstructionalProducts/PracticeTest4/OPT4/SaveUserResponse/", "01ccd576-75a9-4ab4-b4de-73fd5e11f744", items2, 0, items2.length - 1, $("#inlineDropDown"));
+
+        paragon.pt.dropDown.activate("/InstructionalProducts/PracticeTest4/OPT4/SaveUserResponse/", "01ccd576-75a9-4ab4-b4de-73fd5e11f744");
+
+        $.ajax({
+            type: "POST",
+            url: "/InstructionalProducts/PracticeTest4/OPT4/GetUserResponses",
+                data: { 'sectionId': '01ccd576-75a9-4ab4-b4de-73fd5e11f744', 'items': JSON.stringify(paragon.pt.items) },
+                       success: function (data) {
+                           var responses = data.responses;
+                           for (var i = 0; i < responses.length; i++) {
+                               var currentResponse = responses[i];
+                               if (currentResponse != null) {
+                                   var selected = $('ul').find('[data-id=' + currentResponse.Answer + ']');
+                                   if (selected != null) {
+                                       var toggle = $(selected).parent().parent().prev();
+                                       $(toggle).addClass('ddToggle1');
+                                       $(toggle).html(selected.html());
+                                       $(selected).addClass('selected');
+                                   }
+                               }
+                           }
+                       }
+        });
+
+        //show scroll bar
+        if (document.getElementById("multipleChoices").childElementCount > 1) {
+            paragon.pt.showScrollBar($('#panelLeft'), $('#panelRight'));
+        }
+
+        paragon.pt.showReadingAnswerKeyBtn("01ccd576-75a9-4ab4-b4de-73fd5e11f744");
+
+
+    });
+</script>
+
+</div>
+
+<div id="dlgTest" class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-header">
+        <h4>Test</h4>
+    </div>
+    <div class="modal-body">
+        <p>test</p>
+    </div>
+    <div class="modal-footer">
+        <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+    </div>
+</div>
+
+<div id="dlgUnansweredWarning" class="modal hide fade" tabindex="-1" role="dialog">
+    <div class="modal-body">
+        <p>No answer(s) selected. On the official test, if you go to the next page, you will no longer be able to answer the question(s) on this page.</p>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" data-dismiss="modal" style="color: white;">Keep working on this page</button>
+        <button class="btn" data-dismiss="modal" onclick="paragon.pt.skipToNext()">Skip and go to the next page</button>
+    </div>
+</div>
+
+</div>
+    <div class="container hide" id="footer" style="display: block;">
+        <div class="row">
+    <div id="leftBtn" class="span7" align="left"><a href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest4/OPT4/View/ebccede3-dba8-46f1-a8f3-58a21105da56" id="backToResultbtn" class="btn">Answer Key</a></div>
+    <div class="span5">
+        <a href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest4/OPT4/View/4a6e54e5-f6b5-4a1d-8e53-f9f6365f9ffe#" id="btnBack" class="btn btn1 hide btn-danger" style="display: inline;">BACK</a>
+        
+    </div>
+</div>
+
+    </div>
+    <div class="container" style="text-align: center; font-size: 0.9em; color: #53565A; padding-top: 20px;">
+        <p>Copyright 2025 - Paragon Testing Enterprises   |    <a href="https://www.celpip.ca/" target="_blank">www.celpip.ca</a>    |    <a href="https://www.celpip.ca/contact/" target="_blank">Contact Us</a></p>
+    </div>
+
+    <div id="block" class="modal-backdrop hide"></div>
+    <div id="unsupported" class="modal hide" tabindex="-1">
+        <div class="modal-body">
+            <h3>Unsupported screen resolution</h3>
+            <p>This product requires a minimum screen resolution of 1024 x 768.</p>
+        </div>
+    </div>
+
+
+    <script>
+        $(function () {
+            paragon.verifyDisplaySize();
+
+            $(window).resize(function () {
+                paragon.verifyDisplaySize();
+            });
+        });
+    </script>
+
+
+    
+    <script>
+        paragon.pt.showAlert = function (msg) {
+            $('#dlgTest .modal-body p').html(msg);
+            $('#dlgTest').modal();
+        }
+
+        paragon.pt.skipToNext = function () {
+            paragon.pt.nextItem("/InstructionalProducts/PracticeTest4/OPT4/SaveCanvasData",'', "4a6e54e5-f6b5-4a1d-8e53-f9f6365f9ffe", "01ccd576-75a9-4ab4-b4de-73fd5e11f744", 2);
+            paragon.pt.goNext();
+        }
+
+        $(function () {
+            if (paragon.footerVisible == true) {
+                paragon.showFooter();
+            }
+
+            if (paragon.pt.backUrl.length > 0) {
+                $("#btnBack").click(function () {
+                    paragon.pt.goBack();
+                });
+                paragon.pt.showBackButton();
+            }
+
+
+            $("#btnNext").click(function () {
+                var url = "";
+                if (29  == 24 || 29  == 25) {
+                    url = "/InstructionalProducts/PracticeTest4/OPT4/GetUserResponse/";
+                }
+                else {
+                    url = "/InstructionalProducts/PracticeTest4/OPT4/GetUserResponses/";
+                }
+                var unanswered = paragon.pt.countUnansweredQuestionsFromDb(29, "01ccd576-75a9-4ab4-b4de-73fd5e11f744", url);
+                if (unanswered > 0) {
+                    $('#dlgUnansweredWarning').modal();
+                }
+                else {
+                    paragon.pt.skipToNext();
+                }
+            });
+
+            if (paragon.pt.nextUrl.length > 0) {
+                paragon.pt.showNextButton();
+            }
+
+
+        });
+
+        $(".links-main").click(function () {
+            var href = "/InstructionalProducts/PracticeTest4/OPT4/";
+            window.location = href;
+
+        });
+
+    </script>
+
+
+
+</body><grammarly-desktop-integration data-grammarly-shadow-root="true"><template shadowrootmode="open"><style>
+      div.grammarly-desktop-integration {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+        -moz-user-select: none;
+        -webkit-user-select: none;
+        -ms-user-select:none;
+        user-select:none;
+      }
+
+      div.grammarly-desktop-integration:before {
+        content: attr(data-content);
+      }
+    </style><div aria-label="grammarly-integration" role="group" tabindex="-1" class="grammarly-desktop-integration" data-content="{&quot;mode&quot;:&quot;full&quot;,&quot;isActive&quot;:true,&quot;isUserDisabled&quot;:false}"></div></template></grammarly-desktop-integration></html>

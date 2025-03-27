@@ -1,0 +1,1757 @@
+<!DOCTYPE html>
+<!-- saved from url=(0130)https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest2/OPT2/View/9e573821-9955-42d9-96af-84834e0584d9 -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><style>
+    a {
+        outline: 0;
+    }
+</style>
+
+
+
+    
+    <title>Practice Test</title>
+    <meta name="description">
+    <link href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/favicon.ico" rel="shortcut icon" type="image/x-icon">
+    <meta name="viewport" content="width=device-width">
+    <link href="./2-2-4_files/bootstrap.css" rel="stylesheet">
+<link href="./2-2-4_files/Site.css" rel="stylesheet">
+
+    <script src="./2-2-4_files/399283786078546" async=""></script><script async="" src="./2-2-4_files/fbevents.js.下載"></script><script src="./2-2-4_files/jquery-1.9.1.min.js.下載"></script>
+
+    <script src="./2-2-4_files/jquery.unobtrusive-ajax.min.js.下載"></script>
+
+    <script src="./2-2-4_files/bootstrap.js.下載"></script>
+
+    <script src="./2-2-4_files/handlebars.min.js.下載"></script>
+
+    <script src="./2-2-4_files/instructional-product.js.下載"></script>
+
+    <script src="./2-2-4_files/facebook-pixel.js.下載"></script>
+
+    <script>
+    paragon.pt = paragon.pt || {};
+    paragon.pt.backUrl = "";
+    paragon.pt.nextUrl = "";
+    paragon.pt.speakingPrepTimeLeft = 0;
+    paragon.pt.speakingRecordingTimeLeft = 0;
+    paragon.pt.itemIndex = 0;
+
+    paragon.pt.showAlert = function (msg) {
+        alert(msg);
+    }
+
+    paragon.pt.showBackButton = function () {
+        $("#btnBack").show();
+    }
+
+    paragon.pt.showNextButton = function () {
+        $("#btnNext").show();
+    }
+
+    paragon.pt.hideBackButton = function () {
+        $("#btnBack").hide();
+    }
+
+    paragon.pt.hideNextButton = function () {
+        $("#btnNext").hide();
+    }
+
+    paragon.pt.goNext = function () {
+        window.location = paragon.pt.nextUrl;
+    }
+
+    paragon.pt.goBack = function () {
+        window.location = paragon.pt.backUrl;
+    }
+
+    //Timer For Listening, Reading and Writing
+    paragon.pt.timer = paragon.pt.timer || {};
+    paragon.pt.timer.totalTime = 0;
+    paragon.pt.timer.timeLeft = 0;
+    paragon.pt.timer.interval = null;
+    paragon.pt.timer.start = function (timeLeft) {
+        paragon.pt.timer.timeLeft = timeLeft;
+        paragon.pt.timer.totalTime = timeLeft
+        var minutes = Math.floor(timeLeft / 60);
+        var seconds = timeLeft - minutes * 60;
+
+        if (minutes < 1) {
+            $("#timer strong").html(seconds + " seconds");
+            $("#timer strong").attr("style", "color:red");
+        }
+        else if (minutes == 1) {
+            $("#timer strong").html(minutes + " minute");
+        }
+        else {
+            $("#timer strong").html(minutes + " minutes");
+        }
+
+        $("#timer").show();
+
+        if (paragon.pt.timer.interval)
+            window.clearInterval(paragon.pt.timer.interval);
+
+        paragon.pt.timer.interval = window.setInterval(function () { paragon.pt.timer.deductTime() }, 1000);
+
+        paragon.showFooter();
+    }
+
+    paragon.pt.timer.deductTime = function () {
+        if (paragon.pt.timer.timeLeft > 0) {
+            paragon.pt.timer.timeLeft -= 1;
+
+            var minutes = Math.floor(paragon.pt.timer.timeLeft / 60);
+            var seconds = paragon.pt.timer.timeLeft - minutes * 60;
+
+            if (minutes < 1) {
+                $("#timer strong").html(seconds + " seconds");
+                $("#timer strong").attr("style", "color:red");
+            }
+            else if (minutes == 1) {
+                $("#timer strong").html(minutes + " minute");
+            }
+            else {
+                $("#timer strong").html(minutes + " minutes");
+            }
+        }
+        else {
+            window.clearInterval(paragon.pt.timer.interval);
+            $("#timer strong").html("None");
+        }
+    }
+
+    //Timer For Speaking, work in progress
+    paragon.pt.showTimerSpeaking = function (prepTime, recordingTime) {
+        paragon.pt.speakingPrepTimeLeft = prepTime;
+        paragon.pt.speakingRecordingTimeLeft = recordingTime;
+        $("#timerSpeaking strong:first-child").html(prepTime + " seconds");
+        $("#timerSpeaking strong:last-child").html(recordingTime + " seconds");
+        $("#timerSpeaking").show();
+        paragon.showFooter();
+    }
+
+    paragon.pt.userResponse = paragon.pt.userResponse || {};
+
+    paragon.pt.uploadMultipleChoicesValue = function (url, sectionId, itemId, choiceId) {
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: { sectionId: sectionId, itemId: itemId, choiceId: choiceId },
+            dataType: "json",
+            cache: false,
+            success: function (json) {
+                console.log(json);
+                console.log("ItemId: " + itemId + ", " + "ChoiceId: " + choiceId);
+            }
+        });
+    }
+
+    paragon.pt.activateMultipleChoices = function (url, sectionId) {
+        $(document).delegate(".multipleChoices li", "click", function () {
+            var ul = $(this).parent();
+            ul.find("li").removeClass("selected");
+            $(this).addClass("selected");
+
+            paragon.pt.uploadMultipleChoicesValue(url, sectionId, ul.data("id"), $(this).data("id"));
+        });
+    }
+
+    paragon.pt.renderMultipleChoices = function (url, sectionId, item, renderItemText, hasImage, renderChoiceText) {
+        var template;
+        if (renderItemText == true) {
+            if (hasImage == true) {
+                template = Handlebars.compile($("#multipleChoicesTemplateWithItemTextAndImage").html());
+            }
+            else {
+                template = Handlebars.compile($("#multipleChoicesTemplateWithItemText").html());
+            }
+        }
+        else {
+            if (hasImage == true) {
+
+                if (renderChoiceText == true) {
+                    template = Handlebars.compile($("#multipleChoicesTemplateWithImage").html());
+                }
+                else {
+                    template = Handlebars.compile($("#multipleChoicesTemplateWithImageNoText").html());
+                }
+            }
+            else {
+                template = Handlebars.compile($("#multipleChoicesTemplate").html());
+            }
+        }
+
+        $("#multipleChoices").html(template(item));
+
+        paragon.pt.activateMultipleChoices(url, sectionId);
+    }
+
+    //Drop down list
+    paragon.pt.dropDown = paragon.pt.dropDown || {};
+    paragon.pt.dropDown.activeMenu = null;
+    paragon.pt.dropDown.renderTemplate = function (url, sectionId, templateToRender, elementToRender, items) {
+        var template = Handlebars.compile(templateToRender);
+        $(elementToRender).html(template(items));
+    }
+
+    paragon.pt.dropDown.renderInline = function (url, sectionId, items, startIndex, endIndex, elementToRender) {
+
+        var template = Handlebars.compile($("#dropDownListInlineTemplate").html());
+        var text = elementToRender[0].innerHTML;
+        for (var i = startIndex; i <= endIndex; i++) {
+            text = text.replace("{" + items[i].Num + "}", template(items[i]));
+        }
+        //Handlebars.registerHelper('renderInline', function (src, items, startIndex, endIndex, options) {
+        //    var template = Handlebars.compile($("#dropDownListInlineTemplate").html());
+        //    for (var i = startIndex; i <= endIndex; i++) {
+        //        src = src.replace("{" + (i + 1) + "}", template(items[i]));
+        //    }
+        //    return src;
+        //});
+        $(elementToRender).html(text);
+    }
+
+    paragon.pt.dropDown.activate = function (url, sectionId) {
+
+        $(document.body).click(function () {
+            $(".dd").each(function (i) {
+                if (i != paragon.pt.dropDown.activeMenu) {
+                    $(this).find(".ddMenu").hide();
+                    $(this).removeClass('active');
+                }
+            });
+        });
+
+        $(".dd").mouseover(function () {
+            paragon.pt.dropDown.activeMenu = $(".dd").index(this);
+        }).mouseout(function () {
+            paragon.pt.dropDown.activeMenu = null;
+        });
+
+        $(".ddToggle").click(function () {
+            var parent = $(this).parent();
+            parent.toggleClass("active");
+            var ddMenu = parent.find(".ddMenu");
+            ddMenu.animate({ height: 'toggle', opacity: 'toggle' }, 100);
+            var left = $(this).position().left;
+            ddMenu.css("left", Math.round(left) + "px");
+
+            //place the dropDown menu 20px below the box
+            var top = parent.position().top;
+            ddMenu.css("top", Math.round(top) + 20 + "px");
+
+        });
+
+        $('.dd li').click(function () {
+            $(this).parent().find("li").removeClass("selected");
+            $(this).addClass("selected");
+            var parent = $(this).parent().parent().parent();
+            var ddToggle = parent.find(".ddToggle");
+            ddToggle.html($(this).html());
+            ddToggle.addClass("ddToggle1");
+            parent.find(".ddMenu").animate({ height: 'toggle', opacity: 'toggle' }, 400);
+            parent.removeClass('active');
+            var ul = $(this).parent();
+            paragon.pt.uploadMultipleChoicesValue(url, sectionId, ul.data("id"), $(this).data("id"));
+        });
+    }
+
+    paragon.pt.showInfoBox = function (message) {
+        var infoBox = $("#infoBox");
+        if (message)
+            $("#infoBox .boxText p").html(message);
+        infoBox.show();
+    }
+
+    paragon.pt.hideInfoBox = function () {
+        $("#infoBox").hide();
+    }
+
+    //Audio Playback for the Listening Component
+    paragon.pt.playAudio = paragon.pt.playAudio || {};
+    paragon.pt.playAudio.player = null;
+    paragon.pt.playAudio.totalTime = 0;
+    paragon.pt.playAudio.timeLeft = 0;
+    paragon.pt.playAudio.interval = null;
+    paragon.pt.playAudio.onDone = null;
+
+    paragon.pt.playAudio.start = function (playAudioTime) {
+		paragon.pt.hideInfoBox();
+        paragon.pt.playAudio.totalTime = playAudioTime;
+        paragon.pt.playAudio.timeLeft = playAudioTime;
+        if (paragon.pt.playAudio.interval)
+            window.clearInterval(paragon.pt.playAudio.interval);
+
+        $("#playAudioBox").fadeIn(1000);
+    }
+
+
+    //recording functions
+
+    paragon.pt.recording = paragon.pt.recording || {};
+    paragon.pt.recording.totalTime = 0;
+    paragon.pt.recording.timeLeft = 0;
+    paragon.pt.recording.interval = null;
+    paragon.pt.recording.onDone = null;
+
+    paragon.pt.recording.updateProgressBar = function () {
+        var percentage = 100 - (paragon.pt.recording.timeLeft / paragon.pt.recording.totalTime) * 100;
+        $("#startRecTime .progressbar-cover").css("left", percentage + "%");
+    }
+
+    paragon.pt.recording.deductTime = function () {
+        if (paragon.pt.recording.timeLeft > 0) {
+            paragon.pt.recording.timeLeft -= 1;
+            paragon.pt.recording.updateProgressBar();
+        }
+        else {
+            window.clearInterval(paragon.pt.recording.interval);
+            $("#startRecTime").hide();
+            paragon.pt.showNextButton();
+            if (paragon.pt.recording.onDone) {
+                paragon.pt.recording.onDone();
+            }
+        }
+    }
+
+    paragon.pt.recording.start = function (playAudioTime) {
+        paragon.pt.recording.totalTime = playAudioTime;
+        paragon.pt.recording.timeLeft = playAudioTime;
+        if (paragon.pt.recording.interval)
+            window.clearInterval(paragon.pt.recording.interval);
+
+        paragon.pt.recording.interval = window.setInterval(function () { paragon.pt.recording.deductTime() }, 1000);
+        paragon.pt.recording.updateProgressBar();
+        $("#startRecTime").fadeIn(1000);
+    }
+
+    //end recording
+
+    //preperation functions
+
+    paragon.pt.preparation = paragon.pt.preparation || {};
+    paragon.pt.preparation.totalTime = 0;
+    paragon.pt.preparation.timeLeft = 0;
+    paragon.pt.preparation.interval = null;
+    paragon.pt.preparation.onDone = null;
+    paragon.pt.preparation.startRecording = null;
+
+    paragon.pt.preparation.updateProgressBar = function () {
+        $("#startPrepTime #progressTimer").html(paragon.pt.preparation.timeLeft);
+    }
+
+    paragon.pt.preparation.deductTime = function () {
+        if (paragon.pt.preparation.timeLeft > 0) {
+            paragon.pt.preparation.timeLeft -= 1;
+            paragon.pt.preparation.updateProgressBar();
+        }
+        else {
+            window.clearInterval(paragon.pt.preparation.interval);
+            $("#startPrepTime").hide();
+            paragon.pt.showNextButton();
+            if (paragon.pt.preparation.onDone) {
+                paragon.pt.preparation.onDone();
+            }
+        }
+    }
+
+    paragon.pt.preparation.start = function (playAudioTime) {
+        paragon.pt.preparation.totalTime = playAudioTime;
+        paragon.pt.preparation.timeLeft = playAudioTime;
+        if (paragon.pt.preparation.interval)
+            window.clearInterval(paragon.pt.preparation.interval);
+
+        paragon.pt.preparation.interval = window.setInterval(function () { paragon.pt.preparation.deductTime() }, 1000);
+        paragon.pt.preparation.updateProgressBar();
+        $("#startPrepTime").fadeIn(1000);
+    }
+
+    //end prep functinos
+
+    paragon.pt.createAudioPlayer = function (contentUrl, audiofile) {
+        //create player if not exists
+        if (!paragon.pt.playAudio.player) {
+            paragon.pt.playAudio.player = document.createElement('audio');
+			
+			paragon.pt.playAudio.player.controls = true;
+			paragon.pt.playAudio.player.controlsList = "nodownload";
+            paragon.pt.playAudio.player.oggSrc = document.createElement('source');
+            paragon.pt.playAudio.player.oggSrc.setAttribute('type', 'audio/ogg');
+            paragon.pt.playAudio.player.appendChild(paragon.pt.playAudio.player.oggSrc);
+
+            paragon.pt.playAudio.player.mp3Src = document.createElement('source');
+            paragon.pt.playAudio.player.mp3Src.setAttribute('type', 'audio/mp3');
+            paragon.pt.playAudio.player.appendChild(paragon.pt.playAudio.player.mp3Src);
+			
+			paragon.pt.playAudio.player.ontimeupdate = function () {
+                var duration = paragon.pt.playAudio.player.duration;
+                var currentTime = paragon.pt.playAudio.player.currentTime;
+                if (duration) {
+                    var progress = (currentTime / duration) * 100;
+                    $("#playAudioBox .progressbar-cover").css("left", progress + "%");
+                    if (progress >= 100) {
+                        $("#playAudioBox").hide();
+                        paragon.pt.showInfoBox();
+                        paragon.pt.showNextButton();
+                        if (paragon.pt.playAudio.onDone) {
+                            paragon.pt.playAudio.onDone();
+                        }                        
+                    }                    
+                }
+            };
+
+            paragon.pt.playAudio.player.onplay = function () {
+                paragon.pt.playAudio.start(paragon.pt.playAudio.player.duration);
+            };
+        }
+
+        paragon.pt.playAudio.player.addEventListener("loadedmetadata", function (e) {
+            if (e.target) {
+                paragon.pt.playAudio.player.play();
+                paragon.pt.playAudio.start(e.target.duration);
+            }
+        });
+
+        paragon.pt.playAudio.player.oggSrc.setAttribute('src', contentUrl + audiofile + ".ogg");
+        paragon.pt.playAudio.player.mp3Src.setAttribute('src', contentUrl + audiofile + ".mp3");
+
+        paragon.pt.playAudio.player.load();
+        return paragon.pt.playAudio.player;
+    }
+
+
+    paragon.pt.moveScrollBar = function (div, scrollSize) {
+        div.animate({
+            scrollTop: scrollSize
+        }, 1200, function () {
+            div.animate({ scrollTop: 0 }, 300, function () {
+            });
+        });
+    }
+
+    paragon.pt.showScrollBar = function (leftDiv, rightDiv) {
+
+        if (rightDiv.length && rightDiv.is(":visible") && leftDiv.length && leftDiv.is(":visible")) {
+            $.blockUI({
+                message: "Scroll up and down to see everything.",
+                css: { width: '400px', border: '2px solid #000', top: '35%', padding: '50px', color: '#1A578A', fontWeight: 'bold' },
+                showOverlay: false
+            });
+
+            var rightScrollSize = rightDiv[0].scrollHeight;
+            var leftScrollSize = leftDiv[0].scrollHeight;
+            window.setTimeout(function () {
+                paragon.pt.moveScrollBar(rightDiv, rightScrollSize);
+                paragon.pt.moveScrollBar(leftDiv, leftScrollSize);
+
+                window.setTimeout(function () { $.unblockUI(); }, 2300);
+            }, 1400);
+
+
+        }
+
+    }
+
+    paragon.pt.wordCount = function () {
+        $(".writtenTextAreaBox").keyup(countWords);
+
+        function countWords() {
+            var text = " ";
+            if (this.value != "") {
+                var wordCount = this.value.match(/\S+/g).length;
+                if (wordCount == 1) { 
+                    text = wordCount + " word"; 
+                } else { 
+                    text = wordCount + " words";
+                }
+            }
+            document.getElementById("wordCount").innerHTML = text;
+        }
+    }
+
+    paragon.pt.calcSectionNumQuestion = function (sectionID) {
+        var pt1lpSection = sectionID;
+        $.post("/InstructionalProducts/PracticeTest2/OPT2/GetNumberOfQuestions", { sectionId: pt1lpSection }, function (data) { console.log(data); document.getElementById("numQuestion").innerHTML = data.totalQuestions-1 });
+    }
+
+    paragon.pt.calcSectionNumQuestionLS = function (sectionID) {
+        var pt1lpSection = sectionID;
+        $.post("/InstructionalProducts/PracticeTest2/OPT2LS/GetNumberOfQuestions", { sectionId: pt1lpSection }, function (data) { console.log(data); document.getElementById("numQuestion").innerHTML = data.totalQuestions-1 });
+    }
+
+    paragon.pt.calcListScoreGeneral = function (sectionID) {
+
+        $.post("/InstructionalProducts/PracticeTest2/OPT2/GetScoreOnSection", { sectionId: sectionID }, function (data) {
+            console.log(data); document.getElementById("yourScore").innerHTML = data.userScore;
+
+            var userLScore = data.userScore;
+
+            paragon.pt.findListScore(userLScore);
+
+        });
+    }
+
+    paragon.pt.calcListScoreLS = function (sectionID) {
+
+        $.post("/InstructionalProducts/PracticeTest2/OPT2LS/GetScoreOnSection", { sectionId: sectionID }, function (data) {
+            console.log(data); document.getElementById("yourScore").innerHTML = data.userScore;
+
+            var userLScore = data.userScore;
+
+            paragon.pt.findListScore(userLScore);
+
+        });
+    }
+
+    paragon.pt.findListScore = function (userLScore) {
+        if (userLScore <= 7) {
+            document.getElementById("celScore").innerHTML = "M";
+            return;
+        }
+        else if (userLScore <= 12) {
+            document.getElementById("celScore").innerHTML = "3";
+            return;
+        }
+        else if (userLScore <= 18) {
+            document.getElementById("celScore").innerHTML = "4";
+            return;
+        }
+        else if (userLScore <= 23) {
+            document.getElementById("celScore").innerHTML = "5";
+            return;
+        }
+        else if (userLScore <= 28) {
+            document.getElementById("celScore").innerHTML = "6";
+            return;
+        }
+        else if (userLScore <= 31) {
+            document.getElementById("celScore").innerHTML = "7";
+            return;
+        }
+        else if (userLScore <= 33) {
+            document.getElementById("celScore").innerHTML = "8";
+            return;
+        }
+        else if (userLScore <= 35) {
+            document.getElementById("celScore").innerHTML = "9";
+            return;
+        }
+        else {
+            document.getElementById("celScore").innerHTML = "10-12";
+        }
+    }
+
+    paragon.pt.calcListScoreOnYourScore = function (sectionScore, sectionCell) {
+
+            var userLScore = sectionScore;
+
+            if (userLScore <= 7) {
+                document.getElementById(sectionCell).innerHTML = "M";
+                return;
+            }
+            else if (userLScore <= 12) {
+                document.getElementById(sectionCell).innerHTML = "3";
+                return;
+            }
+            else if (userLScore <= 18) {
+                document.getElementById(sectionCell).innerHTML = "4";
+                return;
+            }
+            else if (userLScore <= 23) {
+                document.getElementById(sectionCell).innerHTML = "5";
+                return;
+            }
+            else if (userLScore <= 28) {
+                document.getElementById(sectionCell).innerHTML = "6";
+                return;
+            }
+            else if (userLScore <= 31) {
+                document.getElementById(sectionCell).innerHTML = "7";
+                return;
+            }
+            else if (userLScore <= 33) {
+                document.getElementById(sectionCell).innerHTML = "8";
+                return;
+            }
+            else if (userLScore <= 35) {
+                document.getElementById(sectionCell).innerHTML = "9";
+                return;
+            }
+            else {
+                document.getElementById(sectionCell).innerHTML = "10-12";
+            }
+
+
+    }
+
+    paragon.pt.calcReadScore = function (sectionID) {
+
+        $.post("/InstructionalProducts/PracticeTest2/OPT2/GetScoreOnSection", { sectionId: sectionID }, function (data) {
+            console.log(data); document.getElementById("yourScore").innerHTML = data.userScore;
+
+            var userRScore = data.userScore;
+
+            if (userRScore <= 7) {
+                document.getElementById("celScore").innerHTML = "M";
+                return;
+            }
+            else if (userRScore <= 11) {
+                document.getElementById("celScore").innerHTML = "3";
+                return;
+            }
+            else if (userRScore <= 16) {
+                document.getElementById("celScore").innerHTML = "4";
+                return;
+            }
+            else if (userRScore <= 20) {
+                document.getElementById("celScore").innerHTML = "5";
+                return;
+            }
+            else if (userRScore <= 25) {
+                document.getElementById("celScore").innerHTML = "6";
+                return;
+            }
+            else if (userRScore <= 28) {
+                document.getElementById("celScore").innerHTML = "7";
+                return;
+            }
+            else if (userRScore <= 31) {
+                document.getElementById("celScore").innerHTML = "8";
+                return;
+            }
+            else if (userRScore <= 33) {
+                document.getElementById("celScore").innerHTML = "9";
+                return;
+            }
+            else {
+                document.getElementById("celScore").innerHTML = "10-12";
+            }
+
+        });
+
+    }
+    paragon.pt.calcReadScoreOnYourScore = function (sectionScore, sectionCell) {
+
+        var userRScore = sectionScore;
+
+        if (userRScore <= 7) {
+            document.getElementById(sectionCell).innerHTML = "M";
+            return;
+        }
+        else if (userRScore <= 11) {
+            document.getElementById(sectionCell).innerHTML = "3";
+            return;
+        }
+        else if (userRScore <= 16) {
+            document.getElementById(sectionCell).innerHTML = "4";
+            return;
+        }
+        else if (userRScore <= 20) {
+            document.getElementById(sectionCell).innerHTML = "5";
+            return;
+        }
+        else if (userRScore <= 25) {
+            document.getElementById(sectionCell).innerHTML = "6";
+            return;
+        }
+        else if (userRScore <= 28) {
+            document.getElementById(sectionCell).innerHTML = "7";
+            return;
+        }
+        else if (userRScore <= 31) {
+            document.getElementById(sectionCell).innerHTML = "8";
+            return;
+        }
+        else if (userRScore <= 33) {
+            document.getElementById(sectionCell).innerHTML = "9";
+            return;
+        }
+        else {
+            document.getElementById(sectionCell).innerHTML = "10-12";
+        }
+    }
+
+    paragon.pt.showListeningAnswerKeyBtn = function (sectionId) {
+        if (sectionId == "8d7aca4e-5a13-45ac-83f7-26a9e581f1cc") {
+            $('#leftBtn').html("<a href='4af81ad0-6f1a-44a1-a7eb-00d6fda3eaaa' id='backToResultbtn' class='btn'>Answer Key</a>");
+        }
+
+        if (sectionId == "46321347-b2b2-4789-b68d-7e9da61ef137") {
+            $('#leftBtn').html("<a href='2c1a1382-da5f-4bb9-82ad-a92abc92b9b6' id='backToResultbtn' class='btn'>Answer Key</a>");
+        }
+    }
+
+    paragon.pt.showReadingAnswerKeyBtn = function (sectionId) {
+        if (sectionId == "03a88377-f6ec-4e66-95a3-98d5667ed20f") {
+            $('#leftBtn').html("<a href='ecdd0296-310b-4f0c-97c1-7d262cfd74f5' id='backToResultbtn' class='btn'>Answer Key</a>");
+        }
+
+        if (sectionId == "d344735b-258f-43ad-b5a5-5f37e0681c25") {
+            $('#leftBtn').html("<a href='760a0a7f-7c18-4d98-9084-0836ed6a1f20' id='backToResultbtn' class='btn'>Answer Key</a>");
+        }
+    }
+
+    paragon.pt.showListeningAnswerKeyBtnLS = function (sectionId) {
+        if (sectionId == "0ab45038-7be2-467d-a81d-cc0c94e4c35f") {
+            $('#leftBtn').html("<a href='cbcaf232-114a-4d50-8b89-6f907b7402cd' id='backToResultbtn' class='btn'>Answer Key</a>");
+        }
+
+        if (sectionId == "044019e4-e029-4745-977b-e44baaa5d27a") {
+            $('#leftBtn').html("<a href='3a436067-f6f4-4aba-90ef-fa50e396b62c' id='backToResultbtn' class='btn'>Answer Key</a>");
+        }
+    }
+
+    paragon.pt.nextItem = function (url, itemId, canvasId, sectionId, activityTypeId) {
+        $.post(
+            url,
+            {
+                itemId: itemId,
+                canvasId: canvasId,
+                sectionId: sectionId,
+                activityTypeId: activityTypeId
+            },
+            function (data) {
+                console.log(data);
+            }
+        );
+    }
+
+    paragon.pt.countUnansweredQuestionsFromDb = function (canvasTypeId, sectionId, url) {
+        switch (canvasTypeId) {
+            case 24: //PT04
+            case 25: // PT05
+                return paragon.pt.countSingleUnansweredItemFromDb(sectionId, url);
+                break;
+
+            case 26: //PT06
+            case 27: //PT07
+                if ($("#panelLeft").css('display') != 'none') {
+                    return 0;
+                }
+                else {
+                    return paragon.pt.countAllUnansweredItemsFromDb(sectionId, url);
+                }
+                break;
+
+            default:
+                return paragon.pt.countAllUnansweredItemsFromDb(sectionId, url);
+        }
+    }
+
+    paragon.pt.countAllUnansweredItemsFromDb = function (sectionId, url) {
+        var unanswered = 0;
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: { 'sectionId': sectionId, 'items': JSON.stringify(paragon.pt.items) },
+            async: false,
+            success: function (data) {
+                var responses = data.responses;
+                for (var i = 0; i < responses.length; i++) {
+                    var currentResponse = responses[i];
+                    if (!currentResponse) {
+                        unanswered++;
+                    }
+                }
+            }
+        });
+        return unanswered;
+    }
+
+    paragon.pt.countSingleUnansweredItemFromDb = function (sectionId, url) {
+        var unanswered = 0;
+
+        var index = paragon.pt.itemIndex;
+        if (index > 0) {
+            index = index - 1;
+        }
+        else {
+            return unanswered;
+        }
+
+        var item = paragon.pt.items[index];
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: { "sectionId": sectionId, "itemId": item.Id },
+            async: false,
+            success: function (data) {
+                if (!data.response) {
+                    unanswered++;
+                }
+            }
+        });
+
+        return unanswered;
+    }
+
+</script>
+
+    <script src="./2-2-4_files/soundjs-0.6.0.min.js.下載"></script>
+
+
+
+    <script src="./2-2-4_files/audio.min.js.下載"></script>
+
+    <script src="./2-2-4_files/jquery.blockUI.js.下載"></script>
+
+    <script src="./2-2-4_files/jquery-ui-1.10.4.custom.min.js.下載"></script>
+
+    <script src="./2-2-4_files/jquery.cookie.js.下載"></script>
+
+
+    <link href="./2-2-4_files/font-awesome.css" rel="stylesheet">
+</head>
+<body data-new-gr-c-s-check-loaded="14.1229.0" data-gr-ext-installed="" style="">
+    <noscript>
+        <div id="noscript">
+            <div>Please turn on javascript to continue.</div>
+        </div>
+    </noscript>
+    <header>
+        <div class="navbar">
+            <div class="navbar-inner">
+                <a class="brand" href="https://www.celpip.ca/" target="_blank"> <img src="./2-2-4_files/CELPIP_H_Web.png"></a>
+
+                <div class="brand" style="margin-top:15px;">
+                    Study Materials
+                </div>
+
+                <ul class="nav" style="margin-top:8px;">
+
+                    <li class="dropdown">
+
+                        <a class="dropdown-toggle" data-toggle="dropdown" style="margin-top: 10px;">
+                            Selected Product: <span id="selected-product">CELPIP-General Practice Tests, Set 2</span>
+                            <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/FreeOnlineSampleTest/FOST">Free CELPIP-General Practice Tests (Starter Set)</a></li>
+                            <li><a href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/FreeOnlineSampleTest/FOST2">Free CELPIP-General LS Practice Tests (Starter Set)</a></li>
+
+
+                                    <li><a href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest/PT">CELPIP-General Practice Tests, Set 1</a></li>
+                                    <li><a href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest2/OPT2">CELPIP-General Practice Tests, Set 2</a></li>
+                                    <li><a href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest3/OPT3">CELPIP-General Practice Tests, Set 3</a></li>
+                                    <li><a href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest4/OPT4">CELPIP-General Practice Tests, Set 4</a></li>
+                                    <li><a href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest5/OPT5">CELPIP-General Practice Tests, Set 5</a></li>
+                                    <li><a href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest6/OPT6">CELPIP-General Practice Tests, Set 6</a></li>
+                                    <li><a href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest7/OPT7">CELPIP-General Practice Tests, Set 7</a></li>
+                                    <li><a href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest8/OPT8">CELPIP-General Practice Tests, Set 8</a></li>
+                                    <li><a href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest9/OPT9">CELPIP-General Practice Tests, Set 9</a></li>
+                                    <li><a href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest10/OPT10">CELPIP-General Practice Tests, Set 10</a></li>
+                                        <li><a target="_blank" href="https://testprep.paragontesting.ca/api/sso/v2/sso/jwt?jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6Imh5cDIyMThAZ21haWwuY29tIiwiZmlyc3RfbmFtZSI6IllpLVBpbmciLCJsYXN0X25hbWUiOiJIbyIsIm5hbWVpZCI6IjIyMzc0ODgiLCJpYXQiOjE3NDMwODYxNDIsImp0aSI6MTk0NzIzNzAyMCwibmJmIjoxNzQzMDg1ODQyfQ.EH_eC_doF2hONUMZAeXqmkTD32K1h5_j3Qeu79cN97A&amp;return_to=https%3A%2F%2Ftestprep.paragontesting.ca%2Fbundles%2Fcelpip-accelerate-starter-celpip-general">CELPIP Accelerate Starter - Reading and Writing</a></li>
+                                        <li><a target="_blank" href="https://testprep.paragontesting.ca/api/sso/v2/sso/jwt?jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6Imh5cDIyMThAZ21haWwuY29tIiwiZmlyc3RfbmFtZSI6IllpLVBpbmciLCJsYXN0X25hbWUiOiJIbyIsIm5hbWVpZCI6IjIyMzc0ODgiLCJpYXQiOjE3NDMwODYxNDIsImp0aSI6MTk0NzIzNzAyMCwibmJmIjoxNzQzMDg1ODQyfQ.EH_eC_doF2hONUMZAeXqmkTD32K1h5_j3Qeu79cN97A&amp;return_to=https%3A%2F%2Ftestprep.paragontesting.ca%2Fbundles%2Fcelpip-accelerate-starter-celpip-general-ls">CELPIP Accelerate Starter - Listening and Speaking</a></li>
+                        </ul>
+
+                    </li>
+
+                    <li>
+                        <div style="margin-left: 19px">
+                            <ul class="nav nav-pills header-buttons">
+                                
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+
+                <ul class="nav pull-right" style="margin-top:17px">
+                        <li class="dropdown">
+                            <a class="dropdown-toggle dropdown-email" data-toggle="dropdown">
+                                <img src="./2-2-4_files/fa_cog.png" style="width:18px; height: 18px; margin-top:-5px">
+                                
+                                <b class="caret"></b>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="javascript:document.getElementById(&#39;logoutForm&#39;).submit()">Sign out</a></li>
+                            </ul>
+                        </li>
+                </ul>
+            </div>
+        </div>
+<form action="https://instructionalproducts.paragontesting.ca/InstructionalProducts/Account/LogOff" id="logoutForm" method="post"></form>    </header>
+
+    <div class="container" id="main-container" style="height: 739px;">
+<link href="./2-2-4_files/ptStyle.css" rel="stylesheet" type="text/css">
+<link href="./2-2-4_files/video-js.css" rel="stylesheet">
+<script src="./2-2-4_files/video.js.下載"></script>
+<script>
+    paragon.pt.backUrl = "/InstructionalProducts/PracticeTest2/OPT2/View/35f6ad10-579a-4c90-af79-0a65c14bcac1";
+    paragon.pt.nextUrl = "/InstructionalProducts/PracticeTest2/OPT2/View/760a0a7f-7c18-4d98-9084-0836ed6a1f20";
+    if (paragon.pt.backUrl.length > 0 || paragon.pt.nextUrl.length > 0) {
+        paragon.footerVisible = true;
+    }
+
+    paragon.pt.items = [
+  {
+    "Id": "b49b2b6a-1620-42ec-9d2f-b653957cabad",
+    "ContentId": "9038751f-4061-4aa2-90d7-d707ff914838",
+    "Num": 1,
+    "Text": "1.  Mercado would probably agree that ",
+    "ExtraField1": "",
+    "Choices": [
+      {
+        "Id": "5bf38f88-b255-45c9-a9ab-b433bed71272",
+        "ItemId": "b49b2b6a-1620-42ec-9d2f-b653957cabad",
+        "ChoiceData": null,
+        "Num": 1,
+        "Text": "caregivers should be paid more."
+      },
+      {
+        "Id": "fedeb79b-4e4c-49ce-aee6-20c7dea281c7",
+        "ItemId": "b49b2b6a-1620-42ec-9d2f-b653957cabad",
+        "ChoiceData": null,
+        "Num": 2,
+        "Text": "caregivers are lucky to have jobs."
+      },
+      {
+        "Id": "0f7eaa6a-b9a8-43b0-98bd-e18ed5dd4608",
+        "ItemId": "b49b2b6a-1620-42ec-9d2f-b653957cabad",
+        "ChoiceData": null,
+        "Num": 3,
+        "Text": "caregivers should live with their families."
+      },
+      {
+        "Id": "44fa73d8-3bb4-4202-b426-c8a513c159bb",
+        "ItemId": "b49b2b6a-1620-42ec-9d2f-b653957cabad",
+        "ChoiceData": null,
+        "Num": 4,
+        "Text": "caregivers should translate their contracts."
+      }
+    ]
+  },
+  {
+    "Id": "7a6b232f-46db-4ab5-aa30-f321471c33b6",
+    "ContentId": "9038751f-4061-4aa2-90d7-d707ff914838",
+    "Num": 2,
+    "Text": "2.  In addition to the current reform plan, Mercado would probably want",
+    "ExtraField1": "",
+    "Choices": [
+      {
+        "Id": "9298ab4d-02f8-41f6-945e-01a9a6b87de1",
+        "ItemId": "7a6b232f-46db-4ab5-aa30-f321471c33b6",
+        "ChoiceData": null,
+        "Num": 1,
+        "Text": "a more efficient process for residency.\t"
+      },
+      {
+        "Id": "16fcc771-0694-4747-8041-fef372cda2c5",
+        "ItemId": "7a6b232f-46db-4ab5-aa30-f321471c33b6",
+        "ChoiceData": null,
+        "Num": 2,
+        "Text": "better protection against employer abuse."
+      },
+      {
+        "Id": "f81672d2-f264-4772-86c0-6d53bb021ef6",
+        "ItemId": "7a6b232f-46db-4ab5-aa30-f321471c33b6",
+        "ChoiceData": null,
+        "Num": 3,
+        "Text": "quicker ways of bringing her family to Canada."
+      },
+      {
+        "Id": "3a88ed58-4516-42b6-b4ad-eb19d8cf8902",
+        "ItemId": "7a6b232f-46db-4ab5-aa30-f321471c33b6",
+        "ChoiceData": null,
+        "Num": 4,
+        "Text": "an ability to change caregiver jobs. "
+      }
+    ]
+  },
+  {
+    "Id": "37947b70-af39-45b5-97e3-ede549494627",
+    "ContentId": "9038751f-4061-4aa2-90d7-d707ff914838",
+    "Num": 3,
+    "Text": "3.  The Temporary Foreign Worker Program is popular because",
+    "ExtraField1": "",
+    "Choices": [
+      {
+        "Id": "7af0bfbf-0ef4-454a-a6a8-cb096f01e068",
+        "ItemId": "37947b70-af39-45b5-97e3-ede549494627",
+        "ChoiceData": null,
+        "Num": 1,
+        "Text": "it requires the immigrant to have a job."
+      },
+      {
+        "Id": "48a36163-f691-44c5-9fa9-a3d87c0e9b2e",
+        "ItemId": "37947b70-af39-45b5-97e3-ede549494627",
+        "ChoiceData": null,
+        "Num": 2,
+        "Text": "it allows immigrants to work at a variety of jobs."
+      },
+      {
+        "Id": "fa0d07f4-6f7a-4c42-9223-dfed490500e2",
+        "ItemId": "37947b70-af39-45b5-97e3-ede549494627",
+        "ChoiceData": null,
+        "Num": 3,
+        "Text": "it speeds up citizenship application."
+      },
+      {
+        "Id": "19d05c35-28be-482a-bf02-dd64a64dd949",
+        "ItemId": "37947b70-af39-45b5-97e3-ede549494627",
+        "ChoiceData": null,
+        "Num": 4,
+        "Text": "it provides an opportunity to apply for residency."
+      }
+    ]
+  },
+  {
+    "Id": "53fba802-0bb1-4be4-b9f8-8c53bde17d2d",
+    "ContentId": "9038751f-4061-4aa2-90d7-d707ff914838",
+    "Num": 4,
+    "Text": "4.  According to Swanson, the Temporary Foreign Worker Program  ",
+    "ExtraField1": "",
+    "Choices": [
+      {
+        "Id": "0a0a8ffa-8606-42bb-8e5e-0713df181345",
+        "ItemId": "53fba802-0bb1-4be4-b9f8-8c53bde17d2d",
+        "ChoiceData": null,
+        "Num": 1,
+        "Text": "is undergoing successful reform."
+      },
+      {
+        "Id": "19663413-f4b4-4f61-8cbd-5b07e9de0220",
+        "ItemId": "53fba802-0bb1-4be4-b9f8-8c53bde17d2d",
+        "ChoiceData": null,
+        "Num": 2,
+        "Text": "is no longer a government priority."
+      },
+      {
+        "Id": "0341d05a-c508-4bdb-bfb3-5a3040d190b1",
+        "ItemId": "53fba802-0bb1-4be4-b9f8-8c53bde17d2d",
+        "ChoiceData": null,
+        "Num": 3,
+        "Text": "requires many more reforms to be effective."
+      },
+      {
+        "Id": "ade1e3a1-4444-4858-a86e-5dede49d3612",
+        "ItemId": "53fba802-0bb1-4be4-b9f8-8c53bde17d2d",
+        "ChoiceData": null,
+        "Num": 4,
+        "Text": "will have reduced wait times in the near future. "
+      }
+    ]
+  },
+  {
+    "Id": "7edc86f5-4383-4257-b60c-b4771edb988e",
+    "ContentId": "9038751f-4061-4aa2-90d7-d707ff914838",
+    "Num": 5,
+    "Text": "5. The author of the article thinks that a bigger need than these policy reforms is ",
+    "ExtraField1": "",
+    "Choices": [
+      {
+        "Id": "5217d02e-5642-4593-bc1a-272f690d0c9b",
+        "ItemId": "7edc86f5-4383-4257-b60c-b4771edb988e",
+        "ChoiceData": null,
+        "Num": 1,
+        "Text": "better budgeting for senior-care programs."
+      },
+      {
+        "Id": "e5ad026f-78c0-4fa8-b5f3-48e6060eaec9",
+        "ItemId": "7edc86f5-4383-4257-b60c-b4771edb988e",
+        "ChoiceData": null,
+        "Num": 2,
+        "Text": "better schooling in childcare programs."
+      },
+      {
+        "Id": "2a2c52e2-9307-419e-a39c-65d2c375da76",
+        "ItemId": "7edc86f5-4383-4257-b60c-b4771edb988e",
+        "ChoiceData": null,
+        "Num": 3,
+        "Text": "improved protection against harassment."
+      },
+      {
+        "Id": "93a009fb-dcc9-4fda-a5c6-6e6e2fe2fbc8",
+        "ItemId": "7edc86f5-4383-4257-b60c-b4771edb988e",
+        "ChoiceData": null,
+        "Num": 4,
+        "Text": "quicker availability of open work permits."
+      }
+    ]
+  },
+  {
+    "Id": "e5deaaa1-df5d-4ab3-aa74-e370bdb4d493",
+    "ContentId": "9038751f-4061-4aa2-90d7-d707ff914838",
+    "Num": 6,
+    "Text": "34. Blank 34",
+    "ExtraField1": "",
+    "Choices": [
+      {
+        "Id": "1e2dd14e-eafe-4587-8e60-03ce47d207a9",
+        "ItemId": "e5deaaa1-df5d-4ab3-aa74-e370bdb4d493",
+        "ChoiceData": null,
+        "Num": 1,
+        "Text": "abuse still happens to caregivers."
+      },
+      {
+        "Id": "4125a7ec-c855-432b-abfb-65c673a620c9",
+        "ItemId": "e5deaaa1-df5d-4ab3-aa74-e370bdb4d493",
+        "ChoiceData": null,
+        "Num": 2,
+        "Text": "caregivers are still living with families."
+      },
+      {
+        "Id": "d8460e42-4f1b-4e41-b3e5-075284726de2",
+        "ItemId": "e5deaaa1-df5d-4ab3-aa74-e370bdb4d493",
+        "ChoiceData": null,
+        "Num": 3,
+        "Text": "the government isn’t supporting caregivers."
+      },
+      {
+        "Id": "4e877400-4d57-4b1d-a933-d096384e0b77",
+        "ItemId": "e5deaaa1-df5d-4ab3-aa74-e370bdb4d493",
+        "ChoiceData": null,
+        "Num": 4,
+        "Text": "caregivers can’t change jobs."
+      }
+    ]
+  },
+  {
+    "Id": "65a681cc-5d4b-4ba8-8693-8008da2cc6f8",
+    "ContentId": "9038751f-4061-4aa2-90d7-d707ff914838",
+    "Num": 7,
+    "Text": "35. Blank 35",
+    "ExtraField1": "",
+    "Choices": [
+      {
+        "Id": "1dd54a36-3151-4b86-a7e3-e148c7223952",
+        "ItemId": "65a681cc-5d4b-4ba8-8693-8008da2cc6f8",
+        "ChoiceData": null,
+        "Num": 1,
+        "Text": "complain about their workplace conditions,"
+      },
+      {
+        "Id": "b87f5628-23d4-449a-aa00-05b2128033bf",
+        "ItemId": "65a681cc-5d4b-4ba8-8693-8008da2cc6f8",
+        "ChoiceData": null,
+        "Num": 2,
+        "Text": "complain to their employers,"
+      },
+      {
+        "Id": "235ca659-4769-4acb-afdd-e5b6f4134539",
+        "ItemId": "65a681cc-5d4b-4ba8-8693-8008da2cc6f8",
+        "ChoiceData": null,
+        "Num": 3,
+        "Text": "visit with their families and friends,"
+      },
+      {
+        "Id": "5a9b4efb-fc35-4b33-9087-5c659ac7503d",
+        "ItemId": "65a681cc-5d4b-4ba8-8693-8008da2cc6f8",
+        "ChoiceData": null,
+        "Num": 4,
+        "Text": "take vacations to visit family,"
+      }
+    ]
+  },
+  {
+    "Id": "01bcef80-03b3-438a-8a8a-ff95507ad5e6",
+    "ContentId": "9038751f-4061-4aa2-90d7-d707ff914838",
+    "Num": 8,
+    "Text": "36. Blank 36",
+    "ExtraField1": "",
+    "Choices": [
+      {
+        "Id": "9e893b2c-1434-433b-96a8-6ec11f4cc3ba",
+        "ItemId": "01bcef80-03b3-438a-8a8a-ff95507ad5e6",
+        "ChoiceData": null,
+        "Num": 1,
+        "Text": "their contracts."
+      },
+      {
+        "Id": "df2459f7-7616-418a-8c3f-76dccdfedc55",
+        "ItemId": "01bcef80-03b3-438a-8a8a-ff95507ad5e6",
+        "ChoiceData": null,
+        "Num": 2,
+        "Text": "the local police."
+      },
+      {
+        "Id": "de94fafa-24d1-41a8-976c-9b01e8a3a3c5",
+        "ItemId": "01bcef80-03b3-438a-8a8a-ff95507ad5e6",
+        "ChoiceData": null,
+        "Num": 3,
+        "Text": "the labour laws."
+      },
+      {
+        "Id": "6be938df-d716-4917-9e13-e10acdeabb89",
+        "ItemId": "01bcef80-03b3-438a-8a8a-ff95507ad5e6",
+        "ChoiceData": null,
+        "Num": 4,
+        "Text": "their employers."
+      }
+    ]
+  },
+  {
+    "Id": "2ad9bdba-271e-4da8-8127-f411a37c164e",
+    "ContentId": "9038751f-4061-4aa2-90d7-d707ff914838",
+    "Num": 9,
+    "Text": "37. Blank 37",
+    "ExtraField1": "",
+    "Choices": [
+      {
+        "Id": "8dac31df-7054-4428-9ac9-3d7b37de7a39",
+        "ItemId": "2ad9bdba-271e-4da8-8127-f411a37c164e",
+        "ChoiceData": null,
+        "Num": 1,
+        "Text": "won’t solve the problem."
+      },
+      {
+        "Id": "f693d987-a1b2-446c-9f89-2f8099a3d417",
+        "ItemId": "2ad9bdba-271e-4da8-8127-f411a37c164e",
+        "ChoiceData": null,
+        "Num": 2,
+        "Text": "will alert the police."
+      },
+      {
+        "Id": "7635c4f7-40d5-4d69-a54e-288a8ea9c27f",
+        "ItemId": "2ad9bdba-271e-4da8-8127-f411a37c164e",
+        "ChoiceData": null,
+        "Num": 3,
+        "Text": "won’t change the family."
+      },
+      {
+        "Id": "de98e497-7bc4-494f-bae6-74f34eb2544e",
+        "ItemId": "2ad9bdba-271e-4da8-8127-f411a37c164e",
+        "ChoiceData": null,
+        "Num": 4,
+        "Text": "will increase the problems."
+      }
+    ]
+  },
+  {
+    "Id": "24c5366a-0979-4841-89ac-98ffe780e99b",
+    "ContentId": "9038751f-4061-4aa2-90d7-d707ff914838",
+    "Num": 10,
+    "Text": "38. Blank 38",
+    "ExtraField1": "",
+    "Choices": [
+      {
+        "Id": "ae029715-9022-4d60-93c9-65146bae5f08",
+        "ItemId": "24c5366a-0979-4841-89ac-98ffe780e99b",
+        "ChoiceData": null,
+        "Num": 1,
+        "Text": "another caregiver position will not be available ."
+      },
+      {
+        "Id": "0d3b650a-3a67-4f13-802d-2185abb15376",
+        "ItemId": "24c5366a-0979-4841-89ac-98ffe780e99b",
+        "ChoiceData": null,
+        "Num": 2,
+        "Text": "they will want to leave Canada."
+      },
+      {
+        "Id": "b394f519-f78c-47bf-8a02-c059e83be7f4",
+        "ItemId": "24c5366a-0979-4841-89ac-98ffe780e99b",
+        "ChoiceData": null,
+        "Num": 3,
+        "Text": "the wait for work permits may be even longer."
+      },
+      {
+        "Id": "1d03a8b6-4a7d-4da9-8755-d702aae59869",
+        "ItemId": "24c5366a-0979-4841-89ac-98ffe780e99b",
+        "ChoiceData": null,
+        "Num": 4,
+        "Text": "they can get jobs as nurses."
+      }
+    ]
+  }
+]
+</script>
+
+<div id="panelTop">
+
+    <div id="canvasName" style="float: left; font-size: 16px; font-weight: bold;">
+        Practice Test 2 - Reading Part 4: Reading for Viewpoints
+    </div>
+
+    <div style="float: right;" class="btnNext span1 pull-right">
+                <a href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest2/OPT2/View/9e573821-9955-42d9-96af-84834e0584d9#" id="btnNext" class="btn btn-primary">NEXT</a>
+
+    </div>
+
+    <div style="float: right; display: block;" id="timer" class="hide">
+        Time remaining: <strong>12 minutes</strong>
+    </div>
+
+</div>
+
+<div id="mainContent">
+    
+
+<script id="dropDownListTemplate" type="text/template">
+{{#each this}}
+    <div class="ddrow">
+        {{Text}}
+        <div class='dd'>
+            <div class='ddToggle'>▾</div>
+            <div class='ddMenu'>
+                <ul data-id="{{Id}}">
+                {{#each Choices}}
+                    <li data-id="{{Id}}">{{Text}}</li>
+                {{/each}}
+                </ul>
+            </div>
+        </div>
+    </div>
+{{/each}}
+</script>
+
+<script id="dropDownListInlineTemplate" type="text/template">
+    <div class='dd'>
+        <div class='ddToggle'>▾</div>
+        <div class='ddMenu'>
+            <ul data-id="{{Id}}">
+            {{#each Choices}}
+                <li data-id="{{Id}}">{{Text}}</li>
+            {{/each}}
+            </ul>
+        </div>
+    </div>
+</script>
+
+<script id="dropDownListInFrontTemplate" type="text/template">
+    {{#each this}}
+    <div class="ddrow">
+        <div class='dd'>
+            <div class='ddToggle'>▾</div>
+            <div class='ddMenu'>
+                <ul data-id="{{Id}}">
+                    {{#each Choices}}
+                    <li data-id="{{Id}}">{{Text}}</li>
+                    {{/each}}
+                </ul>
+            </div>
+        </div>
+        &nbsp;-
+        {{Text}}
+    </div>
+    {{/each}}
+</script>
+
+<div id="panelLeft" style="width: 50%; height: 696px;" class="graybg">
+    <div class="row1">
+        <div><div class="instruction" style="margin-bottom: 30px;">Read the following article from a website.</div>
+        
+Live-in Caregiver Amy Mercado is concerned that current policy reforms in the Canadian Temporary Foreign Worker Program are simply band-aid solutions to bigger issues. The program allows Canadian families to hire foreign workers to live temporarily in their homes and care for elderly, young, or disabled citizens. The program is one of three ways that immigrants can acquire permanent Canadian residency. Originally trained as a nurse, Mercado came to Canada from the Philippines 13 years ago to work as a live-in caregiver. She is now a Canadian citizen. Suffering verbal harassment in the first few years of her employment, she’s only too aware of how often live-in caregivers face unsafe working standards. “Although foreign live-in caregivers are technically under the same labour laws as Canadian workers, they work and live in someone else’s private home,” Mercado explains. “They can suffer a lot of unseen damage.” 
+<br><br>
+Ministry Official Mark Swanson says that while the program is nowhere near perfect, they’re trying their best to reform it. “Recent protections, such as the implementation of a standardized employment contract between caregivers and families and a phone help line for caregivers, have made a big difference,” Swanson says. One of the major changes was allowing caregivers to apply for open work permits while waiting for residency. However, the program is currently backlogged with about 80,000 applicants, and wait times can be up to 38 months.
+<br><br>
+Mercado says policy changes are helpful, but are not enough. One of the greatest challenges that caregivers face is having to leave their own children and families behind in their home country. The wait time for residency means they are separated for several years. “It’s sad and ironic, I took care of other people’s children for 3 years while I was separated from my own,” Mercado says. “Family reunification needs to be made the top priority for policy reform.” 
+<br><br>
+Although the Live-in Caregiver Program needs to be reformed, it appears what’s subsequently needed is federal investment in childcare and old-age programs. Foreign supply of labour is a mere band-aid solution to Canada’s lack of funding for such programs.
+<br><br></div>
+        
+        <div class="box hide" id="infoBox">
+    <div class="boxIcon">
+        <em class="info-icon"></em>
+    </div>
+    <div class="boxText">
+        <div>
+            <p>Click "NEXT" to continue.</p>
+        </div>
+    </div>
+</div>
+
+<div class="box hide" id="playAudioBox">
+    <div class="boxIcon">
+        <em class="play-icon"></em>
+    </div>
+    <div class="boxText">
+        <div>Playing...</div>
+        <div class="progressbar">
+            <span class="progressbar-value"><em style="left: 0%;" class="progressbar-cover"></em>
+            </span>
+        </div>
+    </div>
+</div>
+
+<div id="audioDiv"></div>
+
+
+    </div>
+</div>
+
+<div id="panelRight" style="width: 50%; height: 696px;" class="bluebg">
+    <div class="row1">
+        <div class="instruction" style="margin-bottom: 15px;">Using the drop-down menu ( <span class="caret" style="margin-top:7px; border-top: 4px solid #1A578A"></span> ), choose the <span style="color: #4789AC;">best</span> option according to the information given on the website.</div>
+        
+        <div id="multipleChoices" class="wellBlueBG" style="margin-bottom: 20px;">
+
+    <div class="ddrow">
+        1.  Mercado would probably agree that 
+        <div class="dd">
+            <div class="ddToggle">▾</div>
+            <div class="ddMenu">
+                <ul data-id="b49b2b6a-1620-42ec-9d2f-b653957cabad">
+                
+                    <li data-id="5bf38f88-b255-45c9-a9ab-b433bed71272">caregivers should be paid more.</li>
+                
+                    <li data-id="fedeb79b-4e4c-49ce-aee6-20c7dea281c7">caregivers are lucky to have jobs.</li>
+                
+                    <li data-id="0f7eaa6a-b9a8-43b0-98bd-e18ed5dd4608">caregivers should live with their families.</li>
+                
+                    <li data-id="44fa73d8-3bb4-4202-b426-c8a513c159bb">caregivers should translate their contracts.</li>
+                
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="ddrow">
+        2.  In addition to the current reform plan, Mercado would probably want
+        <div class="dd">
+            <div class="ddToggle">▾</div>
+            <div class="ddMenu">
+                <ul data-id="7a6b232f-46db-4ab5-aa30-f321471c33b6">
+                
+                    <li data-id="9298ab4d-02f8-41f6-945e-01a9a6b87de1">a more efficient process for residency.	</li>
+                
+                    <li data-id="16fcc771-0694-4747-8041-fef372cda2c5">better protection against employer abuse.</li>
+                
+                    <li data-id="f81672d2-f264-4772-86c0-6d53bb021ef6">quicker ways of bringing her family to Canada.</li>
+                
+                    <li data-id="3a88ed58-4516-42b6-b4ad-eb19d8cf8902">an ability to change caregiver jobs. </li>
+                
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="ddrow">
+        3.  The Temporary Foreign Worker Program is popular because
+        <div class="dd">
+            <div class="ddToggle">▾</div>
+            <div class="ddMenu">
+                <ul data-id="37947b70-af39-45b5-97e3-ede549494627">
+                
+                    <li data-id="7af0bfbf-0ef4-454a-a6a8-cb096f01e068">it requires the immigrant to have a job.</li>
+                
+                    <li data-id="48a36163-f691-44c5-9fa9-a3d87c0e9b2e">it allows immigrants to work at a variety of jobs.</li>
+                
+                    <li data-id="fa0d07f4-6f7a-4c42-9223-dfed490500e2">it speeds up citizenship application.</li>
+                
+                    <li data-id="19d05c35-28be-482a-bf02-dd64a64dd949">it provides an opportunity to apply for residency.</li>
+                
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="ddrow">
+        4.  According to Swanson, the Temporary Foreign Worker Program  
+        <div class="dd">
+            <div class="ddToggle">▾</div>
+            <div class="ddMenu">
+                <ul data-id="53fba802-0bb1-4be4-b9f8-8c53bde17d2d">
+                
+                    <li data-id="0a0a8ffa-8606-42bb-8e5e-0713df181345">is undergoing successful reform.</li>
+                
+                    <li data-id="19663413-f4b4-4f61-8cbd-5b07e9de0220">is no longer a government priority.</li>
+                
+                    <li data-id="0341d05a-c508-4bdb-bfb3-5a3040d190b1">requires many more reforms to be effective.</li>
+                
+                    <li data-id="ade1e3a1-4444-4858-a86e-5dede49d3612">will have reduced wait times in the near future. </li>
+                
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="ddrow">
+        5. The author of the article thinks that a bigger need than these policy reforms is 
+        <div class="dd">
+            <div class="ddToggle">▾</div>
+            <div class="ddMenu">
+                <ul data-id="7edc86f5-4383-4257-b60c-b4771edb988e">
+                
+                    <li data-id="5217d02e-5642-4593-bc1a-272f690d0c9b">better budgeting for senior-care programs.</li>
+                
+                    <li data-id="e5ad026f-78c0-4fa8-b5f3-48e6060eaec9">better schooling in childcare programs.</li>
+                
+                    <li data-id="2a2c52e2-9307-419e-a39c-65d2c375da76">improved protection against harassment.</li>
+                
+                    <li data-id="93a009fb-dcc9-4fda-a5c6-6e6e2fe2fbc8">quicker availability of open work permits.</li>
+                
+                </ul>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+        <div class="instruction">The following is a comment by a visitor to the website page. Complete the comment by choosing the <span style="color: #4789AC;">best</span> option to fill in each blank.</div>
+
+        <div id="inlineDropDown" class="wellBlueBG" style="margin-top: 20px; margin-bottom: 20px; line-height: 2em;">After reading today’s article, I was shocked to <br>learn that 6.
+    <div class="dd">
+        <div class="ddToggle">▾</div>
+        <div class="ddMenu">
+            <ul data-id="e5deaaa1-df5d-4ab3-aa74-e370bdb4d493">
+            
+                <li data-id="1e2dd14e-eafe-4587-8e60-03ce47d207a9">abuse still happens to caregivers.</li>
+            
+                <li data-id="4125a7ec-c855-432b-abfb-65c673a620c9">caregivers are still living with families.</li>
+            
+                <li data-id="d8460e42-4f1b-4e41-b3e5-075284726de2">the government isn’t supporting caregivers.</li>
+            
+                <li data-id="4e877400-4d57-4b1d-a933-d096384e0b77">caregivers can’t change jobs.</li>
+            
+            </ul>
+        </div>
+    </div>
+ This has been reported 
+for many years. Why is it still happening? Caregivers should be able to 7.
+    <div class="dd">
+        <div class="ddToggle">▾</div>
+        <div class="ddMenu">
+            <ul data-id="65a681cc-5d4b-4ba8-8693-8008da2cc6f8">
+            
+                <li data-id="1dd54a36-3151-4b86-a7e3-e148c7223952">complain about their workplace conditions,</li>
+            
+                <li data-id="b87f5628-23d4-449a-aa00-05b2128033bf">complain to their employers,</li>
+            
+                <li data-id="235ca659-4769-4acb-afdd-e5b6f4134539">visit with their families and friends,</li>
+            
+                <li data-id="5a9b4efb-fc35-4b33-9087-5c659ac7503d">take vacations to visit family,</li>
+            
+            </ul>
+        </div>
+    </div>
+ just like anyone 
+else. Caregivers should receive fair pay and be protected by 8.
+    <div class="dd">
+        <div class="ddToggle">▾</div>
+        <div class="ddMenu">
+            <ul data-id="01bcef80-03b3-438a-8a8a-ff95507ad5e6">
+            
+                <li data-id="9e893b2c-1434-433b-96a8-6ec11f4cc3ba">their contracts.</li>
+            
+                <li data-id="df2459f7-7616-418a-8c3f-76dccdfedc55">the local police.</li>
+            
+                <li data-id="de94fafa-24d1-41a8-976c-9b01e8a3a3c5">the labour laws.</li>
+            
+                <li data-id="6be938df-d716-4917-9e13-e10acdeabb89">their employers.</li>
+            
+            </ul>
+        </div>
+    </div>
+ How can help lines work? 
+If a caregiver is being harassed, a chat on the helpline 9.
+    <div class="dd">
+        <div class="ddToggle">▾</div>
+        <div class="ddMenu">
+            <ul data-id="2ad9bdba-271e-4da8-8127-f411a37c164e">
+            
+                <li data-id="8dac31df-7054-4428-9ac9-3d7b37de7a39">won’t solve the problem.</li>
+            
+                <li data-id="f693d987-a1b2-446c-9f89-2f8099a3d417">will alert the police.</li>
+            
+                <li data-id="7635c4f7-40d5-4d69-a54e-288a8ea9c27f">won’t change the family.</li>
+            
+                <li data-id="de98e497-7bc4-494f-bae6-74f34eb2544e">will increase the problems.</li>
+            
+            </ul>
+        </div>
+    </div>
+ How are the open work permits 
+going to help? By the time caregivers are allowed to change jobs, perhaps <nobr>10. 
+    <div class="dd">
+        <div class="ddToggle">▾</div>
+        <div class="ddMenu">
+            <ul data-id="24c5366a-0979-4841-89ac-98ffe780e99b">
+            
+                <li data-id="ae029715-9022-4d60-93c9-65146bae5f08">another caregiver position will not be available .</li>
+            
+                <li data-id="0d3b650a-3a67-4f13-802d-2185abb15376">they will want to leave Canada.</li>
+            
+                <li data-id="b394f519-f78c-47bf-8a02-c059e83be7f4">the wait for work permits may be even longer.</li>
+            
+                <li data-id="1d03a8b6-4a7d-4da9-8755-d702aae59869">they can get jobs as nurses.</li>
+            
+            </ul>
+        </div>
+    </div>
+</nobr> 
+Considering everything, I think caregivers must be admired for their hard-work and 
+dedication. 
+</div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        paragon.pt.timer.start(780);
+
+        var items1 = paragon.pt.items.slice(0, 5);
+
+        paragon.pt.dropDown.renderTemplate("/InstructionalProducts/PracticeTest2/OPT2/SaveUserResponse/", "d344735b-258f-43ad-b5a5-5f37e0681c25", $('#dropDownListTemplate').html(), $('#multipleChoices'), items1);
+        paragon.pt.dropDown.renderInline("/InstructionalProducts/PracticeTest2/OPT2/SaveUserResponse/", "d344735b-258f-43ad-b5a5-5f37e0681c25", paragon.pt.items, 5, 9, $("#inlineDropDown"));
+
+        paragon.pt.dropDown.activate("/InstructionalProducts/PracticeTest2/OPT2/SaveUserResponse/", "d344735b-258f-43ad-b5a5-5f37e0681c25");
+
+        $.ajax({
+            type: "POST",
+            url: "/InstructionalProducts/PracticeTest2/OPT2/GetUserResponses",
+            data: { 'sectionId': 'd344735b-258f-43ad-b5a5-5f37e0681c25', 'items': JSON.stringify(paragon.pt.items) },
+                       success: function (data) {
+                           var responses = data.responses;
+                           for (var i = 0; i < responses.length; i++) {
+                               var currentResponse = responses[i];
+                               if (currentResponse != null) {
+                                   var selected = $('ul').find('[data-id=' + currentResponse.Answer + ']');
+                                   if (selected != null) {
+                                       var toggle = $(selected).parent().parent().prev();
+                                       $(toggle).addClass('ddToggle1');
+                                       $(toggle).html(selected.html());
+                                       $(selected).addClass('selected');
+                                   }
+                               }
+                           }
+                       }
+        });
+        //show scrollbar
+        paragon.pt.showScrollBar($('#panelLeft'), $('#panelRight'));
+        paragon.pt.showReadingAnswerKeyBtn("d344735b-258f-43ad-b5a5-5f37e0681c25");
+
+
+
+    });
+
+</script>
+
+</div>
+
+<div id="dlgTest" class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-header">
+        <h4>Test</h4>
+    </div>
+    <div class="modal-body">
+        <p>test</p>
+    </div>
+    <div class="modal-footer">
+        <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+    </div>
+</div>
+
+<div id="dlgUnansweredWarning" class="modal hide fade" tabindex="-1" role="dialog">
+    <div class="modal-body">
+        <p>No answer(s) selected. On the official test, if you go to the next page, you will no longer be able to answer the question(s) on this page.</p>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" data-dismiss="modal" style="color: white;">Keep working on this page</button>
+        <button class="btn" data-dismiss="modal" onclick="paragon.pt.skipToNext()">Skip and go to the next page</button>
+    </div>
+</div>
+
+</div>
+    <div class="container hide" id="footer" style="display: block;">
+        <div class="row">
+    <div id="leftBtn" class="span7" align="left"><a href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest2/OPT2/View/760a0a7f-7c18-4d98-9084-0836ed6a1f20" id="backToResultbtn" class="btn">Answer Key</a></div>
+    <div class="span5">
+        <a href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest2/OPT2/View/9e573821-9955-42d9-96af-84834e0584d9#" id="btnBack" class="btn btn1 hide btn-danger" style="display: inline;">BACK</a>
+        
+    </div>
+</div>
+
+    </div>
+    <div class="container" style="text-align: center; font-size: 0.9em; color: #53565A; padding-top: 20px;">
+        <p>Copyright 2025 - Paragon Testing Enterprises   |    <a href="https://www.celpip.ca/" target="_blank">www.celpip.ca</a>    |    <a href="https://www.celpip.ca/contact/" target="_blank">Contact Us</a></p>
+    </div>
+
+    <div id="block" class="modal-backdrop hide"></div>
+    <div id="unsupported" class="modal hide" tabindex="-1">
+        <div class="modal-body">
+            <h3>Unsupported screen resolution</h3>
+            <p>This product requires a minimum screen resolution of 1024 x 768.</p>
+        </div>
+    </div>
+
+
+    <script>
+        $(function () {
+            paragon.verifyDisplaySize();
+
+            $(window).resize(function () {
+                paragon.verifyDisplaySize();
+            });
+        });
+    </script>
+
+
+    
+    <script>
+        paragon.pt.showAlert = function (msg) {
+            $('#dlgTest .modal-body p').html(msg);
+            $('#dlgTest').modal();
+        }
+
+        paragon.pt.skipToNext = function () {
+            paragon.pt.nextItem("/InstructionalProducts/PracticeTest2/OPT2/SaveCanvasData",'', "9e573821-9955-42d9-96af-84834e0584d9", "d344735b-258f-43ad-b5a5-5f37e0681c25", 2);
+            paragon.pt.goNext();
+        }
+
+        $(function () {
+            if (paragon.footerVisible == true) {
+                paragon.showFooter();
+            }
+
+            if (paragon.pt.backUrl.length > 0) {
+                $("#btnBack").click(function () {
+                    paragon.pt.goBack();
+                });
+                paragon.pt.showBackButton();
+            }
+
+
+            $("#btnNext").click(function () {
+                var url = "";
+                if (32  == 24 || 32  == 25) {
+                    url = "/InstructionalProducts/PracticeTest2/OPT2/GetUserResponse/";
+                }
+                else {
+                    url = "/InstructionalProducts/PracticeTest2/OPT2/GetUserResponses/";
+                }
+                var unanswered = paragon.pt.countUnansweredQuestionsFromDb(32, "d344735b-258f-43ad-b5a5-5f37e0681c25", url);
+                if (unanswered > 0) {
+                    $('#dlgUnansweredWarning').modal();
+                }
+                else {
+                    paragon.pt.skipToNext();
+                }
+            });
+
+            if (paragon.pt.nextUrl.length > 0) {
+                paragon.pt.showNextButton();
+            }
+
+
+        });
+
+        $(".links-main").click(function () {
+            var href = "/InstructionalProducts/PracticeTest2/OPT2/";
+            window.location = href;
+
+        });
+
+    </script>
+
+
+
+</body><grammarly-desktop-integration data-grammarly-shadow-root="true"><template shadowrootmode="open"><style>
+      div.grammarly-desktop-integration {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+        -moz-user-select: none;
+        -webkit-user-select: none;
+        -ms-user-select:none;
+        user-select:none;
+      }
+
+      div.grammarly-desktop-integration:before {
+        content: attr(data-content);
+      }
+    </style><div aria-label="grammarly-integration" role="group" tabindex="-1" class="grammarly-desktop-integration" data-content="{&quot;mode&quot;:&quot;full&quot;,&quot;isActive&quot;:true,&quot;isUserDisabled&quot;:false}"></div></template></grammarly-desktop-integration></html>

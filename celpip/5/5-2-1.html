@@ -1,22 +1,28 @@
 <!DOCTYPE html>
 <!-- saved from url=(0130)https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest5/OPT5/View/8b544c68-cb39-4ece-a645-d28de9d1801b -->
-<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><style>
-    a {
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <style>
+      a {
         outline: 0;
-    }
-</style>
+      }
+    </style>
 
-
-
-    
     <title>Practice Test</title>
-    <meta name="description">
-    <link href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/favicon.ico" rel="shortcut icon" type="image/x-icon">
-    <meta name="viewport" content="width=device-width">
-    <link href="./5-2-1_files/bootstrap.css" rel="stylesheet">
-<link href="./5-2-1_files/Site.css" rel="stylesheet">
+    <meta name="description" />
+    <link
+      href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/favicon.ico"
+      rel="shortcut icon"
+      type="image/x-icon"
+    />
+    <meta name="viewport" content="width=device-width" />
+    <link href="./5-2-1_files/bootstrap.css" rel="stylesheet" />
+    <link href="./5-2-1_files/Site.css" rel="stylesheet" />
 
-    <script src="./5-2-1_files/399283786078546" async=""></script><script async="" src="./5-2-1_files/fbevents.js.下載"></script><script src="./5-2-1_files/jquery-1.9.1.min.js.下載"></script>
+    <script src="./5-2-1_files/399283786078546" async=""></script>
+    <script async="" src="./5-2-1_files/fbevents.js.下載"></script>
+    <script src="./5-2-1_files/jquery-1.9.1.min.js.下載"></script>
 
     <script src="./5-2-1_files/jquery.unobtrusive-ajax.min.js.下載"></script>
 
@@ -29,177 +35,208 @@
     <script src="./5-2-1_files/facebook-pixel.js.下載"></script>
 
     <script>
-    paragon.pt = paragon.pt || {};
-    paragon.pt.backUrl = "";
-    paragon.pt.nextUrl = "";
-    paragon.pt.speakingPrepTimeLeft = 0;
-    paragon.pt.speakingRecordingTimeLeft = 0;
-    paragon.pt.itemIndex = 0;
+      paragon.pt = paragon.pt || {};
+      paragon.pt.backUrl = "";
+      paragon.pt.nextUrl = "";
+      paragon.pt.speakingPrepTimeLeft = 0;
+      paragon.pt.speakingRecordingTimeLeft = 0;
+      paragon.pt.itemIndex = 0;
 
-    paragon.pt.showAlert = function (msg) {
+      paragon.pt.showAlert = function (msg) {
         alert(msg);
-    }
+      };
 
-    paragon.pt.showBackButton = function () {
+      paragon.pt.showBackButton = function () {
         $("#btnBack").show();
-    }
+      };
 
-    paragon.pt.showNextButton = function () {
+      paragon.pt.showNextButton = function () {
         $("#btnNext").show();
-    }
+      };
 
-    paragon.pt.hideBackButton = function () {
+      paragon.pt.hideBackButton = function () {
         $("#btnBack").hide();
-    }
+      };
 
-    paragon.pt.hideNextButton = function () {
+      paragon.pt.hideNextButton = function () {
         $("#btnNext").hide();
-    }
+      };
 
-    paragon.pt.goNext = function () {
+      paragon.pt.goNext = function () {
         window.location = paragon.pt.nextUrl;
-    }
+      };
 
-    paragon.pt.goBack = function () {
+      paragon.pt.goBack = function () {
         window.location = paragon.pt.backUrl;
-    }
+      };
 
-    //Timer For Listening, Reading and Writing
-    paragon.pt.timer = paragon.pt.timer || {};
-    paragon.pt.timer.totalTime = 0;
-    paragon.pt.timer.timeLeft = 0;
-    paragon.pt.timer.interval = null;
-    paragon.pt.timer.start = function (timeLeft) {
+      //Timer For Listening, Reading and Writing
+      paragon.pt.timer = paragon.pt.timer || {};
+      paragon.pt.timer.totalTime = 0;
+      paragon.pt.timer.timeLeft = 0;
+      paragon.pt.timer.interval = null;
+      paragon.pt.timer.start = function (timeLeft) {
         paragon.pt.timer.timeLeft = timeLeft;
-        paragon.pt.timer.totalTime = timeLeft
+        paragon.pt.timer.totalTime = timeLeft;
         var minutes = Math.floor(timeLeft / 60);
         var seconds = timeLeft - minutes * 60;
 
         if (minutes < 1) {
-            $("#timer strong").html(seconds + " seconds");
-            $("#timer strong").attr("style", "color:red");
-        }
-        else if (minutes == 1) {
-            $("#timer strong").html(minutes + " minute");
-        }
-        else {
-            $("#timer strong").html(minutes + " minutes");
+          $("#timer strong").html(seconds + " seconds");
+          $("#timer strong").attr("style", "color:red");
+        } else if (minutes == 1) {
+          $("#timer strong").html(minutes + " minute");
+        } else {
+          $("#timer strong").html(minutes + " minutes");
         }
 
         $("#timer").show();
 
         if (paragon.pt.timer.interval)
-            window.clearInterval(paragon.pt.timer.interval);
+          window.clearInterval(paragon.pt.timer.interval);
 
-        paragon.pt.timer.interval = window.setInterval(function () { paragon.pt.timer.deductTime() }, 1000);
+        paragon.pt.timer.interval = window.setInterval(function () {
+          paragon.pt.timer.deductTime();
+        }, 1000);
 
         paragon.showFooter();
-    }
+      };
 
-    paragon.pt.timer.deductTime = function () {
+      paragon.pt.timer.deductTime = function () {
         if (paragon.pt.timer.timeLeft > 0) {
-            paragon.pt.timer.timeLeft -= 1;
+          paragon.pt.timer.timeLeft -= 1;
 
-            var minutes = Math.floor(paragon.pt.timer.timeLeft / 60);
-            var seconds = paragon.pt.timer.timeLeft - minutes * 60;
+          var minutes = Math.floor(paragon.pt.timer.timeLeft / 60);
+          var seconds = paragon.pt.timer.timeLeft - minutes * 60;
 
-            if (minutes < 1) {
-                $("#timer strong").html(seconds + " seconds");
-                $("#timer strong").attr("style", "color:red");
-            }
-            else if (minutes == 1) {
-                $("#timer strong").html(minutes + " minute");
-            }
-            else {
-                $("#timer strong").html(minutes + " minutes");
-            }
+          if (minutes < 1) {
+            $("#timer strong").html(seconds + " seconds");
+            $("#timer strong").attr("style", "color:red");
+          } else if (minutes == 1) {
+            $("#timer strong").html(minutes + " minute");
+          } else {
+            $("#timer strong").html(minutes + " minutes");
+          }
+        } else {
+          window.clearInterval(paragon.pt.timer.interval);
+          $("#timer strong").html("None");
         }
-        else {
-            window.clearInterval(paragon.pt.timer.interval);
-            $("#timer strong").html("None");
-        }
-    }
+      };
 
-    //Timer For Speaking, work in progress
-    paragon.pt.showTimerSpeaking = function (prepTime, recordingTime) {
+      //Timer For Speaking, work in progress
+      paragon.pt.showTimerSpeaking = function (prepTime, recordingTime) {
         paragon.pt.speakingPrepTimeLeft = prepTime;
         paragon.pt.speakingRecordingTimeLeft = recordingTime;
         $("#timerSpeaking strong:first-child").html(prepTime + " seconds");
         $("#timerSpeaking strong:last-child").html(recordingTime + " seconds");
         $("#timerSpeaking").show();
         paragon.showFooter();
-    }
+      };
 
-    paragon.pt.userResponse = paragon.pt.userResponse || {};
+      paragon.pt.userResponse = paragon.pt.userResponse || {};
 
-    paragon.pt.uploadMultipleChoicesValue = function (url, sectionId, itemId, choiceId) {
+      paragon.pt.uploadMultipleChoicesValue = function (
+        url,
+        sectionId,
+        itemId,
+        choiceId
+      ) {
         $.ajax({
-            type: "POST",
-            url: url,
-            data: { sectionId: sectionId, itemId: itemId, choiceId: choiceId },
-            dataType: "json",
-            cache: false,
-            success: function (json) {
-                console.log(json);
-                console.log("ItemId: " + itemId + ", " + "ChoiceId: " + choiceId);
-            }
+          type: "POST",
+          url: url,
+          data: { sectionId: sectionId, itemId: itemId, choiceId: choiceId },
+          dataType: "json",
+          cache: false,
+          success: function (json) {
+            console.log(json);
+            console.log("ItemId: " + itemId + ", " + "ChoiceId: " + choiceId);
+          },
         });
-    }
+      };
 
-    paragon.pt.activateMultipleChoices = function (url, sectionId) {
+      paragon.pt.activateMultipleChoices = function (url, sectionId) {
         $(document).delegate(".multipleChoices li", "click", function () {
-            var ul = $(this).parent();
-            ul.find("li").removeClass("selected");
-            $(this).addClass("selected");
+          var ul = $(this).parent();
+          ul.find("li").removeClass("selected");
+          $(this).addClass("selected");
 
-            paragon.pt.uploadMultipleChoicesValue(url, sectionId, ul.data("id"), $(this).data("id"));
+          paragon.pt.uploadMultipleChoicesValue(
+            url,
+            sectionId,
+            ul.data("id"),
+            $(this).data("id")
+          );
         });
-    }
+      };
 
-    paragon.pt.renderMultipleChoices = function (url, sectionId, item, renderItemText, hasImage, renderChoiceText) {
+      paragon.pt.renderMultipleChoices = function (
+        url,
+        sectionId,
+        item,
+        renderItemText,
+        hasImage,
+        renderChoiceText
+      ) {
         var template;
         if (renderItemText == true) {
-            if (hasImage == true) {
-                template = Handlebars.compile($("#multipleChoicesTemplateWithItemTextAndImage").html());
+          if (hasImage == true) {
+            template = Handlebars.compile(
+              $("#multipleChoicesTemplateWithItemTextAndImage").html()
+            );
+          } else {
+            template = Handlebars.compile(
+              $("#multipleChoicesTemplateWithItemText").html()
+            );
+          }
+        } else {
+          if (hasImage == true) {
+            if (renderChoiceText == true) {
+              template = Handlebars.compile(
+                $("#multipleChoicesTemplateWithImage").html()
+              );
+            } else {
+              template = Handlebars.compile(
+                $("#multipleChoicesTemplateWithImageNoText").html()
+              );
             }
-            else {
-                template = Handlebars.compile($("#multipleChoicesTemplateWithItemText").html());
-            }
-        }
-        else {
-            if (hasImage == true) {
-
-                if (renderChoiceText == true) {
-                    template = Handlebars.compile($("#multipleChoicesTemplateWithImage").html());
-                }
-                else {
-                    template = Handlebars.compile($("#multipleChoicesTemplateWithImageNoText").html());
-                }
-            }
-            else {
-                template = Handlebars.compile($("#multipleChoicesTemplate").html());
-            }
+          } else {
+            template = Handlebars.compile($("#multipleChoicesTemplate").html());
+          }
         }
 
         $("#multipleChoices").html(template(item));
 
         paragon.pt.activateMultipleChoices(url, sectionId);
-    }
+      };
 
-    //Drop down list
-    paragon.pt.dropDown = paragon.pt.dropDown || {};
-    paragon.pt.dropDown.activeMenu = null;
-    paragon.pt.dropDown.renderTemplate = function (url, sectionId, templateToRender, elementToRender, items) {
+      //Drop down list
+      paragon.pt.dropDown = paragon.pt.dropDown || {};
+      paragon.pt.dropDown.activeMenu = null;
+      paragon.pt.dropDown.renderTemplate = function (
+        url,
+        sectionId,
+        templateToRender,
+        elementToRender,
+        items
+      ) {
         var template = Handlebars.compile(templateToRender);
         $(elementToRender).html(template(items));
-    }
+      };
 
-    paragon.pt.dropDown.renderInline = function (url, sectionId, items, startIndex, endIndex, elementToRender) {
-
-        var template = Handlebars.compile($("#dropDownListInlineTemplate").html());
+      paragon.pt.dropDown.renderInline = function (
+        url,
+        sectionId,
+        items,
+        startIndex,
+        endIndex,
+        elementToRender
+      ) {
+        var template = Handlebars.compile(
+          $("#dropDownListInlineTemplate").html()
+        );
         var text = elementToRender[0].innerHTML;
         for (var i = startIndex; i <= endIndex; i++) {
-            text = text.replace("{" + items[i].Num + "}", template(items[i]));
+          text = text.replace("{" + items[i].Num + "}", template(items[i]));
         }
         //Handlebars.registerHelper('renderInline', function (src, items, startIndex, endIndex, options) {
         //    var template = Handlebars.compile($("#dropDownListInlineTemplate").html());
@@ -209,586 +246,636 @@
         //    return src;
         //});
         $(elementToRender).html(text);
-    }
+      };
 
-    paragon.pt.dropDown.activate = function (url, sectionId) {
-
+      paragon.pt.dropDown.activate = function (url, sectionId) {
         $(document.body).click(function () {
-            $(".dd").each(function (i) {
-                if (i != paragon.pt.dropDown.activeMenu) {
-                    $(this).find(".ddMenu").hide();
-                    $(this).removeClass('active');
-                }
-            });
+          $(".dd").each(function (i) {
+            if (i != paragon.pt.dropDown.activeMenu) {
+              $(this).find(".ddMenu").hide();
+              $(this).removeClass("active");
+            }
+          });
         });
 
-        $(".dd").mouseover(function () {
+        $(".dd")
+          .mouseover(function () {
             paragon.pt.dropDown.activeMenu = $(".dd").index(this);
-        }).mouseout(function () {
+          })
+          .mouseout(function () {
             paragon.pt.dropDown.activeMenu = null;
-        });
+          });
 
         $(".ddToggle").click(function () {
-            var parent = $(this).parent();
-            parent.toggleClass("active");
-            var ddMenu = parent.find(".ddMenu");
-            ddMenu.animate({ height: 'toggle', opacity: 'toggle' }, 100);
-            var left = $(this).position().left;
-            ddMenu.css("left", Math.round(left) + "px");
+          var parent = $(this).parent();
+          parent.toggleClass("active");
+          var ddMenu = parent.find(".ddMenu");
+          ddMenu.animate({ height: "toggle", opacity: "toggle" }, 100);
+          var left = $(this).position().left;
+          ddMenu.css("left", Math.round(left) + "px");
 
-            //place the dropDown menu 20px below the box
-            var top = parent.position().top;
-            ddMenu.css("top", Math.round(top) + 20 + "px");
-
+          //place the dropDown menu 20px below the box
+          var top = parent.position().top;
+          ddMenu.css("top", Math.round(top) + 20 + "px");
         });
 
-        $('.dd li').click(function () {
-            $(this).parent().find("li").removeClass("selected");
-            $(this).addClass("selected");
-            var parent = $(this).parent().parent().parent();
-            var ddToggle = parent.find(".ddToggle");
-            ddToggle.html($(this).html());
-            ddToggle.addClass("ddToggle1");
-            parent.find(".ddMenu").animate({ height: 'toggle', opacity: 'toggle' }, 400);
-            parent.removeClass('active');
-            var ul = $(this).parent();
-            paragon.pt.uploadMultipleChoicesValue(url, sectionId, ul.data("id"), $(this).data("id"));
+        $(".dd li").click(function () {
+          $(this).parent().find("li").removeClass("selected");
+          $(this).addClass("selected");
+          var parent = $(this).parent().parent().parent();
+          var ddToggle = parent.find(".ddToggle");
+          ddToggle.html($(this).html());
+          ddToggle.addClass("ddToggle1");
+          parent
+            .find(".ddMenu")
+            .animate({ height: "toggle", opacity: "toggle" }, 400);
+          parent.removeClass("active");
+          var ul = $(this).parent();
+          paragon.pt.uploadMultipleChoicesValue(
+            url,
+            sectionId,
+            ul.data("id"),
+            $(this).data("id")
+          );
         });
-    }
+      };
 
-    paragon.pt.showInfoBox = function (message) {
+      paragon.pt.showInfoBox = function (message) {
         var infoBox = $("#infoBox");
-        if (message)
-            $("#infoBox .boxText p").html(message);
+        if (message) $("#infoBox .boxText p").html(message);
         infoBox.show();
-    }
+      };
 
-    paragon.pt.hideInfoBox = function () {
+      paragon.pt.hideInfoBox = function () {
         $("#infoBox").hide();
-    }
+      };
 
-    //Audio Playback for the Listening Component
-    paragon.pt.playAudio = paragon.pt.playAudio || {};
-    paragon.pt.playAudio.player = null;
-    paragon.pt.playAudio.totalTime = 0;
-    paragon.pt.playAudio.timeLeft = 0;
-    paragon.pt.playAudio.interval = null;
-    paragon.pt.playAudio.onDone = null;
+      //Audio Playback for the Listening Component
+      paragon.pt.playAudio = paragon.pt.playAudio || {};
+      paragon.pt.playAudio.player = null;
+      paragon.pt.playAudio.totalTime = 0;
+      paragon.pt.playAudio.timeLeft = 0;
+      paragon.pt.playAudio.interval = null;
+      paragon.pt.playAudio.onDone = null;
 
-    paragon.pt.playAudio.start = function (playAudioTime) {
+      paragon.pt.playAudio.start = function (playAudioTime) {
         paragon.pt.hideInfoBox();
         paragon.pt.playAudio.totalTime = playAudioTime;
         paragon.pt.playAudio.timeLeft = playAudioTime;
         if (paragon.pt.playAudio.interval)
-            window.clearInterval(paragon.pt.playAudio.interval);
+          window.clearInterval(paragon.pt.playAudio.interval);
 
         $("#playAudioBox").fadeIn(1000);
-    }
+      };
 
+      //recording functions
 
-    //recording functions
+      paragon.pt.recording = paragon.pt.recording || {};
+      paragon.pt.recording.totalTime = 0;
+      paragon.pt.recording.timeLeft = 0;
+      paragon.pt.recording.interval = null;
+      paragon.pt.recording.onDone = null;
 
-    paragon.pt.recording = paragon.pt.recording || {};
-    paragon.pt.recording.totalTime = 0;
-    paragon.pt.recording.timeLeft = 0;
-    paragon.pt.recording.interval = null;
-    paragon.pt.recording.onDone = null;
-
-    paragon.pt.recording.updateProgressBar = function () {
-        var percentage = 100 - (paragon.pt.recording.timeLeft / paragon.pt.recording.totalTime) * 100;
+      paragon.pt.recording.updateProgressBar = function () {
+        var percentage =
+          100 -
+          (paragon.pt.recording.timeLeft / paragon.pt.recording.totalTime) *
+            100;
         $("#startRecTime .progressbar-cover").css("left", percentage + "%");
-    }
+      };
 
-    paragon.pt.recording.deductTime = function () {
+      paragon.pt.recording.deductTime = function () {
         if (paragon.pt.recording.timeLeft > 0) {
-            paragon.pt.recording.timeLeft -= 1;
-            paragon.pt.recording.updateProgressBar();
+          paragon.pt.recording.timeLeft -= 1;
+          paragon.pt.recording.updateProgressBar();
+        } else {
+          window.clearInterval(paragon.pt.recording.interval);
+          $("#startRecTime").hide();
+          paragon.pt.showNextButton();
+          if (paragon.pt.recording.onDone) {
+            paragon.pt.recording.onDone();
+          }
         }
-        else {
-            window.clearInterval(paragon.pt.recording.interval);
-            $("#startRecTime").hide();
-            paragon.pt.showNextButton();
-            if (paragon.pt.recording.onDone) {
-                paragon.pt.recording.onDone();
-            }
-        }
-    }
+      };
 
-    paragon.pt.recording.start = function (playAudioTime) {
+      paragon.pt.recording.start = function (playAudioTime) {
         paragon.pt.recording.totalTime = playAudioTime;
         paragon.pt.recording.timeLeft = playAudioTime;
         if (paragon.pt.recording.interval)
-            window.clearInterval(paragon.pt.recording.interval);
+          window.clearInterval(paragon.pt.recording.interval);
 
-        paragon.pt.recording.interval = window.setInterval(function () { paragon.pt.recording.deductTime() }, 1000);
+        paragon.pt.recording.interval = window.setInterval(function () {
+          paragon.pt.recording.deductTime();
+        }, 1000);
         paragon.pt.recording.updateProgressBar();
         $("#startRecTime").fadeIn(1000);
-    }
+      };
 
-    //end recording
+      //end recording
 
-    //preperation functions
+      //preperation functions
 
-    paragon.pt.preparation = paragon.pt.preparation || {};
-    paragon.pt.preparation.totalTime = 0;
-    paragon.pt.preparation.timeLeft = 0;
-    paragon.pt.preparation.interval = null;
-    paragon.pt.preparation.onDone = null;
-    paragon.pt.preparation.startRecording = null;
+      paragon.pt.preparation = paragon.pt.preparation || {};
+      paragon.pt.preparation.totalTime = 0;
+      paragon.pt.preparation.timeLeft = 0;
+      paragon.pt.preparation.interval = null;
+      paragon.pt.preparation.onDone = null;
+      paragon.pt.preparation.startRecording = null;
 
-    paragon.pt.preparation.updateProgressBar = function () {
-        $("#startPrepTime #progressTimer").html(paragon.pt.preparation.timeLeft);
-    }
+      paragon.pt.preparation.updateProgressBar = function () {
+        $("#startPrepTime #progressTimer").html(
+          paragon.pt.preparation.timeLeft
+        );
+      };
 
-    paragon.pt.preparation.deductTime = function () {
+      paragon.pt.preparation.deductTime = function () {
         if (paragon.pt.preparation.timeLeft > 0) {
-            paragon.pt.preparation.timeLeft -= 1;
-            paragon.pt.preparation.updateProgressBar();
+          paragon.pt.preparation.timeLeft -= 1;
+          paragon.pt.preparation.updateProgressBar();
+        } else {
+          window.clearInterval(paragon.pt.preparation.interval);
+          $("#startPrepTime").hide();
+          paragon.pt.showNextButton();
+          if (paragon.pt.preparation.onDone) {
+            paragon.pt.preparation.onDone();
+          }
         }
-        else {
-            window.clearInterval(paragon.pt.preparation.interval);
-            $("#startPrepTime").hide();
-            paragon.pt.showNextButton();
-            if (paragon.pt.preparation.onDone) {
-                paragon.pt.preparation.onDone();
-            }
-        }
-    }
+      };
 
-    paragon.pt.preparation.start = function (playAudioTime) {
+      paragon.pt.preparation.start = function (playAudioTime) {
         paragon.pt.preparation.totalTime = playAudioTime;
         paragon.pt.preparation.timeLeft = playAudioTime;
         if (paragon.pt.preparation.interval)
-            window.clearInterval(paragon.pt.preparation.interval);
+          window.clearInterval(paragon.pt.preparation.interval);
 
-        paragon.pt.preparation.interval = window.setInterval(function () { paragon.pt.preparation.deductTime() }, 1000);
+        paragon.pt.preparation.interval = window.setInterval(function () {
+          paragon.pt.preparation.deductTime();
+        }, 1000);
         paragon.pt.preparation.updateProgressBar();
         $("#startPrepTime").fadeIn(1000);
-    }
+      };
 
-    //end prep functinos
+      //end prep functinos
 
-    paragon.pt.createAudioPlayer = function (contentUrl, audiofile) {
+      paragon.pt.createAudioPlayer = function (contentUrl, audiofile) {
         //create player if not exists
         if (!paragon.pt.playAudio.player) {
-            paragon.pt.playAudio.player = document.createElement('audio');
+          paragon.pt.playAudio.player = document.createElement("audio");
 
-            paragon.pt.playAudio.player.controls = true;
-            paragon.pt.playAudio.player.controlsList = "nodownload";
-            paragon.pt.playAudio.player.oggSrc = document.createElement('source');
-            paragon.pt.playAudio.player.oggSrc.setAttribute('type', 'audio/ogg');
-            paragon.pt.playAudio.player.appendChild(paragon.pt.playAudio.player.oggSrc);
+          paragon.pt.playAudio.player.controls = true;
+          paragon.pt.playAudio.player.controlsList = "nodownload";
+          paragon.pt.playAudio.player.oggSrc = document.createElement("source");
+          paragon.pt.playAudio.player.oggSrc.setAttribute("type", "audio/ogg");
+          paragon.pt.playAudio.player.appendChild(
+            paragon.pt.playAudio.player.oggSrc
+          );
 
-            paragon.pt.playAudio.player.mp3Src = document.createElement('source');
-            paragon.pt.playAudio.player.mp3Src.setAttribute('type', 'audio/mp3');
-            paragon.pt.playAudio.player.appendChild(paragon.pt.playAudio.player.mp3Src);
+          paragon.pt.playAudio.player.mp3Src = document.createElement("source");
+          paragon.pt.playAudio.player.mp3Src.setAttribute("type", "audio/mp3");
+          paragon.pt.playAudio.player.appendChild(
+            paragon.pt.playAudio.player.mp3Src
+          );
 
-            paragon.pt.playAudio.player.ontimeupdate = function () {
-                var duration = paragon.pt.playAudio.player.duration;
-                var currentTime = paragon.pt.playAudio.player.currentTime;
-                if (duration) {
-                    var progress = (currentTime / duration) * 100;
-                    $("#playAudioBox .progressbar-cover").css("left", progress + "%");
-                    if (progress >= 100) {
-                        $("#playAudioBox").hide();
-                        paragon.pt.showInfoBox();
-                        paragon.pt.showNextButton();
-                        if (paragon.pt.playAudio.onDone) {
-                            paragon.pt.playAudio.onDone();
-                        }
-                    }
+          paragon.pt.playAudio.player.ontimeupdate = function () {
+            var duration = paragon.pt.playAudio.player.duration;
+            var currentTime = paragon.pt.playAudio.player.currentTime;
+            if (duration) {
+              var progress = (currentTime / duration) * 100;
+              $("#playAudioBox .progressbar-cover").css("left", progress + "%");
+              if (progress >= 100) {
+                $("#playAudioBox").hide();
+                paragon.pt.showInfoBox();
+                paragon.pt.showNextButton();
+                if (paragon.pt.playAudio.onDone) {
+                  paragon.pt.playAudio.onDone();
                 }
-            };
+              }
+            }
+          };
 
-            paragon.pt.playAudio.player.onplay = function () {
-                paragon.pt.playAudio.start(paragon.pt.playAudio.player.duration);
-            };
+          paragon.pt.playAudio.player.onplay = function () {
+            paragon.pt.playAudio.start(paragon.pt.playAudio.player.duration);
+          };
         }
 
-        paragon.pt.playAudio.player.addEventListener("loadedmetadata", function (e) {
+        paragon.pt.playAudio.player.addEventListener(
+          "loadedmetadata",
+          function (e) {
             if (e.target) {
-                paragon.pt.playAudio.player.play();
-                paragon.pt.playAudio.start(e.target.duration);
+              paragon.pt.playAudio.player.play();
+              paragon.pt.playAudio.start(e.target.duration);
             }
-        });
+          }
+        );
 
-        paragon.pt.playAudio.player.oggSrc.setAttribute('src', contentUrl + audiofile + ".ogg");
-        paragon.pt.playAudio.player.mp3Src.setAttribute('src', contentUrl + audiofile + ".mp3");
+        paragon.pt.playAudio.player.oggSrc.setAttribute(
+          "src",
+          contentUrl + audiofile + ".ogg"
+        );
+        paragon.pt.playAudio.player.mp3Src.setAttribute(
+          "src",
+          contentUrl + audiofile + ".mp3"
+        );
 
         paragon.pt.playAudio.player.load();
         return paragon.pt.playAudio.player;
-    }
+      };
 
+      paragon.pt.moveScrollBar = function (div, scrollSize) {
+        div.animate(
+          {
+            scrollTop: scrollSize,
+          },
+          1200,
+          function () {
+            div.animate({ scrollTop: 0 }, 300, function () {});
+          }
+        );
+      };
 
-    paragon.pt.moveScrollBar = function (div, scrollSize) {
-        div.animate({
-            scrollTop: scrollSize
-        }, 1200, function () {
-            div.animate({ scrollTop: 0 }, 300, function () {
-            });
-        });
-    }
+      paragon.pt.showScrollBar = function (leftDiv, rightDiv) {
+        if (
+          rightDiv.length &&
+          rightDiv.is(":visible") &&
+          leftDiv.length &&
+          leftDiv.is(":visible")
+        ) {
+          $.blockUI({
+            message: "Scroll up and down to see everything.",
+            css: {
+              width: "400px",
+              border: "2px solid #000",
+              top: "35%",
+              padding: "50px",
+              color: "#1A578A",
+              fontWeight: "bold",
+            },
+            showOverlay: false,
+          });
 
-    paragon.pt.showScrollBar = function (leftDiv, rightDiv) {
+          var rightScrollSize = rightDiv[0].scrollHeight;
+          var leftScrollSize = leftDiv[0].scrollHeight;
+          window.setTimeout(function () {
+            paragon.pt.moveScrollBar(rightDiv, rightScrollSize);
+            paragon.pt.moveScrollBar(leftDiv, leftScrollSize);
 
-        if (rightDiv.length && rightDiv.is(":visible") && leftDiv.length && leftDiv.is(":visible")) {
-            $.blockUI({
-                message: "Scroll up and down to see everything.",
-                css: { width: '400px', border: '2px solid #000', top: '35%', padding: '50px', color: '#1A578A', fontWeight: 'bold' },
-                showOverlay: false
-            });
-
-            var rightScrollSize = rightDiv[0].scrollHeight;
-            var leftScrollSize = leftDiv[0].scrollHeight;
             window.setTimeout(function () {
-                paragon.pt.moveScrollBar(rightDiv, rightScrollSize);
-                paragon.pt.moveScrollBar(leftDiv, leftScrollSize);
-
-                window.setTimeout(function () { $.unblockUI(); }, 2300);
-            }, 1400);
-
-
+              $.unblockUI();
+            }, 2300);
+          }, 1400);
         }
+      };
 
-    }
-
-    paragon.pt.wordCount = function () {
+      paragon.pt.wordCount = function () {
         $(".writtenTextAreaBox").keyup(countWords);
 
         function countWords() {
-            var text = " ";
-            if (this.value != "") {
-                var wordCount = this.value.match(/\S+/g).length;
-                if (wordCount == 1) { 
-                    text = wordCount + " word"; 
-                } else { 
-                    text = wordCount + " words";
-                }
+          var text = " ";
+          if (this.value != "") {
+            var wordCount = this.value.match(/\S+/g).length;
+            if (wordCount == 1) {
+              text = wordCount + " word";
+            } else {
+              text = wordCount + " words";
             }
-            document.getElementById("wordCount").innerHTML = text;
+          }
+          document.getElementById("wordCount").innerHTML = text;
         }
-    }
+      };
 
-    paragon.pt.calcSectionNumQuestion = function (sectionID) {
+      paragon.pt.calcSectionNumQuestion = function (sectionID) {
         var pt1lpSection = sectionID;
-        $.post("/InstructionalProducts/PracticeTest5/OPT5/GetNumberOfQuestions", { sectionId: pt1lpSection }, function (data) { console.log(data); document.getElementById("numQuestion").innerHTML = data.totalQuestions-1 });
-    }
+        $.post(
+          "/InstructionalProducts/PracticeTest5/OPT5/GetNumberOfQuestions",
+          { sectionId: pt1lpSection },
+          function (data) {
+            console.log(data);
+            document.getElementById("numQuestion").innerHTML =
+              data.totalQuestions - 1;
+          }
+        );
+      };
 
-    paragon.pt.calcSectionNumQuestionLS = function (sectionID) {
+      paragon.pt.calcSectionNumQuestionLS = function (sectionID) {
         var pt1lpSection = sectionID;
-        $.post("/InstructionalProducts/PracticeTest5/OPT5LS/GetNumberOfQuestions", { sectionId: pt1lpSection }, function (data) { console.log(data); document.getElementById("numQuestion").innerHTML = data.totalQuestions-1 });
-    }
+        $.post(
+          "/InstructionalProducts/PracticeTest5/OPT5LS/GetNumberOfQuestions",
+          { sectionId: pt1lpSection },
+          function (data) {
+            console.log(data);
+            document.getElementById("numQuestion").innerHTML =
+              data.totalQuestions - 1;
+          }
+        );
+      };
 
-    paragon.pt.calcListScoreGeneral = function (sectionID) {
-
-        $.post("/InstructionalProducts/PracticeTest5/OPT5/GetScoreOnSection", { sectionId: sectionID }, function (data) {
-            console.log(data); document.getElementById("yourScore").innerHTML = data.userScore;
+      paragon.pt.calcListScoreGeneral = function (sectionID) {
+        $.post(
+          "/InstructionalProducts/PracticeTest5/OPT5/GetScoreOnSection",
+          { sectionId: sectionID },
+          function (data) {
+            console.log(data);
+            document.getElementById("yourScore").innerHTML = data.userScore;
 
             var userLScore = data.userScore;
 
             paragon.pt.findListScore(userLScore);
+          }
+        );
+      };
 
-        });
-    }
-
-    paragon.pt.calcListScoreLS = function (sectionID) {
-
-        $.post("/InstructionalProducts/PracticeTest5/OPT5LS/GetScoreOnSection", { sectionId: sectionID }, function (data) {
-            console.log(data); document.getElementById("yourScore").innerHTML = data.userScore;
+      paragon.pt.calcListScoreLS = function (sectionID) {
+        $.post(
+          "/InstructionalProducts/PracticeTest5/OPT5LS/GetScoreOnSection",
+          { sectionId: sectionID },
+          function (data) {
+            console.log(data);
+            document.getElementById("yourScore").innerHTML = data.userScore;
 
             var userLScore = data.userScore;
 
             paragon.pt.findListScore(userLScore);
+          }
+        );
+      };
 
-        });
-    }
-
-    paragon.pt.findListScore = function (userLScore) {
+      paragon.pt.findListScore = function (userLScore) {
         if (userLScore <= 7) {
-            document.getElementById("celScore").innerHTML = "M";
-            return;
-        }
-        else if (userLScore <= 12) {
-            document.getElementById("celScore").innerHTML = "3";
-            return;
-        }
-        else if (userLScore <= 18) {
-            document.getElementById("celScore").innerHTML = "4";
-            return;
-        }
-        else if (userLScore <= 23) {
-            document.getElementById("celScore").innerHTML = "5";
-            return;
-        }
-        else if (userLScore <= 28) {
-            document.getElementById("celScore").innerHTML = "6";
-            return;
-        }
-        else if (userLScore <= 31) {
-            document.getElementById("celScore").innerHTML = "7";
-            return;
-        }
-        else if (userLScore <= 33) {
-            document.getElementById("celScore").innerHTML = "8";
-            return;
-        }
-        else if (userLScore <= 35) {
+          document.getElementById("celScore").innerHTML = "M";
+          return;
+        } else if (userLScore <= 12) {
+          document.getElementById("celScore").innerHTML = "3";
+          return;
+        } else if (userLScore <= 18) {
+          document.getElementById("celScore").innerHTML = "4";
+          return;
+        } else if (userLScore <= 23) {
+          document.getElementById("celScore").innerHTML = "5";
+          return;
+        } else if (userLScore <= 28) {
+          document.getElementById("celScore").innerHTML = "6";
+          return;
+        } else if (userLScore <= 31) {
+          document.getElementById("celScore").innerHTML = "7";
+          return;
+        } else if (userLScore <= 33) {
+          document.getElementById("celScore").innerHTML = "8";
+          return;
+        } else if (userLScore <= 35) {
           document.getElementById("celScore").innerHTML = "9";
           return;
-          }
-          else {
+        } else {
           document.getElementById("celScore").innerHTML = "10-12";
-          }
-          }
+        }
+      };
 
-          paragon.pt.calcListScoreOnYourScore = function (sectionScore, sectionCell) {
+      paragon.pt.calcListScoreOnYourScore = function (
+        sectionScore,
+        sectionCell
+      ) {
+        var userLScore = sectionScore;
 
-          var userLScore = sectionScore;
+        if (userLScore <= 7) {
+          document.getElementById(sectionCell).innerHTML = "M";
+          return;
+        } else if (userLScore <= 12) {
+          document.getElementById(sectionCell).innerHTML = "3";
+          return;
+        } else if (userLScore <= 18) {
+          document.getElementById(sectionCell).innerHTML = "4";
+          return;
+        } else if (userLScore <= 23) {
+          document.getElementById(sectionCell).innerHTML = "5";
+          return;
+        } else if (userLScore <= 28) {
+          document.getElementById(sectionCell).innerHTML = "6";
+          return;
+        } else if (userLScore <= 31) {
+          document.getElementById(sectionCell).innerHTML = "7";
+          return;
+        } else if (userLScore <= 33) {
+          document.getElementById(sectionCell).innerHTML = "8";
+          return;
+        } else if (userLScore <= 35) {
+          document.getElementById(sectionCell).innerHTML = "9";
+          return;
+        } else {
+          document.getElementById(sectionCell).innerHTML = "10-12";
+        }
+      };
 
-          if (userLScore <= 7) {
-                document.getElementById(sectionCell).innerHTML = "M";
-                return;
-            }
-            else if (userLScore <= 12) {
-                document.getElementById(sectionCell).innerHTML = "3";
-                return;
-            }
-            else if (userLScore <= 18) {
-                document.getElementById(sectionCell).innerHTML = "4";
-                return;
-            }
-            else if (userLScore <= 23) {
-                document.getElementById(sectionCell).innerHTML = "5";
-                return;
-            }
-            else if (userLScore <= 28) {
-                document.getElementById(sectionCell).innerHTML = "6";
-                return;
-            }
-            else if (userLScore <= 31) {
-                document.getElementById(sectionCell).innerHTML = "7";
-                return;
-            }
-            else if (userLScore <= 33) {
-                document.getElementById(sectionCell).innerHTML = "8";
-                return;
-            }
-            else if (userLScore <= 35) {
-                document.getElementById(sectionCell).innerHTML = "9";
-                return;
-            }
-            else {
-                document.getElementById(sectionCell).innerHTML = "10-12";
-            }
-
-
-    }
-
-    paragon.pt.calcReadScore = function (sectionID) {
-
-        $.post("/InstructionalProducts/PracticeTest5/OPT5/GetScoreOnSection", { sectionId: sectionID }, function (data) {
-            console.log(data); document.getElementById("yourScore").innerHTML = data.userScore;
+      paragon.pt.calcReadScore = function (sectionID) {
+        $.post(
+          "/InstructionalProducts/PracticeTest5/OPT5/GetScoreOnSection",
+          { sectionId: sectionID },
+          function (data) {
+            console.log(data);
+            document.getElementById("yourScore").innerHTML = data.userScore;
 
             var userRScore = data.userScore;
 
             if (userRScore <= 7) {
-                document.getElementById("celScore").innerHTML = "M";
-                return;
+              document.getElementById("celScore").innerHTML = "M";
+              return;
+            } else if (userRScore <= 11) {
+              document.getElementById("celScore").innerHTML = "3";
+              return;
+            } else if (userRScore <= 16) {
+              document.getElementById("celScore").innerHTML = "4";
+              return;
+            } else if (userRScore <= 20) {
+              document.getElementById("celScore").innerHTML = "5";
+              return;
+            } else if (userRScore <= 25) {
+              document.getElementById("celScore").innerHTML = "6";
+              return;
+            } else if (userRScore <= 28) {
+              document.getElementById("celScore").innerHTML = "7";
+              return;
+            } else if (userRScore <= 31) {
+              document.getElementById("celScore").innerHTML = "8";
+              return;
+            } else if (userRScore <= 33) {
+              document.getElementById("celScore").innerHTML = "9";
+              return;
+            } else {
+              document.getElementById("celScore").innerHTML = "10-12";
             }
-            else if (userRScore <= 11) {
-                document.getElementById("celScore").innerHTML = "3";
-                return;
-            }
-            else if (userRScore <= 16) {
-                document.getElementById("celScore").innerHTML = "4";
-                return;
-            }
-            else if (userRScore <= 20) {
-                document.getElementById("celScore").innerHTML = "5";
-                return;
-            }
-            else if (userRScore <= 25) {
-                document.getElementById("celScore").innerHTML = "6";
-                return;
-            }
-            else if (userRScore <= 28) {
-                document.getElementById("celScore").innerHTML = "7";
-                return;
-            }
-            else if (userRScore <= 31) {
-                document.getElementById("celScore").innerHTML = "8";
-                return;
-            }
-            else if (userRScore <= 33) {
-                document.getElementById("celScore").innerHTML = "9";
-                return;
-            }
-            else {
-                document.getElementById("celScore").innerHTML = "10-12";
-            }
-
-        });
-
-    }
-    paragon.pt.calcReadScoreOnYourScore = function (sectionScore, sectionCell) {
-
+          }
+        );
+      };
+      paragon.pt.calcReadScoreOnYourScore = function (
+        sectionScore,
+        sectionCell
+      ) {
         var userRScore = sectionScore;
 
         if (userRScore <= 7) {
-            document.getElementById(sectionCell).innerHTML = "M";
-            return;
+          document.getElementById(sectionCell).innerHTML = "M";
+          return;
+        } else if (userRScore <= 11) {
+          document.getElementById(sectionCell).innerHTML = "3";
+          return;
+        } else if (userRScore <= 16) {
+          document.getElementById(sectionCell).innerHTML = "4";
+          return;
+        } else if (userRScore <= 20) {
+          document.getElementById(sectionCell).innerHTML = "5";
+          return;
+        } else if (userRScore <= 25) {
+          document.getElementById(sectionCell).innerHTML = "6";
+          return;
+        } else if (userRScore <= 28) {
+          document.getElementById(sectionCell).innerHTML = "7";
+          return;
+        } else if (userRScore <= 31) {
+          document.getElementById(sectionCell).innerHTML = "8";
+          return;
+        } else if (userRScore <= 33) {
+          document.getElementById(sectionCell).innerHTML = "9";
+          return;
+        } else {
+          document.getElementById(sectionCell).innerHTML = "10-12";
         }
-        else if (userRScore <= 11) {
-            document.getElementById(sectionCell).innerHTML = "3";
-            return;
-        }
-        else if (userRScore <= 16) {
-            document.getElementById(sectionCell).innerHTML = "4";
-            return;
-        }
-        else if (userRScore <= 20) {
-            document.getElementById(sectionCell).innerHTML = "5";
-            return;
-        }
-        else if (userRScore <= 25) {
-            document.getElementById(sectionCell).innerHTML = "6";
-            return;
-        }
-        else if (userRScore <= 28) {
-            document.getElementById(sectionCell).innerHTML = "7";
-            return;
-        }
-        else if (userRScore <= 31) {
-            document.getElementById(sectionCell).innerHTML = "8";
-            return;
-        }
-        else if (userRScore <= 33) {
-            document.getElementById(sectionCell).innerHTML = "9";
-            return;
-        }
-        else {
-            document.getElementById(sectionCell).innerHTML = "10-12";
-        }
-    }
+      };
 
-
-    //HARDCODED
-    paragon.pt.showListeningAnswerKeyBtn = function (sectionId) {
+      //HARDCODED
+      paragon.pt.showListeningAnswerKeyBtn = function (sectionId) {
         if (sectionId == "f1b42af6-de33-467d-b10f-cdec9bf95b92") {
-            $('#leftBtn').html("<a href='bf767d13-4bb6-4af8-844a-ceb178b8a226' id='backToResultbtn' class='btn'>Answer Key</a>");
+          $("#leftBtn").html(
+            "<a href='bf767d13-4bb6-4af8-844a-ceb178b8a226' id='backToResultbtn' class='btn'>Answer Key</a>"
+          );
         }
 
         if (sectionId == "6f3648e4-e614-4bee-b350-e21a267d3492") {
-            $('#leftBtn').html("<a href='44f572ee-a621-429c-b762-7eb01f326e04' id='backToResultbtn' class='btn'>Answer Key</a>");
+          $("#leftBtn").html(
+            "<a href='44f572ee-a621-429c-b762-7eb01f326e04' id='backToResultbtn' class='btn'>Answer Key</a>"
+          );
         }
         if (sectionId == "35615962-cb35-43bf-a9d6-aba7e7d64ba3") {
-            $('#leftBtn').html("<a href='50fa6e3d-0f9c-4eeb-bcd3-853bb9f0bc8d' id='backToResultbtn' class='btn'>Answer Key</a>");
+          $("#leftBtn").html(
+            "<a href='50fa6e3d-0f9c-4eeb-bcd3-853bb9f0bc8d' id='backToResultbtn' class='btn'>Answer Key</a>"
+          );
         }
 
         if (sectionId == "a5df8773-7edc-4f91-8cea-0482168a9f10") {
-            $('#leftBtn').html("<a href='98b188af-fa9c-425d-bbfa-a37cb1d1c218' id='backToResultbtn' class='btn'>Answer Key</a>");
+          $("#leftBtn").html(
+            "<a href='98b188af-fa9c-425d-bbfa-a37cb1d1c218' id='backToResultbtn' class='btn'>Answer Key</a>"
+          );
         }
-    }
+      };
 
-    paragon.pt.showReadingAnswerKeyBtn = function (sectionId) {
+      paragon.pt.showReadingAnswerKeyBtn = function (sectionId) {
         if (sectionId == "9e3bcb00-09c7-4bd1-a232-72bf8b6d4e03") {
-            $('#leftBtn').html("<a href='fe5cd4c8-2c43-4a70-8de1-4c1bdf8e1421' id='backToResultbtn' class='btn'>Answer Key</a>");
+          $("#leftBtn").html(
+            "<a href='fe5cd4c8-2c43-4a70-8de1-4c1bdf8e1421' id='backToResultbtn' class='btn'>Answer Key</a>"
+          );
         }
 
         if (sectionId == "ecbbe55f-b677-43dc-aeff-a7ed258c2051") {
-            $('#leftBtn').html("<a href='a0a62c03-708f-458f-8d60-72cfd6a46291' id='backToResultbtn' class='btn'>Answer Key</a>");
+          $("#leftBtn").html(
+            "<a href='a0a62c03-708f-458f-8d60-72cfd6a46291' id='backToResultbtn' class='btn'>Answer Key</a>"
+          );
         }
-    }
+      };
 
-    paragon.pt.nextItem = function (url, itemId, canvasId, sectionId, activityTypeId) {
+      paragon.pt.nextItem = function (
+        url,
+        itemId,
+        canvasId,
+        sectionId,
+        activityTypeId
+      ) {
         $.post(
-            url,
-            {
-                itemId: itemId,
-                canvasId: canvasId,
-                sectionId: sectionId,
-                activityTypeId: activityTypeId
-            },
-            function (data) {
-                console.log(data);
-            }
+          url,
+          {
+            itemId: itemId,
+            canvasId: canvasId,
+            sectionId: sectionId,
+            activityTypeId: activityTypeId,
+          },
+          function (data) {
+            console.log(data);
+          }
         );
-    }
+      };
 
-    paragon.pt.countUnansweredQuestionsFromDb = function (canvasTypeId, sectionId, url) {
+      paragon.pt.countUnansweredQuestionsFromDb = function (
+        canvasTypeId,
+        sectionId,
+        url
+      ) {
         switch (canvasTypeId) {
-            case 24: //PT04
-            case 25: // PT05
-                return paragon.pt.countSingleUnansweredItemFromDb(sectionId, url);
-                break;
+          case 24: //PT04
+          case 25: // PT05
+            return paragon.pt.countSingleUnansweredItemFromDb(sectionId, url);
+            break;
 
-            case 26: //PT06
-            case 27: //PT07
-                if ($("#panelLeft").css('display') != 'none') {
-                    return 0;
-                }
-                else {
-                    return paragon.pt.countAllUnansweredItemsFromDb(sectionId, url);
-                }
-                break;
+          case 26: //PT06
+          case 27: //PT07
+            if ($("#panelLeft").css("display") != "none") {
+              return 0;
+            } else {
+              return paragon.pt.countAllUnansweredItemsFromDb(sectionId, url);
+            }
+            break;
 
-            default:
-                return paragon.pt.countAllUnansweredItemsFromDb(sectionId, url);
+          default:
+            return paragon.pt.countAllUnansweredItemsFromDb(sectionId, url);
         }
-    }
+      };
 
-    paragon.pt.countAllUnansweredItemsFromDb = function (sectionId, url) {
+      paragon.pt.countAllUnansweredItemsFromDb = function (sectionId, url) {
         var unanswered = 0;
         $.ajax({
-            type: "POST",
-            url: url,
-            data: { 'sectionId': sectionId, 'items': JSON.stringify(paragon.pt.items) },
-            async: false,
-            success: function (data) {
-                var responses = data.responses;
-                for (var i = 0; i < responses.length; i++) {
-                    var currentResponse = responses[i];
-                    if (!currentResponse) {
-                        unanswered++;
-                    }
-                }
+          type: "POST",
+          url: url,
+          data: {
+            sectionId: sectionId,
+            items: JSON.stringify(paragon.pt.items),
+          },
+          async: false,
+          success: function (data) {
+            var responses = data.responses;
+            for (var i = 0; i < responses.length; i++) {
+              var currentResponse = responses[i];
+              if (!currentResponse) {
+                unanswered++;
+              }
             }
+          },
         });
         return unanswered;
-    }
+      };
 
-    paragon.pt.countSingleUnansweredItemFromDb = function (sectionId, url) {
+      paragon.pt.countSingleUnansweredItemFromDb = function (sectionId, url) {
         var unanswered = 0;
 
         var index = paragon.pt.itemIndex;
         if (index > 0) {
-            index = index - 1;
-        }
-        else {
-            return unanswered;
+          index = index - 1;
+        } else {
+          return unanswered;
         }
 
         var item = paragon.pt.items[index];
         $.ajax({
-            type: "POST",
-            url: url,
-            data: { "sectionId": sectionId, "itemId": item.Id },
-            async: false,
-            success: function (data) {
-                if (!data.response) {
-                    unanswered++;
-                }
+          type: "POST",
+          url: url,
+          data: { sectionId: sectionId, itemId: item.Id },
+          async: false,
+          success: function (data) {
+            if (!data.response) {
+              unanswered++;
             }
+          },
         });
 
         return unanswered;
-    }
-
-</script>
+      };
+    </script>
 
     <script src="./5-2-1_files/soundjs-0.6.0.min.js.下載"></script>
-
-
 
     <script src="./5-2-1_files/audio.min.js.下載"></script>
 
@@ -798,1047 +885,1357 @@
 
     <script src="./5-2-1_files/jquery.cookie.js.下載"></script>
 
-
-    <link href="./5-2-1_files/font-awesome.css" rel="stylesheet">
-</head>
-<body data-new-gr-c-s-check-loaded="14.1229.0" data-gr-ext-installed="" style="">
+    <link href="./5-2-1_files/font-awesome.css" rel="stylesheet" />
+  </head>
+  <body
+    data-new-gr-c-s-check-loaded="14.1229.0"
+    data-gr-ext-installed=""
+    style=""
+  >
     <noscript>
-        <div id="noscript">
-            <div>Please turn on javascript to continue.</div>
-        </div>
+      <div id="noscript">
+        <div>Please turn on javascript to continue.</div>
+      </div>
     </noscript>
     <header>
-        <div class="navbar">
-            <div class="navbar-inner">
-                <a class="brand" href="https://www.celpip.ca/" target="_blank"> <img src="./5-2-1_files/CELPIP_H_Web.png"></a>
+      <div class="navbar">
+        <div class="navbar-inner">
+          <a class="brand" href="https://www.celpip.ca/" target="_blank">
+            <img src="./5-2-1_files/CELPIP_H_Web.png"
+          /></a>
 
-                <div class="brand" style="margin-top:15px;">
-                    Study Materials
+          <div class="brand" style="margin-top: 15px">Study Materials</div>
+
+          <ul class="nav" style="margin-top: 8px">
+            <li class="dropdown">
+              <a
+                class="dropdown-toggle"
+                data-toggle="dropdown"
+                style="margin-top: 10px"
+              >
+                Selected Product:
+                <span id="selected-product"
+                  >CELPIP-General Practice Tests, Set 5</span
+                >
+                <b class="caret"></b>
+              </a>
+              <ul class="dropdown-menu">
+                <li>
+                  <a
+                    href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/FreeOnlineSampleTest/FOST"
+                    >Free CELPIP-General Practice Tests (Starter Set)</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/FreeOnlineSampleTest/FOST2"
+                    >Free CELPIP-General LS Practice Tests (Starter Set)</a
+                  >
+                </li>
+
+                <li>
+                  <a
+                    href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest/PT"
+                    >CELPIP-General Practice Tests, Set 1</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest2/OPT2"
+                    >CELPIP-General Practice Tests, Set 2</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest3/OPT3"
+                    >CELPIP-General Practice Tests, Set 3</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest4/OPT4"
+                    >CELPIP-General Practice Tests, Set 4</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest5/OPT5"
+                    >CELPIP-General Practice Tests, Set 5</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest6/OPT6"
+                    >CELPIP-General Practice Tests, Set 6</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest7/OPT7"
+                    >CELPIP-General Practice Tests, Set 7</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest8/OPT8"
+                    >CELPIP-General Practice Tests, Set 8</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest9/OPT9"
+                    >CELPIP-General Practice Tests, Set 9</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest10/OPT10"
+                    >CELPIP-General Practice Tests, Set 10</a
+                  >
+                </li>
+                <li>
+                  <a
+                    target="_blank"
+                    href="https://testprep.paragontesting.ca/api/sso/v2/sso/jwt?jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6Imh5cDIyMThAZ21haWwuY29tIiwiZmlyc3RfbmFtZSI6IllpLVBpbmciLCJsYXN0X25hbWUiOiJIbyIsIm5hbWVpZCI6IjIyMzc0ODgiLCJpYXQiOjE3NDMwMTQ4NTgsImp0aSI6MTMzMTY5MzI0NSwibmJmIjoxNzQzMDE0NTU4fQ.vombAmsXR4PjcbftTx-zfS_VBh45TuR5bzQbADWDfSM&amp;return_to=https%3A%2F%2Ftestprep.paragontesting.ca%2Fbundles%2Fcelpip-accelerate-starter-celpip-general"
+                    >CELPIP Accelerate Starter - Reading and Writing</a
+                  >
+                </li>
+                <li>
+                  <a
+                    target="_blank"
+                    href="https://testprep.paragontesting.ca/api/sso/v2/sso/jwt?jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6Imh5cDIyMThAZ21haWwuY29tIiwiZmlyc3RfbmFtZSI6IllpLVBpbmciLCJsYXN0X25hbWUiOiJIbyIsIm5hbWVpZCI6IjIyMzc0ODgiLCJpYXQiOjE3NDMwMTQ4NTgsImp0aSI6NjQ4MzY0MTc5LCJuYmYiOjE3NDMwMTQ1NTh9.2Aoph4fUP49i9FaG_ZpK7JXZrMp7a0_bev_GRF3-KAk&amp;return_to=https%3A%2F%2Ftestprep.paragontesting.ca%2Fbundles%2Fcelpip-accelerate-starter-celpip-general-ls"
+                    >CELPIP Accelerate Starter - Listening and Speaking</a
+                  >
+                </li>
+              </ul>
+            </li>
+
+            <li>
+              <div style="margin-left: 19px">
+                <ul class="nav nav-pills header-buttons"></ul>
+              </div>
+            </li>
+          </ul>
+
+          <ul class="nav pull-right" style="margin-top: 17px">
+            <li class="dropdown">
+              <a class="dropdown-toggle dropdown-email" data-toggle="dropdown">
+                <img
+                  src="./5-2-1_files/fa_cog.png"
+                  style="width: 18px; height: 18px; margin-top: -5px"
+                />
+
+                <b class="caret"></b>
+              </a>
+              <ul class="dropdown-menu">
+                <li>
+                  <a
+                    href="javascript:document.getElementById(&#39;logoutForm&#39;).submit()"
+                    >Sign out</a
+                  >
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <form
+        action="https://instructionalproducts.paragontesting.ca/InstructionalProducts/Account/LogOff"
+        id="logoutForm"
+        method="post"
+      ></form>
+    </header>
+
+    <div class="container" id="main-container" style="height: 773px">
+      <link href="./5-2-1_files/ptStyle.css" rel="stylesheet" type="text/css" />
+      <link href="./5-2-1_files/video-js.css" rel="stylesheet" />
+      <script src="./5-2-1_files/video.js.下載"></script>
+      <script>
+        paragon.pt.backUrl =
+          "/InstructionalProducts/PracticeTest5/OPT5/View/7b639fcc-d2ca-46bf-8372-93c1fd2085d7";
+        paragon.pt.nextUrl =
+          "/InstructionalProducts/PracticeTest5/OPT5/View/599304ec-1184-4782-b80d-412c8593f989";
+        if (paragon.pt.backUrl.length > 0 || paragon.pt.nextUrl.length > 0) {
+          paragon.footerVisible = true;
+        }
+
+        paragon.pt.items = [
+          {
+            Id: "a5631464-2128-486a-b35a-3fa65fb43d72",
+            ContentId: "e40641aa-6755-4d43-a09a-0e5f6eb5bcc8",
+            Num: 1,
+            Text: "1. Sergiy and Ms. Wilkes    ",
+            ExtraField1: "",
+            Choices: [
+              {
+                Id: "4988fe94-b27f-4cbb-b257-8bd240b3dd5e",
+                ItemId: "a5631464-2128-486a-b35a-3fa65fb43d72",
+                ChoiceData: null,
+                Num: 1,
+                Text: "both speak highly of each other.",
+              },
+              {
+                Id: "34197dc1-a722-48d7-8dcb-f08c87316b94",
+                ItemId: "a5631464-2128-486a-b35a-3fa65fb43d72",
+                ChoiceData: null,
+                Num: 2,
+                Text: "do not personally know each other. ",
+              },
+              {
+                Id: "4a416fa2-9a3d-4843-b79f-45b4e424ad42",
+                ItemId: "a5631464-2128-486a-b35a-3fa65fb43d72",
+                ChoiceData: null,
+                Num: 3,
+                Text: "have an appointment to meet soon.",
+              },
+              {
+                Id: "cdcc1ab5-cee5-4c07-ba4b-363b16ced1a9",
+                ItemId: "a5631464-2128-486a-b35a-3fa65fb43d72",
+                ChoiceData: null,
+                Num: 4,
+                Text: "know the girl's other teachers.",
+              },
+            ],
+          },
+          {
+            Id: "63dc06ba-b14d-4c62-9d72-e627f1a5d70c",
+            ContentId: "e40641aa-6755-4d43-a09a-0e5f6eb5bcc8",
+            Num: 2,
+            Text: "2. We know for sure that Ms. Wilkes teaches ",
+            ExtraField1: "",
+            Choices: [
+              {
+                Id: "03ad351e-2825-48d4-8341-b03fb97fa34c",
+                ItemId: "63dc06ba-b14d-4c62-9d72-e627f1a5d70c",
+                ChoiceData: null,
+                Num: 1,
+                Text: "math.",
+              },
+              {
+                Id: "fe951c85-217f-49f3-8ed2-98963480f490",
+                ItemId: "63dc06ba-b14d-4c62-9d72-e627f1a5d70c",
+                ChoiceData: null,
+                Num: 2,
+                Text: "English.",
+              },
+              {
+                Id: "29d49d1b-b689-491f-b1da-4695f74e4a72",
+                ItemId: "63dc06ba-b14d-4c62-9d72-e627f1a5d70c",
+                ChoiceData: null,
+                Num: 3,
+                Text: "French.",
+              },
+              {
+                Id: "b8192942-ac35-4272-8450-07719b05304c",
+                ItemId: "63dc06ba-b14d-4c62-9d72-e627f1a5d70c",
+                ChoiceData: null,
+                Num: 4,
+                Text: "science.",
+              },
+            ],
+          },
+          {
+            Id: "78432599-149c-450d-aa61-801de35469a7",
+            ContentId: "e40641aa-6755-4d43-a09a-0e5f6eb5bcc8",
+            Num: 3,
+            Text: "3. The email indicates that Nadia       ",
+            ExtraField1: "",
+            Choices: [
+              {
+                Id: "4257598e-7837-4f06-b203-7c83c8294f0c",
+                ItemId: "78432599-149c-450d-aa61-801de35469a7",
+                ChoiceData: null,
+                Num: 1,
+                Text: "is good at learning mathematics.",
+              },
+              {
+                Id: "cd5b97e5-5acd-45ab-a7f6-d22c9dd832fb",
+                ItemId: "78432599-149c-450d-aa61-801de35469a7",
+                ChoiceData: null,
+                Num: 2,
+                Text: "pays attention in Ms. Wilkes' class.",
+              },
+              {
+                Id: "0899264f-5810-489d-a7a9-fb403e6fcc64",
+                ItemId: "78432599-149c-450d-aa61-801de35469a7",
+                ChoiceData: null,
+                Num: 3,
+                Text: "can sing funny songs in French.",
+              },
+              {
+                Id: "7fbba999-70b4-4c38-961e-829d785ccb0b",
+                ItemId: "78432599-149c-450d-aa61-801de35469a7",
+                ChoiceData: null,
+                Num: 4,
+                Text: "wants Ms. Wilkes as a private tutor.",
+              },
+            ],
+          },
+          {
+            Id: "6fbdc21f-e42c-4f50-9ce7-e6ac2bbeaf1a",
+            ContentId: "e40641aa-6755-4d43-a09a-0e5f6eb5bcc8",
+            Num: 4,
+            Text: "4. Sergiy is likely writing this email  ",
+            ExtraField1: "",
+            Choices: [
+              {
+                Id: "fb9b0a93-8910-407c-acbd-824d1ca6f65a",
+                ItemId: "6fbdc21f-e42c-4f50-9ce7-e6ac2bbeaf1a",
+                ChoiceData: null,
+                Num: 1,
+                Text: "during the summer holidays.",
+              },
+              {
+                Id: "fc5e3a78-0ecb-4bd4-a794-d67d81d96aa4",
+                ItemId: "6fbdc21f-e42c-4f50-9ce7-e6ac2bbeaf1a",
+                ChoiceData: null,
+                Num: 2,
+                Text: "at the end of the school year.",
+              },
+              {
+                Id: "802a655a-1c43-4133-8108-c58d0e2327e1",
+                ItemId: "6fbdc21f-e42c-4f50-9ce7-e6ac2bbeaf1a",
+                ChoiceData: null,
+                Num: 3,
+                Text: "near the December holiday.",
+              },
+              {
+                Id: "440c6ecd-b49c-4d6f-b5bc-77dffdaceb95",
+                ItemId: "6fbdc21f-e42c-4f50-9ce7-e6ac2bbeaf1a",
+                ChoiceData: null,
+                Num: 4,
+                Text: "near the start of the school year.",
+              },
+            ],
+          },
+          {
+            Id: "74a2279b-8066-4135-ac1f-2a71e5e6be6e",
+            ContentId: "e40641aa-6755-4d43-a09a-0e5f6eb5bcc8",
+            Num: 5,
+            Text: "5. Nadia seems to   ",
+            ExtraField1: "",
+            Choices: [
+              {
+                Id: "77033d16-34db-46dd-b09c-8f42aa97fd66",
+                ItemId: "74a2279b-8066-4135-ac1f-2a71e5e6be6e",
+                ChoiceData: null,
+                Num: 1,
+                Text: "look forward to French class.",
+              },
+              {
+                Id: "46d090fa-c558-486a-9bc1-a8ecc041b4fd",
+                ItemId: "74a2279b-8066-4135-ac1f-2a71e5e6be6e",
+                ChoiceData: null,
+                Num: 2,
+                Text: "be uncomfortable about French class.",
+              },
+              {
+                Id: "d4192673-d440-48bc-be7e-b220cd273417",
+                ItemId: "74a2279b-8066-4135-ac1f-2a71e5e6be6e",
+                ChoiceData: null,
+                Num: 3,
+                Text: "participate often in French class.",
+              },
+              {
+                Id: "e736e020-9ee1-4dad-a0dd-a0899186ee2b",
+                ItemId: "74a2279b-8066-4135-ac1f-2a71e5e6be6e",
+                ChoiceData: null,
+                Num: 4,
+                Text: "talk often about French class.",
+              },
+            ],
+          },
+          {
+            Id: "0ecf1e03-0c61-4037-a345-3422474662e4",
+            ContentId: "e40641aa-6755-4d43-a09a-0e5f6eb5bcc8",
+            Num: 6,
+            Text: "6. Sergiy’s main purpose for writing the email is to    \r\n",
+            ExtraField1: "",
+            Choices: [
+              {
+                Id: "49746314-0dbd-4367-8a76-feffe7128a85",
+                ItemId: "0ecf1e03-0c61-4037-a345-3422474662e4",
+                ChoiceData: null,
+                Num: 1,
+                Text: "ask what work Nadia has missed.",
+              },
+              {
+                Id: "7d1fed34-69d2-46cd-95be-a198de1d86d5",
+                ItemId: "0ecf1e03-0c61-4037-a345-3422474662e4",
+                ChoiceData: null,
+                Num: 2,
+                Text: "compliment an effective teacher.",
+              },
+              {
+                Id: "a6133c0b-6d80-48ff-89be-5def02e64870",
+                ItemId: "0ecf1e03-0c61-4037-a345-3422474662e4",
+                ChoiceData: null,
+                Num: 3,
+                Text: "find out why Nadia dislikes French.",
+              },
+              {
+                Id: "7cac1079-b8ae-4781-881d-076c554c1f01",
+                ItemId: "0ecf1e03-0c61-4037-a345-3422474662e4",
+                ChoiceData: null,
+                Num: 4,
+                Text: "obtain information and advice.",
+              },
+            ],
+          },
+          {
+            Id: "74878e03-acb7-4fa0-9567-b2e1fb7f5d21",
+            ContentId: "e40641aa-6755-4d43-a09a-0e5f6eb5bcc8",
+            Num: 7,
+            Text: "",
+            ExtraField1: "",
+            Choices: [
+              {
+                Id: "4ae6a1cb-c4d8-4f63-bc10-03ebde521ff5",
+                ItemId: "74878e03-acb7-4fa0-9567-b2e1fb7f5d21",
+                ChoiceData: null,
+                Num: 1,
+                Text: "a recent",
+              },
+              {
+                Id: "625f96f2-b0d7-47bd-8131-b069922d350a",
+                ItemId: "74878e03-acb7-4fa0-9567-b2e1fb7f5d21",
+                ChoiceData: null,
+                Num: 2,
+                Text: "a reluctant",
+              },
+              {
+                Id: "a71484a7-36db-4b4e-b106-a2055bc6d6f1",
+                ItemId: "74878e03-acb7-4fa0-9567-b2e1fb7f5d21",
+                ChoiceData: null,
+                Num: 3,
+                Text: "an unhappy",
+              },
+              {
+                Id: "da8851bc-e9b0-4739-aff4-9ce8421cc087",
+                ItemId: "74878e03-acb7-4fa0-9567-b2e1fb7f5d21",
+                ChoiceData: null,
+                Num: 4,
+                Text: "an anxious",
+              },
+            ],
+          },
+          {
+            Id: "07b152b4-3fff-4a6c-8ea9-e09f7c33d28f",
+            ContentId: "e40641aa-6755-4d43-a09a-0e5f6eb5bcc8",
+            Num: 8,
+            Text: "",
+            ExtraField1: "",
+            Choices: [
+              {
+                Id: "e8d72e45-150e-412c-b1d0-a6bc37bb15ab",
+                ItemId: "07b152b4-3fff-4a6c-8ea9-e09f7c33d28f",
+                ChoiceData: null,
+                Num: 1,
+                Text: "challenging",
+              },
+              {
+                Id: "2b9983df-670d-4192-abca-93fb57915681",
+                ItemId: "07b152b4-3fff-4a6c-8ea9-e09f7c33d28f",
+                ChoiceData: null,
+                Num: 2,
+                Text: "fluent",
+              },
+              {
+                Id: "cd2d31fb-0c45-44a8-abb9-d8f2304abf21",
+                ItemId: "07b152b4-3fff-4a6c-8ea9-e09f7c33d28f",
+                ChoiceData: null,
+                Num: 3,
+                Text: "intermediate",
+              },
+              {
+                Id: "aabaa250-7b69-4525-a597-ad9b59ce7b37",
+                ItemId: "07b152b4-3fff-4a6c-8ea9-e09f7c33d28f",
+                ChoiceData: null,
+                Num: 4,
+                Text: "native",
+              },
+            ],
+          },
+          {
+            Id: "b8ccb562-b426-4e0c-91ce-fddb8ff43f3e",
+            ContentId: "e40641aa-6755-4d43-a09a-0e5f6eb5bcc8",
+            Num: 9,
+            Text: "",
+            ExtraField1: "",
+            Choices: [
+              {
+                Id: "59b624fa-f6b1-426a-9f67-061f18d4af93",
+                ItemId: "b8ccb562-b426-4e0c-91ce-fddb8ff43f3e",
+                ChoiceData: null,
+                Num: 1,
+                Text: "change schools",
+              },
+              {
+                Id: "b8a797dc-c1e9-4748-9724-68491cfc8d32",
+                ItemId: "b8ccb562-b426-4e0c-91ce-fddb8ff43f3e",
+                ChoiceData: null,
+                Num: 2,
+                Text: "spend money",
+              },
+              {
+                Id: "6207ae1c-7c9e-4fea-a306-a804492977d5",
+                ItemId: "b8ccb562-b426-4e0c-91ce-fddb8ff43f3e",
+                ChoiceData: null,
+                Num: 3,
+                Text: "drive some distance",
+              },
+              {
+                Id: "e499daab-a298-43cd-b2c7-2226fd62a9d8",
+                ItemId: "b8ccb562-b426-4e0c-91ce-fddb8ff43f3e",
+                ChoiceData: null,
+                Num: 4,
+                Text: "take time off work ",
+              },
+            ],
+          },
+          {
+            Id: "3be8130c-a837-485f-899a-95f3edc29fd3",
+            ContentId: "e40641aa-6755-4d43-a09a-0e5f6eb5bcc8",
+            Num: 10,
+            Text: "",
+            ExtraField1: "",
+            Choices: [
+              {
+                Id: "2316b3dd-0c87-4dcb-a4fd-fd130d59d6d5",
+                ItemId: "3be8130c-a837-485f-899a-95f3edc29fd3",
+                ChoiceData: null,
+                Num: 1,
+                Text: "not been very helpful",
+              },
+              {
+                Id: "f959eed6-c7bc-4de5-ae10-8c179ac1e68e",
+                ItemId: "3be8130c-a837-485f-899a-95f3edc29fd3",
+                ChoiceData: null,
+                Num: 2,
+                Text: "been closed when you called",
+              },
+              {
+                Id: "45adf025-8721-45bb-b300-508a02e77786",
+                ItemId: "3be8130c-a837-485f-899a-95f3edc29fd3",
+                ChoiceData: null,
+                Num: 3,
+                Text: "given you the wrong information",
+              },
+              {
+                Id: "8cca66b7-22cc-46f6-ab43-75eeb72db07c",
+                ItemId: "3be8130c-a837-485f-899a-95f3edc29fd3",
+                ChoiceData: null,
+                Num: 4,
+                Text: "discouraged a meeting",
+              },
+            ],
+          },
+          {
+            Id: "405827ae-0de2-41f2-9c6b-ac77a0ed4297",
+            ContentId: "e40641aa-6755-4d43-a09a-0e5f6eb5bcc8",
+            Num: 11,
+            Text: "",
+            ExtraField1: "",
+            Choices: [
+              {
+                Id: "206c5000-4175-426f-97fd-e252ca5f0db9",
+                ItemId: "405827ae-0de2-41f2-9c6b-ac77a0ed4297",
+                ChoiceData: null,
+                Num: 1,
+                Text: "bringing to my attention Nadia's love for music theory",
+              },
+              {
+                Id: "003ace0d-95ed-42a4-b83f-6d5ae510e7aa",
+                ItemId: "405827ae-0de2-41f2-9c6b-ac77a0ed4297",
+                ChoiceData: null,
+                Num: 2,
+                Text: "your kind words about my efforts to engage the class",
+              },
+              {
+                Id: "7ce301ec-4a38-4d55-be5d-0fd99065938c",
+                ItemId: "405827ae-0de2-41f2-9c6b-ac77a0ed4297",
+                ChoiceData: null,
+                Num: 3,
+                Text: "sharing Nadia's recent language test results with me",
+              },
+              {
+                Id: "d7a01d3d-b5de-491b-b638-3abd1ad9a7c7",
+                ItemId: "405827ae-0de2-41f2-9c6b-ac77a0ed4297",
+                ChoiceData: null,
+                Num: 4,
+                Text: "your suggestions about teaching through storytelling",
+              },
+            ],
+          },
+        ];
+      </script>
+
+      <div id="panelTop">
+        <div
+          id="canvasName"
+          style="float: left; font-size: 16px; font-weight: bold"
+        >
+          Practice Test 2 - Reading Part 1: Reading Correspondence
+        </div>
+
+        <div style="float: right" class="btnNext span1 pull-right">
+          <a
+            href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest5/OPT5/View/8b544c68-cb39-4ece-a645-d28de9d1801b#"
+            id="btnNext"
+            class="btn btn-primary"
+            >NEXT</a
+          >
+        </div>
+
+        <div style="float: right; display: block" id="timer" class="hide">
+          Time remaining: <strong>10 minutes</strong>
+        </div>
+      </div>
+
+      <div id="mainContent">
+        <script id="dropDownListTemplate" type="text/template">
+          {{#each this}}
+              <div class="ddrow">
+                  {{Text}}
+                  <div class='dd'>
+                      <div class='ddToggle'>▾</div>
+                      <div class='ddMenu'>
+                          <ul data-id="{{Id}}">
+                          {{#each Choices}}
+                              <li data-id="{{Id}}">{{Text}}</li>
+                          {{/each}}
+                          </ul>
+                      </div>
+                  </div>
+              </div>
+          {{/each}}
+        </script>
+
+        <script id="dropDownListInlineTemplate" type="text/template">
+          <div class='dd'>
+              <div class='ddToggle'>▾</div>
+              <div class='ddMenu'>
+                  <ul data-id="{{Id}}">
+                  {{#each Choices}}
+                      <li data-id="{{Id}}">{{Text}}</li>
+                  {{/each}}
+                  </ul>
+              </div>
+          </div>
+        </script>
+
+        <script id="dropDownListInFrontTemplate" type="text/template">
+          {{#each this}}
+          <div class="ddrow">
+              <div class='dd'>
+                  <div class='ddToggle'>▾</div>
+                  <div class='ddMenu'>
+                      <ul data-id="{{Id}}">
+                          {{#each Choices}}
+                          <li data-id="{{Id}}">{{Text}}</li>
+                          {{/each}}
+                      </ul>
+                  </div>
+              </div>
+              &nbsp;-
+              {{Text}}
+          </div>
+          {{/each}}
+        </script>
+
+        <div id="panelLeft" style="width: 50%; height: 730px" class="graybg">
+          <div class="row1">
+            <div class="instruction" style="margin-bottom: 30px">
+              Read the following message.
+            </div>
+            <div>
+              From: &lt;s.sychov@email.com&gt;<br />
+              To: &lt;pam.wilkes@dfsb.ca&gt;<br />
+              Subject: Requesting Extra Help for French<br /><br />
+
+              <p>Dear Ms. Wilkes,</p>
+
+              <p>
+                My name is Sergiy Sychov, and I am Nadia’s father. Although I
+                have driven from work to the school to get Nadia a few times, we
+                have not yet had a chance to formally meet.
+              </p>
+
+              <p>
+                Nadia has spoken very highly of you since the first day of
+                school. Every evening at dinner, she tells us “a Ms. Wilkes
+                story.” The stories are usually about something funny you told
+                the class or an interesting way you teach, such as having the
+                students sing a song in order to learn one of your math lessons.
+                I think she is your biggest fan!
+              </p>
+
+              <p>
+                The reason I am writing to you is that I am worried about Nadia
+                keeping up in French class. Our family immigrated to Canada from
+                the Ukraine just last year. Nadia has done very well with
+                learning English since we arrived, but we are concerned about
+                her French. You know what they say—kids are like sponges when it
+                comes to learning languages! But, as French is her third
+                language, I wonder if she is struggling more than the other
+                kids. When we ask her about French class, she usually lowers her
+                head and says she doesn’t want to talk about it.
+              </p>
+
+              <p>
+                I have called the school’s main office and spoken with someone,
+                but, since I don’t know the French teacher’s name, I’m hoping
+                you can tell me how to get in touch with her. Also, since you
+                are clearly a passionate educator, I would be very grateful if
+                you had any suggestions for us to make sure Nadia doesn’t fall
+                behind. I know that the school year is just getting started, but
+                I don’t want to wait until it is too late for her to catch up. I
+                have heard that some families hire private tutors or sign their
+                kids up for after-school lessons. Would you be able to recommend
+                either a class or a tutor? She could use some help in science as
+                well.
+              </p>
+
+              <p>
+                Thank you for any help you can give us. If you think it would be
+                a good idea, I would be happy to meet with you or the French
+                teacher sometime this week to talk about Nadia.
+              </p>
+
+              <p>
+                Sincerely, <br /><br />
+                Sergiy Sychov
+              </p>
+            </div>
+
+            <div class="box hide" id="infoBox">
+              <div class="boxIcon">
+                <em class="info-icon"></em>
+              </div>
+              <div class="boxText">
+                <div>
+                  <p>Click "NEXT" to continue.</p>
                 </div>
+              </div>
+            </div>
 
-                <ul class="nav" style="margin-top:8px;">
+            <div class="box hide" id="playAudioBox">
+              <div class="boxIcon">
+                <em class="play-icon"></em>
+              </div>
+              <div class="boxText">
+                <div>Playing...</div>
+                <div class="progressbar">
+                  <span class="progressbar-value"
+                    ><em style="left: 0%" class="progressbar-cover"></em>
+                  </span>
+                </div>
+              </div>
+            </div>
 
-                    <li class="dropdown">
+            <div id="audioDiv"></div>
+          </div>
+        </div>
 
-                        <a class="dropdown-toggle" data-toggle="dropdown" style="margin-top: 10px;">
-                            Selected Product: <span id="selected-product">CELPIP-General Practice Tests, Set 5</span>
-                            <b class="caret"></b>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/FreeOnlineSampleTest/FOST">Free CELPIP-General Practice Tests (Starter Set)</a></li>
-                            <li><a href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/FreeOnlineSampleTest/FOST2">Free CELPIP-General LS Practice Tests (Starter Set)</a></li>
+        <div id="panelRight" style="width: 50%; height: 730px" class="bluebg">
+          <div class="row1">
+            <div class="instruction" style="margin-bottom: 15px">
+              Using the drop-down menu (
+              <span
+                class="caret"
+                style="margin-top: 7px; border-top: 4px solid #1a578a"
+              ></span>
+              ), choose the <span style="color: #4789ac">best</span> option
+              according to the information given in the message.
+            </div>
 
+            <div
+              id="multipleChoices"
+              class="wellBlueBG"
+              style="margin-bottom: 20px"
+            >
+              <div class="ddrow">
+                1. Sergiy and Ms. Wilkes
+                <div class="dd">
+                  <div class="ddToggle">▾</div>
+                  <div class="ddMenu">
+                    <ul data-id="a5631464-2128-486a-b35a-3fa65fb43d72">
+                      <li data-id="4988fe94-b27f-4cbb-b257-8bd240b3dd5e">
+                        both speak highly of each other.
+                      </li>
 
-                                    <li><a href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest/PT">CELPIP-General Practice Tests, Set 1</a></li>
-                                    <li><a href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest2/OPT2">CELPIP-General Practice Tests, Set 2</a></li>
-                                    <li><a href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest3/OPT3">CELPIP-General Practice Tests, Set 3</a></li>
-                                    <li><a href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest4/OPT4">CELPIP-General Practice Tests, Set 4</a></li>
-                                    <li><a href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest5/OPT5">CELPIP-General Practice Tests, Set 5</a></li>
-                                    <li><a href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest6/OPT6">CELPIP-General Practice Tests, Set 6</a></li>
-                                    <li><a href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest7/OPT7">CELPIP-General Practice Tests, Set 7</a></li>
-                                    <li><a href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest8/OPT8">CELPIP-General Practice Tests, Set 8</a></li>
-                                    <li><a href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest9/OPT9">CELPIP-General Practice Tests, Set 9</a></li>
-                                    <li><a href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest10/OPT10">CELPIP-General Practice Tests, Set 10</a></li>
-                                        <li><a target="_blank" href="https://testprep.paragontesting.ca/api/sso/v2/sso/jwt?jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6Imh5cDIyMThAZ21haWwuY29tIiwiZmlyc3RfbmFtZSI6IllpLVBpbmciLCJsYXN0X25hbWUiOiJIbyIsIm5hbWVpZCI6IjIyMzc0ODgiLCJpYXQiOjE3NDMwMTQ4NTgsImp0aSI6MTMzMTY5MzI0NSwibmJmIjoxNzQzMDE0NTU4fQ.vombAmsXR4PjcbftTx-zfS_VBh45TuR5bzQbADWDfSM&amp;return_to=https%3A%2F%2Ftestprep.paragontesting.ca%2Fbundles%2Fcelpip-accelerate-starter-celpip-general">CELPIP Accelerate Starter - Reading and Writing</a></li>
-                                        <li><a target="_blank" href="https://testprep.paragontesting.ca/api/sso/v2/sso/jwt?jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6Imh5cDIyMThAZ21haWwuY29tIiwiZmlyc3RfbmFtZSI6IllpLVBpbmciLCJsYXN0X25hbWUiOiJIbyIsIm5hbWVpZCI6IjIyMzc0ODgiLCJpYXQiOjE3NDMwMTQ4NTgsImp0aSI6NjQ4MzY0MTc5LCJuYmYiOjE3NDMwMTQ1NTh9.2Aoph4fUP49i9FaG_ZpK7JXZrMp7a0_bev_GRF3-KAk&amp;return_to=https%3A%2F%2Ftestprep.paragontesting.ca%2Fbundles%2Fcelpip-accelerate-starter-celpip-general-ls">CELPIP Accelerate Starter - Listening and Speaking</a></li>
-                        </ul>
+                      <li data-id="34197dc1-a722-48d7-8dcb-f08c87316b94">
+                        do not personally know each other.
+                      </li>
 
+                      <li data-id="4a416fa2-9a3d-4843-b79f-45b4e424ad42">
+                        have an appointment to meet soon.
+                      </li>
+
+                      <li data-id="cdcc1ab5-cee5-4c07-ba4b-363b16ced1a9">
+                        know the girl's other teachers.
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <div class="ddrow">
+                2. We know for sure that Ms. Wilkes teaches
+                <div class="dd">
+                  <div class="ddToggle">▾</div>
+                  <div class="ddMenu">
+                    <ul data-id="63dc06ba-b14d-4c62-9d72-e627f1a5d70c">
+                      <li data-id="03ad351e-2825-48d4-8341-b03fb97fa34c">
+                        math.
+                      </li>
+
+                      <li data-id="fe951c85-217f-49f3-8ed2-98963480f490">
+                        English.
+                      </li>
+
+                      <li data-id="29d49d1b-b689-491f-b1da-4695f74e4a72">
+                        French.
+                      </li>
+
+                      <li data-id="b8192942-ac35-4272-8450-07719b05304c">
+                        science.
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <div class="ddrow">
+                3. The email indicates that Nadia
+                <div class="dd">
+                  <div class="ddToggle">▾</div>
+                  <div class="ddMenu">
+                    <ul data-id="78432599-149c-450d-aa61-801de35469a7">
+                      <li data-id="4257598e-7837-4f06-b203-7c83c8294f0c">
+                        is good at learning mathematics.
+                      </li>
+
+                      <li data-id="cd5b97e5-5acd-45ab-a7f6-d22c9dd832fb">
+                        pays attention in Ms. Wilkes' class.
+                      </li>
+
+                      <li data-id="0899264f-5810-489d-a7a9-fb403e6fcc64">
+                        can sing funny songs in French.
+                      </li>
+
+                      <li data-id="7fbba999-70b4-4c38-961e-829d785ccb0b">
+                        wants Ms. Wilkes as a private tutor.
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <div class="ddrow">
+                4. Sergiy is likely writing this email
+                <div class="dd">
+                  <div class="ddToggle">▾</div>
+                  <div class="ddMenu">
+                    <ul data-id="6fbdc21f-e42c-4f50-9ce7-e6ac2bbeaf1a">
+                      <li data-id="fb9b0a93-8910-407c-acbd-824d1ca6f65a">
+                        during the summer holidays.
+                      </li>
+
+                      <li data-id="fc5e3a78-0ecb-4bd4-a794-d67d81d96aa4">
+                        at the end of the school year.
+                      </li>
+
+                      <li data-id="802a655a-1c43-4133-8108-c58d0e2327e1">
+                        near the December holiday.
+                      </li>
+
+                      <li data-id="440c6ecd-b49c-4d6f-b5bc-77dffdaceb95">
+                        near the start of the school year.
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <div class="ddrow">
+                5. Nadia seems to
+                <div class="dd">
+                  <div class="ddToggle">▾</div>
+                  <div class="ddMenu">
+                    <ul data-id="74a2279b-8066-4135-ac1f-2a71e5e6be6e">
+                      <li data-id="77033d16-34db-46dd-b09c-8f42aa97fd66">
+                        look forward to French class.
+                      </li>
+
+                      <li data-id="46d090fa-c558-486a-9bc1-a8ecc041b4fd">
+                        be uncomfortable about French class.
+                      </li>
+
+                      <li data-id="d4192673-d440-48bc-be7e-b220cd273417">
+                        participate often in French class.
+                      </li>
+
+                      <li data-id="e736e020-9ee1-4dad-a0dd-a0899186ee2b">
+                        talk often about French class.
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <div class="ddrow">
+                6. Sergiy’s main purpose for writing the email is to
+
+                <div class="dd">
+                  <div class="ddToggle">▾</div>
+                  <div class="ddMenu">
+                    <ul data-id="0ecf1e03-0c61-4037-a345-3422474662e4">
+                      <li data-id="49746314-0dbd-4367-8a76-feffe7128a85">
+                        ask what work Nadia has missed.
+                      </li>
+
+                      <li data-id="7d1fed34-69d2-46cd-95be-a198de1d86d5">
+                        compliment an effective teacher.
+                      </li>
+
+                      <li data-id="a6133c0b-6d80-48ff-89be-5def02e64870">
+                        find out why Nadia dislikes French.
+                      </li>
+
+                      <li data-id="7cac1079-b8ae-4781-881d-076c554c1f01">
+                        obtain information and advice.
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="instruction">
+              Here is a response to the message. Complete the response by
+              filling in the blanks. Select the
+              <span style="color: #4789ac">best</span> choice for each blank
+              from the drop-down
+              <br />
+              menu (
+              <span
+                class="caret"
+                style="margin-top: 7px; border-top: 4px solid #1a578a"
+              ></span>
+              ).
+            </div>
+
+            <div
+              id="inlineDropDown"
+              class="wellBlueBG"
+              style="margin-top: 20px; margin-bottom: 20px; line-height: 2em"
+            >
+              <p>
+                From:&lt;pam.wilkes@dfsb.ca&gt;<br />
+                To:&lt;s.sychov@email.com&gt;<br />
+                Subject: Re: Requesting Extra Help for French
+              </p>
+
+              Hello Mr. Sychov,
+              <br /><br />
+              I did not realize that Nadia is such 7.
+              <div class="dd">
+                <div class="ddToggle">▾</div>
+                <div class="ddMenu">
+                  <ul data-id="74878e03-acb7-4fa0-9567-b2e1fb7f5d21">
+                    <li data-id="4ae6a1cb-c4d8-4f63-bc10-03ebde521ff5">
+                      a recent
                     </li>
 
-                    <li>
-                        <div style="margin-left: 19px">
-                            <ul class="nav nav-pills header-buttons">
-                                
-                            </ul>
-                        </div>
+                    <li data-id="625f96f2-b0d7-47bd-8131-b069922d350a">
+                      a reluctant
                     </li>
-                </ul>
 
-                <ul class="nav pull-right" style="margin-top:17px">
-                        <li class="dropdown">
-                            <a class="dropdown-toggle dropdown-email" data-toggle="dropdown">
-                                <img src="./5-2-1_files/fa_cog.png" style="width:18px; height: 18px; margin-top:-5px">
-                                hyp2218@gmail.com
-                                <b class="caret"></b>
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li><a href="javascript:document.getElementById(&#39;logoutForm&#39;).submit()">Sign out</a></li>
-                            </ul>
-                        </li>
-                </ul>
+                    <li data-id="a71484a7-36db-4b4e-b106-a2055bc6d6f1">
+                      an unhappy
+                    </li>
+
+                    <li data-id="da8851bc-e9b0-4739-aff4-9ce8421cc087">
+                      an anxious
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              newcomer! As you say, her English is 8.
+              <div class="dd">
+                <div class="ddToggle">▾</div>
+                <div class="ddMenu">
+                  <ul data-id="07b152b4-3fff-4a6c-8ea9-e09f7c33d28f">
+                    <li data-id="e8d72e45-150e-412c-b1d0-a6bc37bb15ab">
+                      challenging
+                    </li>
+
+                    <li data-id="2b9983df-670d-4192-abca-93fb57915681">
+                      fluent
+                    </li>
+
+                    <li data-id="cd2d31fb-0c45-44a8-abb9-d8f2304abf21">
+                      intermediate
+                    </li>
+
+                    <li data-id="aabaa250-7b69-4525-a597-ad9b59ce7b37">
+                      native
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              . With regard to Nadia’s French, I appreciate that you are willing
+              to 9.
+              <div class="dd">
+                <div class="ddToggle">▾</div>
+                <div class="ddMenu">
+                  <ul data-id="b8ccb562-b426-4e0c-91ce-fddb8ff43f3e">
+                    <li data-id="59b624fa-f6b1-426a-9f67-061f18d4af93">
+                      change schools
+                    </li>
+
+                    <li data-id="b8a797dc-c1e9-4748-9724-68491cfc8d32">
+                      spend money
+                    </li>
+
+                    <li data-id="6207ae1c-7c9e-4fea-a306-a804492977d5">
+                      drive some distance
+                    </li>
+
+                    <li data-id="e499daab-a298-43cd-b2c7-2226fd62a9d8">
+                      take time off work
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              to get her some extra help, but that may not be necessary. Let’s
+              explore other options first. I’m surprised our main office has 10.
+              <div class="dd">
+                <div class="ddToggle">▾</div>
+                <div class="ddMenu">
+                  <ul data-id="3be8130c-a837-485f-899a-95f3edc29fd3">
+                    <li data-id="2316b3dd-0c87-4dcb-a4fd-fd130d59d6d5">
+                      not been very helpful
+                    </li>
+
+                    <li data-id="f959eed6-c7bc-4de5-ae10-8c179ac1e68e">
+                      been closed when you called
+                    </li>
+
+                    <li data-id="45adf025-8721-45bb-b300-508a02e77786">
+                      given you the wrong information
+                    </li>
+
+                    <li data-id="8cca66b7-22cc-46f6-ab43-75eeb72db07c">
+                      discouraged a meeting
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              . Our French teacher’s name is Sylvie Gagnon, and she can be
+              reached at sylvie.gagnon@dfsb.ca. If I can be of any assistance,
+              let me know.
+              <br /><br />
+              In the meantime, I thank you for 11.
+              <div class="dd">
+                <div class="ddToggle">▾</div>
+                <div class="ddMenu">
+                  <ul data-id="405827ae-0de2-41f2-9c6b-ac77a0ed4297">
+                    <li data-id="206c5000-4175-426f-97fd-e252ca5f0db9">
+                      bringing to my attention Nadia's love for music theory
+                    </li>
+
+                    <li data-id="003ace0d-95ed-42a4-b83f-6d5ae510e7aa">
+                      your kind words about my efforts to engage the class
+                    </li>
+
+                    <li data-id="7ce301ec-4a38-4d55-be5d-0fd99065938c">
+                      sharing Nadia's recent language test results with me
+                    </li>
+
+                    <li data-id="d7a01d3d-b5de-491b-b638-3abd1ad9a7c7">
+                      your suggestions about teaching through storytelling
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              !
+              <br /><br />
+              Yours truly,
+              <br /><br />
+              Ms. Pam Wilkes
             </div>
-        </div>
-<form action="https://instructionalproducts.paragontesting.ca/InstructionalProducts/Account/LogOff" id="logoutForm" method="post"></form>    </header>
-
-    <div class="container" id="main-container" style="height: 773px;">
-<link href="./5-2-1_files/ptStyle.css" rel="stylesheet" type="text/css">
-<link href="./5-2-1_files/video-js.css" rel="stylesheet">
-<script src="./5-2-1_files/video.js.下載"></script>
-<script>
-    paragon.pt.backUrl = "/InstructionalProducts/PracticeTest5/OPT5/View/7b639fcc-d2ca-46bf-8372-93c1fd2085d7";
-    paragon.pt.nextUrl = "/InstructionalProducts/PracticeTest5/OPT5/View/599304ec-1184-4782-b80d-412c8593f989";
-    if (paragon.pt.backUrl.length > 0 || paragon.pt.nextUrl.length > 0) {
-        paragon.footerVisible = true;
-    }
-
-    paragon.pt.items = [
-  {
-    "Id": "a5631464-2128-486a-b35a-3fa65fb43d72",
-    "ContentId": "e40641aa-6755-4d43-a09a-0e5f6eb5bcc8",
-    "Num": 1,
-    "Text": "1. Sergiy and Ms. Wilkes    ",
-    "ExtraField1": "",
-    "Choices": [
-      {
-        "Id": "4988fe94-b27f-4cbb-b257-8bd240b3dd5e",
-        "ItemId": "a5631464-2128-486a-b35a-3fa65fb43d72",
-        "ChoiceData": null,
-        "Num": 1,
-        "Text": "both speak highly of each other."
-      },
-      {
-        "Id": "34197dc1-a722-48d7-8dcb-f08c87316b94",
-        "ItemId": "a5631464-2128-486a-b35a-3fa65fb43d72",
-        "ChoiceData": null,
-        "Num": 2,
-        "Text": "do not personally know each other. "
-      },
-      {
-        "Id": "4a416fa2-9a3d-4843-b79f-45b4e424ad42",
-        "ItemId": "a5631464-2128-486a-b35a-3fa65fb43d72",
-        "ChoiceData": null,
-        "Num": 3,
-        "Text": "have an appointment to meet soon."
-      },
-      {
-        "Id": "cdcc1ab5-cee5-4c07-ba4b-363b16ced1a9",
-        "ItemId": "a5631464-2128-486a-b35a-3fa65fb43d72",
-        "ChoiceData": null,
-        "Num": 4,
-        "Text": "know the girl's other teachers."
-      }
-    ]
-  },
-  {
-    "Id": "63dc06ba-b14d-4c62-9d72-e627f1a5d70c",
-    "ContentId": "e40641aa-6755-4d43-a09a-0e5f6eb5bcc8",
-    "Num": 2,
-    "Text": "2. We know for sure that Ms. Wilkes teaches ",
-    "ExtraField1": "",
-    "Choices": [
-      {
-        "Id": "03ad351e-2825-48d4-8341-b03fb97fa34c",
-        "ItemId": "63dc06ba-b14d-4c62-9d72-e627f1a5d70c",
-        "ChoiceData": null,
-        "Num": 1,
-        "Text": "math."
-      },
-      {
-        "Id": "fe951c85-217f-49f3-8ed2-98963480f490",
-        "ItemId": "63dc06ba-b14d-4c62-9d72-e627f1a5d70c",
-        "ChoiceData": null,
-        "Num": 2,
-        "Text": "English."
-      },
-      {
-        "Id": "29d49d1b-b689-491f-b1da-4695f74e4a72",
-        "ItemId": "63dc06ba-b14d-4c62-9d72-e627f1a5d70c",
-        "ChoiceData": null,
-        "Num": 3,
-        "Text": "French."
-      },
-      {
-        "Id": "b8192942-ac35-4272-8450-07719b05304c",
-        "ItemId": "63dc06ba-b14d-4c62-9d72-e627f1a5d70c",
-        "ChoiceData": null,
-        "Num": 4,
-        "Text": "science."
-      }
-    ]
-  },
-  {
-    "Id": "78432599-149c-450d-aa61-801de35469a7",
-    "ContentId": "e40641aa-6755-4d43-a09a-0e5f6eb5bcc8",
-    "Num": 3,
-    "Text": "3. The email indicates that Nadia       ",
-    "ExtraField1": "",
-    "Choices": [
-      {
-        "Id": "4257598e-7837-4f06-b203-7c83c8294f0c",
-        "ItemId": "78432599-149c-450d-aa61-801de35469a7",
-        "ChoiceData": null,
-        "Num": 1,
-        "Text": "is good at learning mathematics."
-      },
-      {
-        "Id": "cd5b97e5-5acd-45ab-a7f6-d22c9dd832fb",
-        "ItemId": "78432599-149c-450d-aa61-801de35469a7",
-        "ChoiceData": null,
-        "Num": 2,
-        "Text": "pays attention in Ms. Wilkes' class."
-      },
-      {
-        "Id": "0899264f-5810-489d-a7a9-fb403e6fcc64",
-        "ItemId": "78432599-149c-450d-aa61-801de35469a7",
-        "ChoiceData": null,
-        "Num": 3,
-        "Text": "can sing funny songs in French."
-      },
-      {
-        "Id": "7fbba999-70b4-4c38-961e-829d785ccb0b",
-        "ItemId": "78432599-149c-450d-aa61-801de35469a7",
-        "ChoiceData": null,
-        "Num": 4,
-        "Text": "wants Ms. Wilkes as a private tutor."
-      }
-    ]
-  },
-  {
-    "Id": "6fbdc21f-e42c-4f50-9ce7-e6ac2bbeaf1a",
-    "ContentId": "e40641aa-6755-4d43-a09a-0e5f6eb5bcc8",
-    "Num": 4,
-    "Text": "4. Sergiy is likely writing this email  ",
-    "ExtraField1": "",
-    "Choices": [
-      {
-        "Id": "fb9b0a93-8910-407c-acbd-824d1ca6f65a",
-        "ItemId": "6fbdc21f-e42c-4f50-9ce7-e6ac2bbeaf1a",
-        "ChoiceData": null,
-        "Num": 1,
-        "Text": "during the summer holidays."
-      },
-      {
-        "Id": "fc5e3a78-0ecb-4bd4-a794-d67d81d96aa4",
-        "ItemId": "6fbdc21f-e42c-4f50-9ce7-e6ac2bbeaf1a",
-        "ChoiceData": null,
-        "Num": 2,
-        "Text": "at the end of the school year."
-      },
-      {
-        "Id": "802a655a-1c43-4133-8108-c58d0e2327e1",
-        "ItemId": "6fbdc21f-e42c-4f50-9ce7-e6ac2bbeaf1a",
-        "ChoiceData": null,
-        "Num": 3,
-        "Text": "near the December holiday."
-      },
-      {
-        "Id": "440c6ecd-b49c-4d6f-b5bc-77dffdaceb95",
-        "ItemId": "6fbdc21f-e42c-4f50-9ce7-e6ac2bbeaf1a",
-        "ChoiceData": null,
-        "Num": 4,
-        "Text": "near the start of the school year."
-      }
-    ]
-  },
-  {
-    "Id": "74a2279b-8066-4135-ac1f-2a71e5e6be6e",
-    "ContentId": "e40641aa-6755-4d43-a09a-0e5f6eb5bcc8",
-    "Num": 5,
-    "Text": "5. Nadia seems to   ",
-    "ExtraField1": "",
-    "Choices": [
-      {
-        "Id": "77033d16-34db-46dd-b09c-8f42aa97fd66",
-        "ItemId": "74a2279b-8066-4135-ac1f-2a71e5e6be6e",
-        "ChoiceData": null,
-        "Num": 1,
-        "Text": "look forward to French class."
-      },
-      {
-        "Id": "46d090fa-c558-486a-9bc1-a8ecc041b4fd",
-        "ItemId": "74a2279b-8066-4135-ac1f-2a71e5e6be6e",
-        "ChoiceData": null,
-        "Num": 2,
-        "Text": "be uncomfortable about French class."
-      },
-      {
-        "Id": "d4192673-d440-48bc-be7e-b220cd273417",
-        "ItemId": "74a2279b-8066-4135-ac1f-2a71e5e6be6e",
-        "ChoiceData": null,
-        "Num": 3,
-        "Text": "participate often in French class."
-      },
-      {
-        "Id": "e736e020-9ee1-4dad-a0dd-a0899186ee2b",
-        "ItemId": "74a2279b-8066-4135-ac1f-2a71e5e6be6e",
-        "ChoiceData": null,
-        "Num": 4,
-        "Text": "talk often about French class."
-      }
-    ]
-  },
-  {
-    "Id": "0ecf1e03-0c61-4037-a345-3422474662e4",
-    "ContentId": "e40641aa-6755-4d43-a09a-0e5f6eb5bcc8",
-    "Num": 6,
-    "Text": "6. Sergiy’s main purpose for writing the email is to    \r\n",
-    "ExtraField1": "",
-    "Choices": [
-      {
-        "Id": "49746314-0dbd-4367-8a76-feffe7128a85",
-        "ItemId": "0ecf1e03-0c61-4037-a345-3422474662e4",
-        "ChoiceData": null,
-        "Num": 1,
-        "Text": "ask what work Nadia has missed."
-      },
-      {
-        "Id": "7d1fed34-69d2-46cd-95be-a198de1d86d5",
-        "ItemId": "0ecf1e03-0c61-4037-a345-3422474662e4",
-        "ChoiceData": null,
-        "Num": 2,
-        "Text": "compliment an effective teacher."
-      },
-      {
-        "Id": "a6133c0b-6d80-48ff-89be-5def02e64870",
-        "ItemId": "0ecf1e03-0c61-4037-a345-3422474662e4",
-        "ChoiceData": null,
-        "Num": 3,
-        "Text": "find out why Nadia dislikes French."
-      },
-      {
-        "Id": "7cac1079-b8ae-4781-881d-076c554c1f01",
-        "ItemId": "0ecf1e03-0c61-4037-a345-3422474662e4",
-        "ChoiceData": null,
-        "Num": 4,
-        "Text": "obtain information and advice."
-      }
-    ]
-  },
-  {
-    "Id": "74878e03-acb7-4fa0-9567-b2e1fb7f5d21",
-    "ContentId": "e40641aa-6755-4d43-a09a-0e5f6eb5bcc8",
-    "Num": 7,
-    "Text": "",
-    "ExtraField1": "",
-    "Choices": [
-      {
-        "Id": "4ae6a1cb-c4d8-4f63-bc10-03ebde521ff5",
-        "ItemId": "74878e03-acb7-4fa0-9567-b2e1fb7f5d21",
-        "ChoiceData": null,
-        "Num": 1,
-        "Text": "a recent"
-      },
-      {
-        "Id": "625f96f2-b0d7-47bd-8131-b069922d350a",
-        "ItemId": "74878e03-acb7-4fa0-9567-b2e1fb7f5d21",
-        "ChoiceData": null,
-        "Num": 2,
-        "Text": "a reluctant"
-      },
-      {
-        "Id": "a71484a7-36db-4b4e-b106-a2055bc6d6f1",
-        "ItemId": "74878e03-acb7-4fa0-9567-b2e1fb7f5d21",
-        "ChoiceData": null,
-        "Num": 3,
-        "Text": "an unhappy"
-      },
-      {
-        "Id": "da8851bc-e9b0-4739-aff4-9ce8421cc087",
-        "ItemId": "74878e03-acb7-4fa0-9567-b2e1fb7f5d21",
-        "ChoiceData": null,
-        "Num": 4,
-        "Text": "an anxious"
-      }
-    ]
-  },
-  {
-    "Id": "07b152b4-3fff-4a6c-8ea9-e09f7c33d28f",
-    "ContentId": "e40641aa-6755-4d43-a09a-0e5f6eb5bcc8",
-    "Num": 8,
-    "Text": "",
-    "ExtraField1": "",
-    "Choices": [
-      {
-        "Id": "e8d72e45-150e-412c-b1d0-a6bc37bb15ab",
-        "ItemId": "07b152b4-3fff-4a6c-8ea9-e09f7c33d28f",
-        "ChoiceData": null,
-        "Num": 1,
-        "Text": "challenging"
-      },
-      {
-        "Id": "2b9983df-670d-4192-abca-93fb57915681",
-        "ItemId": "07b152b4-3fff-4a6c-8ea9-e09f7c33d28f",
-        "ChoiceData": null,
-        "Num": 2,
-        "Text": "fluent"
-      },
-      {
-        "Id": "cd2d31fb-0c45-44a8-abb9-d8f2304abf21",
-        "ItemId": "07b152b4-3fff-4a6c-8ea9-e09f7c33d28f",
-        "ChoiceData": null,
-        "Num": 3,
-        "Text": "intermediate"
-      },
-      {
-        "Id": "aabaa250-7b69-4525-a597-ad9b59ce7b37",
-        "ItemId": "07b152b4-3fff-4a6c-8ea9-e09f7c33d28f",
-        "ChoiceData": null,
-        "Num": 4,
-        "Text": "native"
-      }
-    ]
-  },
-  {
-    "Id": "b8ccb562-b426-4e0c-91ce-fddb8ff43f3e",
-    "ContentId": "e40641aa-6755-4d43-a09a-0e5f6eb5bcc8",
-    "Num": 9,
-    "Text": "",
-    "ExtraField1": "",
-    "Choices": [
-      {
-        "Id": "59b624fa-f6b1-426a-9f67-061f18d4af93",
-        "ItemId": "b8ccb562-b426-4e0c-91ce-fddb8ff43f3e",
-        "ChoiceData": null,
-        "Num": 1,
-        "Text": "change schools"
-      },
-      {
-        "Id": "b8a797dc-c1e9-4748-9724-68491cfc8d32",
-        "ItemId": "b8ccb562-b426-4e0c-91ce-fddb8ff43f3e",
-        "ChoiceData": null,
-        "Num": 2,
-        "Text": "spend money"
-      },
-      {
-        "Id": "6207ae1c-7c9e-4fea-a306-a804492977d5",
-        "ItemId": "b8ccb562-b426-4e0c-91ce-fddb8ff43f3e",
-        "ChoiceData": null,
-        "Num": 3,
-        "Text": "drive some distance"
-      },
-      {
-        "Id": "e499daab-a298-43cd-b2c7-2226fd62a9d8",
-        "ItemId": "b8ccb562-b426-4e0c-91ce-fddb8ff43f3e",
-        "ChoiceData": null,
-        "Num": 4,
-        "Text": "take time off work "
-      }
-    ]
-  },
-  {
-    "Id": "3be8130c-a837-485f-899a-95f3edc29fd3",
-    "ContentId": "e40641aa-6755-4d43-a09a-0e5f6eb5bcc8",
-    "Num": 10,
-    "Text": "",
-    "ExtraField1": "",
-    "Choices": [
-      {
-        "Id": "2316b3dd-0c87-4dcb-a4fd-fd130d59d6d5",
-        "ItemId": "3be8130c-a837-485f-899a-95f3edc29fd3",
-        "ChoiceData": null,
-        "Num": 1,
-        "Text": "not been very helpful"
-      },
-      {
-        "Id": "f959eed6-c7bc-4de5-ae10-8c179ac1e68e",
-        "ItemId": "3be8130c-a837-485f-899a-95f3edc29fd3",
-        "ChoiceData": null,
-        "Num": 2,
-        "Text": "been closed when you called"
-      },
-      {
-        "Id": "45adf025-8721-45bb-b300-508a02e77786",
-        "ItemId": "3be8130c-a837-485f-899a-95f3edc29fd3",
-        "ChoiceData": null,
-        "Num": 3,
-        "Text": "given you the wrong information"
-      },
-      {
-        "Id": "8cca66b7-22cc-46f6-ab43-75eeb72db07c",
-        "ItemId": "3be8130c-a837-485f-899a-95f3edc29fd3",
-        "ChoiceData": null,
-        "Num": 4,
-        "Text": "discouraged a meeting"
-      }
-    ]
-  },
-  {
-    "Id": "405827ae-0de2-41f2-9c6b-ac77a0ed4297",
-    "ContentId": "e40641aa-6755-4d43-a09a-0e5f6eb5bcc8",
-    "Num": 11,
-    "Text": "",
-    "ExtraField1": "",
-    "Choices": [
-      {
-        "Id": "206c5000-4175-426f-97fd-e252ca5f0db9",
-        "ItemId": "405827ae-0de2-41f2-9c6b-ac77a0ed4297",
-        "ChoiceData": null,
-        "Num": 1,
-        "Text": "bringing to my attention Nadia's love for music theory"
-      },
-      {
-        "Id": "003ace0d-95ed-42a4-b83f-6d5ae510e7aa",
-        "ItemId": "405827ae-0de2-41f2-9c6b-ac77a0ed4297",
-        "ChoiceData": null,
-        "Num": 2,
-        "Text": "your kind words about my efforts to engage the class"
-      },
-      {
-        "Id": "7ce301ec-4a38-4d55-be5d-0fd99065938c",
-        "ItemId": "405827ae-0de2-41f2-9c6b-ac77a0ed4297",
-        "ChoiceData": null,
-        "Num": 3,
-        "Text": "sharing Nadia's recent language test results with me"
-      },
-      {
-        "Id": "d7a01d3d-b5de-491b-b638-3abd1ad9a7c7",
-        "ItemId": "405827ae-0de2-41f2-9c6b-ac77a0ed4297",
-        "ChoiceData": null,
-        "Num": 4,
-        "Text": "your suggestions about teaching through storytelling"
-      }
-    ]
-  }
-]
-</script>
-
-<div id="panelTop">
-
-    <div id="canvasName" style="float: left; font-size: 16px; font-weight: bold;">
-        Practice Test 2 - Reading Part 1: Reading Correspondence
-    </div>
-
-    <div style="float: right;" class="btnNext span1 pull-right">
-                <a href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest5/OPT5/View/8b544c68-cb39-4ece-a645-d28de9d1801b#" id="btnNext" class="btn btn-primary">NEXT</a>
-
-    </div>
-
-    <div style="float: right; display: block;" id="timer" class="hide">
-        Time remaining: <strong>10 minutes</strong>
-    </div>
-
-</div>
-
-<div id="mainContent">
-    
-
-<script id="dropDownListTemplate" type="text/template">
-{{#each this}}
-    <div class="ddrow">
-        {{Text}}
-        <div class='dd'>
-            <div class='ddToggle'>▾</div>
-            <div class='ddMenu'>
-                <ul data-id="{{Id}}">
-                {{#each Choices}}
-                    <li data-id="{{Id}}">{{Text}}</li>
-                {{/each}}
-                </ul>
-            </div>
-        </div>
-    </div>
-{{/each}}
-</script>
-
-<script id="dropDownListInlineTemplate" type="text/template">
-    <div class='dd'>
-        <div class='ddToggle'>▾</div>
-        <div class='ddMenu'>
-            <ul data-id="{{Id}}">
-            {{#each Choices}}
-                <li data-id="{{Id}}">{{Text}}</li>
-            {{/each}}
-            </ul>
-        </div>
-    </div>
-</script>
-
-<script id="dropDownListInFrontTemplate" type="text/template">
-    {{#each this}}
-    <div class="ddrow">
-        <div class='dd'>
-            <div class='ddToggle'>▾</div>
-            <div class='ddMenu'>
-                <ul data-id="{{Id}}">
-                    {{#each Choices}}
-                    <li data-id="{{Id}}">{{Text}}</li>
-                    {{/each}}
-                </ul>
-            </div>
-        </div>
-        &nbsp;-
-        {{Text}}
-    </div>
-    {{/each}}
-</script>
-
-<div id="panelLeft" style="width: 50%; height: 730px;" class="graybg">
-    <div class="row1">
-        <div class="instruction" style="margin-bottom: 30px;">Read the following message.  </div>
-        <div>From: &lt;s.sychov@email.com&gt;<br>
-To: &lt;pam.wilkes@dfsb.ca&gt;<br>
-Subject: Requesting Extra Help for French<br><br>
-
-<p>Dear Ms. Wilkes,</p>
-
-<p>My name is Sergiy Sychov, and I am Nadia’s father. Although I have driven from work to the school to get Nadia a few times, we have not yet had a chance to formally meet.</p>
-
-<p>Nadia has spoken very highly of you since the first day of school. Every evening at dinner, she tells us “a Ms. Wilkes story.” The stories are usually about something funny you told the class or an interesting way you teach, such as having the students sing a song in order to learn one of your math lessons. I think she is your biggest fan!</p>
-
-<p>The reason I am writing to you is that I am worried about Nadia keeping up in French class. Our family immigrated to Canada from the Ukraine just last year. Nadia has done very well with learning English since we arrived, but we are concerned about her French. You know what they say—kids are like sponges when it comes to learning languages! But, as French is her third language, I wonder if she is struggling more than the other kids. When we ask her about French class, she usually lowers her head and says she doesn’t want to talk about it.</p>
-
-<p>I have called the school’s main office and spoken with someone, but, since I don’t know the French teacher’s name, I’m hoping you can tell me how to get in touch with her. Also, since you are clearly a passionate educator, I would be very grateful if you had any suggestions for us to make sure Nadia doesn’t fall behind. I know that the school year is just getting started, but I don’t want to wait until it is too late for her to catch up. I have heard that some families hire private tutors or sign their kids up for after-school lessons. Would you be able to recommend either a class or a tutor? She could use some help in science as well.</p>
-
-<p>Thank you for any help you can give us. If you think it would be a good idea, I would be happy to meet with you or the French teacher sometime this week to talk about Nadia.</p>
-
-<p>Sincerely,
-<br><br>
-Sergiy Sychov</p></div>
-        
-        <div class="box hide" id="infoBox">
-    <div class="boxIcon">
-        <em class="info-icon"></em>
-    </div>
-    <div class="boxText">
-        <div>
-            <p>Click "NEXT" to continue.</p>
-        </div>
-    </div>
-</div>
-
-<div class="box hide" id="playAudioBox">
-    <div class="boxIcon">
-        <em class="play-icon"></em>
-    </div>
-    <div class="boxText">
-        <div>Playing...</div>
-        <div class="progressbar">
-            <span class="progressbar-value"><em style="left: 0%;" class="progressbar-cover"></em>
-            </span>
-        </div>
-    </div>
-</div>
-
-<div id="audioDiv"></div>
-
-
-    </div>
-</div>
-
-<div id="panelRight" style="width: 50%; height: 730px;" class="bluebg">
-    <div class="row1">
-        <div class="instruction" style="margin-bottom: 15px;">
-            Using the drop-down menu ( <span class="caret" style="margin-top:7px; border-top: 4px solid #1A578A"></span> ), choose the <span style="color: #4789AC;">best</span> option according to the information given in the message.
-        </div>
-        
-        <div id="multipleChoices" class="wellBlueBG" style="margin-bottom: 20px;">
-
-    <div class="ddrow">
-        1. Sergiy and Ms. Wilkes    
-        <div class="dd">
-            <div class="ddToggle">▾</div>
-            <div class="ddMenu">
-                <ul data-id="a5631464-2128-486a-b35a-3fa65fb43d72">
-                
-                    <li data-id="4988fe94-b27f-4cbb-b257-8bd240b3dd5e">both speak highly of each other.</li>
-                
-                    <li data-id="34197dc1-a722-48d7-8dcb-f08c87316b94">do not personally know each other. </li>
-                
-                    <li data-id="4a416fa2-9a3d-4843-b79f-45b4e424ad42">have an appointment to meet soon.</li>
-                
-                    <li data-id="cdcc1ab5-cee5-4c07-ba4b-363b16ced1a9">know the girl's other teachers.</li>
-                
-                </ul>
-            </div>
-        </div>
-    </div>
-
-    <div class="ddrow">
-        2. We know for sure that Ms. Wilkes teaches 
-        <div class="dd">
-            <div class="ddToggle">▾</div>
-            <div class="ddMenu">
-                <ul data-id="63dc06ba-b14d-4c62-9d72-e627f1a5d70c">
-                
-                    <li data-id="03ad351e-2825-48d4-8341-b03fb97fa34c">math.</li>
-                
-                    <li data-id="fe951c85-217f-49f3-8ed2-98963480f490">English.</li>
-                
-                    <li data-id="29d49d1b-b689-491f-b1da-4695f74e4a72">French.</li>
-                
-                    <li data-id="b8192942-ac35-4272-8450-07719b05304c">science.</li>
-                
-                </ul>
-            </div>
-        </div>
-    </div>
-
-    <div class="ddrow">
-        3. The email indicates that Nadia       
-        <div class="dd">
-            <div class="ddToggle">▾</div>
-            <div class="ddMenu">
-                <ul data-id="78432599-149c-450d-aa61-801de35469a7">
-                
-                    <li data-id="4257598e-7837-4f06-b203-7c83c8294f0c">is good at learning mathematics.</li>
-                
-                    <li data-id="cd5b97e5-5acd-45ab-a7f6-d22c9dd832fb">pays attention in Ms. Wilkes' class.</li>
-                
-                    <li data-id="0899264f-5810-489d-a7a9-fb403e6fcc64">can sing funny songs in French.</li>
-                
-                    <li data-id="7fbba999-70b4-4c38-961e-829d785ccb0b">wants Ms. Wilkes as a private tutor.</li>
-                
-                </ul>
-            </div>
-        </div>
-    </div>
-
-    <div class="ddrow">
-        4. Sergiy is likely writing this email  
-        <div class="dd">
-            <div class="ddToggle">▾</div>
-            <div class="ddMenu">
-                <ul data-id="6fbdc21f-e42c-4f50-9ce7-e6ac2bbeaf1a">
-                
-                    <li data-id="fb9b0a93-8910-407c-acbd-824d1ca6f65a">during the summer holidays.</li>
-                
-                    <li data-id="fc5e3a78-0ecb-4bd4-a794-d67d81d96aa4">at the end of the school year.</li>
-                
-                    <li data-id="802a655a-1c43-4133-8108-c58d0e2327e1">near the December holiday.</li>
-                
-                    <li data-id="440c6ecd-b49c-4d6f-b5bc-77dffdaceb95">near the start of the school year.</li>
-                
-                </ul>
-            </div>
-        </div>
-    </div>
-
-    <div class="ddrow">
-        5. Nadia seems to   
-        <div class="dd">
-            <div class="ddToggle">▾</div>
-            <div class="ddMenu">
-                <ul data-id="74a2279b-8066-4135-ac1f-2a71e5e6be6e">
-                
-                    <li data-id="77033d16-34db-46dd-b09c-8f42aa97fd66">look forward to French class.</li>
-                
-                    <li data-id="46d090fa-c558-486a-9bc1-a8ecc041b4fd">be uncomfortable about French class.</li>
-                
-                    <li data-id="d4192673-d440-48bc-be7e-b220cd273417">participate often in French class.</li>
-                
-                    <li data-id="e736e020-9ee1-4dad-a0dd-a0899186ee2b">talk often about French class.</li>
-                
-                </ul>
-            </div>
-        </div>
-    </div>
-
-    <div class="ddrow">
-        6. Sergiy’s main purpose for writing the email is to    
-
-        <div class="dd">
-            <div class="ddToggle">▾</div>
-            <div class="ddMenu">
-                <ul data-id="0ecf1e03-0c61-4037-a345-3422474662e4">
-                
-                    <li data-id="49746314-0dbd-4367-8a76-feffe7128a85">ask what work Nadia has missed.</li>
-                
-                    <li data-id="7d1fed34-69d2-46cd-95be-a198de1d86d5">compliment an effective teacher.</li>
-                
-                    <li data-id="a6133c0b-6d80-48ff-89be-5def02e64870">find out why Nadia dislikes French.</li>
-                
-                    <li data-id="7cac1079-b8ae-4781-881d-076c554c1f01">obtain information and advice.</li>
-                
-                </ul>
-            </div>
-        </div>
-    </div>
-
-</div>
-
-        <div class="instruction">
-            Here is a response to the message. Complete the response by filling in the blanks. Select the <span style="color: #4789AC;">best</span> choice for each blank from the drop-down 
-            <br>
-            menu ( <span class="caret" style="margin-top:7px; border-top: 4px solid #1A578A"></span> ). 
+          </div>
         </div>
 
-        <div id="inlineDropDown" class="wellBlueBG" style="margin-top: 20px; margin-bottom: 20px; line-height: 2em;"><p>From:&lt;pam.wilkes@dfsb.ca&gt;<br>
-To:&lt;s.sychov@email.com&gt;<br>
-Subject: Re: Requesting Extra Help for French</p>
+        <script>
+          $(function () {
+            paragon.pt.timer.start(660);
 
-Hello Mr. Sychov,
-<br><br>
-I did not realize that Nadia is such 7.
-    <div class="dd">
-        <div class="ddToggle">▾</div>
-        <div class="ddMenu">
-            <ul data-id="74878e03-acb7-4fa0-9567-b2e1fb7f5d21">
-            
-                <li data-id="4ae6a1cb-c4d8-4f63-bc10-03ebde521ff5">a recent</li>
-            
-                <li data-id="625f96f2-b0d7-47bd-8131-b069922d350a">a reluctant</li>
-            
-                <li data-id="a71484a7-36db-4b4e-b106-a2055bc6d6f1">an unhappy</li>
-            
-                <li data-id="da8851bc-e9b0-4739-aff4-9ce8421cc087">an anxious</li>
-            
-            </ul>
+            var items1 = paragon.pt.items.slice(0, 6);
+            var items2 = paragon.pt.items.slice(6);
+
+            if (items2.length === 0) {
+              $(".instruction")[2].hidden = true;
+              $("#inlineDropDown").hide();
+            }
+
+            paragon.pt.dropDown.renderTemplate(
+              "/InstructionalProducts/PracticeTest5/OPT5/SaveUserResponse/",
+              "ecbbe55f-b677-43dc-aeff-a7ed258c2051",
+              $("#dropDownListTemplate").html(),
+              $("#multipleChoices"),
+              items1
+            );
+            paragon.pt.dropDown.renderInline(
+              "/InstructionalProducts/PracticeTest5/OPT5/SaveUserResponse/",
+              "ecbbe55f-b677-43dc-aeff-a7ed258c2051",
+              items2,
+              0,
+              items2.length - 1,
+              $("#inlineDropDown")
+            );
+
+            paragon.pt.dropDown.activate(
+              "/InstructionalProducts/PracticeTest5/OPT5/SaveUserResponse/",
+              "ecbbe55f-b677-43dc-aeff-a7ed258c2051"
+            );
+
+            $.ajax({
+              type: "POST",
+              url: "/InstructionalProducts/PracticeTest5/OPT5/GetUserResponses",
+              data: {
+                sectionId: "ecbbe55f-b677-43dc-aeff-a7ed258c2051",
+                items: JSON.stringify(paragon.pt.items),
+              },
+              success: function (data) {
+                var responses = data.responses;
+                for (var i = 0; i < responses.length; i++) {
+                  var currentResponse = responses[i];
+                  if (currentResponse != null) {
+                    var selected = $("ul").find(
+                      "[data-id=" + currentResponse.Answer + "]"
+                    );
+                    if (selected != null) {
+                      var toggle = $(selected).parent().parent().prev();
+                      $(toggle).addClass("ddToggle1");
+                      $(toggle).html(selected.html());
+                      $(selected).addClass("selected");
+                    }
+                  }
+                }
+              },
+            });
+
+            //show scroll bar
+            if (
+              document.getElementById("multipleChoices").childElementCount > 1
+            ) {
+              paragon.pt.showScrollBar($("#panelLeft"), $("#panelRight"));
+            }
+
+            paragon.pt.showReadingAnswerKeyBtn(
+              "ecbbe55f-b677-43dc-aeff-a7ed258c2051"
+            );
+          });
+        </script>
+      </div>
+
+      <div
+        id="dlgTest"
+        class="modal hide fade"
+        tabindex="-1"
+        role="dialog"
+        aria-hidden="true"
+      >
+        <div class="modal-header">
+          <h4>Test</h4>
         </div>
-    </div>
- newcomer! As you say, her English is 8.
-    <div class="dd">
-        <div class="ddToggle">▾</div>
-        <div class="ddMenu">
-            <ul data-id="07b152b4-3fff-4a6c-8ea9-e09f7c33d28f">
-            
-                <li data-id="e8d72e45-150e-412c-b1d0-a6bc37bb15ab">challenging</li>
-            
-                <li data-id="2b9983df-670d-4192-abca-93fb57915681">fluent</li>
-            
-                <li data-id="cd2d31fb-0c45-44a8-abb9-d8f2304abf21">intermediate</li>
-            
-                <li data-id="aabaa250-7b69-4525-a597-ad9b59ce7b37">native</li>
-            
-            </ul>
+        <div class="modal-body">
+          <p>test</p>
         </div>
-    </div>
-. With regard to Nadia’s French, I appreciate that you are willing to 9.
-    <div class="dd">
-        <div class="ddToggle">▾</div>
-        <div class="ddMenu">
-            <ul data-id="b8ccb562-b426-4e0c-91ce-fddb8ff43f3e">
-            
-                <li data-id="59b624fa-f6b1-426a-9f67-061f18d4af93">change schools</li>
-            
-                <li data-id="b8a797dc-c1e9-4748-9724-68491cfc8d32">spend money</li>
-            
-                <li data-id="6207ae1c-7c9e-4fea-a306-a804492977d5">drive some distance</li>
-            
-                <li data-id="e499daab-a298-43cd-b2c7-2226fd62a9d8">take time off work </li>
-            
-            </ul>
+        <div class="modal-footer">
+          <button class="btn" data-dismiss="modal" aria-hidden="true">
+            Close
+          </button>
         </div>
-    </div>
- to get her some extra help, but that may not be necessary. Let’s explore other options first. I’m surprised our main office has 10.
-    <div class="dd">
-        <div class="ddToggle">▾</div>
-        <div class="ddMenu">
-            <ul data-id="3be8130c-a837-485f-899a-95f3edc29fd3">
-            
-                <li data-id="2316b3dd-0c87-4dcb-a4fd-fd130d59d6d5">not been very helpful</li>
-            
-                <li data-id="f959eed6-c7bc-4de5-ae10-8c179ac1e68e">been closed when you called</li>
-            
-                <li data-id="45adf025-8721-45bb-b300-508a02e77786">given you the wrong information</li>
-            
-                <li data-id="8cca66b7-22cc-46f6-ab43-75eeb72db07c">discouraged a meeting</li>
-            
-            </ul>
+      </div>
+
+      <div
+        id="dlgUnansweredWarning"
+        class="modal hide fade"
+        tabindex="-1"
+        role="dialog"
+      >
+        <div class="modal-body">
+          <p>
+            No answer(s) selected. On the official test, if you go to the next
+            page, you will no longer be able to answer the question(s) on this
+            page.
+          </p>
         </div>
-    </div>
-. Our French teacher’s name is Sylvie Gagnon, and she can be reached at sylvie.gagnon@dfsb.ca. If I can be of any assistance, let me know.
-<br><br>
-In the meantime, I thank you for 11.
-    <div class="dd">
-        <div class="ddToggle">▾</div>
-        <div class="ddMenu">
-            <ul data-id="405827ae-0de2-41f2-9c6b-ac77a0ed4297">
-            
-                <li data-id="206c5000-4175-426f-97fd-e252ca5f0db9">bringing to my attention Nadia's love for music theory</li>
-            
-                <li data-id="003ace0d-95ed-42a4-b83f-6d5ae510e7aa">your kind words about my efforts to engage the class</li>
-            
-                <li data-id="7ce301ec-4a38-4d55-be5d-0fd99065938c">sharing Nadia's recent language test results with me</li>
-            
-                <li data-id="d7a01d3d-b5de-491b-b638-3abd1ad9a7c7">your suggestions about teaching through storytelling</li>
-            
-            </ul>
+        <div class="modal-footer">
+          <button
+            class="btn btn-primary"
+            data-dismiss="modal"
+            style="color: white"
+          >
+            Keep working on this page
+          </button>
+          <button
+            class="btn"
+            data-dismiss="modal"
+            onclick="paragon.pt.skipToNext()"
+          >
+            Skip and go to the next page
+          </button>
         </div>
+      </div>
     </div>
-!
-<br><br>
-Yours truly,
-<br><br>
-Ms. Pam Wilkes</div>
+    <div class="container hide" id="footer" style="display: block">
+      <div class="row">
+        <div id="leftBtn" class="span7" align="left">
+          <a
+            href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest5/OPT5/View/a0a62c03-708f-458f-8d60-72cfd6a46291"
+            id="backToResultbtn"
+            class="btn"
+            >Answer Key</a
+          >
+        </div>
+        <div class="span5">
+          <a
+            href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest5/OPT5/View/8b544c68-cb39-4ece-a645-d28de9d1801b#"
+            id="btnBack"
+            class="btn btn1 hide btn-danger"
+            style="display: inline"
+            >BACK</a
+          >
+        </div>
+      </div>
     </div>
-</div>
-
-<script>
-    $(function () {
-
-
-        paragon.pt.timer.start(660);
-
-        var items1 = paragon.pt.items.slice(0, 6);
-        var items2 = paragon.pt.items.slice(6);
-
-        if (items2.length === 0) {
-            $('.instruction')[2].hidden = true;
-            $('#inlineDropDown').hide();
-        }
-        
-        paragon.pt.dropDown.renderTemplate("/InstructionalProducts/PracticeTest5/OPT5/SaveUserResponse/", "ecbbe55f-b677-43dc-aeff-a7ed258c2051", $('#dropDownListTemplate').html(), $('#multipleChoices'), items1);
-        paragon.pt.dropDown.renderInline("/InstructionalProducts/PracticeTest5/OPT5/SaveUserResponse/", "ecbbe55f-b677-43dc-aeff-a7ed258c2051", items2, 0, items2.length - 1, $("#inlineDropDown"));
-
-        paragon.pt.dropDown.activate("/InstructionalProducts/PracticeTest5/OPT5/SaveUserResponse/", "ecbbe55f-b677-43dc-aeff-a7ed258c2051");
-
-        $.ajax({
-            type: "POST",
-            url: "/InstructionalProducts/PracticeTest5/OPT5/GetUserResponses",
-                data: { 'sectionId': 'ecbbe55f-b677-43dc-aeff-a7ed258c2051', 'items': JSON.stringify(paragon.pt.items) },
-                       success: function (data) {
-                           var responses = data.responses;
-                           for (var i = 0; i < responses.length; i++) {
-                               var currentResponse = responses[i];
-                               if (currentResponse != null) {
-                                   var selected = $('ul').find('[data-id=' + currentResponse.Answer + ']');
-                                   if (selected != null) {
-                                       var toggle = $(selected).parent().parent().prev();
-                                       $(toggle).addClass('ddToggle1');
-                                       $(toggle).html(selected.html());
-                                       $(selected).addClass('selected');
-                                   }
-                               }
-                           }
-                       }
-        });
-
-        //show scroll bar
-        if (document.getElementById("multipleChoices").childElementCount > 1) {
-            paragon.pt.showScrollBar($('#panelLeft'), $('#panelRight'));
-        }
-
-        paragon.pt.showReadingAnswerKeyBtn("ecbbe55f-b677-43dc-aeff-a7ed258c2051");
-
-
-    });
-</script>
-
-</div>
-
-<div id="dlgTest" class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-header">
-        <h4>Test</h4>
-    </div>
-    <div class="modal-body">
-        <p>test</p>
-    </div>
-    <div class="modal-footer">
-        <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
-    </div>
-</div>
-
-<div id="dlgUnansweredWarning" class="modal hide fade" tabindex="-1" role="dialog">
-    <div class="modal-body">
-        <p>No answer(s) selected. On the official test, if you go to the next page, you will no longer be able to answer the question(s) on this page.</p>
-    </div>
-    <div class="modal-footer">
-        <button class="btn btn-primary" data-dismiss="modal" style="color: white;">Keep working on this page</button>
-        <button class="btn" data-dismiss="modal" onclick="paragon.pt.skipToNext()">Skip and go to the next page</button>
-    </div>
-</div>
-
-</div>
-    <div class="container hide" id="footer" style="display: block;">
-        <div class="row">
-    <div id="leftBtn" class="span7" align="left"><a href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest5/OPT5/View/a0a62c03-708f-458f-8d60-72cfd6a46291" id="backToResultbtn" class="btn">Answer Key</a></div>
-    <div class="span5">
-        <a href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest5/OPT5/View/8b544c68-cb39-4ece-a645-d28de9d1801b#" id="btnBack" class="btn btn1 hide btn-danger" style="display: inline;">BACK</a>
-        
-    </div>
-</div>
-
-    </div>
-    <div class="container" style="text-align: center; font-size: 0.9em; color: #53565A; padding-top: 20px;">
-        <p>Copyright 2025 - Paragon Testing Enterprises   |    <a href="https://www.celpip.ca/" target="_blank">www.celpip.ca</a>    |    <a href="https://www.celpip.ca/contact/" target="_blank">Contact Us</a></p>
+    <div
+      class="container"
+      style="
+        text-align: center;
+        font-size: 0.9em;
+        color: #53565a;
+        padding-top: 20px;
+      "
+    >
+      <p>
+        Copyright 2025 - Paragon Testing Enterprises |
+        <a href="https://www.celpip.ca/" target="_blank">www.celpip.ca</a> |
+        <a href="https://www.celpip.ca/contact/" target="_blank">Contact Us</a>
+      </p>
     </div>
 
     <div id="block" class="modal-backdrop hide"></div>
     <div id="unsupported" class="modal hide" tabindex="-1">
-        <div class="modal-body">
-            <h3>Unsupported screen resolution</h3>
-            <p>This product requires a minimum screen resolution of 1024 x 768.</p>
-        </div>
+      <div class="modal-body">
+        <h3>Unsupported screen resolution</h3>
+        <p>This product requires a minimum screen resolution of 1024 x 768.</p>
+      </div>
     </div>
 
-
     <script>
-        $(function () {
-            paragon.verifyDisplaySize();
+      $(function () {
+        paragon.verifyDisplaySize();
 
-            $(window).resize(function () {
-                paragon.verifyDisplaySize();
-            });
+        $(window).resize(function () {
+          paragon.verifyDisplaySize();
         });
+      });
     </script>
 
-
-    
     <script>
-        paragon.pt.showAlert = function (msg) {
-            $('#dlgTest .modal-body p').html(msg);
-            $('#dlgTest').modal();
+      paragon.pt.showAlert = function (msg) {
+        $("#dlgTest .modal-body p").html(msg);
+        $("#dlgTest").modal();
+      };
+
+      paragon.pt.skipToNext = function () {
+        paragon.pt.nextItem(
+          "/InstructionalProducts/PracticeTest5/OPT5/SaveCanvasData",
+          "",
+          "8b544c68-cb39-4ece-a645-d28de9d1801b",
+          "ecbbe55f-b677-43dc-aeff-a7ed258c2051",
+          2
+        );
+        paragon.pt.goNext();
+      };
+
+      $(function () {
+        if (paragon.footerVisible == true) {
+          paragon.showFooter();
         }
 
-        paragon.pt.skipToNext = function () {
-            paragon.pt.nextItem("/InstructionalProducts/PracticeTest5/OPT5/SaveCanvasData",'', "8b544c68-cb39-4ece-a645-d28de9d1801b", "ecbbe55f-b677-43dc-aeff-a7ed258c2051", 2);
-            paragon.pt.goNext();
+        if (paragon.pt.backUrl.length > 0) {
+          $("#btnBack").click(function () {
+            paragon.pt.goBack();
+          });
+          paragon.pt.showBackButton();
         }
 
-        $(function () {
-            if (paragon.footerVisible == true) {
-                paragon.showFooter();
-            }
-
-            if (paragon.pt.backUrl.length > 0) {
-                $("#btnBack").click(function () {
-                    paragon.pt.goBack();
-                });
-                paragon.pt.showBackButton();
-            }
-
-            $("#btnNext").click(function () {
-                var url = "";
-                if (29  == 24 || 29  == 25) {
-                    url = "/InstructionalProducts/PracticeTest5/OPT5/GetUserResponse/";
-                }
-                else {
-                    url = "/InstructionalProducts/PracticeTest5/OPT5/GetUserResponses/";
-                }
-                var unanswered = paragon.pt.countUnansweredQuestionsFromDb(29, "ecbbe55f-b677-43dc-aeff-a7ed258c2051", url);
-                if (unanswered > 0) {
-                    $('#dlgUnansweredWarning').modal();
-                }
-                else {
-                    paragon.pt.skipToNext();
-                }
-            });
-
-            if (paragon.pt.nextUrl.length > 0) {
-                paragon.pt.showNextButton();
-            }
-
-
+        $("#btnNext").click(function () {
+          var url = "";
+          if (29 == 24 || 29 == 25) {
+            url = "/InstructionalProducts/PracticeTest5/OPT5/GetUserResponse/";
+          } else {
+            url = "/InstructionalProducts/PracticeTest5/OPT5/GetUserResponses/";
+          }
+          var unanswered = paragon.pt.countUnansweredQuestionsFromDb(
+            29,
+            "ecbbe55f-b677-43dc-aeff-a7ed258c2051",
+            url
+          );
+          if (unanswered > 0) {
+            $("#dlgUnansweredWarning").modal();
+          } else {
+            paragon.pt.skipToNext();
+          }
         });
 
-        $(".links-main").click(function () {
-            var href = "/InstructionalProducts/PracticeTest5/OPT5/";
-            window.location = href;
+        if (paragon.pt.nextUrl.length > 0) {
+          paragon.pt.showNextButton();
+        }
+      });
 
-        });
-
+      $(".links-main").click(function () {
+        var href = "/InstructionalProducts/PracticeTest5/OPT5/";
+        window.location = href;
+      });
     </script>
+  </body>
+  <grammarly-desktop-integration data-grammarly-shadow-root="true"
+    ><template shadowrootmode="open"
+      ><style>
+        div.grammarly-desktop-integration {
+          position: absolute;
+          width: 1px;
+          height: 1px;
+          padding: 0;
+          margin: -1px;
+          overflow: hidden;
+          clip: rect(0, 0, 0, 0);
+          white-space: nowrap;
+          border: 0;
+          -moz-user-select: none;
+          -webkit-user-select: none;
+          -ms-user-select: none;
+          user-select: none;
+        }
 
-
-
-</body><grammarly-desktop-integration data-grammarly-shadow-root="true"><template shadowrootmode="open"><style>
-      div.grammarly-desktop-integration {
-        position: absolute;
-        width: 1px;
-        height: 1px;
-        padding: 0;
-        margin: -1px;
-        overflow: hidden;
-        clip: rect(0, 0, 0, 0);
-        white-space: nowrap;
-        border: 0;
-        -moz-user-select: none;
-        -webkit-user-select: none;
-        -ms-user-select:none;
-        user-select:none;
-      }
-
-      div.grammarly-desktop-integration:before {
-        content: attr(data-content);
-      }
-    </style><div aria-label="grammarly-integration" role="group" tabindex="-1" class="grammarly-desktop-integration" data-content="{&quot;mode&quot;:&quot;full&quot;,&quot;isActive&quot;:true,&quot;isUserDisabled&quot;:false}"></div></template></grammarly-desktop-integration></html>
+        div.grammarly-desktop-integration:before {
+          content: attr(data-content);
+        }
+      </style>
+      <div
+        aria-label="grammarly-integration"
+        role="group"
+        tabindex="-1"
+        class="grammarly-desktop-integration"
+        data-content='{"mode":"full","isActive":true,"isUserDisabled":false}'
+      ></div></template
+  ></grammarly-desktop-integration>
+</html>
