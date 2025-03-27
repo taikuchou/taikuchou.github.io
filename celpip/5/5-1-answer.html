@@ -1,0 +1,1332 @@
+<!DOCTYPE html>
+<!-- saved from url=(0130)https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest5/OPT5/View/fe5cd4c8-2c43-4a70-8de1-4c1bdf8e1421 -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><style>
+    a {
+        outline: 0;
+    }
+</style>
+
+
+
+    
+    <title>Practice Test</title>
+    <meta name="description">
+    <link href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/favicon.ico" rel="shortcut icon" type="image/x-icon">
+    <meta name="viewport" content="width=device-width">
+    <link href="./5-1-answer_files/bootstrap.css" rel="stylesheet">
+<link href="./5-1-answer_files/Site.css" rel="stylesheet">
+
+    <script src="./5-1-answer_files/399283786078546" async=""></script><script async="" src="./5-1-answer_files/fbevents.js.下載"></script><script src="./5-1-answer_files/jquery-1.9.1.min.js.下載"></script>
+
+    <script src="./5-1-answer_files/jquery.unobtrusive-ajax.min.js.下載"></script>
+
+    <script src="./5-1-answer_files/bootstrap.js.下載"></script>
+
+    <script src="./5-1-answer_files/handlebars.min.js.下載"></script>
+
+    <script src="./5-1-answer_files/instructional-product.js.下載"></script>
+
+    <script src="./5-1-answer_files/facebook-pixel.js.下載"></script>
+
+    <script>
+    paragon.pt = paragon.pt || {};
+    paragon.pt.backUrl = "";
+    paragon.pt.nextUrl = "";
+    paragon.pt.speakingPrepTimeLeft = 0;
+    paragon.pt.speakingRecordingTimeLeft = 0;
+    paragon.pt.itemIndex = 0;
+
+    paragon.pt.showAlert = function (msg) {
+        alert(msg);
+    }
+
+    paragon.pt.showBackButton = function () {
+        $("#btnBack").show();
+    }
+
+    paragon.pt.showNextButton = function () {
+        $("#btnNext").show();
+    }
+
+    paragon.pt.hideBackButton = function () {
+        $("#btnBack").hide();
+    }
+
+    paragon.pt.hideNextButton = function () {
+        $("#btnNext").hide();
+    }
+
+    paragon.pt.goNext = function () {
+        window.location = paragon.pt.nextUrl;
+    }
+
+    paragon.pt.goBack = function () {
+        window.location = paragon.pt.backUrl;
+    }
+
+    //Timer For Listening, Reading and Writing
+    paragon.pt.timer = paragon.pt.timer || {};
+    paragon.pt.timer.totalTime = 0;
+    paragon.pt.timer.timeLeft = 0;
+    paragon.pt.timer.interval = null;
+    paragon.pt.timer.start = function (timeLeft) {
+        paragon.pt.timer.timeLeft = timeLeft;
+        paragon.pt.timer.totalTime = timeLeft
+        var minutes = Math.floor(timeLeft / 60);
+        var seconds = timeLeft - minutes * 60;
+
+        if (minutes < 1) {
+            $("#timer strong").html(seconds + " seconds");
+            $("#timer strong").attr("style", "color:red");
+        }
+        else if (minutes == 1) {
+            $("#timer strong").html(minutes + " minute");
+        }
+        else {
+            $("#timer strong").html(minutes + " minutes");
+        }
+
+        $("#timer").show();
+
+        if (paragon.pt.timer.interval)
+            window.clearInterval(paragon.pt.timer.interval);
+
+        paragon.pt.timer.interval = window.setInterval(function () { paragon.pt.timer.deductTime() }, 1000);
+
+        paragon.showFooter();
+    }
+
+    paragon.pt.timer.deductTime = function () {
+        if (paragon.pt.timer.timeLeft > 0) {
+            paragon.pt.timer.timeLeft -= 1;
+
+            var minutes = Math.floor(paragon.pt.timer.timeLeft / 60);
+            var seconds = paragon.pt.timer.timeLeft - minutes * 60;
+
+            if (minutes < 1) {
+                $("#timer strong").html(seconds + " seconds");
+                $("#timer strong").attr("style", "color:red");
+            }
+            else if (minutes == 1) {
+                $("#timer strong").html(minutes + " minute");
+            }
+            else {
+                $("#timer strong").html(minutes + " minutes");
+            }
+        }
+        else {
+            window.clearInterval(paragon.pt.timer.interval);
+            $("#timer strong").html("None");
+        }
+    }
+
+    //Timer For Speaking, work in progress
+    paragon.pt.showTimerSpeaking = function (prepTime, recordingTime) {
+        paragon.pt.speakingPrepTimeLeft = prepTime;
+        paragon.pt.speakingRecordingTimeLeft = recordingTime;
+        $("#timerSpeaking strong:first-child").html(prepTime + " seconds");
+        $("#timerSpeaking strong:last-child").html(recordingTime + " seconds");
+        $("#timerSpeaking").show();
+        paragon.showFooter();
+    }
+
+    paragon.pt.userResponse = paragon.pt.userResponse || {};
+
+    paragon.pt.uploadMultipleChoicesValue = function (url, sectionId, itemId, choiceId) {
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: { sectionId: sectionId, itemId: itemId, choiceId: choiceId },
+            dataType: "json",
+            cache: false,
+            success: function (json) {
+                console.log(json);
+                console.log("ItemId: " + itemId + ", " + "ChoiceId: " + choiceId);
+            }
+        });
+    }
+
+    paragon.pt.activateMultipleChoices = function (url, sectionId) {
+        $(document).delegate(".multipleChoices li", "click", function () {
+            var ul = $(this).parent();
+            ul.find("li").removeClass("selected");
+            $(this).addClass("selected");
+
+            paragon.pt.uploadMultipleChoicesValue(url, sectionId, ul.data("id"), $(this).data("id"));
+        });
+    }
+
+    paragon.pt.renderMultipleChoices = function (url, sectionId, item, renderItemText, hasImage, renderChoiceText) {
+        var template;
+        if (renderItemText == true) {
+            if (hasImage == true) {
+                template = Handlebars.compile($("#multipleChoicesTemplateWithItemTextAndImage").html());
+            }
+            else {
+                template = Handlebars.compile($("#multipleChoicesTemplateWithItemText").html());
+            }
+        }
+        else {
+            if (hasImage == true) {
+
+                if (renderChoiceText == true) {
+                    template = Handlebars.compile($("#multipleChoicesTemplateWithImage").html());
+                }
+                else {
+                    template = Handlebars.compile($("#multipleChoicesTemplateWithImageNoText").html());
+                }
+            }
+            else {
+                template = Handlebars.compile($("#multipleChoicesTemplate").html());
+            }
+        }
+
+        $("#multipleChoices").html(template(item));
+
+        paragon.pt.activateMultipleChoices(url, sectionId);
+    }
+
+    //Drop down list
+    paragon.pt.dropDown = paragon.pt.dropDown || {};
+    paragon.pt.dropDown.activeMenu = null;
+    paragon.pt.dropDown.renderTemplate = function (url, sectionId, templateToRender, elementToRender, items) {
+        var template = Handlebars.compile(templateToRender);
+        $(elementToRender).html(template(items));
+    }
+
+    paragon.pt.dropDown.renderInline = function (url, sectionId, items, startIndex, endIndex, elementToRender) {
+
+        var template = Handlebars.compile($("#dropDownListInlineTemplate").html());
+        var text = elementToRender[0].innerHTML;
+        for (var i = startIndex; i <= endIndex; i++) {
+            text = text.replace("{" + items[i].Num + "}", template(items[i]));
+        }
+        //Handlebars.registerHelper('renderInline', function (src, items, startIndex, endIndex, options) {
+        //    var template = Handlebars.compile($("#dropDownListInlineTemplate").html());
+        //    for (var i = startIndex; i <= endIndex; i++) {
+        //        src = src.replace("{" + (i + 1) + "}", template(items[i]));
+        //    }
+        //    return src;
+        //});
+        $(elementToRender).html(text);
+    }
+
+    paragon.pt.dropDown.activate = function (url, sectionId) {
+
+        $(document.body).click(function () {
+            $(".dd").each(function (i) {
+                if (i != paragon.pt.dropDown.activeMenu) {
+                    $(this).find(".ddMenu").hide();
+                    $(this).removeClass('active');
+                }
+            });
+        });
+
+        $(".dd").mouseover(function () {
+            paragon.pt.dropDown.activeMenu = $(".dd").index(this);
+        }).mouseout(function () {
+            paragon.pt.dropDown.activeMenu = null;
+        });
+
+        $(".ddToggle").click(function () {
+            var parent = $(this).parent();
+            parent.toggleClass("active");
+            var ddMenu = parent.find(".ddMenu");
+            ddMenu.animate({ height: 'toggle', opacity: 'toggle' }, 100);
+            var left = $(this).position().left;
+            ddMenu.css("left", Math.round(left) + "px");
+
+            //place the dropDown menu 20px below the box
+            var top = parent.position().top;
+            ddMenu.css("top", Math.round(top) + 20 + "px");
+
+        });
+
+        $('.dd li').click(function () {
+            $(this).parent().find("li").removeClass("selected");
+            $(this).addClass("selected");
+            var parent = $(this).parent().parent().parent();
+            var ddToggle = parent.find(".ddToggle");
+            ddToggle.html($(this).html());
+            ddToggle.addClass("ddToggle1");
+            parent.find(".ddMenu").animate({ height: 'toggle', opacity: 'toggle' }, 400);
+            parent.removeClass('active');
+            var ul = $(this).parent();
+            paragon.pt.uploadMultipleChoicesValue(url, sectionId, ul.data("id"), $(this).data("id"));
+        });
+    }
+
+    paragon.pt.showInfoBox = function (message) {
+        var infoBox = $("#infoBox");
+        if (message)
+            $("#infoBox .boxText p").html(message);
+        infoBox.show();
+    }
+
+    paragon.pt.hideInfoBox = function () {
+        $("#infoBox").hide();
+    }
+
+    //Audio Playback for the Listening Component
+    paragon.pt.playAudio = paragon.pt.playAudio || {};
+    paragon.pt.playAudio.player = null;
+    paragon.pt.playAudio.totalTime = 0;
+    paragon.pt.playAudio.timeLeft = 0;
+    paragon.pt.playAudio.interval = null;
+    paragon.pt.playAudio.onDone = null;
+
+    paragon.pt.playAudio.start = function (playAudioTime) {
+        paragon.pt.hideInfoBox();
+        paragon.pt.playAudio.totalTime = playAudioTime;
+        paragon.pt.playAudio.timeLeft = playAudioTime;
+        if (paragon.pt.playAudio.interval)
+            window.clearInterval(paragon.pt.playAudio.interval);
+
+        $("#playAudioBox").fadeIn(1000);
+    }
+
+
+    //recording functions
+
+    paragon.pt.recording = paragon.pt.recording || {};
+    paragon.pt.recording.totalTime = 0;
+    paragon.pt.recording.timeLeft = 0;
+    paragon.pt.recording.interval = null;
+    paragon.pt.recording.onDone = null;
+
+    paragon.pt.recording.updateProgressBar = function () {
+        var percentage = 100 - (paragon.pt.recording.timeLeft / paragon.pt.recording.totalTime) * 100;
+        $("#startRecTime .progressbar-cover").css("left", percentage + "%");
+    }
+
+    paragon.pt.recording.deductTime = function () {
+        if (paragon.pt.recording.timeLeft > 0) {
+            paragon.pt.recording.timeLeft -= 1;
+            paragon.pt.recording.updateProgressBar();
+        }
+        else {
+            window.clearInterval(paragon.pt.recording.interval);
+            $("#startRecTime").hide();
+            paragon.pt.showNextButton();
+            if (paragon.pt.recording.onDone) {
+                paragon.pt.recording.onDone();
+            }
+        }
+    }
+
+    paragon.pt.recording.start = function (playAudioTime) {
+        paragon.pt.recording.totalTime = playAudioTime;
+        paragon.pt.recording.timeLeft = playAudioTime;
+        if (paragon.pt.recording.interval)
+            window.clearInterval(paragon.pt.recording.interval);
+
+        paragon.pt.recording.interval = window.setInterval(function () { paragon.pt.recording.deductTime() }, 1000);
+        paragon.pt.recording.updateProgressBar();
+        $("#startRecTime").fadeIn(1000);
+    }
+
+    //end recording
+
+    //preperation functions
+
+    paragon.pt.preparation = paragon.pt.preparation || {};
+    paragon.pt.preparation.totalTime = 0;
+    paragon.pt.preparation.timeLeft = 0;
+    paragon.pt.preparation.interval = null;
+    paragon.pt.preparation.onDone = null;
+    paragon.pt.preparation.startRecording = null;
+
+    paragon.pt.preparation.updateProgressBar = function () {
+        $("#startPrepTime #progressTimer").html(paragon.pt.preparation.timeLeft);
+    }
+
+    paragon.pt.preparation.deductTime = function () {
+        if (paragon.pt.preparation.timeLeft > 0) {
+            paragon.pt.preparation.timeLeft -= 1;
+            paragon.pt.preparation.updateProgressBar();
+        }
+        else {
+            window.clearInterval(paragon.pt.preparation.interval);
+            $("#startPrepTime").hide();
+            paragon.pt.showNextButton();
+            if (paragon.pt.preparation.onDone) {
+                paragon.pt.preparation.onDone();
+            }
+        }
+    }
+
+    paragon.pt.preparation.start = function (playAudioTime) {
+        paragon.pt.preparation.totalTime = playAudioTime;
+        paragon.pt.preparation.timeLeft = playAudioTime;
+        if (paragon.pt.preparation.interval)
+            window.clearInterval(paragon.pt.preparation.interval);
+
+        paragon.pt.preparation.interval = window.setInterval(function () { paragon.pt.preparation.deductTime() }, 1000);
+        paragon.pt.preparation.updateProgressBar();
+        $("#startPrepTime").fadeIn(1000);
+    }
+
+    //end prep functinos
+
+    paragon.pt.createAudioPlayer = function (contentUrl, audiofile) {
+        //create player if not exists
+        if (!paragon.pt.playAudio.player) {
+            paragon.pt.playAudio.player = document.createElement('audio');
+
+            paragon.pt.playAudio.player.controls = true;
+            paragon.pt.playAudio.player.controlsList = "nodownload";
+            paragon.pt.playAudio.player.oggSrc = document.createElement('source');
+            paragon.pt.playAudio.player.oggSrc.setAttribute('type', 'audio/ogg');
+            paragon.pt.playAudio.player.appendChild(paragon.pt.playAudio.player.oggSrc);
+
+            paragon.pt.playAudio.player.mp3Src = document.createElement('source');
+            paragon.pt.playAudio.player.mp3Src.setAttribute('type', 'audio/mp3');
+            paragon.pt.playAudio.player.appendChild(paragon.pt.playAudio.player.mp3Src);
+
+            paragon.pt.playAudio.player.ontimeupdate = function () {
+                var duration = paragon.pt.playAudio.player.duration;
+                var currentTime = paragon.pt.playAudio.player.currentTime;
+                if (duration) {
+                    var progress = (currentTime / duration) * 100;
+                    $("#playAudioBox .progressbar-cover").css("left", progress + "%");
+                    if (progress >= 100) {
+                        $("#playAudioBox").hide();
+                        paragon.pt.showInfoBox();
+                        paragon.pt.showNextButton();
+                        if (paragon.pt.playAudio.onDone) {
+                            paragon.pt.playAudio.onDone();
+                        }
+                    }
+                }
+            };
+
+            paragon.pt.playAudio.player.onplay = function () {
+                paragon.pt.playAudio.start(paragon.pt.playAudio.player.duration);
+            };
+        }
+
+        paragon.pt.playAudio.player.addEventListener("loadedmetadata", function (e) {
+            if (e.target) {
+                paragon.pt.playAudio.player.play();
+                paragon.pt.playAudio.start(e.target.duration);
+            }
+        });
+
+        paragon.pt.playAudio.player.oggSrc.setAttribute('src', contentUrl + audiofile + ".ogg");
+        paragon.pt.playAudio.player.mp3Src.setAttribute('src', contentUrl + audiofile + ".mp3");
+
+        paragon.pt.playAudio.player.load();
+        return paragon.pt.playAudio.player;
+    }
+
+
+    paragon.pt.moveScrollBar = function (div, scrollSize) {
+        div.animate({
+            scrollTop: scrollSize
+        }, 1200, function () {
+            div.animate({ scrollTop: 0 }, 300, function () {
+            });
+        });
+    }
+
+    paragon.pt.showScrollBar = function (leftDiv, rightDiv) {
+
+        if (rightDiv.length && rightDiv.is(":visible") && leftDiv.length && leftDiv.is(":visible")) {
+            $.blockUI({
+                message: "Scroll up and down to see everything.",
+                css: { width: '400px', border: '2px solid #000', top: '35%', padding: '50px', color: '#1A578A', fontWeight: 'bold' },
+                showOverlay: false
+            });
+
+            var rightScrollSize = rightDiv[0].scrollHeight;
+            var leftScrollSize = leftDiv[0].scrollHeight;
+            window.setTimeout(function () {
+                paragon.pt.moveScrollBar(rightDiv, rightScrollSize);
+                paragon.pt.moveScrollBar(leftDiv, leftScrollSize);
+
+                window.setTimeout(function () { $.unblockUI(); }, 2300);
+            }, 1400);
+
+
+        }
+
+    }
+
+    paragon.pt.wordCount = function () {
+        $(".writtenTextAreaBox").keyup(countWords);
+
+        function countWords() {
+            var text = " ";
+            if (this.value != "") {
+                var wordCount = this.value.match(/\S+/g).length;
+                if (wordCount == 1) { 
+                    text = wordCount + " word"; 
+                } else { 
+                    text = wordCount + " words";
+                }
+            }
+            document.getElementById("wordCount").innerHTML = text;
+        }
+    }
+
+    paragon.pt.calcSectionNumQuestion = function (sectionID) {
+        var pt1lpSection = sectionID;
+        $.post("/InstructionalProducts/PracticeTest5/OPT5/GetNumberOfQuestions", { sectionId: pt1lpSection }, function (data) { console.log(data); document.getElementById("numQuestion").innerHTML = data.totalQuestions-1 });
+    }
+
+    paragon.pt.calcSectionNumQuestionLS = function (sectionID) {
+        var pt1lpSection = sectionID;
+        $.post("/InstructionalProducts/PracticeTest5/OPT5LS/GetNumberOfQuestions", { sectionId: pt1lpSection }, function (data) { console.log(data); document.getElementById("numQuestion").innerHTML = data.totalQuestions-1 });
+    }
+
+    paragon.pt.calcListScoreGeneral = function (sectionID) {
+
+        $.post("/InstructionalProducts/PracticeTest5/OPT5/GetScoreOnSection", { sectionId: sectionID }, function (data) {
+            console.log(data); document.getElementById("yourScore").innerHTML = data.userScore;
+
+            var userLScore = data.userScore;
+
+            paragon.pt.findListScore(userLScore);
+
+        });
+    }
+
+    paragon.pt.calcListScoreLS = function (sectionID) {
+
+        $.post("/InstructionalProducts/PracticeTest5/OPT5LS/GetScoreOnSection", { sectionId: sectionID }, function (data) {
+            console.log(data); document.getElementById("yourScore").innerHTML = data.userScore;
+
+            var userLScore = data.userScore;
+
+            paragon.pt.findListScore(userLScore);
+
+        });
+    }
+
+    paragon.pt.findListScore = function (userLScore) {
+        if (userLScore <= 7) {
+            document.getElementById("celScore").innerHTML = "M";
+            return;
+        }
+        else if (userLScore <= 12) {
+            document.getElementById("celScore").innerHTML = "3";
+            return;
+        }
+        else if (userLScore <= 18) {
+            document.getElementById("celScore").innerHTML = "4";
+            return;
+        }
+        else if (userLScore <= 23) {
+            document.getElementById("celScore").innerHTML = "5";
+            return;
+        }
+        else if (userLScore <= 28) {
+            document.getElementById("celScore").innerHTML = "6";
+            return;
+        }
+        else if (userLScore <= 31) {
+            document.getElementById("celScore").innerHTML = "7";
+            return;
+        }
+        else if (userLScore <= 33) {
+            document.getElementById("celScore").innerHTML = "8";
+            return;
+        }
+        else if (userLScore <= 35) {
+          document.getElementById("celScore").innerHTML = "9";
+          return;
+          }
+          else {
+          document.getElementById("celScore").innerHTML = "10-12";
+          }
+          }
+
+          paragon.pt.calcListScoreOnYourScore = function (sectionScore, sectionCell) {
+
+          var userLScore = sectionScore;
+
+          if (userLScore <= 7) {
+                document.getElementById(sectionCell).innerHTML = "M";
+                return;
+            }
+            else if (userLScore <= 12) {
+                document.getElementById(sectionCell).innerHTML = "3";
+                return;
+            }
+            else if (userLScore <= 18) {
+                document.getElementById(sectionCell).innerHTML = "4";
+                return;
+            }
+            else if (userLScore <= 23) {
+                document.getElementById(sectionCell).innerHTML = "5";
+                return;
+            }
+            else if (userLScore <= 28) {
+                document.getElementById(sectionCell).innerHTML = "6";
+                return;
+            }
+            else if (userLScore <= 31) {
+                document.getElementById(sectionCell).innerHTML = "7";
+                return;
+            }
+            else if (userLScore <= 33) {
+                document.getElementById(sectionCell).innerHTML = "8";
+                return;
+            }
+            else if (userLScore <= 35) {
+                document.getElementById(sectionCell).innerHTML = "9";
+                return;
+            }
+            else {
+                document.getElementById(sectionCell).innerHTML = "10-12";
+            }
+
+
+    }
+
+    paragon.pt.calcReadScore = function (sectionID) {
+
+        $.post("/InstructionalProducts/PracticeTest5/OPT5/GetScoreOnSection", { sectionId: sectionID }, function (data) {
+            console.log(data); document.getElementById("yourScore").innerHTML = data.userScore;
+
+            var userRScore = data.userScore;
+
+            if (userRScore <= 7) {
+                document.getElementById("celScore").innerHTML = "M";
+                return;
+            }
+            else if (userRScore <= 11) {
+                document.getElementById("celScore").innerHTML = "3";
+                return;
+            }
+            else if (userRScore <= 16) {
+                document.getElementById("celScore").innerHTML = "4";
+                return;
+            }
+            else if (userRScore <= 20) {
+                document.getElementById("celScore").innerHTML = "5";
+                return;
+            }
+            else if (userRScore <= 25) {
+                document.getElementById("celScore").innerHTML = "6";
+                return;
+            }
+            else if (userRScore <= 28) {
+                document.getElementById("celScore").innerHTML = "7";
+                return;
+            }
+            else if (userRScore <= 31) {
+                document.getElementById("celScore").innerHTML = "8";
+                return;
+            }
+            else if (userRScore <= 33) {
+                document.getElementById("celScore").innerHTML = "9";
+                return;
+            }
+            else {
+                document.getElementById("celScore").innerHTML = "10-12";
+            }
+
+        });
+
+    }
+    paragon.pt.calcReadScoreOnYourScore = function (sectionScore, sectionCell) {
+
+        var userRScore = sectionScore;
+
+        if (userRScore <= 7) {
+            document.getElementById(sectionCell).innerHTML = "M";
+            return;
+        }
+        else if (userRScore <= 11) {
+            document.getElementById(sectionCell).innerHTML = "3";
+            return;
+        }
+        else if (userRScore <= 16) {
+            document.getElementById(sectionCell).innerHTML = "4";
+            return;
+        }
+        else if (userRScore <= 20) {
+            document.getElementById(sectionCell).innerHTML = "5";
+            return;
+        }
+        else if (userRScore <= 25) {
+            document.getElementById(sectionCell).innerHTML = "6";
+            return;
+        }
+        else if (userRScore <= 28) {
+            document.getElementById(sectionCell).innerHTML = "7";
+            return;
+        }
+        else if (userRScore <= 31) {
+            document.getElementById(sectionCell).innerHTML = "8";
+            return;
+        }
+        else if (userRScore <= 33) {
+            document.getElementById(sectionCell).innerHTML = "9";
+            return;
+        }
+        else {
+            document.getElementById(sectionCell).innerHTML = "10-12";
+        }
+    }
+
+
+    //HARDCODED
+    paragon.pt.showListeningAnswerKeyBtn = function (sectionId) {
+        if (sectionId == "f1b42af6-de33-467d-b10f-cdec9bf95b92") {
+            $('#leftBtn').html("<a href='bf767d13-4bb6-4af8-844a-ceb178b8a226' id='backToResultbtn' class='btn'>Answer Key</a>");
+        }
+
+        if (sectionId == "6f3648e4-e614-4bee-b350-e21a267d3492") {
+            $('#leftBtn').html("<a href='44f572ee-a621-429c-b762-7eb01f326e04' id='backToResultbtn' class='btn'>Answer Key</a>");
+        }
+        if (sectionId == "35615962-cb35-43bf-a9d6-aba7e7d64ba3") {
+            $('#leftBtn').html("<a href='50fa6e3d-0f9c-4eeb-bcd3-853bb9f0bc8d' id='backToResultbtn' class='btn'>Answer Key</a>");
+        }
+
+        if (sectionId == "a5df8773-7edc-4f91-8cea-0482168a9f10") {
+            $('#leftBtn').html("<a href='98b188af-fa9c-425d-bbfa-a37cb1d1c218' id='backToResultbtn' class='btn'>Answer Key</a>");
+        }
+    }
+
+    paragon.pt.showReadingAnswerKeyBtn = function (sectionId) {
+        if (sectionId == "9e3bcb00-09c7-4bd1-a232-72bf8b6d4e03") {
+            $('#leftBtn').html("<a href='fe5cd4c8-2c43-4a70-8de1-4c1bdf8e1421' id='backToResultbtn' class='btn'>Answer Key</a>");
+        }
+
+        if (sectionId == "ecbbe55f-b677-43dc-aeff-a7ed258c2051") {
+            $('#leftBtn').html("<a href='a0a62c03-708f-458f-8d60-72cfd6a46291' id='backToResultbtn' class='btn'>Answer Key</a>");
+        }
+    }
+
+    paragon.pt.nextItem = function (url, itemId, canvasId, sectionId, activityTypeId) {
+        $.post(
+            url,
+            {
+                itemId: itemId,
+                canvasId: canvasId,
+                sectionId: sectionId,
+                activityTypeId: activityTypeId
+            },
+            function (data) {
+                console.log(data);
+            }
+        );
+    }
+
+    paragon.pt.countUnansweredQuestionsFromDb = function (canvasTypeId, sectionId, url) {
+        switch (canvasTypeId) {
+            case 24: //PT04
+            case 25: // PT05
+                return paragon.pt.countSingleUnansweredItemFromDb(sectionId, url);
+                break;
+
+            case 26: //PT06
+            case 27: //PT07
+                if ($("#panelLeft").css('display') != 'none') {
+                    return 0;
+                }
+                else {
+                    return paragon.pt.countAllUnansweredItemsFromDb(sectionId, url);
+                }
+                break;
+
+            default:
+                return paragon.pt.countAllUnansweredItemsFromDb(sectionId, url);
+        }
+    }
+
+    paragon.pt.countAllUnansweredItemsFromDb = function (sectionId, url) {
+        var unanswered = 0;
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: { 'sectionId': sectionId, 'items': JSON.stringify(paragon.pt.items) },
+            async: false,
+            success: function (data) {
+                var responses = data.responses;
+                for (var i = 0; i < responses.length; i++) {
+                    var currentResponse = responses[i];
+                    if (!currentResponse) {
+                        unanswered++;
+                    }
+                }
+            }
+        });
+        return unanswered;
+    }
+
+    paragon.pt.countSingleUnansweredItemFromDb = function (sectionId, url) {
+        var unanswered = 0;
+
+        var index = paragon.pt.itemIndex;
+        if (index > 0) {
+            index = index - 1;
+        }
+        else {
+            return unanswered;
+        }
+
+        var item = paragon.pt.items[index];
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: { "sectionId": sectionId, "itemId": item.Id },
+            async: false,
+            success: function (data) {
+                if (!data.response) {
+                    unanswered++;
+                }
+            }
+        });
+
+        return unanswered;
+    }
+
+</script>
+
+    <script src="./5-1-answer_files/soundjs-0.6.0.min.js.下載"></script>
+
+
+
+    <script src="./5-1-answer_files/audio.min.js.下載"></script>
+
+    <script src="./5-1-answer_files/jquery.blockUI.js.下載"></script>
+
+    <script src="./5-1-answer_files/jquery-ui-1.10.4.custom.min.js.下載"></script>
+
+    <script src="./5-1-answer_files/jquery.cookie.js.下載"></script>
+
+
+    <link href="./5-1-answer_files/font-awesome.css" rel="stylesheet">
+</head>
+<body data-new-gr-c-s-check-loaded="14.1229.0" data-gr-ext-installed="">
+    <noscript>
+        <div id="noscript">
+            <div>Please turn on javascript to continue.</div>
+        </div>
+    </noscript>
+    <header>
+        <div class="navbar">
+            <div class="navbar-inner">
+                <a class="brand" href="https://www.celpip.ca/" target="_blank"> <img src="./5-1-answer_files/CELPIP_H_Web.png"></a>
+
+                <div class="brand" style="margin-top:15px;">
+                    Study Materials
+                </div>
+
+                <ul class="nav" style="margin-top:8px;">
+
+                    <li class="dropdown">
+
+                        <a class="dropdown-toggle" data-toggle="dropdown" style="margin-top: 10px;">
+                            Selected Product: <span id="selected-product">CELPIP-General Practice Tests, Set 5</span>
+                            <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/FreeOnlineSampleTest/FOST">Free CELPIP-General Practice Tests (Starter Set)</a></li>
+                            <li><a href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/FreeOnlineSampleTest/FOST2">Free CELPIP-General LS Practice Tests (Starter Set)</a></li>
+
+
+                                    <li><a href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest/PT">CELPIP-General Practice Tests, Set 1</a></li>
+                                    <li><a href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest2/OPT2">CELPIP-General Practice Tests, Set 2</a></li>
+                                    <li><a href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest3/OPT3">CELPIP-General Practice Tests, Set 3</a></li>
+                                    <li><a href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest4/OPT4">CELPIP-General Practice Tests, Set 4</a></li>
+                                    <li><a href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest5/OPT5">CELPIP-General Practice Tests, Set 5</a></li>
+                                    <li><a href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest6/OPT6">CELPIP-General Practice Tests, Set 6</a></li>
+                                    <li><a href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest7/OPT7">CELPIP-General Practice Tests, Set 7</a></li>
+                                    <li><a href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest8/OPT8">CELPIP-General Practice Tests, Set 8</a></li>
+                                    <li><a href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest9/OPT9">CELPIP-General Practice Tests, Set 9</a></li>
+                                    <li><a href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest10/OPT10">CELPIP-General Practice Tests, Set 10</a></li>
+                                        <li><a target="_blank" href="https://testprep.paragontesting.ca/api/sso/v2/sso/jwt?jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6Imh5cDIyMThAZ21haWwuY29tIiwiZmlyc3RfbmFtZSI6IllpLVBpbmciLCJsYXN0X25hbWUiOiJIbyIsIm5hbWVpZCI6IjIyMzc0ODgiLCJpYXQiOjE3NDMwMTQ3MTgsImp0aSI6MTYzNDkxMTc4LCJuYmYiOjE3NDMwMTQ0MTh9.HvCe7eVJEZpbcY9YopS8lFH3VxXDwQEN0NHTXUzcv6c&amp;return_to=https%3A%2F%2Ftestprep.paragontesting.ca%2Fbundles%2Fcelpip-accelerate-starter-celpip-general">CELPIP Accelerate Starter - Reading and Writing</a></li>
+                                        <li><a target="_blank" href="https://testprep.paragontesting.ca/api/sso/v2/sso/jwt?jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6Imh5cDIyMThAZ21haWwuY29tIiwiZmlyc3RfbmFtZSI6IllpLVBpbmciLCJsYXN0X25hbWUiOiJIbyIsIm5hbWVpZCI6IjIyMzc0ODgiLCJpYXQiOjE3NDMwMTQ3MTgsImp0aSI6MTAyMTIxNzk2OCwibmJmIjoxNzQzMDE0NDE4fQ.xMlKrmcG52mHMfWFx5T4wP2dVTv3j1hO2dmb_RIpipA&amp;return_to=https%3A%2F%2Ftestprep.paragontesting.ca%2Fbundles%2Fcelpip-accelerate-starter-celpip-general-ls">CELPIP Accelerate Starter - Listening and Speaking</a></li>
+                        </ul>
+
+                    </li>
+
+                    <li>
+                        <div style="margin-left: 19px">
+                            <ul class="nav nav-pills header-buttons">
+                                
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+
+                <ul class="nav pull-right" style="margin-top:17px">
+                        <li class="dropdown">
+                            <a class="dropdown-toggle dropdown-email" data-toggle="dropdown">
+                                <img src="./5-1-answer_files/fa_cog.png" style="width:18px; height: 18px; margin-top:-5px">
+                                hyp2218@gmail.com
+                                <b class="caret"></b>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="javascript:document.getElementById(&#39;logoutForm&#39;).submit()">Sign out</a></li>
+                            </ul>
+                        </li>
+                </ul>
+            </div>
+        </div>
+<form action="https://instructionalproducts.paragontesting.ca/InstructionalProducts/Account/LogOff" id="logoutForm" method="post"></form>    </header>
+
+    <div class="container" id="main-container" style="height: 802px;">
+<link href="./5-1-answer_files/ptStyle.css" rel="stylesheet" type="text/css">
+<link href="./5-1-answer_files/video-js.css" rel="stylesheet">
+<script src="./5-1-answer_files/video.js.下載"></script>
+<script>
+    paragon.pt.backUrl = "/InstructionalProducts/PracticeTest5/OPT5/View/8106527a-385c-4ae4-854c-4da37b4ba888";
+    paragon.pt.nextUrl = "/InstructionalProducts/PracticeTest5/OPT5/View/517b7d1f-0c81-4182-aafc-b1f1fbf57599";
+    if (paragon.pt.backUrl.length > 0 || paragon.pt.nextUrl.length > 0) {
+        paragon.footerVisible = true;
+    }
+
+    paragon.pt.items = []
+</script>
+
+<div id="panelTop">
+
+    <div id="canvasName" style="float: left; font-size: 16px; font-weight: bold;">
+        Practice Test 1 - Reading Result Page
+    </div>
+
+    <div style="float: right;" class="btnNext span1 pull-right">
+                <a href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest5/OPT5/View/fe5cd4c8-2c43-4a70-8de1-4c1bdf8e1421#" id="btnNext" class="btn btn-primary">NEXT</a>
+
+    </div>
+
+    <div style="float: right;" id="timer" class="hide">
+        Time remaining: <strong>999 seconds</strong>
+    </div>
+
+</div>
+
+<div id="mainContent">
+    
+
+<div class="row1">
+    <div class="span11">
+
+        <table class="table table-striped table-condensed" style="margin: 20px auto">
+            <tbody><tr>
+                <th>Question</th>
+                <th class="cell-center">Answer Key</th>
+                <th class="cell-center">Your Answer</th>
+                <th class="cell-center"></th>
+            </tr>
+                        <tr>
+                            <td class="cell-center" style="width:300px;"> Reading Practice Task</td>
+                            <td class="cell-center">British Columbia</td>
+                            <td class="cell-center">British Columbia</td>
+                            <td class="cell-center"><i class="icon-ok text-success"></i></td>
+                        </tr>
+                            <tr>
+                                <td><a href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest5/OPT5/View/df70865f-93e2-47dd-80a8-bc2f8eab0c98">Return to Practice Task</a></td>
+                                <td class="cell-center"></td>
+                                <td class="cell-center"></td>
+                                <td class="cell-center"></td>
+                            </tr>
+                        <tr>
+                            <td class="cell-center" style="width:300px;"> Reading Part 1: Reading Correspondence - Q1</td>
+                            <td class="cell-center">make a cottage reservation.</td>
+                            <td class="cell-center"></td>
+                            <td class="cell-center"><i class=""></i></td>
+                        </tr>
+                        <tr>
+                            <td class="cell-center" style="width:300px;"> Reading Part 1: Reading Correspondence - Q2</td>
+                            <td class="cell-center">eating in quality restaurants.</td>
+                            <td class="cell-center"></td>
+                            <td class="cell-center"><i class=""></i></td>
+                        </tr>
+                        <tr>
+                            <td class="cell-center" style="width:300px;"> Reading Part 1: Reading Correspondence - Q3</td>
+                            <td class="cell-center">She was told that it’s cold.</td>
+                            <td class="cell-center"></td>
+                            <td class="cell-center"><i class=""></i></td>
+                        </tr>
+                        <tr>
+                            <td class="cell-center" style="width:300px;"> Reading Part 1: Reading Correspondence - Q4</td>
+                            <td class="cell-center">she read about a famous one.</td>
+                            <td class="cell-center"></td>
+                            <td class="cell-center"><i class=""></i></td>
+                        </tr>
+                        <tr>
+                            <td class="cell-center" style="width:300px;"> Reading Part 1: Reading Correspondence - Q5</td>
+                            <td class="cell-center">severe weather.</td>
+                            <td class="cell-center"></td>
+                            <td class="cell-center"><i class=""></i></td>
+                        </tr>
+                        <tr>
+                            <td class="cell-center" style="width:300px;"> Reading Part 1: Reading Correspondence - Q6</td>
+                            <td class="cell-center">It’s near the ocean. </td>
+                            <td class="cell-center"></td>
+                            <td class="cell-center"><i class=""></i></td>
+                        </tr>
+                        <tr>
+                            <td class="cell-center" style="width:300px;"> Reading Part 1: Reading Correspondence - Q7</td>
+                            <td class="cell-center">ocean being cold</td>
+                            <td class="cell-center"></td>
+                            <td class="cell-center"><i class=""></i></td>
+                        </tr>
+                        <tr>
+                            <td class="cell-center" style="width:300px;"> Reading Part 1: Reading Correspondence - Q8</td>
+                            <td class="cell-center">wetsuits</td>
+                            <td class="cell-center"></td>
+                            <td class="cell-center"><i class=""></i></td>
+                        </tr>
+                        <tr>
+                            <td class="cell-center" style="width:300px;"> Reading Part 1: Reading Correspondence - Q9</td>
+                            <td class="cell-center">inconvenience</td>
+                            <td class="cell-center"></td>
+                            <td class="cell-center"><i class=""></i></td>
+                        </tr>
+                        <tr>
+                            <td class="cell-center" style="width:300px;"> Reading Part 1: Reading Correspondence - Q10</td>
+                            <td class="cell-center">an emergency supply kit</td>
+                            <td class="cell-center"></td>
+                            <td class="cell-center"><i class=""></i></td>
+                        </tr>
+                        <tr>
+                            <td class="cell-center" style="width:300px;"> Reading Part 1: Reading Correspondence - Q11</td>
+                            <td class="cell-center">spots to dine </td>
+                            <td class="cell-center"></td>
+                            <td class="cell-center"><i class=""></i></td>
+                        </tr>
+                            <tr>
+                                <td><a href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest5/OPT5/View/99fdbbab-2d02-45a7-a1e3-940e2b0a07a1">Return to the beginning of Part 1</a></td>
+                                <td class="cell-center"></td>
+                                <td class="cell-center"></td>
+                                <td class="cell-center"></td>
+                            </tr>
+                        <tr>
+                            <td class="cell-center" style="width:300px;"> Reading Part 2: Reading to Apply a Diagram - Q1</td>
+                            <td class="cell-center">local school board website</td>
+                            <td class="cell-center"></td>
+                            <td class="cell-center"><i class=""></i></td>
+                        </tr>
+                        <tr>
+                            <td class="cell-center" style="width:300px;"> Reading Part 2: Reading to Apply a Diagram - Q2</td>
+                            <td class="cell-center">Schools</td>
+                            <td class="cell-center"></td>
+                            <td class="cell-center"><i class=""></i></td>
+                        </tr>
+                        <tr>
+                            <td class="cell-center" style="width:300px;"> Reading Part 2: Reading to Apply a Diagram - Q3</td>
+                            <td class="cell-center">kindergarten registration</td>
+                            <td class="cell-center"></td>
+                            <td class="cell-center"><i class=""></i></td>
+                        </tr>
+                        <tr>
+                            <td class="cell-center" style="width:300px;"> Reading Part 2: Reading to Apply a Diagram - Q4</td>
+                            <td class="cell-center">paid for by the provincial government</td>
+                            <td class="cell-center"></td>
+                            <td class="cell-center"><i class=""></i></td>
+                        </tr>
+                        <tr>
+                            <td class="cell-center" style="width:300px;"> Reading Part 2: Reading to Apply a Diagram - Q5</td>
+                            <td class="cell-center">online learning</td>
+                            <td class="cell-center"></td>
+                            <td class="cell-center"><i class=""></i></td>
+                        </tr>
+                        <tr>
+                            <td class="cell-center" style="width:300px;"> Reading Part 2: Reading to Apply a Diagram - Q6</td>
+                            <td class="cell-center">new classmates.</td>
+                            <td class="cell-center"></td>
+                            <td class="cell-center"><i class=""></i></td>
+                        </tr>
+                        <tr>
+                            <td class="cell-center" style="width:300px;"> Reading Part 2: Reading to Apply a Diagram - Q7</td>
+                            <td class="cell-center">young child living with her.</td>
+                            <td class="cell-center"></td>
+                            <td class="cell-center"><i class=""></i></td>
+                        </tr>
+                        <tr>
+                            <td class="cell-center" style="width:300px;"> Reading Part 2: Reading to Apply a Diagram - Q8</td>
+                            <td class="cell-center">share useful information.</td>
+                            <td class="cell-center"></td>
+                            <td class="cell-center"><i class=""></i></td>
+                        </tr>
+                            <tr>
+                                <td><a href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest5/OPT5/View/3fda487d-266c-411e-bd73-7dea5612b778">Return to the beginning of Part 2</a></td>
+                                <td class="cell-center"></td>
+                                <td class="cell-center"></td>
+                                <td class="cell-center"></td>
+                            </tr>
+                        <tr>
+                            <td class="cell-center" style="width:300px;"> Reading Part 3: Reading for Information - Q1</td>
+                            <td class="cell-center">C</td>
+                            <td class="cell-center"></td>
+                            <td class="cell-center"><i class=""></i></td>
+                        </tr>
+                        <tr>
+                            <td class="cell-center" style="width:300px;"> Reading Part 3: Reading for Information - Q2</td>
+                            <td class="cell-center">B</td>
+                            <td class="cell-center"></td>
+                            <td class="cell-center"><i class=""></i></td>
+                        </tr>
+                        <tr>
+                            <td class="cell-center" style="width:300px;"> Reading Part 3: Reading for Information - Q3</td>
+                            <td class="cell-center">E</td>
+                            <td class="cell-center"></td>
+                            <td class="cell-center"><i class=""></i></td>
+                        </tr>
+                        <tr>
+                            <td class="cell-center" style="width:300px;"> Reading Part 3: Reading for Information - Q4</td>
+                            <td class="cell-center">D</td>
+                            <td class="cell-center"></td>
+                            <td class="cell-center"><i class=""></i></td>
+                        </tr>
+                        <tr>
+                            <td class="cell-center" style="width:300px;"> Reading Part 3: Reading for Information - Q5</td>
+                            <td class="cell-center">A</td>
+                            <td class="cell-center"></td>
+                            <td class="cell-center"><i class=""></i></td>
+                        </tr>
+                        <tr>
+                            <td class="cell-center" style="width:300px;"> Reading Part 3: Reading for Information - Q6</td>
+                            <td class="cell-center">A</td>
+                            <td class="cell-center"></td>
+                            <td class="cell-center"><i class=""></i></td>
+                        </tr>
+                        <tr>
+                            <td class="cell-center" style="width:300px;"> Reading Part 3: Reading for Information - Q7</td>
+                            <td class="cell-center">B</td>
+                            <td class="cell-center"></td>
+                            <td class="cell-center"><i class=""></i></td>
+                        </tr>
+                        <tr>
+                            <td class="cell-center" style="width:300px;"> Reading Part 3: Reading for Information - Q8</td>
+                            <td class="cell-center">D</td>
+                            <td class="cell-center"></td>
+                            <td class="cell-center"><i class=""></i></td>
+                        </tr>
+                        <tr>
+                            <td class="cell-center" style="width:300px;"> Reading Part 3: Reading for Information - Q9</td>
+                            <td class="cell-center">E</td>
+                            <td class="cell-center"></td>
+                            <td class="cell-center"><i class=""></i></td>
+                        </tr>
+                            <tr>
+                                <td><a href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest5/OPT5/View/3921587e-acf8-4f16-a310-19dd6c3148af">Return to the beginning of Part 3</a></td>
+                                <td class="cell-center"></td>
+                                <td class="cell-center"></td>
+                                <td class="cell-center"></td>
+                            </tr>
+                        <tr>
+                            <td class="cell-center" style="width:300px;"> Reading Part 4: Reading for Viewpoints - Q1</td>
+                            <td class="cell-center">provide background information.</td>
+                            <td class="cell-center"></td>
+                            <td class="cell-center"><i class=""></i></td>
+                        </tr>
+                        <tr>
+                            <td class="cell-center" style="width:300px;"> Reading Part 4: Reading for Viewpoints - Q2</td>
+                            <td class="cell-center">low-income earners.</td>
+                            <td class="cell-center"></td>
+                            <td class="cell-center"><i class=""></i></td>
+                        </tr>
+                        <tr>
+                            <td class="cell-center" style="width:300px;"> Reading Part 4: Reading for Viewpoints - Q3</td>
+                            <td class="cell-center">require monetary support.</td>
+                            <td class="cell-center"></td>
+                            <td class="cell-center"><i class=""></i></td>
+                        </tr>
+                        <tr>
+                            <td class="cell-center" style="width:300px;"> Reading Part 4: Reading for Viewpoints - Q4</td>
+                            <td class="cell-center">refrain from participating.</td>
+                            <td class="cell-center"></td>
+                            <td class="cell-center"><i class=""></i></td>
+                        </tr>
+                        <tr>
+                            <td class="cell-center" style="width:300px;"> Reading Part 4: Reading for Viewpoints - Q5</td>
+                            <td class="cell-center">they are mandatory.</td>
+                            <td class="cell-center"></td>
+                            <td class="cell-center"><i class=""></i></td>
+                        </tr>
+                        <tr>
+                            <td class="cell-center" style="width:300px;"> Reading Part 4: Reading for Viewpoints - Q6</td>
+                            <td class="cell-center">revenue</td>
+                            <td class="cell-center"></td>
+                            <td class="cell-center"><i class=""></i></td>
+                        </tr>
+                        <tr>
+                            <td class="cell-center" style="width:300px;"> Reading Part 4: Reading for Viewpoints - Q7</td>
+                            <td class="cell-center">disadvantages</td>
+                            <td class="cell-center"></td>
+                            <td class="cell-center"><i class=""></i></td>
+                        </tr>
+                        <tr>
+                            <td class="cell-center" style="width:300px;"> Reading Part 4: Reading for Viewpoints - Q8</td>
+                            <td class="cell-center">fund only a company’s full-time employees</td>
+                            <td class="cell-center"></td>
+                            <td class="cell-center"><i class=""></i></td>
+                        </tr>
+                        <tr>
+                            <td class="cell-center" style="width:300px;"> Reading Part 4: Reading for Viewpoints - Q9</td>
+                            <td class="cell-center">health care plans</td>
+                            <td class="cell-center"></td>
+                            <td class="cell-center"><i class=""></i></td>
+                        </tr>
+                        <tr>
+                            <td class="cell-center" style="width:300px;"> Reading Part 4: Reading for Viewpoints - Q10</td>
+                            <td class="cell-center">employer contributions</td>
+                            <td class="cell-center"></td>
+                            <td class="cell-center"><i class=""></i></td>
+                        </tr>
+                            <tr>
+                                <td><a href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest5/OPT5/View/8106527a-385c-4ae4-854c-4da37b4ba888">Return to the beginning of Part 4</a></td>
+                                <td class="cell-center"></td>
+                                <td class="cell-center"></td>
+                                <td class="cell-center"></td>
+                            </tr>
+
+        </tbody></table>
+
+
+    </div>
+</div>
+
+<script>
+    $(window.onload = function () {
+        $("#btnBack").attr('href', 'javascript:history.back()');
+
+    });
+</script>
+</div>
+
+<div id="dlgTest" class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-header">
+        <h4>Test</h4>
+    </div>
+    <div class="modal-body">
+        <p>test</p>
+    </div>
+    <div class="modal-footer">
+        <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+    </div>
+</div>
+
+<div id="dlgUnansweredWarning" class="modal hide fade" tabindex="-1" role="dialog">
+    <div class="modal-body">
+        <p>No answer(s) selected. On the official test, if you go to the next page, you will no longer be able to answer the question(s) on this page.</p>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" data-dismiss="modal" style="color: white;">Keep working on this page</button>
+        <button class="btn" data-dismiss="modal" onclick="paragon.pt.skipToNext()">Skip and go to the next page</button>
+    </div>
+</div>
+
+</div>
+    <div class="container hide" id="footer" style="display: block;">
+        <div class="row">
+    <div id="leftBtn" class="span7" align="left">
+    </div>
+    <div class="span5">
+        <a href="javascript:history.back()" id="btnBack" class="btn btn1 hide btn-danger" style="display: inline;">BACK</a>
+        
+    </div>
+</div>
+
+    </div>
+    <div class="container" style="text-align: center; font-size: 0.9em; color: #53565A; padding-top: 20px;">
+        <p>Copyright 2025 - Paragon Testing Enterprises   |    <a href="https://www.celpip.ca/" target="_blank">www.celpip.ca</a>    |    <a href="https://www.celpip.ca/contact/" target="_blank">Contact Us</a></p>
+    </div>
+
+    <div id="block" class="modal-backdrop hide"></div>
+    <div id="unsupported" class="modal hide" tabindex="-1">
+        <div class="modal-body">
+            <h3>Unsupported screen resolution</h3>
+            <p>This product requires a minimum screen resolution of 1024 x 768.</p>
+        </div>
+    </div>
+
+
+    <script>
+        $(function () {
+            paragon.verifyDisplaySize();
+
+            $(window).resize(function () {
+                paragon.verifyDisplaySize();
+            });
+        });
+    </script>
+
+
+    
+    <script>
+        paragon.pt.showAlert = function (msg) {
+            $('#dlgTest .modal-body p').html(msg);
+            $('#dlgTest').modal();
+        }
+
+        paragon.pt.skipToNext = function () {
+            paragon.pt.nextItem("/InstructionalProducts/PracticeTest5/OPT5/SaveCanvasData",'', "fe5cd4c8-2c43-4a70-8de1-4c1bdf8e1421", "9e3bcb00-09c7-4bd1-a232-72bf8b6d4e03", 2);
+            paragon.pt.goNext();
+        }
+
+        $(function () {
+            if (paragon.footerVisible == true) {
+                paragon.showFooter();
+            }
+
+            if (paragon.pt.backUrl.length > 0) {
+                $("#btnBack").click(function () {
+                    paragon.pt.goBack();
+                });
+                paragon.pt.showBackButton();
+            }
+
+            $("#btnNext").click(function () {
+                var url = "";
+                if (33  == 24 || 33  == 25) {
+                    url = "/InstructionalProducts/PracticeTest5/OPT5/GetUserResponse/";
+                }
+                else {
+                    url = "/InstructionalProducts/PracticeTest5/OPT5/GetUserResponses/";
+                }
+                var unanswered = paragon.pt.countUnansweredQuestionsFromDb(33, "9e3bcb00-09c7-4bd1-a232-72bf8b6d4e03", url);
+                if (unanswered > 0) {
+                    $('#dlgUnansweredWarning').modal();
+                }
+                else {
+                    paragon.pt.skipToNext();
+                }
+            });
+
+            if (paragon.pt.nextUrl.length > 0) {
+                paragon.pt.showNextButton();
+            }
+
+
+        });
+
+        $(".links-main").click(function () {
+            var href = "/InstructionalProducts/PracticeTest5/OPT5/";
+            window.location = href;
+
+        });
+
+    </script>
+
+
+
+</body><grammarly-desktop-integration data-grammarly-shadow-root="true"><template shadowrootmode="open"><style>
+      div.grammarly-desktop-integration {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+        -moz-user-select: none;
+        -webkit-user-select: none;
+        -ms-user-select:none;
+        user-select:none;
+      }
+
+      div.grammarly-desktop-integration:before {
+        content: attr(data-content);
+      }
+    </style><div aria-label="grammarly-integration" role="group" tabindex="-1" class="grammarly-desktop-integration" data-content="{&quot;mode&quot;:&quot;full&quot;,&quot;isActive&quot;:true,&quot;isUserDisabled&quot;:false}"></div></template></grammarly-desktop-integration></html>

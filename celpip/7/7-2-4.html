@@ -1,0 +1,1752 @@
+<!DOCTYPE html>
+<!-- saved from url=(0130)https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest7/OPT7/View/3edb9dd9-3296-4a58-ba00-59c9f41952d7 -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><style>
+    a {
+        outline: 0;
+    }
+</style>
+
+
+
+    
+    <title>Practice Test</title>
+    <meta name="description">
+    <link href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/favicon.ico" rel="shortcut icon" type="image/x-icon">
+    <meta name="viewport" content="width=device-width">
+    <link href="./7-2-4_files/bootstrap.css" rel="stylesheet">
+<link href="./7-2-4_files/Site.css" rel="stylesheet">
+
+    <script src="./7-2-4_files/399283786078546" async=""></script><script async="" src="./7-2-4_files/fbevents.js.下載"></script><script src="./7-2-4_files/jquery-1.9.1.min.js.下載"></script>
+
+    <script src="./7-2-4_files/jquery.unobtrusive-ajax.min.js.下載"></script>
+
+    <script src="./7-2-4_files/bootstrap.js.下載"></script>
+
+    <script src="./7-2-4_files/handlebars.min.js.下載"></script>
+
+    <script src="./7-2-4_files/instructional-product.js.下載"></script>
+
+    <script src="./7-2-4_files/facebook-pixel.js.下載"></script>
+
+    <script>
+    paragon.pt = paragon.pt || {};
+    paragon.pt.backUrl = "";
+    paragon.pt.nextUrl = "";
+    paragon.pt.speakingPrepTimeLeft = 0;
+    paragon.pt.speakingRecordingTimeLeft = 0;
+    paragon.pt.itemIndex = 0;
+
+    paragon.pt.showAlert = function (msg) {
+        alert(msg);
+    }
+
+    paragon.pt.showBackButton = function () {
+        $("#btnBack").show();
+    }
+
+    paragon.pt.showNextButton = function () {
+        $("#btnNext").show();
+    }
+
+    paragon.pt.hideBackButton = function () {
+        $("#btnBack").hide();
+    }
+
+    paragon.pt.hideNextButton = function () {
+        $("#btnNext").hide();
+    }
+
+    paragon.pt.goNext = function () {
+        window.location = paragon.pt.nextUrl;
+    }
+
+    paragon.pt.goBack = function () {
+        window.location = paragon.pt.backUrl;
+    }
+
+    //Timer For Listening, Reading and Writing
+    paragon.pt.timer = paragon.pt.timer || {};
+    paragon.pt.timer.totalTime = 0;
+    paragon.pt.timer.timeLeft = 0;
+    paragon.pt.timer.interval = null;
+    paragon.pt.timer.start = function (timeLeft) {
+        paragon.pt.timer.timeLeft = timeLeft;
+        paragon.pt.timer.totalTime = timeLeft
+        var minutes = Math.floor(timeLeft / 60);
+        var seconds = timeLeft - minutes * 60;
+
+        if (minutes < 1) {
+            $("#timer strong").html(seconds + " seconds");
+            $("#timer strong").attr("style", "color:red");
+        }
+        else if (minutes == 1) {
+            $("#timer strong").html(minutes + " minute");
+        }
+        else {
+            $("#timer strong").html(minutes + " minutes");
+        }
+
+        $("#timer").show();
+
+        if (paragon.pt.timer.interval)
+            window.clearInterval(paragon.pt.timer.interval);
+
+        paragon.pt.timer.interval = window.setInterval(function () { paragon.pt.timer.deductTime() }, 1000);
+
+        paragon.showFooter();
+    }
+
+    paragon.pt.timer.deductTime = function () {
+        if (paragon.pt.timer.timeLeft > 0) {
+            paragon.pt.timer.timeLeft -= 1;
+
+            var minutes = Math.floor(paragon.pt.timer.timeLeft / 60);
+            var seconds = paragon.pt.timer.timeLeft - minutes * 60;
+
+            if (minutes < 1) {
+                $("#timer strong").html(seconds + " seconds");
+                $("#timer strong").attr("style", "color:red");
+            }
+            else if (minutes == 1) {
+                $("#timer strong").html(minutes + " minute");
+            }
+            else {
+                $("#timer strong").html(minutes + " minutes");
+            }
+        }
+        else {
+            window.clearInterval(paragon.pt.timer.interval);
+            $("#timer strong").html("None");
+        }
+    }
+
+    //Timer For Speaking, work in progress
+    paragon.pt.showTimerSpeaking = function (prepTime, recordingTime) {
+        paragon.pt.speakingPrepTimeLeft = prepTime;
+        paragon.pt.speakingRecordingTimeLeft = recordingTime;
+        $("#timerSpeaking strong:first-child").html(prepTime + " seconds");
+        $("#timerSpeaking strong:last-child").html(recordingTime + " seconds");
+        $("#timerSpeaking").show();
+        paragon.showFooter();
+    }
+
+    paragon.pt.userResponse = paragon.pt.userResponse || {};
+
+    paragon.pt.uploadMultipleChoicesValue = function (url, sectionId, itemId, choiceId) {
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: { sectionId: sectionId, itemId: itemId, choiceId: choiceId },
+            dataType: "json",
+            cache: false,
+            success: function (json) {
+                console.log(json);
+                console.log("ItemId: " + itemId + ", " + "ChoiceId: " + choiceId);
+            }
+        });
+    }
+
+    paragon.pt.activateMultipleChoices = function (url, sectionId) {
+        $(document).delegate(".multipleChoices li", "click", function () {
+            var ul = $(this).parent();
+            ul.find("li").removeClass("selected");
+            $(this).addClass("selected");
+
+            paragon.pt.uploadMultipleChoicesValue(url, sectionId, ul.data("id"), $(this).data("id"));
+        });
+    }
+
+    paragon.pt.renderMultipleChoices = function (url, sectionId, item, renderItemText, hasImage, renderChoiceText) {
+        var template;
+        if (renderItemText == true) {
+            if (hasImage == true) {
+                template = Handlebars.compile($("#multipleChoicesTemplateWithItemTextAndImage").html());
+            }
+            else {
+                template = Handlebars.compile($("#multipleChoicesTemplateWithItemText").html());
+            }
+        }
+        else {
+            if (hasImage == true) {
+
+                if (renderChoiceText == true) {
+                    template = Handlebars.compile($("#multipleChoicesTemplateWithImage").html());
+                }
+                else {
+                    template = Handlebars.compile($("#multipleChoicesTemplateWithImageNoText").html());
+                }
+            }
+            else {
+                template = Handlebars.compile($("#multipleChoicesTemplate").html());
+            }
+        }
+
+        $("#multipleChoices").html(template(item));
+
+        paragon.pt.activateMultipleChoices(url, sectionId);
+    }
+
+    //Drop down list
+    paragon.pt.dropDown = paragon.pt.dropDown || {};
+    paragon.pt.dropDown.activeMenu = null;
+    paragon.pt.dropDown.renderTemplate = function (url, sectionId, templateToRender, elementToRender, items) {
+        var template = Handlebars.compile(templateToRender);
+        $(elementToRender).html(template(items));
+    }
+
+    paragon.pt.dropDown.renderInline = function (url, sectionId, items, startIndex, endIndex, elementToRender) {
+
+        var template = Handlebars.compile($("#dropDownListInlineTemplate").html());
+        var text = elementToRender[0].innerHTML;
+        for (var i = startIndex; i <= endIndex; i++) {
+            text = text.replace("{" + items[i].Num + "}", template(items[i]));
+        }
+        //Handlebars.registerHelper('renderInline', function (src, items, startIndex, endIndex, options) {
+        //    var template = Handlebars.compile($("#dropDownListInlineTemplate").html());
+        //    for (var i = startIndex; i <= endIndex; i++) {
+        //        src = src.replace("{" + (i + 1) + "}", template(items[i]));
+        //    }
+        //    return src;
+        //});
+        $(elementToRender).html(text);
+    }
+
+    paragon.pt.dropDown.activate = function (url, sectionId) {
+
+        $(document.body).click(function () {
+            $(".dd").each(function (i) {
+                if (i != paragon.pt.dropDown.activeMenu) {
+                    $(this).find(".ddMenu").hide();
+                    $(this).removeClass('active');
+                }
+            });
+        });
+
+        $(".dd").mouseover(function () {
+            paragon.pt.dropDown.activeMenu = $(".dd").index(this);
+        }).mouseout(function () {
+            paragon.pt.dropDown.activeMenu = null;
+        });
+
+        $(".ddToggle").click(function () {
+            var parent = $(this).parent();
+            parent.toggleClass("active");
+            var ddMenu = parent.find(".ddMenu");
+            ddMenu.animate({ height: 'toggle', opacity: 'toggle' }, 100);
+            var left = $(this).position().left;
+            ddMenu.css("left", Math.round(left) + "px");
+
+            //place the dropDown menu 20px below the box
+            var top = parent.position().top;
+            ddMenu.css("top", Math.round(top) + 20 + "px");
+
+        });
+
+        $('.dd li').click(function () {
+            $(this).parent().find("li").removeClass("selected");
+            $(this).addClass("selected");
+            var parent = $(this).parent().parent().parent();
+            var ddToggle = parent.find(".ddToggle");
+            ddToggle.html($(this).html());
+            ddToggle.addClass("ddToggle1");
+            parent.find(".ddMenu").animate({ height: 'toggle', opacity: 'toggle' }, 400);
+            parent.removeClass('active');
+            var ul = $(this).parent();
+            paragon.pt.uploadMultipleChoicesValue(url, sectionId, ul.data("id"), $(this).data("id"));
+        });
+    }
+
+    paragon.pt.showInfoBox = function (message) {
+        var infoBox = $("#infoBox");
+        if (message)
+            $("#infoBox .boxText p").html(message);
+        infoBox.show();
+    }
+
+    paragon.pt.hideInfoBox = function () {
+        $("#infoBox").hide();
+    }
+
+    //Audio Playback for the Listening Component
+    paragon.pt.playAudio = paragon.pt.playAudio || {};
+    paragon.pt.playAudio.player = null;
+    paragon.pt.playAudio.totalTime = 0;
+    paragon.pt.playAudio.timeLeft = 0;
+    paragon.pt.playAudio.interval = null;
+    paragon.pt.playAudio.onDone = null;
+
+    paragon.pt.playAudio.start = function (playAudioTime) {
+        paragon.pt.hideInfoBox();
+        paragon.pt.playAudio.totalTime = playAudioTime;
+        paragon.pt.playAudio.timeLeft = playAudioTime;
+        if (paragon.pt.playAudio.interval)
+            window.clearInterval(paragon.pt.playAudio.interval);
+
+        $("#playAudioBox").fadeIn(1000);
+    }
+
+
+    //recording functions
+
+    paragon.pt.recording = paragon.pt.recording || {};
+    paragon.pt.recording.totalTime = 0;
+    paragon.pt.recording.timeLeft = 0;
+    paragon.pt.recording.interval = null;
+    paragon.pt.recording.onDone = null;
+
+    paragon.pt.recording.updateProgressBar = function () {
+        var percentage = 100 - (paragon.pt.recording.timeLeft / paragon.pt.recording.totalTime) * 100;
+        $("#startRecTime .progressbar-cover").css("left", percentage + "%");
+    }
+
+    paragon.pt.recording.deductTime = function () {
+        if (paragon.pt.recording.timeLeft > 0) {
+            paragon.pt.recording.timeLeft -= 1;
+            paragon.pt.recording.updateProgressBar();
+        }
+        else {
+            window.clearInterval(paragon.pt.recording.interval);
+            $("#startRecTime").hide();
+            paragon.pt.showNextButton();
+            if (paragon.pt.recording.onDone) {
+                paragon.pt.recording.onDone();
+            }
+        }
+    }
+
+    paragon.pt.recording.start = function (playAudioTime) {
+        paragon.pt.recording.totalTime = playAudioTime;
+        paragon.pt.recording.timeLeft = playAudioTime;
+        if (paragon.pt.recording.interval)
+            window.clearInterval(paragon.pt.recording.interval);
+
+        paragon.pt.recording.interval = window.setInterval(function () { paragon.pt.recording.deductTime() }, 1000);
+        paragon.pt.recording.updateProgressBar();
+        $("#startRecTime").fadeIn(1000);
+    }
+
+    //end recording
+
+    //preperation functions
+
+    paragon.pt.preparation = paragon.pt.preparation || {};
+    paragon.pt.preparation.totalTime = 0;
+    paragon.pt.preparation.timeLeft = 0;
+    paragon.pt.preparation.interval = null;
+    paragon.pt.preparation.onDone = null;
+    paragon.pt.preparation.startRecording = null;
+
+    paragon.pt.preparation.updateProgressBar = function () {
+        $("#startPrepTime #progressTimer").html(paragon.pt.preparation.timeLeft);
+    }
+
+    paragon.pt.preparation.deductTime = function () {
+        if (paragon.pt.preparation.timeLeft > 0) {
+            paragon.pt.preparation.timeLeft -= 1;
+            paragon.pt.preparation.updateProgressBar();
+        }
+        else {
+            window.clearInterval(paragon.pt.preparation.interval);
+            $("#startPrepTime").hide();
+            paragon.pt.showNextButton();
+            if (paragon.pt.preparation.onDone) {
+                paragon.pt.preparation.onDone();
+            }
+        }
+    }
+
+    paragon.pt.preparation.start = function (playAudioTime) {
+        paragon.pt.preparation.totalTime = playAudioTime;
+        paragon.pt.preparation.timeLeft = playAudioTime;
+        if (paragon.pt.preparation.interval)
+            window.clearInterval(paragon.pt.preparation.interval);
+
+        paragon.pt.preparation.interval = window.setInterval(function () { paragon.pt.preparation.deductTime() }, 1000);
+        paragon.pt.preparation.updateProgressBar();
+        $("#startPrepTime").fadeIn(1000);
+    }
+
+    //end prep functinos
+
+    paragon.pt.createAudioPlayer = function (contentUrl, audiofile) {
+        //create player if not exists
+        if (!paragon.pt.playAudio.player) {
+            paragon.pt.playAudio.player = document.createElement('audio');
+
+            paragon.pt.playAudio.player.controls = true;
+            paragon.pt.playAudio.player.controlsList = "nodownload";
+            paragon.pt.playAudio.player.oggSrc = document.createElement('source');
+            paragon.pt.playAudio.player.oggSrc.setAttribute('type', 'audio/ogg');
+            paragon.pt.playAudio.player.appendChild(paragon.pt.playAudio.player.oggSrc);
+
+            paragon.pt.playAudio.player.mp3Src = document.createElement('source');
+            paragon.pt.playAudio.player.mp3Src.setAttribute('type', 'audio/mp3');
+            paragon.pt.playAudio.player.appendChild(paragon.pt.playAudio.player.mp3Src);
+
+            paragon.pt.playAudio.player.ontimeupdate = function () {
+                var duration = paragon.pt.playAudio.player.duration;
+                var currentTime = paragon.pt.playAudio.player.currentTime;
+                if (duration) {
+                    var progress = (currentTime / duration) * 100;
+                    $("#playAudioBox .progressbar-cover").css("left", progress + "%");
+                    if (progress >= 100) {
+                        $("#playAudioBox").hide();
+                        paragon.pt.showInfoBox();
+                        paragon.pt.showNextButton();
+                        if (paragon.pt.playAudio.onDone) {
+                            paragon.pt.playAudio.onDone();
+                        }
+                    }
+                }
+            };
+
+            paragon.pt.playAudio.player.onplay = function () {
+                paragon.pt.playAudio.start(paragon.pt.playAudio.player.duration);
+            };
+        }
+
+        paragon.pt.playAudio.player.addEventListener("loadedmetadata", function (e) {
+            if (e.target) {
+                paragon.pt.playAudio.player.play();
+                paragon.pt.playAudio.start(e.target.duration);
+            }
+        });
+
+        paragon.pt.playAudio.player.oggSrc.setAttribute('src', contentUrl + audiofile + ".ogg");
+        paragon.pt.playAudio.player.mp3Src.setAttribute('src', contentUrl + audiofile + ".mp3");
+
+        paragon.pt.playAudio.player.load();
+        return paragon.pt.playAudio.player;
+    }
+
+
+    paragon.pt.moveScrollBar = function (div, scrollSize) {
+        div.animate({
+            scrollTop: scrollSize
+        }, 1200, function () {
+            div.animate({ scrollTop: 0 }, 300, function () {
+            });
+        });
+    }
+
+    paragon.pt.showScrollBar = function (leftDiv, rightDiv) {
+
+        if (rightDiv.length && rightDiv.is(":visible") && leftDiv.length && leftDiv.is(":visible")) {
+            $.blockUI({
+                message: "Scroll up and down to see everything.",
+                css: { width: '400px', border: '2px solid #000', top: '35%', padding: '50px', color: '#1A578A', fontWeight: 'bold' },
+                showOverlay: false
+            });
+
+            var rightScrollSize = rightDiv[0].scrollHeight;
+            var leftScrollSize = leftDiv[0].scrollHeight;
+            window.setTimeout(function () {
+                paragon.pt.moveScrollBar(rightDiv, rightScrollSize);
+                paragon.pt.moveScrollBar(leftDiv, leftScrollSize);
+
+                window.setTimeout(function () { $.unblockUI(); }, 2300);
+            }, 1400);
+
+
+        }
+
+    }
+
+    paragon.pt.wordCount = function () {
+        $(".writtenTextAreaBox").keyup(countWords);
+
+        function countWords() {
+            var text = " ";
+            if (this.value != "") {
+                var wordCount = this.value.match(/\S+/g).length;
+                if (wordCount == 1) {
+                    text = wordCount + " word";
+                } else {
+                    text = wordCount + " words";
+                }
+            }
+            document.getElementById("wordCount").innerHTML = text;
+        }
+    }
+
+    paragon.pt.calcSectionNumQuestion = function (sectionID) {
+        var pt1lpSection = sectionID;
+        $.post("/InstructionalProducts/PracticeTest7/OPT7/GetNumberOfQuestions", { sectionId: pt1lpSection }, function (data) { console.log(data); document.getElementById("numQuestion").innerHTML = data.totalQuestions-1 });
+    }
+
+    paragon.pt.calcSectionNumQuestionLS = function (sectionID) {
+        var pt1lpSection = sectionID;
+        $.post("/InstructionalProducts/PracticeTest7/OPT7LS/GetNumberOfQuestions", { sectionId: pt1lpSection }, function (data) { console.log(data); document.getElementById("numQuestion").innerHTML = data.totalQuestions-1 });
+    }
+
+    paragon.pt.calcListScoreGeneral = function (sectionID) {
+
+        $.post("/InstructionalProducts/PracticeTest7/OPT7/GetScoreOnSection", { sectionId: sectionID }, function (data) {
+            console.log(data); document.getElementById("yourScore").innerHTML = data.userScore;
+
+            var userLScore = data.userScore;
+
+            paragon.pt.findListScore(userLScore);
+
+        });
+    }
+
+    paragon.pt.calcListScoreLS = function (sectionID) {
+
+        $.post("/InstructionalProducts/PracticeTest7/OPT7LS/GetScoreOnSection", { sectionId: sectionID }, function (data) {
+            console.log(data); document.getElementById("yourScore").innerHTML = data.userScore;
+
+            var userLScore = data.userScore;
+
+            paragon.pt.findListScore(userLScore);
+
+        });
+    }
+
+    paragon.pt.findListScore = function (userLScore) {
+        if (userLScore <= 7) {
+            document.getElementById("celScore").innerHTML = "M";
+            return;
+        }
+        else if (userLScore <= 12) {
+            document.getElementById("celScore").innerHTML = "3";
+            return;
+        }
+        else if (userLScore <= 18) {
+            document.getElementById("celScore").innerHTML = "4";
+            return;
+        }
+        else if (userLScore <= 23) {
+            document.getElementById("celScore").innerHTML = "5";
+            return;
+        }
+        else if (userLScore <= 28) {
+            document.getElementById("celScore").innerHTML = "6";
+            return;
+        }
+        else if (userLScore <= 31) {
+            document.getElementById("celScore").innerHTML = "7";
+            return;
+        }
+        else if (userLScore <= 33) {
+            document.getElementById("celScore").innerHTML = "8";
+            return;
+        }
+        else if (userLScore <= 35) {
+          document.getElementById("celScore").innerHTML = "9";
+          return;
+          }
+          else {
+          document.getElementById("celScore").innerHTML = "10-12";
+          }
+          }
+
+          paragon.pt.calcListScoreOnYourScore = function (sectionScore, sectionCell) {
+
+          var userLScore = sectionScore;
+
+          if (userLScore <= 7) {
+                document.getElementById(sectionCell).innerHTML = "M";
+                return;
+            }
+            else if (userLScore <= 12) {
+                document.getElementById(sectionCell).innerHTML = "3";
+                return;
+            }
+            else if (userLScore <= 18) {
+                document.getElementById(sectionCell).innerHTML = "4";
+                return;
+            }
+            else if (userLScore <= 23) {
+                document.getElementById(sectionCell).innerHTML = "5";
+                return;
+            }
+            else if (userLScore <= 28) {
+                document.getElementById(sectionCell).innerHTML = "6";
+                return;
+            }
+            else if (userLScore <= 31) {
+                document.getElementById(sectionCell).innerHTML = "7";
+                return;
+            }
+            else if (userLScore <= 33) {
+                document.getElementById(sectionCell).innerHTML = "8";
+                return;
+            }
+            else if (userLScore <= 35) {
+                document.getElementById(sectionCell).innerHTML = "9";
+                return;
+            }
+            else {
+                document.getElementById(sectionCell).innerHTML = "10-12";
+            }
+
+
+    }
+
+    paragon.pt.calcReadScore = function (sectionID) {
+
+        $.post("/InstructionalProducts/PracticeTest7/OPT7/GetScoreOnSection", { sectionId: sectionID }, function (data) {
+            console.log(data); document.getElementById("yourScore").innerHTML = data.userScore;
+
+            var userRScore = data.userScore;
+
+            if (userRScore <= 7) {
+                document.getElementById("celScore").innerHTML = "M";
+                return;
+            }
+            else if (userRScore <= 11) {
+                document.getElementById("celScore").innerHTML = "3";
+                return;
+            }
+            else if (userRScore <= 16) {
+                document.getElementById("celScore").innerHTML = "4";
+                return;
+            }
+            else if (userRScore <= 20) {
+                document.getElementById("celScore").innerHTML = "5";
+                return;
+            }
+            else if (userRScore <= 25) {
+                document.getElementById("celScore").innerHTML = "6";
+                return;
+            }
+            else if (userRScore <= 28) {
+                document.getElementById("celScore").innerHTML = "7";
+                return;
+            }
+            else if (userRScore <= 31) {
+                document.getElementById("celScore").innerHTML = "8";
+                return;
+            }
+            else if (userRScore <= 33) {
+                document.getElementById("celScore").innerHTML = "9";
+                return;
+            }
+            else {
+                document.getElementById("celScore").innerHTML = "10-12";
+            }
+
+        });
+
+    }
+    paragon.pt.calcReadScoreOnYourScore = function (sectionScore, sectionCell) {
+
+        var userRScore = sectionScore;
+
+        if (userRScore <= 7) {
+            document.getElementById(sectionCell).innerHTML = "M";
+            return;
+        }
+        else if (userRScore <= 11) {
+            document.getElementById(sectionCell).innerHTML = "3";
+            return;
+        }
+        else if (userRScore <= 16) {
+            document.getElementById(sectionCell).innerHTML = "4";
+            return;
+        }
+        else if (userRScore <= 20) {
+            document.getElementById(sectionCell).innerHTML = "5";
+            return;
+        }
+        else if (userRScore <= 25) {
+            document.getElementById(sectionCell).innerHTML = "6";
+            return;
+        }
+        else if (userRScore <= 28) {
+            document.getElementById(sectionCell).innerHTML = "7";
+            return;
+        }
+        else if (userRScore <= 31) {
+            document.getElementById(sectionCell).innerHTML = "8";
+            return;
+        }
+        else if (userRScore <= 33) {
+            document.getElementById(sectionCell).innerHTML = "9";
+            return;
+        }
+        else {
+            document.getElementById(sectionCell).innerHTML = "10-12";
+        }
+    }
+
+
+    //HARDCODED
+    paragon.pt.showListeningAnswerKeyBtn = function (sectionId) {
+        if (sectionId == "2edc8d1b-ef52-49f9-bf3f-91b69475551b") {
+            $('#leftBtn').html("<a href='c201271c-e466-478b-aa46-92ece323ebce' id='backToResultbtn' class='btn'>Answer Key</a>");
+        }
+
+        if (sectionId == "7f3af724-8eb5-43f7-85ee-31b2e93a1f4f") {
+            $('#leftBtn').html("<a href='8aacc082-0d9b-49d0-845f-6d78a2f09530' id='backToResultbtn' class='btn'>Answer Key</a>");
+        }
+        if (sectionId == "ee046fdb-6dc2-4353-8c1f-0887e653c1e8") {
+            $('#leftBtn').html("<a href='024d965b-adde-4bf0-b455-cc8676c403bf' id='backToResultbtn' class='btn'>Answer Key</a>");
+        }
+
+        if (sectionId == "a50848c6-599a-4fc2-aea7-9fd0e61b6ef7") {
+            $('#leftBtn').html("<a href='3a0e10ca-f0e3-42d5-a60a-39ecd2d38cfd' id='backToResultbtn' class='btn'>Answer Key</a>");
+        }
+    }
+
+    paragon.pt.showReadingAnswerKeyBtn = function (sectionId) {
+        if (sectionId == "09b7b95b-d88a-4301-b875-7b0668d83e16") {
+            $('#leftBtn').html("<a href='ffe3c20e-f61e-4150-a09b-219076e06bf0' id='backToResultbtn' class='btn'>Answer Key</a>");
+        }
+
+        if (sectionId == "836851e3-1eb9-4747-afc4-cc4c72da1a1b") {
+            $('#leftBtn').html("<a href='92c1359f-300c-4f9b-8039-48aa86cee542' id='backToResultbtn' class='btn'>Answer Key</a>");
+        }
+    }
+
+    paragon.pt.nextItem = function (url, itemId, canvasId, sectionId, activityTypeId) {
+        $.post(
+            url,
+            {
+                itemId: itemId,
+                canvasId: canvasId,
+                sectionId: sectionId,
+                activityTypeId: activityTypeId
+            },
+            function (data) {
+                console.log(data);
+            }
+        );
+    }
+
+    paragon.pt.countUnansweredQuestionsFromDb = function (canvasTypeId, sectionId, url) {
+        switch (canvasTypeId) {
+            case 24: //PT04
+            case 25: // PT05
+                return paragon.pt.countSingleUnansweredItemFromDb(sectionId, url);
+                break;
+
+            case 26: //PT06
+            case 27: //PT07
+                if ($("#panelLeft").css('display') != 'none') {
+                    return 0;
+                }
+                else {
+                    return paragon.pt.countAllUnansweredItemsFromDb(sectionId, url);
+                }
+                break;
+
+            default:
+                return paragon.pt.countAllUnansweredItemsFromDb(sectionId, url);
+        }
+    }
+
+    paragon.pt.countAllUnansweredItemsFromDb = function (sectionId, url) {
+        var unanswered = 0;
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: { 'sectionId': sectionId, 'items': JSON.stringify(paragon.pt.items) },
+            async: false,
+            success: function (data) {
+                var responses = data.responses;
+                for (var i = 0; i < responses.length; i++) {
+                    var currentResponse = responses[i];
+                    if (!currentResponse) {
+                        unanswered++;
+                    }
+                }
+            }
+        });
+        return unanswered;
+    }
+
+    paragon.pt.countSingleUnansweredItemFromDb = function (sectionId, url) {
+        var unanswered = 0;
+
+        var index = paragon.pt.itemIndex;
+        if (index > 0) {
+            index = index - 1;
+        }
+        else {
+            return unanswered;
+        }
+
+        var item = paragon.pt.items[index];
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: { "sectionId": sectionId, "itemId": item.Id },
+            async: false,
+            success: function (data) {
+                if (!data.response) {
+                    unanswered++;
+                }
+            }
+        });
+
+        return unanswered;
+    }
+
+</script>
+
+    <script src="./7-2-4_files/soundjs-0.6.0.min.js.下載"></script>
+
+
+
+    <script src="./7-2-4_files/audio.min.js.下載"></script>
+
+    <script src="./7-2-4_files/jquery.blockUI.js.下載"></script>
+
+    <script src="./7-2-4_files/jquery-ui-1.10.4.custom.min.js.下載"></script>
+
+    <script src="./7-2-4_files/jquery.cookie.js.下載"></script>
+
+
+    <link href="./7-2-4_files/font-awesome.css" rel="stylesheet">
+</head>
+<body data-new-gr-c-s-check-loaded="14.1229.0" data-gr-ext-installed="" style="">
+    <noscript>
+        <div id="noscript">
+            <div>Please turn on javascript to continue.</div>
+        </div>
+    </noscript>
+    <header>
+        <div class="navbar">
+            <div class="navbar-inner">
+                <a class="brand" href="https://www.celpip.ca/" target="_blank"> <img src="./7-2-4_files/CELPIP_H_Web.png"></a>
+
+                <div class="brand" style="margin-top:15px;">
+                    Study Materials
+                </div>
+
+                <ul class="nav" style="margin-top:8px;">
+
+                    <li class="dropdown">
+
+                        <a class="dropdown-toggle" data-toggle="dropdown" style="margin-top: 10px;">
+                            Selected Product: <span id="selected-product">CELPIP-General Practice Tests, Set 7</span>
+                            <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/FreeOnlineSampleTest/FOST">Free CELPIP-General Practice Tests (Starter Set)</a></li>
+                            <li><a href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/FreeOnlineSampleTest/FOST2">Free CELPIP-General LS Practice Tests (Starter Set)</a></li>
+
+
+                                    <li><a href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest/PT">CELPIP-General Practice Tests, Set 1</a></li>
+                                    <li><a href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest2/OPT2">CELPIP-General Practice Tests, Set 2</a></li>
+                                    <li><a href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest3/OPT3">CELPIP-General Practice Tests, Set 3</a></li>
+                                    <li><a href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest4/OPT4">CELPIP-General Practice Tests, Set 4</a></li>
+                                    <li><a href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest5/OPT5">CELPIP-General Practice Tests, Set 5</a></li>
+                                    <li><a href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest6/OPT6">CELPIP-General Practice Tests, Set 6</a></li>
+                                    <li><a href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest7/OPT7">CELPIP-General Practice Tests, Set 7</a></li>
+                                    <li><a href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest8/OPT8">CELPIP-General Practice Tests, Set 8</a></li>
+                                    <li><a href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest9/OPT9">CELPIP-General Practice Tests, Set 9</a></li>
+                                    <li><a href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest10/OPT10">CELPIP-General Practice Tests, Set 10</a></li>
+                                        <li><a target="_blank" href="https://testprep.paragontesting.ca/api/sso/v2/sso/jwt?jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6Imh5cDIyMThAZ21haWwuY29tIiwiZmlyc3RfbmFtZSI6IllpLVBpbmciLCJsYXN0X25hbWUiOiJIbyIsIm5hbWVpZCI6IjIyMzc0ODgiLCJpYXQiOjE3NDMwMTQzNTYsImp0aSI6MTcwMDQ1NjM2OCwibmJmIjoxNzQzMDE0MDU2fQ.cfQSKwzjgSoiJAUfQmxI27XOYia513HhE36N5WLMXMw&amp;return_to=https%3A%2F%2Ftestprep.paragontesting.ca%2Fbundles%2Fcelpip-accelerate-starter-celpip-general">CELPIP Accelerate Starter - Reading and Writing</a></li>
+                                        <li><a target="_blank" href="https://testprep.paragontesting.ca/api/sso/v2/sso/jwt?jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6Imh5cDIyMThAZ21haWwuY29tIiwiZmlyc3RfbmFtZSI6IllpLVBpbmciLCJsYXN0X25hbWUiOiJIbyIsIm5hbWVpZCI6IjIyMzc0ODgiLCJpYXQiOjE3NDMwMTQzNTYsImp0aSI6MTAxNzEyNzMwMiwibmJmIjoxNzQzMDE0MDU2fQ.pzm4c7Rz1of6amZP7YzWQDhuRvIV32UMZTR8KLLHSdo&amp;return_to=https%3A%2F%2Ftestprep.paragontesting.ca%2Fbundles%2Fcelpip-accelerate-starter-celpip-general-ls">CELPIP Accelerate Starter - Listening and Speaking</a></li>
+                        </ul>
+
+                    </li>
+
+                    <li>
+                        <div style="margin-left: 19px">
+                            <ul class="nav nav-pills header-buttons">
+                                
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+
+                <ul class="nav pull-right" style="margin-top:17px">
+                        <li class="dropdown">
+                            <a class="dropdown-toggle dropdown-email" data-toggle="dropdown">
+                                <img src="./7-2-4_files/fa_cog.png" style="width:18px; height: 18px; margin-top:-5px">
+                                hyp2218@gmail.com
+                                <b class="caret"></b>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="javascript:document.getElementById(&#39;logoutForm&#39;).submit()">Sign out</a></li>
+                            </ul>
+                        </li>
+                </ul>
+            </div>
+        </div>
+<form action="https://instructionalproducts.paragontesting.ca/InstructionalProducts/Account/LogOff" id="logoutForm" method="post"></form>    </header>
+
+    <div class="container" id="main-container" style="height: 773px;">
+<link href="./7-2-4_files/ptStyle.css" rel="stylesheet" type="text/css">
+<link href="./7-2-4_files/video-js.css" rel="stylesheet">
+<script src="./7-2-4_files/video.js.下載"></script>
+<script>
+    paragon.pt.backUrl = "/InstructionalProducts/PracticeTest7/OPT7/View/9d04c0d5-cd32-42de-b06b-ad2f7753a263";
+    paragon.pt.nextUrl = "/InstructionalProducts/PracticeTest7/OPT7/View/92c1359f-300c-4f9b-8039-48aa86cee542";
+    if (paragon.pt.backUrl.length > 0 || paragon.pt.nextUrl.length > 0) {
+        paragon.footerVisible = true;
+    }
+
+    paragon.pt.items = [
+  {
+    "Id": "57441d89-b574-4651-9722-ff3852da5959",
+    "ContentId": "521bf9d4-48ad-4d72-bf99-ab724df861c7",
+    "Num": 1,
+    "Text": "1.  Ewing visited Ottawa to",
+    "ExtraField1": "",
+    "Choices": [
+      {
+        "Id": "b07a0a5e-f908-44ba-9201-4c01dba82404",
+        "ItemId": "57441d89-b574-4651-9722-ff3852da5959",
+        "ChoiceData": null,
+        "Num": 1,
+        "Text": "strengthen economic ties."
+      },
+      {
+        "Id": "89525008-479f-4126-8343-1e4d3e36a8d4",
+        "ItemId": "57441d89-b574-4651-9722-ff3852da5959",
+        "ChoiceData": null,
+        "Num": 2,
+        "Text": "discuss joining Canada."
+      },
+      {
+        "Id": "848d9d3c-4cd9-4454-972c-b6b5745f204c",
+        "ItemId": "57441d89-b574-4651-9722-ff3852da5959",
+        "ChoiceData": null,
+        "Num": 3,
+        "Text": "study financial policies."
+      },
+      {
+        "Id": "43efab74-821a-44ff-9b51-31326800ceff",
+        "ItemId": "57441d89-b574-4651-9722-ff3852da5959",
+        "ChoiceData": null,
+        "Num": 4,
+        "Text": "boost investment in Canada."
+      }
+    ]
+  },
+  {
+    "Id": "76e1de67-f6d2-4c59-8e3e-5253823ed685",
+    "ContentId": "521bf9d4-48ad-4d72-bf99-ab724df861c7",
+    "Num": 2,
+    "Text": "2.  Arguments presented in favour of annexation suggest",
+    "ExtraField1": "",
+    "Choices": [
+      {
+        "Id": "ac47505d-7903-4e2d-8bf7-13a47b9197b2",
+        "ItemId": "76e1de67-f6d2-4c59-8e3e-5253823ed685",
+        "ChoiceData": null,
+        "Num": 1,
+        "Text": "improved regulations for both countries."
+      },
+      {
+        "Id": "32f585ec-13c6-449a-9efa-39cd17626be8",
+        "ItemId": "76e1de67-f6d2-4c59-8e3e-5253823ed685",
+        "ChoiceData": null,
+        "Num": 2,
+        "Text": "increased opportunities for both parties."
+      },
+      {
+        "Id": "09ac80e3-d738-4619-a80b-4e363da3626d",
+        "ItemId": "76e1de67-f6d2-4c59-8e3e-5253823ed685",
+        "ChoiceData": null,
+        "Num": 3,
+        "Text": "increased tourism in both countries."
+      },
+      {
+        "Id": "b2b4d47c-e4b0-4734-9116-28560c5e2d9a",
+        "ItemId": "76e1de67-f6d2-4c59-8e3e-5253823ed685",
+        "ChoiceData": null,
+        "Num": 4,
+        "Text": "improved health care for both parties."
+      }
+    ]
+  },
+  {
+    "Id": "8e029c8c-bebc-4f11-96c6-159e5a959d95",
+    "ContentId": "521bf9d4-48ad-4d72-bf99-ab724df861c7",
+    "Num": 3,
+    "Text": "3.  Janice Bloom believes that annexing Turks and Caicos is",
+    "ExtraField1": "",
+    "Choices": [
+      {
+        "Id": "abbd9656-a753-4b4a-ba85-98e4c8bf280f",
+        "ItemId": "8e029c8c-bebc-4f11-96c6-159e5a959d95",
+        "ChoiceData": null,
+        "Num": 1,
+        "Text": "a shared Canadian dream."
+      },
+      {
+        "Id": "bbdb1c26-84c6-429e-9891-3097a0b8ab56",
+        "ItemId": "8e029c8c-bebc-4f11-96c6-159e5a959d95",
+        "ChoiceData": null,
+        "Num": 2,
+        "Text": "a pointless proposition."
+      },
+      {
+        "Id": "528eaeef-271a-44cb-9b0b-e33e01075188",
+        "ItemId": "8e029c8c-bebc-4f11-96c6-159e5a959d95",
+        "ChoiceData": null,
+        "Num": 3,
+        "Text": "a worthy cause to pursue."
+      },
+      {
+        "Id": "821718e0-7142-4511-ac9d-1665707c47a5",
+        "ItemId": "8e029c8c-bebc-4f11-96c6-159e5a959d95",
+        "ChoiceData": null,
+        "Num": 4,
+        "Text": "a pressing government issue."
+      }
+    ]
+  },
+  {
+    "Id": "a88aa79a-d2b0-4a27-9dbd-e264f9f79db9",
+    "ContentId": "521bf9d4-48ad-4d72-bf99-ab724df861c7",
+    "Num": 4,
+    "Text": "4.  Inhabitants of Turks and Caicos",
+    "ExtraField1": "",
+    "Choices": [
+      {
+        "Id": "912b7c9b-d232-429a-b4da-b746f26a1247",
+        "ItemId": "a88aa79a-d2b0-4a27-9dbd-e264f9f79db9",
+        "ChoiceData": null,
+        "Num": 1,
+        "Text": "lead a different lifestyle than Canadians."
+      },
+      {
+        "Id": "649fa2fe-1432-4dd2-8880-cb1f1bb6613c",
+        "ItemId": "a88aa79a-d2b0-4a27-9dbd-e264f9f79db9",
+        "ChoiceData": null,
+        "Num": 2,
+        "Text": "want to speed up the process of joining Canada."
+      },
+      {
+        "Id": "bf5ed2da-0930-49d3-a397-c64f67ad3b26",
+        "ItemId": "a88aa79a-d2b0-4a27-9dbd-e264f9f79db9",
+        "ChoiceData": null,
+        "Num": 3,
+        "Text": "have high rates of unemployment."
+      },
+      {
+        "Id": "61e04422-9907-4af8-851b-1633ecc302ed",
+        "ItemId": "a88aa79a-d2b0-4a27-9dbd-e264f9f79db9",
+        "ChoiceData": null,
+        "Num": 4,
+        "Text": "value their independence from foreign powers."
+      }
+    ]
+  },
+  {
+    "Id": "0a8fbbf6-4d30-4eb8-9ba5-124abea7c313",
+    "ContentId": "521bf9d4-48ad-4d72-bf99-ab724df861c7",
+    "Num": 5,
+    "Text": "5.  The author of the article is",
+    "ExtraField1": "",
+    "Choices": [
+      {
+        "Id": "c6870b8d-f743-463e-a77a-6b49a784304d",
+        "ItemId": "0a8fbbf6-4d30-4eb8-9ba5-124abea7c313",
+        "ChoiceData": null,
+        "Num": 1,
+        "Text": "in favour of the proposal."
+      },
+      {
+        "Id": "0bed4bff-b7cf-4fef-aaa4-b75c7a3b9be7",
+        "ItemId": "0a8fbbf6-4d30-4eb8-9ba5-124abea7c313",
+        "ChoiceData": null,
+        "Num": 2,
+        "Text": "skeptical about the prospect."
+      },
+      {
+        "Id": "c19c1be5-5940-490c-8d21-8a64ffa05974",
+        "ItemId": "0a8fbbf6-4d30-4eb8-9ba5-124abea7c313",
+        "ChoiceData": null,
+        "Num": 3,
+        "Text": "opposed to the annexation."
+      },
+      {
+        "Id": "68834311-aa59-4654-ab21-16c4087a46f5",
+        "ItemId": "0a8fbbf6-4d30-4eb8-9ba5-124abea7c313",
+        "ChoiceData": null,
+        "Num": 4,
+        "Text": "surprised by the reactions."
+      }
+    ]
+  },
+  {
+    "Id": "44152b39-9c8c-4bb1-85ef-a4b464c08c46",
+    "ContentId": "521bf9d4-48ad-4d72-bf99-ab724df861c7",
+    "Num": 6,
+    "Text": "6. Question_Text",
+    "ExtraField1": "",
+    "Choices": [
+      {
+        "Id": "b9801d06-761e-44f8-a741-0d2efff8b379",
+        "ItemId": "44152b39-9c8c-4bb1-85ef-a4b464c08c46",
+        "ChoiceData": null,
+        "Num": 1,
+        "Text": "enter into business with a Caribbean paradise"
+      },
+      {
+        "Id": "2264d116-846e-48c8-9890-ff5afb98a05a",
+        "ItemId": "44152b39-9c8c-4bb1-85ef-a4b464c08c46",
+        "ChoiceData": null,
+        "Num": 2,
+        "Text": "forge new diplomatic ties with Turks and Caicos"
+      },
+      {
+        "Id": "89663f6c-88ab-4ea9-bd3e-067b292a36f2",
+        "ItemId": "44152b39-9c8c-4bb1-85ef-a4b464c08c46",
+        "ChoiceData": null,
+        "Num": 3,
+        "Text": "incorporate a group of sunny southern islands"
+      },
+      {
+        "Id": "76846aa7-ae27-4d6f-8606-801ef59a63ca",
+        "ItemId": "44152b39-9c8c-4bb1-85ef-a4b464c08c46",
+        "ChoiceData": null,
+        "Num": 4,
+        "Text": "promote low-cost travel throughout the Caribbean"
+      }
+    ]
+  },
+  {
+    "Id": "ca1df82f-71fa-4b61-9b17-e31efbeec0ce",
+    "ContentId": "521bf9d4-48ad-4d72-bf99-ab724df861c7",
+    "Num": 7,
+    "Text": "",
+    "ExtraField1": "",
+    "Choices": [
+      {
+        "Id": "54bb153b-5f27-447c-988a-b3bf3d698eb2",
+        "ItemId": "ca1df82f-71fa-4b61-9b17-e31efbeec0ce",
+        "ChoiceData": null,
+        "Num": 1,
+        "Text": "Ewing remained largely silent on the matter "
+      },
+      {
+        "Id": "4cb41833-077b-43e3-b30b-4a7bb232d771",
+        "ItemId": "ca1df82f-71fa-4b61-9b17-e31efbeec0ce",
+        "ChoiceData": null,
+        "Num": 2,
+        "Text": "Goldring felt he has done all that he can"
+      },
+      {
+        "Id": "c45bee1e-6186-4b3b-9d9c-7387df0ac154",
+        "ItemId": "ca1df82f-71fa-4b61-9b17-e31efbeec0ce",
+        "ChoiceData": null,
+        "Num": 3,
+        "Text": "Bloom thought Ewing has better things to do "
+      },
+      {
+        "Id": "598842b1-bb03-44d1-bbf0-d08e33c05b04",
+        "ItemId": "ca1df82f-71fa-4b61-9b17-e31efbeec0ce",
+        "ChoiceData": null,
+        "Num": 4,
+        "Text": "Douglas feared a Canadian job might be too hard"
+      }
+    ]
+  },
+  {
+    "Id": "4897376f-f3e6-44c6-bec9-fa9a8297fcf3",
+    "ContentId": "521bf9d4-48ad-4d72-bf99-ab724df861c7",
+    "Num": 8,
+    "Text": "",
+    "ExtraField1": "",
+    "Choices": [
+      {
+        "Id": "30d7c7a8-9f05-41e2-a9d3-c59603ca8ba4",
+        "ItemId": "4897376f-f3e6-44c6-bec9-fa9a8297fcf3",
+        "ChoiceData": null,
+        "Num": 1,
+        "Text": "feel resentment toward"
+      },
+      {
+        "Id": "509b2fcb-145e-4a2b-91a6-90fdbe672b9a",
+        "ItemId": "4897376f-f3e6-44c6-bec9-fa9a8297fcf3",
+        "ChoiceData": null,
+        "Num": 2,
+        "Text": "desire compensation from"
+      },
+      {
+        "Id": "3d89bc48-de05-4f57-8bf6-51bc2a4bc988",
+        "ItemId": "4897376f-f3e6-44c6-bec9-fa9a8297fcf3",
+        "ChoiceData": null,
+        "Num": 3,
+        "Text": "need an incentive from"
+      },
+      {
+        "Id": "d88fc765-6897-49d5-ab1f-c71d4b39c7ca",
+        "ItemId": "4897376f-f3e6-44c6-bec9-fa9a8297fcf3",
+        "ChoiceData": null,
+        "Num": 4,
+        "Text": "want to avoid relations with"
+      }
+    ]
+  },
+  {
+    "Id": "3e3aa439-e876-4dd0-9238-8a5f079e50be",
+    "ContentId": "521bf9d4-48ad-4d72-bf99-ab724df861c7",
+    "Num": 9,
+    "Text": "",
+    "ExtraField1": "",
+    "Choices": [
+      {
+        "Id": "42c1315e-eabd-4a0d-be4d-e5b3219fee9f",
+        "ItemId": "3e3aa439-e876-4dd0-9238-8a5f079e50be",
+        "ChoiceData": null,
+        "Num": 1,
+        "Text": "arrogantly overconfident Liberal position"
+      },
+      {
+        "Id": "54ed95ba-a1e3-479a-ae4e-cdb32f1d512d",
+        "ItemId": "3e3aa439-e876-4dd0-9238-8a5f079e50be",
+        "ChoiceData": null,
+        "Num": 2,
+        "Text": "evidently guileful Turks and Caicos Premier"
+      },
+      {
+        "Id": "89e33717-dfa9-49fb-bc0e-c6274fad876e",
+        "ItemId": "3e3aa439-e876-4dd0-9238-8a5f079e50be",
+        "ChoiceData": null,
+        "Num": 3,
+        "Text": "highly reluctant Turks and Caicos resident"
+      },
+      {
+        "Id": "1fdf2c0b-04ac-46e9-b7e9-dc7c9c5091d3",
+        "ItemId": "3e3aa439-e876-4dd0-9238-8a5f079e50be",
+        "ChoiceData": null,
+        "Num": 4,
+        "Text": "tersely dismissive Conservative position"
+      }
+    ]
+  },
+  {
+    "Id": "5fc97719-12fd-42ee-8988-ac0f5e782efc",
+    "ContentId": "521bf9d4-48ad-4d72-bf99-ab724df861c7",
+    "Num": 10,
+    "Text": "",
+    "ExtraField1": "",
+    "Choices": [
+      {
+        "Id": "0870e2db-523a-492c-b0a4-ff7fd70d6e54",
+        "ItemId": "5fc97719-12fd-42ee-8988-ac0f5e782efc",
+        "ChoiceData": null,
+        "Num": 1,
+        "Text": "too late to implement "
+      },
+      {
+        "Id": "d1c6de99-8830-423a-aae9-05de3a2b1b96",
+        "ItemId": "5fc97719-12fd-42ee-8988-ac0f5e782efc",
+        "ChoiceData": null,
+        "Num": 2,
+        "Text": "an urgent political matter"
+      },
+      {
+        "Id": "14912c43-564b-454d-82b4-8ff69b7ba524",
+        "ItemId": "5fc97719-12fd-42ee-8988-ac0f5e782efc",
+        "ChoiceData": null,
+        "Num": 3,
+        "Text": "an unfeasible scheme"
+      },
+      {
+        "Id": "d677ed4e-5520-4286-a5b3-8dc5ebdce467",
+        "ItemId": "5fc97719-12fd-42ee-8988-ac0f5e782efc",
+        "ChoiceData": null,
+        "Num": 4,
+        "Text": "too burdensome for businesses"
+      }
+    ]
+  }
+]
+</script>
+
+<div id="panelTop">
+
+    <div id="canvasName" style="float: left; font-size: 16px; font-weight: bold;">
+        Practice Test 2 - Reading Part 4: Reading for Viewpoints
+    </div>
+
+    <div style="float: right;" class="btnNext span1 pull-right">
+                <a href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest7/OPT7/View/3edb9dd9-3296-4a58-ba00-59c9f41952d7#" id="btnNext" class="btn btn-primary">NEXT</a>
+
+    </div>
+
+    <div style="float: right; display: block;" id="timer" class="hide">
+        Time remaining: <strong>12 minutes</strong>
+    </div>
+
+</div>
+
+<div id="mainContent">
+    
+
+<script id="dropDownListTemplate" type="text/template">
+{{#each this}}
+    <div class="ddrow">
+        {{Text}}
+        <div class='dd'>
+            <div class='ddToggle'>▾</div>
+            <div class='ddMenu'>
+                <ul data-id="{{Id}}">
+                {{#each Choices}}
+                    <li data-id="{{Id}}">{{Text}}</li>
+                {{/each}}
+                </ul>
+            </div>
+        </div>
+    </div>
+{{/each}}
+</script>
+
+<script id="dropDownListInlineTemplate" type="text/template">
+    <div class='dd'>
+        <div class='ddToggle'>▾</div>
+        <div class='ddMenu'>
+            <ul data-id="{{Id}}">
+            {{#each Choices}}
+                <li data-id="{{Id}}">{{Text}}</li>
+            {{/each}}
+            </ul>
+        </div>
+    </div>
+</script>
+
+<script id="dropDownListInFrontTemplate" type="text/template">
+    {{#each this}}
+    <div class="ddrow">
+        <div class='dd'>
+            <div class='ddToggle'>▾</div>
+            <div class='ddMenu'>
+                <ul data-id="{{Id}}">
+                    {{#each Choices}}
+                    <li data-id="{{Id}}">{{Text}}</li>
+                    {{/each}}
+                </ul>
+            </div>
+        </div>
+        &nbsp;-
+        {{Text}}
+    </div>
+    {{/each}}
+</script>
+
+<div id="panelLeft" style="width: 50%; height: 730px;" class="graybg">
+    <div class="row1">
+        <div><div class="instruction" style="margin-bottom: 30px;">Read the following article from a website.</div>
+
+A recent visit to Canada by Turks and Caicos Premier, Rufus Ewing, resparked interest in Canada’s annexation of the country. Turks and Caicos, a Caribbean archipelago of 40 islands, has been a point of interest in Canada’s history. This most recent debate marks the third time in the last century that Ottawa politicians have pushed to make the territory Canada’s eleventh province. With over 300 kilometres of beaches, the tropical paradise would certainly be a welcome asset.
+ <br><br>
+Ewing hailed Canada as a role model of fiscal responsibility from which his country could learn, accolades that resounded in Ottawa on the foreign leader's recent diplomatic junket to spur bilateral trade and tourism. When asked about the possibility of Turks and Caicos becoming a Canadian province, the Premier skirted the issue. He said he would not dismiss the idea completely, but he also offered us a glimmer of hope with the tantalizing observation that “there is no marriage without some kind of relationship first.”
+<br><br>
+Liberal politician Peter Goldring is spearheading the latest campaign for the annexation and feels that much of the legwork has already been done. According to Goldring, “Canada has the greatest proportion of foreign investment in Turks and Caicos, and the second highest number of tourists to the country. Annexation would permit further growth in these areas.” Goldring also argues that the island could serve as a gateway to Latin America. “The location would be ideal for military support from Ottawa and particularly for disaster relief,” he adds.
+<br><br>
+Disappointingly, Conservative politician Janice Bloom calls the whole idea a pipe dream. 
+“Canada is not in the business of annexing tropical islands,” she claims. “Annexation would be extremely complicated since it would involve changes to the islands’ tax and health care systems.” Bloom contends that the government has more pressing matters.
+<br><br>
+Yet, according to a recent poll, the majority of the islands’ residents support the proposal. Cab driver Ron Douglas says he’d love the opportunity to work in Alberta’s oil industry. However, he admits the primary concern of many locals is that Canada’s rules are too strict. “They go against the laid-back attitude of us islanders.”
+<br><br></div>
+        
+        <div class="box hide" id="infoBox">
+    <div class="boxIcon">
+        <em class="info-icon"></em>
+    </div>
+    <div class="boxText">
+        <div>
+            <p>Click "NEXT" to continue.</p>
+        </div>
+    </div>
+</div>
+
+<div class="box hide" id="playAudioBox">
+    <div class="boxIcon">
+        <em class="play-icon"></em>
+    </div>
+    <div class="boxText">
+        <div>Playing...</div>
+        <div class="progressbar">
+            <span class="progressbar-value"><em style="left: 0%;" class="progressbar-cover"></em>
+            </span>
+        </div>
+    </div>
+</div>
+
+<div id="audioDiv"></div>
+
+
+    </div>
+</div>
+
+<div id="panelRight" style="width: 50%; height: 730px;" class="bluebg">
+    <div class="row1">
+        <div class="instruction" style="margin-bottom: 15px;">Using the drop-down menu ( <span class="caret" style="margin-top:7px; border-top: 4px solid #1A578A"></span> ), choose the <span style="color: #4789AC;">best</span> option according to the information given on the website.</div>
+        
+        <div id="multipleChoices" class="wellBlueBG" style="margin-bottom: 20px;">
+
+    <div class="ddrow">
+        1.  Ewing visited Ottawa to
+        <div class="dd">
+            <div class="ddToggle">▾</div>
+            <div class="ddMenu">
+                <ul data-id="57441d89-b574-4651-9722-ff3852da5959">
+                
+                    <li data-id="b07a0a5e-f908-44ba-9201-4c01dba82404">strengthen economic ties.</li>
+                
+                    <li data-id="89525008-479f-4126-8343-1e4d3e36a8d4">discuss joining Canada.</li>
+                
+                    <li data-id="848d9d3c-4cd9-4454-972c-b6b5745f204c">study financial policies.</li>
+                
+                    <li data-id="43efab74-821a-44ff-9b51-31326800ceff">boost investment in Canada.</li>
+                
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="ddrow">
+        2.  Arguments presented in favour of annexation suggest
+        <div class="dd">
+            <div class="ddToggle">▾</div>
+            <div class="ddMenu">
+                <ul data-id="76e1de67-f6d2-4c59-8e3e-5253823ed685">
+                
+                    <li data-id="ac47505d-7903-4e2d-8bf7-13a47b9197b2">improved regulations for both countries.</li>
+                
+                    <li data-id="32f585ec-13c6-449a-9efa-39cd17626be8">increased opportunities for both parties.</li>
+                
+                    <li data-id="09ac80e3-d738-4619-a80b-4e363da3626d">increased tourism in both countries.</li>
+                
+                    <li data-id="b2b4d47c-e4b0-4734-9116-28560c5e2d9a">improved health care for both parties.</li>
+                
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="ddrow">
+        3.  Janice Bloom believes that annexing Turks and Caicos is
+        <div class="dd">
+            <div class="ddToggle">▾</div>
+            <div class="ddMenu">
+                <ul data-id="8e029c8c-bebc-4f11-96c6-159e5a959d95">
+                
+                    <li data-id="abbd9656-a753-4b4a-ba85-98e4c8bf280f">a shared Canadian dream.</li>
+                
+                    <li data-id="bbdb1c26-84c6-429e-9891-3097a0b8ab56">a pointless proposition.</li>
+                
+                    <li data-id="528eaeef-271a-44cb-9b0b-e33e01075188">a worthy cause to pursue.</li>
+                
+                    <li data-id="821718e0-7142-4511-ac9d-1665707c47a5">a pressing government issue.</li>
+                
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="ddrow">
+        4.  Inhabitants of Turks and Caicos
+        <div class="dd">
+            <div class="ddToggle">▾</div>
+            <div class="ddMenu">
+                <ul data-id="a88aa79a-d2b0-4a27-9dbd-e264f9f79db9">
+                
+                    <li data-id="912b7c9b-d232-429a-b4da-b746f26a1247">lead a different lifestyle than Canadians.</li>
+                
+                    <li data-id="649fa2fe-1432-4dd2-8880-cb1f1bb6613c">want to speed up the process of joining Canada.</li>
+                
+                    <li data-id="bf5ed2da-0930-49d3-a397-c64f67ad3b26">have high rates of unemployment.</li>
+                
+                    <li data-id="61e04422-9907-4af8-851b-1633ecc302ed">value their independence from foreign powers.</li>
+                
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="ddrow">
+        5.  The author of the article is
+        <div class="dd">
+            <div class="ddToggle">▾</div>
+            <div class="ddMenu">
+                <ul data-id="0a8fbbf6-4d30-4eb8-9ba5-124abea7c313">
+                
+                    <li data-id="c6870b8d-f743-463e-a77a-6b49a784304d">in favour of the proposal.</li>
+                
+                    <li data-id="0bed4bff-b7cf-4fef-aaa4-b75c7a3b9be7">skeptical about the prospect.</li>
+                
+                    <li data-id="c19c1be5-5940-490c-8d21-8a64ffa05974">opposed to the annexation.</li>
+                
+                    <li data-id="68834311-aa59-4654-ab21-16c4087a46f5">surprised by the reactions.</li>
+                
+                </ul>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+        <div class="instruction">The following is a comment by a visitor to the website page. Complete the comment by choosing the <span style="color: #4789AC;">best</span> option to fill in each blank.</div>
+
+        <div id="inlineDropDown" class="wellBlueBG" style="margin-top: 20px; margin-bottom: 20px; line-height: 2em;">I have to admit, reading that Canada could potentially 6.
+    <div class="dd">
+        <div class="ddToggle">▾</div>
+        <div class="ddMenu">
+            <ul data-id="44152b39-9c8c-4bb1-85ef-a4b464c08c46">
+            
+                <li data-id="b9801d06-761e-44f8-a741-0d2efff8b379">enter into business with a Caribbean paradise</li>
+            
+                <li data-id="2264d116-846e-48c8-9890-ff5afb98a05a">forge new diplomatic ties with Turks and Caicos</li>
+            
+                <li data-id="89663f6c-88ab-4ea9-bd3e-067b292a36f2">incorporate a group of sunny southern islands</li>
+            
+                <li data-id="76846aa7-ae27-4d6f-8606-801ef59a63ca">promote low-cost travel throughout the Caribbean</li>
+            
+            </ul>
+        </div>
+    </div>
+ made my day. To be honest, however, I am not at all surprised that 7.
+    <div class="dd">
+        <div class="ddToggle">▾</div>
+        <div class="ddMenu">
+            <ul data-id="ca1df82f-71fa-4b61-9b17-e31efbeec0ce">
+            
+                <li data-id="54bb153b-5f27-447c-988a-b3bf3d698eb2">Ewing remained largely silent on the matter </li>
+            
+                <li data-id="4cb41833-077b-43e3-b30b-4a7bb232d771">Goldring felt he has done all that he can</li>
+            
+                <li data-id="c45bee1e-6186-4b3b-9d9c-7387df0ac154">Bloom thought Ewing has better things to do </li>
+            
+                <li data-id="598842b1-bb03-44d1-bbf0-d08e33c05b04">Douglas feared a Canadian job might be too hard</li>
+            
+            </ul>
+        </div>
+    </div>
+. Turks and Caicos officials have approached the Canadian government before regarding the issue, and were rejected each time. As Ewing insinuates, they likely 8.
+    <div class="dd">
+        <div class="ddToggle">▾</div>
+        <div class="ddMenu">
+            <ul data-id="4897376f-f3e6-44c6-bec9-fa9a8297fcf3">
+            
+                <li data-id="30d7c7a8-9f05-41e2-a9d3-c59603ca8ba4">feel resentment toward</li>
+            
+                <li data-id="509b2fcb-145e-4a2b-91a6-90fdbe672b9a">desire compensation from</li>
+            
+                <li data-id="3d89bc48-de05-4f57-8bf6-51bc2a4bc988">need an incentive from</li>
+            
+                <li data-id="d88fc765-6897-49d5-ab1f-c71d4b39c7ca">want to avoid relations with</li>
+            
+            </ul>
+        </div>
+    </div>
+ Canada now. I am, however, shocked by the 9.
+    <div class="dd">
+        <div class="ddToggle">▾</div>
+        <div class="ddMenu">
+            <ul data-id="3e3aa439-e876-4dd0-9238-8a5f079e50be">
+            
+                <li data-id="42c1315e-eabd-4a0d-be4d-e5b3219fee9f">arrogantly overconfident Liberal position</li>
+            
+                <li data-id="54ed95ba-a1e3-479a-ae4e-cdb32f1d512d">evidently guileful Turks and Caicos Premier</li>
+            
+                <li data-id="89e33717-dfa9-49fb-bc0e-c6274fad876e">highly reluctant Turks and Caicos resident</li>
+            
+                <li data-id="1fdf2c0b-04ac-46e9-b7e9-dc7c9c5091d3">tersely dismissive Conservative position</li>
+            
+            </ul>
+        </div>
+    </div>
+. You’d think if there was any financial gain to be had, they would be the first on board. However, I do agree with Bloom's sentiment that at present, it is perhaps 10.
+    <div class="dd">
+        <div class="ddToggle">▾</div>
+        <div class="ddMenu">
+            <ul data-id="5fc97719-12fd-42ee-8988-ac0f5e782efc">
+            
+                <li data-id="0870e2db-523a-492c-b0a4-ff7fd70d6e54">too late to implement </li>
+            
+                <li data-id="d1c6de99-8830-423a-aae9-05de3a2b1b96">an urgent political matter</li>
+            
+                <li data-id="14912c43-564b-454d-82b4-8ff69b7ba524">an unfeasible scheme</li>
+            
+                <li data-id="d677ed4e-5520-4286-a5b3-8dc5ebdce467">too burdensome for businesses</li>
+            
+            </ul>
+        </div>
+    </div>
+.</div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        paragon.pt.timer.start(780);
+
+        var items1 = paragon.pt.items.slice(0, 5);
+
+        paragon.pt.dropDown.renderTemplate("/InstructionalProducts/PracticeTest7/OPT7/SaveUserResponse/", "836851e3-1eb9-4747-afc4-cc4c72da1a1b", $('#dropDownListTemplate').html(), $('#multipleChoices'), items1);
+        paragon.pt.dropDown.renderInline("/InstructionalProducts/PracticeTest7/OPT7/SaveUserResponse/", "836851e3-1eb9-4747-afc4-cc4c72da1a1b", paragon.pt.items, 5, 9, $("#inlineDropDown"));
+
+        paragon.pt.dropDown.activate("/InstructionalProducts/PracticeTest7/OPT7/SaveUserResponse/", "836851e3-1eb9-4747-afc4-cc4c72da1a1b");
+
+        $.ajax({
+            type: "POST",
+            url: "/InstructionalProducts/PracticeTest7/OPT7/GetUserResponses",
+            data: { 'sectionId': '836851e3-1eb9-4747-afc4-cc4c72da1a1b', 'items': JSON.stringify(paragon.pt.items) },
+                       success: function (data) {
+                           var responses = data.responses;
+                           for (var i = 0; i < responses.length; i++) {
+                               var currentResponse = responses[i];
+                               if (currentResponse != null) {
+                                   var selected = $('ul').find('[data-id=' + currentResponse.Answer + ']');
+                                   if (selected != null) {
+                                       var toggle = $(selected).parent().parent().prev();
+                                       $(toggle).addClass('ddToggle1');
+                                       $(toggle).html(selected.html());
+                                       $(selected).addClass('selected');
+                                   }
+                               }
+                           }
+                       }
+        });
+        //show scrollbar
+        paragon.pt.showScrollBar($('#panelLeft'), $('#panelRight'));
+        paragon.pt.showReadingAnswerKeyBtn("836851e3-1eb9-4747-afc4-cc4c72da1a1b");
+
+
+
+    });
+
+</script>
+
+</div>
+
+<div id="dlgTest" class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-header">
+        <h4>Test</h4>
+    </div>
+    <div class="modal-body">
+        <p>test</p>
+    </div>
+    <div class="modal-footer">
+        <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+    </div>
+</div>
+
+<div id="dlgUnansweredWarning" class="modal hide fade" tabindex="-1" role="dialog">
+    <div class="modal-body">
+        <p>No answer(s) selected. On the official test, if you go to the next page, you will no longer be able to answer the question(s) on this page.</p>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" data-dismiss="modal" style="color: white;">Keep working on this page</button>
+        <button class="btn" data-dismiss="modal" onclick="paragon.pt.skipToNext()">Skip and go to the next page</button>
+    </div>
+</div>
+
+</div>
+    <div class="container hide" id="footer" style="display: block;">
+        <div class="row">
+    <div id="leftBtn" class="span7" align="left"><a href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest7/OPT7/View/92c1359f-300c-4f9b-8039-48aa86cee542" id="backToResultbtn" class="btn">Answer Key</a></div>
+    <div class="span5">
+        <a href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest7/OPT7/View/3edb9dd9-3296-4a58-ba00-59c9f41952d7#" id="btnBack" class="btn btn1 hide btn-danger" style="display: inline;">BACK</a>
+        
+    </div>
+</div>
+
+    </div>
+    <div class="container" style="text-align: center; font-size: 0.9em; color: #53565A; padding-top: 20px;">
+        <p>Copyright 2025 - Paragon Testing Enterprises   |    <a href="https://www.celpip.ca/" target="_blank">www.celpip.ca</a>    |    <a href="https://www.celpip.ca/contact/" target="_blank">Contact Us</a></p>
+    </div>
+
+    <div id="block" class="modal-backdrop hide"></div>
+    <div id="unsupported" class="modal hide" tabindex="-1">
+        <div class="modal-body">
+            <h3>Unsupported screen resolution</h3>
+            <p>This product requires a minimum screen resolution of 1024 x 768.</p>
+        </div>
+    </div>
+
+
+    <script>
+        $(function () {
+            paragon.verifyDisplaySize();
+
+            $(window).resize(function () {
+                paragon.verifyDisplaySize();
+            });
+        });
+    </script>
+
+
+    
+    <script>
+        paragon.pt.showAlert = function (msg) {
+            $('#dlgTest .modal-body p').html(msg);
+            $('#dlgTest').modal();
+        }
+
+        paragon.pt.skipToNext = function () {
+            paragon.pt.nextItem("/InstructionalProducts/PracticeTest7/OPT7/SaveCanvasData",'', "3edb9dd9-3296-4a58-ba00-59c9f41952d7", "836851e3-1eb9-4747-afc4-cc4c72da1a1b", 2);
+            paragon.pt.goNext();
+        }
+
+        $(function () {
+            if (paragon.footerVisible == true) {
+                paragon.showFooter();
+            }
+
+            if (paragon.pt.backUrl.length > 0) {
+                $("#btnBack").click(function () {
+                    paragon.pt.goBack();
+                });
+                paragon.pt.showBackButton();
+            }
+
+
+            $("#btnNext").click(function () {
+                var url = "";
+                if (32  == 24 || 32  == 25) {
+                    url = "/InstructionalProducts/PracticeTest7/OPT7/GetUserResponse/";
+                }
+                else {
+                    url = "/InstructionalProducts/PracticeTest7/OPT7/GetUserResponses/";
+                }
+                var unanswered = paragon.pt.countUnansweredQuestionsFromDb(32, "836851e3-1eb9-4747-afc4-cc4c72da1a1b", url);
+                if (unanswered > 0) {
+                    $('#dlgUnansweredWarning').modal();
+                }
+                else {
+                    paragon.pt.skipToNext();
+                }
+            });
+
+            if (paragon.pt.nextUrl.length > 0) {
+                paragon.pt.showNextButton();
+            }
+
+
+        });
+
+        $(".links-main").click(function () {
+            var href = "/InstructionalProducts/PracticeTest7/OPT7/";
+            window.location = href;
+
+        });
+
+    </script>
+
+
+
+</body><grammarly-desktop-integration data-grammarly-shadow-root="true"><template shadowrootmode="open"><style>
+      div.grammarly-desktop-integration {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+        -moz-user-select: none;
+        -webkit-user-select: none;
+        -ms-user-select:none;
+        user-select:none;
+      }
+
+      div.grammarly-desktop-integration:before {
+        content: attr(data-content);
+      }
+    </style><div aria-label="grammarly-integration" role="group" tabindex="-1" class="grammarly-desktop-integration" data-content="{&quot;mode&quot;:&quot;full&quot;,&quot;isActive&quot;:true,&quot;isUserDisabled&quot;:false}"></div></template></grammarly-desktop-integration></html>

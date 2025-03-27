@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CEPLIP Readings</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            margin: 10px 0;
+        }
+        a {
+            text-decoration: none;
+            color: #0066cc;
+            cursor: pointer;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        .sublinks {
+            display: none;
+            margin-left: 20px;
+        }
+        .parent-link {
+            font-weight: bold;
+        }
+        @media (max-width: 600px) {
+            body {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>CELPIP Reading Mocks</h1>
+    <ul id="linkList">
+        <!-- Existing items will remain here -->
+    </ul>
+
+    <div id="test"></div>
+
+    <script>
+        function toggleSublinks(element) {
+            const sublinks = element.nextElementSibling;
+            if (sublinks && sublinks.classList.contains('sublinks')) {
+                sublinks.style.display = sublinks.style.display === 'block' ? 'none' : 'block';
+            }
+        }
+
+        function getMock_module(num) {
+                const linkList = document.getElementById("linkList");
+                const mockLi = document.createElement("li");
+                const mockParent = document.createElement("a");
+                mockParent.className = "parent-link";
+                mockParent.textContent = `Mock ${num}`;
+                mockParent.onclick = function () { toggleSublinks(this); };
+
+                const subUl = document.createElement("ul");
+                subUl.className = "sublinks";
+
+                const sublinks = [
+                    { href: `./${num}/${num}-1-1.html`, text: "1-1" },
+                    { href: `./${num}/${num}-1-2.html`, text: "1-2" },
+                    { href: `./${num}/${num}-1-3.html`, text: "1-3" },
+                    { href: `./${num}/${num}-1-4.html`, text: "1-4" },
+                    { href: `./${num}/${num}-1-answer.html`, text: "1-Ans" },
+                    { href: `./${num}/${num}-2-1.html`, text: "2-1" },
+                    { href: `./${num}/${num}-2-2.html`, text: "2-2" },
+                    { href: `./${num}/${num}-2-3.html`, text: "2-3" },
+                    { href: `./${num}/${num}-2-4.html`, text: "2-4" },
+                    { href: `./${num}/${num}-2-answer.html`, text: "2-Ans" },
+                ];
+
+                sublinks.forEach(link => {
+                    const subLi = document.createElement("li");
+                    const subA = document.createElement("a");
+                    subA.href = link.href;
+                    subA.textContent = link.text;
+                    subLi.appendChild(subA);
+                    subUl.appendChild(subLi);
+                });
+
+                mockLi.appendChild(mockParent);
+                mockLi.appendChild(subUl);
+                linkList.appendChild(mockLi);
+
+            }
+        // Dynamically add Mock 10 item to #linkList
+        for (i = 1; i<= 10; i++){
+            getMock_module(i)
+        }
+        // Dynamically add the same Mock 10 item to <div id="test">
+        const testDiv = document.getElementById("test");
+        const newLi = mockLi.cloneNode(true);
+        const newUl = document.createElement("ul");
+        newUl.appendChild(newLi);
+        testDiv.appendChild(newUl);
+    </script>
+</body>
+</html>

@@ -1,0 +1,1841 @@
+<!DOCTYPE html>
+<!-- saved from url=(0130)https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest7/OPT7/View/3c2a4eab-1124-406f-9f0a-3531d9aa8ffc -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><style>
+    a {
+        outline: 0;
+    }
+</style>
+
+
+
+    
+    <title>Practice Test</title>
+    <meta name="description">
+    <link href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/favicon.ico" rel="shortcut icon" type="image/x-icon">
+    <meta name="viewport" content="width=device-width">
+    <link href="./7-2-1_files/bootstrap.css" rel="stylesheet">
+<link href="./7-2-1_files/Site.css" rel="stylesheet">
+
+    <script src="./7-2-1_files/399283786078546" async=""></script><script async="" src="./7-2-1_files/fbevents.js.下載"></script><script src="./7-2-1_files/jquery-1.9.1.min.js.下載"></script>
+
+    <script src="./7-2-1_files/jquery.unobtrusive-ajax.min.js.下載"></script>
+
+    <script src="./7-2-1_files/bootstrap.js.下載"></script>
+
+    <script src="./7-2-1_files/handlebars.min.js.下載"></script>
+
+    <script src="./7-2-1_files/instructional-product.js.下載"></script>
+
+    <script src="./7-2-1_files/facebook-pixel.js.下載"></script>
+
+    <script>
+    paragon.pt = paragon.pt || {};
+    paragon.pt.backUrl = "";
+    paragon.pt.nextUrl = "";
+    paragon.pt.speakingPrepTimeLeft = 0;
+    paragon.pt.speakingRecordingTimeLeft = 0;
+    paragon.pt.itemIndex = 0;
+
+    paragon.pt.showAlert = function (msg) {
+        alert(msg);
+    }
+
+    paragon.pt.showBackButton = function () {
+        $("#btnBack").show();
+    }
+
+    paragon.pt.showNextButton = function () {
+        $("#btnNext").show();
+    }
+
+    paragon.pt.hideBackButton = function () {
+        $("#btnBack").hide();
+    }
+
+    paragon.pt.hideNextButton = function () {
+        $("#btnNext").hide();
+    }
+
+    paragon.pt.goNext = function () {
+        window.location = paragon.pt.nextUrl;
+    }
+
+    paragon.pt.goBack = function () {
+        window.location = paragon.pt.backUrl;
+    }
+
+    //Timer For Listening, Reading and Writing
+    paragon.pt.timer = paragon.pt.timer || {};
+    paragon.pt.timer.totalTime = 0;
+    paragon.pt.timer.timeLeft = 0;
+    paragon.pt.timer.interval = null;
+    paragon.pt.timer.start = function (timeLeft) {
+        paragon.pt.timer.timeLeft = timeLeft;
+        paragon.pt.timer.totalTime = timeLeft
+        var minutes = Math.floor(timeLeft / 60);
+        var seconds = timeLeft - minutes * 60;
+
+        if (minutes < 1) {
+            $("#timer strong").html(seconds + " seconds");
+            $("#timer strong").attr("style", "color:red");
+        }
+        else if (minutes == 1) {
+            $("#timer strong").html(minutes + " minute");
+        }
+        else {
+            $("#timer strong").html(minutes + " minutes");
+        }
+
+        $("#timer").show();
+
+        if (paragon.pt.timer.interval)
+            window.clearInterval(paragon.pt.timer.interval);
+
+        paragon.pt.timer.interval = window.setInterval(function () { paragon.pt.timer.deductTime() }, 1000);
+
+        paragon.showFooter();
+    }
+
+    paragon.pt.timer.deductTime = function () {
+        if (paragon.pt.timer.timeLeft > 0) {
+            paragon.pt.timer.timeLeft -= 1;
+
+            var minutes = Math.floor(paragon.pt.timer.timeLeft / 60);
+            var seconds = paragon.pt.timer.timeLeft - minutes * 60;
+
+            if (minutes < 1) {
+                $("#timer strong").html(seconds + " seconds");
+                $("#timer strong").attr("style", "color:red");
+            }
+            else if (minutes == 1) {
+                $("#timer strong").html(minutes + " minute");
+            }
+            else {
+                $("#timer strong").html(minutes + " minutes");
+            }
+        }
+        else {
+            window.clearInterval(paragon.pt.timer.interval);
+            $("#timer strong").html("None");
+        }
+    }
+
+    //Timer For Speaking, work in progress
+    paragon.pt.showTimerSpeaking = function (prepTime, recordingTime) {
+        paragon.pt.speakingPrepTimeLeft = prepTime;
+        paragon.pt.speakingRecordingTimeLeft = recordingTime;
+        $("#timerSpeaking strong:first-child").html(prepTime + " seconds");
+        $("#timerSpeaking strong:last-child").html(recordingTime + " seconds");
+        $("#timerSpeaking").show();
+        paragon.showFooter();
+    }
+
+    paragon.pt.userResponse = paragon.pt.userResponse || {};
+
+    paragon.pt.uploadMultipleChoicesValue = function (url, sectionId, itemId, choiceId) {
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: { sectionId: sectionId, itemId: itemId, choiceId: choiceId },
+            dataType: "json",
+            cache: false,
+            success: function (json) {
+                console.log(json);
+                console.log("ItemId: " + itemId + ", " + "ChoiceId: " + choiceId);
+            }
+        });
+    }
+
+    paragon.pt.activateMultipleChoices = function (url, sectionId) {
+        $(document).delegate(".multipleChoices li", "click", function () {
+            var ul = $(this).parent();
+            ul.find("li").removeClass("selected");
+            $(this).addClass("selected");
+
+            paragon.pt.uploadMultipleChoicesValue(url, sectionId, ul.data("id"), $(this).data("id"));
+        });
+    }
+
+    paragon.pt.renderMultipleChoices = function (url, sectionId, item, renderItemText, hasImage, renderChoiceText) {
+        var template;
+        if (renderItemText == true) {
+            if (hasImage == true) {
+                template = Handlebars.compile($("#multipleChoicesTemplateWithItemTextAndImage").html());
+            }
+            else {
+                template = Handlebars.compile($("#multipleChoicesTemplateWithItemText").html());
+            }
+        }
+        else {
+            if (hasImage == true) {
+
+                if (renderChoiceText == true) {
+                    template = Handlebars.compile($("#multipleChoicesTemplateWithImage").html());
+                }
+                else {
+                    template = Handlebars.compile($("#multipleChoicesTemplateWithImageNoText").html());
+                }
+            }
+            else {
+                template = Handlebars.compile($("#multipleChoicesTemplate").html());
+            }
+        }
+
+        $("#multipleChoices").html(template(item));
+
+        paragon.pt.activateMultipleChoices(url, sectionId);
+    }
+
+    //Drop down list
+    paragon.pt.dropDown = paragon.pt.dropDown || {};
+    paragon.pt.dropDown.activeMenu = null;
+    paragon.pt.dropDown.renderTemplate = function (url, sectionId, templateToRender, elementToRender, items) {
+        var template = Handlebars.compile(templateToRender);
+        $(elementToRender).html(template(items));
+    }
+
+    paragon.pt.dropDown.renderInline = function (url, sectionId, items, startIndex, endIndex, elementToRender) {
+
+        var template = Handlebars.compile($("#dropDownListInlineTemplate").html());
+        var text = elementToRender[0].innerHTML;
+        for (var i = startIndex; i <= endIndex; i++) {
+            text = text.replace("{" + items[i].Num + "}", template(items[i]));
+        }
+        //Handlebars.registerHelper('renderInline', function (src, items, startIndex, endIndex, options) {
+        //    var template = Handlebars.compile($("#dropDownListInlineTemplate").html());
+        //    for (var i = startIndex; i <= endIndex; i++) {
+        //        src = src.replace("{" + (i + 1) + "}", template(items[i]));
+        //    }
+        //    return src;
+        //});
+        $(elementToRender).html(text);
+    }
+
+    paragon.pt.dropDown.activate = function (url, sectionId) {
+
+        $(document.body).click(function () {
+            $(".dd").each(function (i) {
+                if (i != paragon.pt.dropDown.activeMenu) {
+                    $(this).find(".ddMenu").hide();
+                    $(this).removeClass('active');
+                }
+            });
+        });
+
+        $(".dd").mouseover(function () {
+            paragon.pt.dropDown.activeMenu = $(".dd").index(this);
+        }).mouseout(function () {
+            paragon.pt.dropDown.activeMenu = null;
+        });
+
+        $(".ddToggle").click(function () {
+            var parent = $(this).parent();
+            parent.toggleClass("active");
+            var ddMenu = parent.find(".ddMenu");
+            ddMenu.animate({ height: 'toggle', opacity: 'toggle' }, 100);
+            var left = $(this).position().left;
+            ddMenu.css("left", Math.round(left) + "px");
+
+            //place the dropDown menu 20px below the box
+            var top = parent.position().top;
+            ddMenu.css("top", Math.round(top) + 20 + "px");
+
+        });
+
+        $('.dd li').click(function () {
+            $(this).parent().find("li").removeClass("selected");
+            $(this).addClass("selected");
+            var parent = $(this).parent().parent().parent();
+            var ddToggle = parent.find(".ddToggle");
+            ddToggle.html($(this).html());
+            ddToggle.addClass("ddToggle1");
+            parent.find(".ddMenu").animate({ height: 'toggle', opacity: 'toggle' }, 400);
+            parent.removeClass('active');
+            var ul = $(this).parent();
+            paragon.pt.uploadMultipleChoicesValue(url, sectionId, ul.data("id"), $(this).data("id"));
+        });
+    }
+
+    paragon.pt.showInfoBox = function (message) {
+        var infoBox = $("#infoBox");
+        if (message)
+            $("#infoBox .boxText p").html(message);
+        infoBox.show();
+    }
+
+    paragon.pt.hideInfoBox = function () {
+        $("#infoBox").hide();
+    }
+
+    //Audio Playback for the Listening Component
+    paragon.pt.playAudio = paragon.pt.playAudio || {};
+    paragon.pt.playAudio.player = null;
+    paragon.pt.playAudio.totalTime = 0;
+    paragon.pt.playAudio.timeLeft = 0;
+    paragon.pt.playAudio.interval = null;
+    paragon.pt.playAudio.onDone = null;
+
+    paragon.pt.playAudio.start = function (playAudioTime) {
+        paragon.pt.hideInfoBox();
+        paragon.pt.playAudio.totalTime = playAudioTime;
+        paragon.pt.playAudio.timeLeft = playAudioTime;
+        if (paragon.pt.playAudio.interval)
+            window.clearInterval(paragon.pt.playAudio.interval);
+
+        $("#playAudioBox").fadeIn(1000);
+    }
+
+
+    //recording functions
+
+    paragon.pt.recording = paragon.pt.recording || {};
+    paragon.pt.recording.totalTime = 0;
+    paragon.pt.recording.timeLeft = 0;
+    paragon.pt.recording.interval = null;
+    paragon.pt.recording.onDone = null;
+
+    paragon.pt.recording.updateProgressBar = function () {
+        var percentage = 100 - (paragon.pt.recording.timeLeft / paragon.pt.recording.totalTime) * 100;
+        $("#startRecTime .progressbar-cover").css("left", percentage + "%");
+    }
+
+    paragon.pt.recording.deductTime = function () {
+        if (paragon.pt.recording.timeLeft > 0) {
+            paragon.pt.recording.timeLeft -= 1;
+            paragon.pt.recording.updateProgressBar();
+        }
+        else {
+            window.clearInterval(paragon.pt.recording.interval);
+            $("#startRecTime").hide();
+            paragon.pt.showNextButton();
+            if (paragon.pt.recording.onDone) {
+                paragon.pt.recording.onDone();
+            }
+        }
+    }
+
+    paragon.pt.recording.start = function (playAudioTime) {
+        paragon.pt.recording.totalTime = playAudioTime;
+        paragon.pt.recording.timeLeft = playAudioTime;
+        if (paragon.pt.recording.interval)
+            window.clearInterval(paragon.pt.recording.interval);
+
+        paragon.pt.recording.interval = window.setInterval(function () { paragon.pt.recording.deductTime() }, 1000);
+        paragon.pt.recording.updateProgressBar();
+        $("#startRecTime").fadeIn(1000);
+    }
+
+    //end recording
+
+    //preperation functions
+
+    paragon.pt.preparation = paragon.pt.preparation || {};
+    paragon.pt.preparation.totalTime = 0;
+    paragon.pt.preparation.timeLeft = 0;
+    paragon.pt.preparation.interval = null;
+    paragon.pt.preparation.onDone = null;
+    paragon.pt.preparation.startRecording = null;
+
+    paragon.pt.preparation.updateProgressBar = function () {
+        $("#startPrepTime #progressTimer").html(paragon.pt.preparation.timeLeft);
+    }
+
+    paragon.pt.preparation.deductTime = function () {
+        if (paragon.pt.preparation.timeLeft > 0) {
+            paragon.pt.preparation.timeLeft -= 1;
+            paragon.pt.preparation.updateProgressBar();
+        }
+        else {
+            window.clearInterval(paragon.pt.preparation.interval);
+            $("#startPrepTime").hide();
+            paragon.pt.showNextButton();
+            if (paragon.pt.preparation.onDone) {
+                paragon.pt.preparation.onDone();
+            }
+        }
+    }
+
+    paragon.pt.preparation.start = function (playAudioTime) {
+        paragon.pt.preparation.totalTime = playAudioTime;
+        paragon.pt.preparation.timeLeft = playAudioTime;
+        if (paragon.pt.preparation.interval)
+            window.clearInterval(paragon.pt.preparation.interval);
+
+        paragon.pt.preparation.interval = window.setInterval(function () { paragon.pt.preparation.deductTime() }, 1000);
+        paragon.pt.preparation.updateProgressBar();
+        $("#startPrepTime").fadeIn(1000);
+    }
+
+    //end prep functinos
+
+    paragon.pt.createAudioPlayer = function (contentUrl, audiofile) {
+        //create player if not exists
+        if (!paragon.pt.playAudio.player) {
+            paragon.pt.playAudio.player = document.createElement('audio');
+
+            paragon.pt.playAudio.player.controls = true;
+            paragon.pt.playAudio.player.controlsList = "nodownload";
+            paragon.pt.playAudio.player.oggSrc = document.createElement('source');
+            paragon.pt.playAudio.player.oggSrc.setAttribute('type', 'audio/ogg');
+            paragon.pt.playAudio.player.appendChild(paragon.pt.playAudio.player.oggSrc);
+
+            paragon.pt.playAudio.player.mp3Src = document.createElement('source');
+            paragon.pt.playAudio.player.mp3Src.setAttribute('type', 'audio/mp3');
+            paragon.pt.playAudio.player.appendChild(paragon.pt.playAudio.player.mp3Src);
+
+            paragon.pt.playAudio.player.ontimeupdate = function () {
+                var duration = paragon.pt.playAudio.player.duration;
+                var currentTime = paragon.pt.playAudio.player.currentTime;
+                if (duration) {
+                    var progress = (currentTime / duration) * 100;
+                    $("#playAudioBox .progressbar-cover").css("left", progress + "%");
+                    if (progress >= 100) {
+                        $("#playAudioBox").hide();
+                        paragon.pt.showInfoBox();
+                        paragon.pt.showNextButton();
+                        if (paragon.pt.playAudio.onDone) {
+                            paragon.pt.playAudio.onDone();
+                        }
+                    }
+                }
+            };
+
+            paragon.pt.playAudio.player.onplay = function () {
+                paragon.pt.playAudio.start(paragon.pt.playAudio.player.duration);
+            };
+        }
+
+        paragon.pt.playAudio.player.addEventListener("loadedmetadata", function (e) {
+            if (e.target) {
+                paragon.pt.playAudio.player.play();
+                paragon.pt.playAudio.start(e.target.duration);
+            }
+        });
+
+        paragon.pt.playAudio.player.oggSrc.setAttribute('src', contentUrl + audiofile + ".ogg");
+        paragon.pt.playAudio.player.mp3Src.setAttribute('src', contentUrl + audiofile + ".mp3");
+
+        paragon.pt.playAudio.player.load();
+        return paragon.pt.playAudio.player;
+    }
+
+
+    paragon.pt.moveScrollBar = function (div, scrollSize) {
+        div.animate({
+            scrollTop: scrollSize
+        }, 1200, function () {
+            div.animate({ scrollTop: 0 }, 300, function () {
+            });
+        });
+    }
+
+    paragon.pt.showScrollBar = function (leftDiv, rightDiv) {
+
+        if (rightDiv.length && rightDiv.is(":visible") && leftDiv.length && leftDiv.is(":visible")) {
+            $.blockUI({
+                message: "Scroll up and down to see everything.",
+                css: { width: '400px', border: '2px solid #000', top: '35%', padding: '50px', color: '#1A578A', fontWeight: 'bold' },
+                showOverlay: false
+            });
+
+            var rightScrollSize = rightDiv[0].scrollHeight;
+            var leftScrollSize = leftDiv[0].scrollHeight;
+            window.setTimeout(function () {
+                paragon.pt.moveScrollBar(rightDiv, rightScrollSize);
+                paragon.pt.moveScrollBar(leftDiv, leftScrollSize);
+
+                window.setTimeout(function () { $.unblockUI(); }, 2300);
+            }, 1400);
+
+
+        }
+
+    }
+
+    paragon.pt.wordCount = function () {
+        $(".writtenTextAreaBox").keyup(countWords);
+
+        function countWords() {
+            var text = " ";
+            if (this.value != "") {
+                var wordCount = this.value.match(/\S+/g).length;
+                if (wordCount == 1) {
+                    text = wordCount + " word";
+                } else {
+                    text = wordCount + " words";
+                }
+            }
+            document.getElementById("wordCount").innerHTML = text;
+        }
+    }
+
+    paragon.pt.calcSectionNumQuestion = function (sectionID) {
+        var pt1lpSection = sectionID;
+        $.post("/InstructionalProducts/PracticeTest7/OPT7/GetNumberOfQuestions", { sectionId: pt1lpSection }, function (data) { console.log(data); document.getElementById("numQuestion").innerHTML = data.totalQuestions-1 });
+    }
+
+    paragon.pt.calcSectionNumQuestionLS = function (sectionID) {
+        var pt1lpSection = sectionID;
+        $.post("/InstructionalProducts/PracticeTest7/OPT7LS/GetNumberOfQuestions", { sectionId: pt1lpSection }, function (data) { console.log(data); document.getElementById("numQuestion").innerHTML = data.totalQuestions-1 });
+    }
+
+    paragon.pt.calcListScoreGeneral = function (sectionID) {
+
+        $.post("/InstructionalProducts/PracticeTest7/OPT7/GetScoreOnSection", { sectionId: sectionID }, function (data) {
+            console.log(data); document.getElementById("yourScore").innerHTML = data.userScore;
+
+            var userLScore = data.userScore;
+
+            paragon.pt.findListScore(userLScore);
+
+        });
+    }
+
+    paragon.pt.calcListScoreLS = function (sectionID) {
+
+        $.post("/InstructionalProducts/PracticeTest7/OPT7LS/GetScoreOnSection", { sectionId: sectionID }, function (data) {
+            console.log(data); document.getElementById("yourScore").innerHTML = data.userScore;
+
+            var userLScore = data.userScore;
+
+            paragon.pt.findListScore(userLScore);
+
+        });
+    }
+
+    paragon.pt.findListScore = function (userLScore) {
+        if (userLScore <= 7) {
+            document.getElementById("celScore").innerHTML = "M";
+            return;
+        }
+        else if (userLScore <= 12) {
+            document.getElementById("celScore").innerHTML = "3";
+            return;
+        }
+        else if (userLScore <= 18) {
+            document.getElementById("celScore").innerHTML = "4";
+            return;
+        }
+        else if (userLScore <= 23) {
+            document.getElementById("celScore").innerHTML = "5";
+            return;
+        }
+        else if (userLScore <= 28) {
+            document.getElementById("celScore").innerHTML = "6";
+            return;
+        }
+        else if (userLScore <= 31) {
+            document.getElementById("celScore").innerHTML = "7";
+            return;
+        }
+        else if (userLScore <= 33) {
+            document.getElementById("celScore").innerHTML = "8";
+            return;
+        }
+        else if (userLScore <= 35) {
+          document.getElementById("celScore").innerHTML = "9";
+          return;
+          }
+          else {
+          document.getElementById("celScore").innerHTML = "10-12";
+          }
+          }
+
+          paragon.pt.calcListScoreOnYourScore = function (sectionScore, sectionCell) {
+
+          var userLScore = sectionScore;
+
+          if (userLScore <= 7) {
+                document.getElementById(sectionCell).innerHTML = "M";
+                return;
+            }
+            else if (userLScore <= 12) {
+                document.getElementById(sectionCell).innerHTML = "3";
+                return;
+            }
+            else if (userLScore <= 18) {
+                document.getElementById(sectionCell).innerHTML = "4";
+                return;
+            }
+            else if (userLScore <= 23) {
+                document.getElementById(sectionCell).innerHTML = "5";
+                return;
+            }
+            else if (userLScore <= 28) {
+                document.getElementById(sectionCell).innerHTML = "6";
+                return;
+            }
+            else if (userLScore <= 31) {
+                document.getElementById(sectionCell).innerHTML = "7";
+                return;
+            }
+            else if (userLScore <= 33) {
+                document.getElementById(sectionCell).innerHTML = "8";
+                return;
+            }
+            else if (userLScore <= 35) {
+                document.getElementById(sectionCell).innerHTML = "9";
+                return;
+            }
+            else {
+                document.getElementById(sectionCell).innerHTML = "10-12";
+            }
+
+
+    }
+
+    paragon.pt.calcReadScore = function (sectionID) {
+
+        $.post("/InstructionalProducts/PracticeTest7/OPT7/GetScoreOnSection", { sectionId: sectionID }, function (data) {
+            console.log(data); document.getElementById("yourScore").innerHTML = data.userScore;
+
+            var userRScore = data.userScore;
+
+            if (userRScore <= 7) {
+                document.getElementById("celScore").innerHTML = "M";
+                return;
+            }
+            else if (userRScore <= 11) {
+                document.getElementById("celScore").innerHTML = "3";
+                return;
+            }
+            else if (userRScore <= 16) {
+                document.getElementById("celScore").innerHTML = "4";
+                return;
+            }
+            else if (userRScore <= 20) {
+                document.getElementById("celScore").innerHTML = "5";
+                return;
+            }
+            else if (userRScore <= 25) {
+                document.getElementById("celScore").innerHTML = "6";
+                return;
+            }
+            else if (userRScore <= 28) {
+                document.getElementById("celScore").innerHTML = "7";
+                return;
+            }
+            else if (userRScore <= 31) {
+                document.getElementById("celScore").innerHTML = "8";
+                return;
+            }
+            else if (userRScore <= 33) {
+                document.getElementById("celScore").innerHTML = "9";
+                return;
+            }
+            else {
+                document.getElementById("celScore").innerHTML = "10-12";
+            }
+
+        });
+
+    }
+    paragon.pt.calcReadScoreOnYourScore = function (sectionScore, sectionCell) {
+
+        var userRScore = sectionScore;
+
+        if (userRScore <= 7) {
+            document.getElementById(sectionCell).innerHTML = "M";
+            return;
+        }
+        else if (userRScore <= 11) {
+            document.getElementById(sectionCell).innerHTML = "3";
+            return;
+        }
+        else if (userRScore <= 16) {
+            document.getElementById(sectionCell).innerHTML = "4";
+            return;
+        }
+        else if (userRScore <= 20) {
+            document.getElementById(sectionCell).innerHTML = "5";
+            return;
+        }
+        else if (userRScore <= 25) {
+            document.getElementById(sectionCell).innerHTML = "6";
+            return;
+        }
+        else if (userRScore <= 28) {
+            document.getElementById(sectionCell).innerHTML = "7";
+            return;
+        }
+        else if (userRScore <= 31) {
+            document.getElementById(sectionCell).innerHTML = "8";
+            return;
+        }
+        else if (userRScore <= 33) {
+            document.getElementById(sectionCell).innerHTML = "9";
+            return;
+        }
+        else {
+            document.getElementById(sectionCell).innerHTML = "10-12";
+        }
+    }
+
+
+    //HARDCODED
+    paragon.pt.showListeningAnswerKeyBtn = function (sectionId) {
+        if (sectionId == "2edc8d1b-ef52-49f9-bf3f-91b69475551b") {
+            $('#leftBtn').html("<a href='c201271c-e466-478b-aa46-92ece323ebce' id='backToResultbtn' class='btn'>Answer Key</a>");
+        }
+
+        if (sectionId == "7f3af724-8eb5-43f7-85ee-31b2e93a1f4f") {
+            $('#leftBtn').html("<a href='8aacc082-0d9b-49d0-845f-6d78a2f09530' id='backToResultbtn' class='btn'>Answer Key</a>");
+        }
+        if (sectionId == "ee046fdb-6dc2-4353-8c1f-0887e653c1e8") {
+            $('#leftBtn').html("<a href='024d965b-adde-4bf0-b455-cc8676c403bf' id='backToResultbtn' class='btn'>Answer Key</a>");
+        }
+
+        if (sectionId == "a50848c6-599a-4fc2-aea7-9fd0e61b6ef7") {
+            $('#leftBtn').html("<a href='3a0e10ca-f0e3-42d5-a60a-39ecd2d38cfd' id='backToResultbtn' class='btn'>Answer Key</a>");
+        }
+    }
+
+    paragon.pt.showReadingAnswerKeyBtn = function (sectionId) {
+        if (sectionId == "09b7b95b-d88a-4301-b875-7b0668d83e16") {
+            $('#leftBtn').html("<a href='ffe3c20e-f61e-4150-a09b-219076e06bf0' id='backToResultbtn' class='btn'>Answer Key</a>");
+        }
+
+        if (sectionId == "836851e3-1eb9-4747-afc4-cc4c72da1a1b") {
+            $('#leftBtn').html("<a href='92c1359f-300c-4f9b-8039-48aa86cee542' id='backToResultbtn' class='btn'>Answer Key</a>");
+        }
+    }
+
+    paragon.pt.nextItem = function (url, itemId, canvasId, sectionId, activityTypeId) {
+        $.post(
+            url,
+            {
+                itemId: itemId,
+                canvasId: canvasId,
+                sectionId: sectionId,
+                activityTypeId: activityTypeId
+            },
+            function (data) {
+                console.log(data);
+            }
+        );
+    }
+
+    paragon.pt.countUnansweredQuestionsFromDb = function (canvasTypeId, sectionId, url) {
+        switch (canvasTypeId) {
+            case 24: //PT04
+            case 25: // PT05
+                return paragon.pt.countSingleUnansweredItemFromDb(sectionId, url);
+                break;
+
+            case 26: //PT06
+            case 27: //PT07
+                if ($("#panelLeft").css('display') != 'none') {
+                    return 0;
+                }
+                else {
+                    return paragon.pt.countAllUnansweredItemsFromDb(sectionId, url);
+                }
+                break;
+
+            default:
+                return paragon.pt.countAllUnansweredItemsFromDb(sectionId, url);
+        }
+    }
+
+    paragon.pt.countAllUnansweredItemsFromDb = function (sectionId, url) {
+        var unanswered = 0;
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: { 'sectionId': sectionId, 'items': JSON.stringify(paragon.pt.items) },
+            async: false,
+            success: function (data) {
+                var responses = data.responses;
+                for (var i = 0; i < responses.length; i++) {
+                    var currentResponse = responses[i];
+                    if (!currentResponse) {
+                        unanswered++;
+                    }
+                }
+            }
+        });
+        return unanswered;
+    }
+
+    paragon.pt.countSingleUnansweredItemFromDb = function (sectionId, url) {
+        var unanswered = 0;
+
+        var index = paragon.pt.itemIndex;
+        if (index > 0) {
+            index = index - 1;
+        }
+        else {
+            return unanswered;
+        }
+
+        var item = paragon.pt.items[index];
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: { "sectionId": sectionId, "itemId": item.Id },
+            async: false,
+            success: function (data) {
+                if (!data.response) {
+                    unanswered++;
+                }
+            }
+        });
+
+        return unanswered;
+    }
+
+</script>
+
+    <script src="./7-2-1_files/soundjs-0.6.0.min.js.下載"></script>
+
+
+
+    <script src="./7-2-1_files/audio.min.js.下載"></script>
+
+    <script src="./7-2-1_files/jquery.blockUI.js.下載"></script>
+
+    <script src="./7-2-1_files/jquery-ui-1.10.4.custom.min.js.下載"></script>
+
+    <script src="./7-2-1_files/jquery.cookie.js.下載"></script>
+
+
+    <link href="./7-2-1_files/font-awesome.css" rel="stylesheet">
+</head>
+<body data-new-gr-c-s-check-loaded="14.1229.0" data-gr-ext-installed="" style="">
+    <noscript>
+        <div id="noscript">
+            <div>Please turn on javascript to continue.</div>
+        </div>
+    </noscript>
+    <header>
+        <div class="navbar">
+            <div class="navbar-inner">
+                <a class="brand" href="https://www.celpip.ca/" target="_blank"> <img src="./7-2-1_files/CELPIP_H_Web.png"></a>
+
+                <div class="brand" style="margin-top:15px;">
+                    Study Materials
+                </div>
+
+                <ul class="nav" style="margin-top:8px;">
+
+                    <li class="dropdown">
+
+                        <a class="dropdown-toggle" data-toggle="dropdown" style="margin-top: 10px;">
+                            Selected Product: <span id="selected-product">CELPIP-General Practice Tests, Set 7</span>
+                            <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/FreeOnlineSampleTest/FOST">Free CELPIP-General Practice Tests (Starter Set)</a></li>
+                            <li><a href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/FreeOnlineSampleTest/FOST2">Free CELPIP-General LS Practice Tests (Starter Set)</a></li>
+
+
+                                    <li><a href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest/PT">CELPIP-General Practice Tests, Set 1</a></li>
+                                    <li><a href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest2/OPT2">CELPIP-General Practice Tests, Set 2</a></li>
+                                    <li><a href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest3/OPT3">CELPIP-General Practice Tests, Set 3</a></li>
+                                    <li><a href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest4/OPT4">CELPIP-General Practice Tests, Set 4</a></li>
+                                    <li><a href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest5/OPT5">CELPIP-General Practice Tests, Set 5</a></li>
+                                    <li><a href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest6/OPT6">CELPIP-General Practice Tests, Set 6</a></li>
+                                    <li><a href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest7/OPT7">CELPIP-General Practice Tests, Set 7</a></li>
+                                    <li><a href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest8/OPT8">CELPIP-General Practice Tests, Set 8</a></li>
+                                    <li><a href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest9/OPT9">CELPIP-General Practice Tests, Set 9</a></li>
+                                    <li><a href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest10/OPT10">CELPIP-General Practice Tests, Set 10</a></li>
+                                        <li><a target="_blank" href="https://testprep.paragontesting.ca/api/sso/v2/sso/jwt?jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6Imh5cDIyMThAZ21haWwuY29tIiwiZmlyc3RfbmFtZSI6IllpLVBpbmciLCJsYXN0X25hbWUiOiJIbyIsIm5hbWVpZCI6IjIyMzc0ODgiLCJpYXQiOjE3NDMwMTQyOTgsImp0aSI6MTg4NTU3MTkzLCJuYmYiOjE3NDMwMTM5OTh9.2yQsluPq-3nGkTQTPEuecJVFF9bTPuTrtvfB_RCrIBQ&amp;return_to=https%3A%2F%2Ftestprep.paragontesting.ca%2Fbundles%2Fcelpip-accelerate-starter-celpip-general">CELPIP Accelerate Starter - Reading and Writing</a></li>
+                                        <li><a target="_blank" href="https://testprep.paragontesting.ca/api/sso/v2/sso/jwt?jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6Imh5cDIyMThAZ21haWwuY29tIiwiZmlyc3RfbmFtZSI6IllpLVBpbmciLCJsYXN0X25hbWUiOiJIbyIsIm5hbWVpZCI6IjIyMzc0ODgiLCJpYXQiOjE3NDMwMTQyOTgsImp0aSI6MjY1NDU4NDY4LCJuYmYiOjE3NDMwMTM5OTh9.uBXIdPAoKAJnQaakSE4J87NNeyr6RZDXyIoWnV1RM18&amp;return_to=https%3A%2F%2Ftestprep.paragontesting.ca%2Fbundles%2Fcelpip-accelerate-starter-celpip-general-ls">CELPIP Accelerate Starter - Listening and Speaking</a></li>
+                        </ul>
+
+                    </li>
+
+                    <li>
+                        <div style="margin-left: 19px">
+                            <ul class="nav nav-pills header-buttons">
+                                
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+
+                <ul class="nav pull-right" style="margin-top:17px">
+                        <li class="dropdown">
+                            <a class="dropdown-toggle dropdown-email" data-toggle="dropdown">
+                                <img src="./7-2-1_files/fa_cog.png" style="width:18px; height: 18px; margin-top:-5px">
+                                hyp2218@gmail.com
+                                <b class="caret"></b>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="javascript:document.getElementById(&#39;logoutForm&#39;).submit()">Sign out</a></li>
+                            </ul>
+                        </li>
+                </ul>
+            </div>
+        </div>
+<form action="https://instructionalproducts.paragontesting.ca/InstructionalProducts/Account/LogOff" id="logoutForm" method="post"></form>    </header>
+
+    <div class="container" id="main-container" style="height: 773px;">
+<link href="./7-2-1_files/ptStyle.css" rel="stylesheet" type="text/css">
+<link href="./7-2-1_files/video-js.css" rel="stylesheet">
+<script src="./7-2-1_files/video.js.下載"></script>
+<script>
+    paragon.pt.backUrl = "/InstructionalProducts/PracticeTest7/OPT7/View/d0818d5a-ca0a-4563-a7b4-05fc215cf6a4";
+    paragon.pt.nextUrl = "/InstructionalProducts/PracticeTest7/OPT7/View/23553103-0c3c-49fd-bf86-45e9aae5994a";
+    if (paragon.pt.backUrl.length > 0 || paragon.pt.nextUrl.length > 0) {
+        paragon.footerVisible = true;
+    }
+
+    paragon.pt.items = [
+  {
+    "Id": "ae4f81df-8df9-4a05-8b46-428dc6c1eaa3",
+    "ContentId": "9706989e-db1c-41cc-8eb5-1ebadd5b7f30",
+    "Num": 1,
+    "Text": "1. Scott and his family",
+    "ExtraField1": "",
+    "Choices": [
+      {
+        "Id": "a662fcef-102f-4860-b057-6c58744a34ac",
+        "ItemId": "ae4f81df-8df9-4a05-8b46-428dc6c1eaa3",
+        "ChoiceData": null,
+        "Num": 1,
+        "Text": "have lived in Vancouver for many years."
+      },
+      {
+        "Id": "ed9350c9-17d4-4d66-a73d-e73d969987e4",
+        "ItemId": "ae4f81df-8df9-4a05-8b46-428dc6c1eaa3",
+        "ChoiceData": null,
+        "Num": 2,
+        "Text": "will soon be moving to Vancouver."
+      },
+      {
+        "Id": "92f40c16-39de-4a33-9857-42c6953a11af",
+        "ItemId": "ae4f81df-8df9-4a05-8b46-428dc6c1eaa3",
+        "ChoiceData": null,
+        "Num": 3,
+        "Text": "no longer live in Vancouver"
+      },
+      {
+        "Id": "0836b2d0-0ec1-4883-8ec8-21bcabfafc05",
+        "ItemId": "ae4f81df-8df9-4a05-8b46-428dc6c1eaa3",
+        "ChoiceData": null,
+        "Num": 4,
+        "Text": "recently moved to Vancouver."
+      }
+    ]
+  },
+  {
+    "Id": "bed5f112-143c-48f4-832d-103da84cb4be",
+    "ContentId": "9706989e-db1c-41cc-8eb5-1ebadd5b7f30",
+    "Num": 2,
+    "Text": "2. Jim and Kelly went hiking because",
+    "ExtraField1": "",
+    "Choices": [
+      {
+        "Id": "8e8ac966-0447-48e3-a0e0-88f9f3e8e2ac",
+        "ItemId": "bed5f112-143c-48f4-832d-103da84cb4be",
+        "ChoiceData": null,
+        "Num": 1,
+        "Text": "they both love the outdoors."
+      },
+      {
+        "Id": "4998866d-b276-46ab-af2d-e5d247da2113",
+        "ItemId": "bed5f112-143c-48f4-832d-103da84cb4be",
+        "ChoiceData": null,
+        "Num": 2,
+        "Text": "it is something Kelly enjoys."
+      },
+      {
+        "Id": "cb68df12-b041-45a0-8524-ca79cb83f6cc",
+        "ItemId": "bed5f112-143c-48f4-832d-103da84cb4be",
+        "ChoiceData": null,
+        "Num": 3,
+        "Text": "Sparky likes to run off-leash."
+      },
+      {
+        "Id": "6b6c4d69-0642-4203-a2d0-aa27c308c397",
+        "ItemId": "bed5f112-143c-48f4-832d-103da84cb4be",
+        "ChoiceData": null,
+        "Num": 4,
+        "Text": "Jim loves spending time in nature."
+      }
+    ]
+  },
+  {
+    "Id": "89211ba6-ac78-4275-96c8-ff742b11cf25",
+    "ContentId": "9706989e-db1c-41cc-8eb5-1ebadd5b7f30",
+    "Num": 3,
+    "Text": "3. Jim wrote Scott to",
+    "ExtraField1": "",
+    "Choices": [
+      {
+        "Id": "5d15ddc7-a2f8-42a3-ac08-9a1e6f1125fb",
+        "ItemId": "89211ba6-ac78-4275-96c8-ff742b11cf25",
+        "ChoiceData": null,
+        "Num": 1,
+        "Text": "ask about his new job in Vancouver."
+      },
+      {
+        "Id": "e47e005c-834c-469e-ad21-d4227fed33f0",
+        "ItemId": "89211ba6-ac78-4275-96c8-ff742b11cf25",
+        "ChoiceData": null,
+        "Num": 2,
+        "Text": "warn him about hiking around Vancouver."
+      },
+      {
+        "Id": "219724b1-9bbe-4f8a-9eb8-680934c9f86d",
+        "ItemId": "89211ba6-ac78-4275-96c8-ff742b11cf25",
+        "ChoiceData": null,
+        "Num": 3,
+        "Text": "answer a question about his anniversary."
+      },
+      {
+        "Id": "9b5cf5dc-692f-4772-b86c-d57cfd9b19a4",
+        "ItemId": "89211ba6-ac78-4275-96c8-ff742b11cf25",
+        "ChoiceData": null,
+        "Num": 4,
+        "Text": "tell how Sparky saved a bad hiking trip."
+      }
+    ]
+  },
+  {
+    "Id": "9e164009-0d12-465c-8739-fa443cde337c",
+    "ContentId": "9706989e-db1c-41cc-8eb5-1ebadd5b7f30",
+    "Num": 4,
+    "Text": "4. Jim and Kelly’s recent anniversary",
+    "ExtraField1": "",
+    "Choices": [
+      {
+        "Id": "84dc6191-31a6-4855-a96d-9e6771a32361",
+        "ItemId": "9e164009-0d12-465c-8739-fa443cde337c",
+        "ChoiceData": null,
+        "Num": 1,
+        "Text": "included staying at a cabin they had reserved."
+      },
+      {
+        "Id": "80e355c0-fed4-4889-88c5-ac7ed3ee9249",
+        "ItemId": "9e164009-0d12-465c-8739-fa443cde337c",
+        "ChoiceData": null,
+        "Num": 2,
+        "Text": "did not turn out as they had planned."
+      },
+      {
+        "Id": "a97193a4-9557-4276-afdd-af8158d301ee",
+        "ItemId": "9e164009-0d12-465c-8739-fa443cde337c",
+        "ChoiceData": null,
+        "Num": 3,
+        "Text": "was one of their favourite anniversaries ever."
+      },
+      {
+        "Id": "06d0aff9-ec1e-4f96-96f4-420155c80d57",
+        "ItemId": "9e164009-0d12-465c-8739-fa443cde337c",
+        "ChoiceData": null,
+        "Num": 4,
+        "Text": "involved a lot of driving in the car."
+      }
+    ]
+  },
+  {
+    "Id": "6802b468-3ea3-489f-84f9-88d510d6064b",
+    "ContentId": "9706989e-db1c-41cc-8eb5-1ebadd5b7f30",
+    "Num": 5,
+    "Text": "5. The trouble began when Jim and Kelly",
+    "ExtraField1": "",
+    "Choices": [
+      {
+        "Id": "eda13aa8-a410-48b2-93f0-5789e609704d",
+        "ItemId": "6802b468-3ea3-489f-84f9-88d510d6064b",
+        "ChoiceData": null,
+        "Num": 1,
+        "Text": "realized they had forgotten their map."
+      },
+      {
+        "Id": "e0c2b24e-6c5a-4e3a-9944-2c3c9c01934a",
+        "ItemId": "6802b468-3ea3-489f-84f9-88d510d6064b",
+        "ChoiceData": null,
+        "Num": 2,
+        "Text": "ran out of all their food and water."
+      },
+      {
+        "Id": "d50b04d6-283a-4a9d-a5e5-3906433e5773",
+        "ItemId": "6802b468-3ea3-489f-84f9-88d510d6064b",
+        "ChoiceData": null,
+        "Num": 3,
+        "Text": "went running into the woods after Sparky."
+      },
+      {
+        "Id": "ed058b3c-3638-43d2-8997-1a92fe9734e6",
+        "ItemId": "6802b468-3ea3-489f-84f9-88d510d6064b",
+        "ChoiceData": null,
+        "Num": 4,
+        "Text": "decided to bring Sparky to the park."
+      }
+    ]
+  },
+  {
+    "Id": "c5182bc2-8ee1-440c-aa78-0faadcb04c50",
+    "ContentId": "9706989e-db1c-41cc-8eb5-1ebadd5b7f30",
+    "Num": 6,
+    "Text": "6. It was lucky that Jim and Kelly",
+    "ExtraField1": "",
+    "Choices": [
+      {
+        "Id": "2c98ab6a-a966-429a-a5fb-7e484f881c7a",
+        "ItemId": "c5182bc2-8ee1-440c-aa78-0faadcb04c50",
+        "ChoiceData": null,
+        "Num": 1,
+        "Text": "had brought a compass with them."
+      },
+      {
+        "Id": "bb1f694f-e9f0-4fb7-8be3-5260e2201a57",
+        "ItemId": "c5182bc2-8ee1-440c-aa78-0faadcb04c50",
+        "ChoiceData": null,
+        "Num": 2,
+        "Text": "found shelter before it got dark out."
+      },
+      {
+        "Id": "ed8a1d74-b9a8-4c0a-9f4b-194509dc1859",
+        "ItemId": "c5182bc2-8ee1-440c-aa78-0faadcb04c50",
+        "ChoiceData": null,
+        "Num": 3,
+        "Text": "had a good sleep the night before."
+      },
+      {
+        "Id": "fa445e82-b411-41e2-b1d4-b80cd5c8db75",
+        "ItemId": "c5182bc2-8ee1-440c-aa78-0faadcb04c50",
+        "ChoiceData": null,
+        "Num": 4,
+        "Text": "parked their car close to the trailhead."
+      }
+    ]
+  },
+  {
+    "Id": "82014b55-41a0-49a4-bd56-a40f7e00b8d4",
+    "ContentId": "9706989e-db1c-41cc-8eb5-1ebadd5b7f30",
+    "Num": 7,
+    "Text": "",
+    "ExtraField1": "",
+    "Choices": [
+      {
+        "Id": "a90b6087-ea73-4a01-a162-5833d53f5225",
+        "ItemId": "82014b55-41a0-49a4-bd56-a40f7e00b8d4",
+        "ChoiceData": null,
+        "Num": 1,
+        "Text": "best employee"
+      },
+      {
+        "Id": "a339c53f-44a7-4a94-9764-0dd8168159ef",
+        "ItemId": "82014b55-41a0-49a4-bd56-a40f7e00b8d4",
+        "ChoiceData": null,
+        "Num": 2,
+        "Text": "next-door neighbour"
+      },
+      {
+        "Id": "bc6aea75-d721-433e-9d75-bce2c62898ca",
+        "ItemId": "82014b55-41a0-49a4-bd56-a40f7e00b8d4",
+        "ChoiceData": null,
+        "Num": 3,
+        "Text": "favorite brother"
+      },
+      {
+        "Id": "bfb51615-afd4-4a48-97f8-55e240a40edc",
+        "ItemId": "82014b55-41a0-49a4-bd56-a40f7e00b8d4",
+        "ChoiceData": null,
+        "Num": 4,
+        "Text": "old roommate"
+      }
+    ]
+  },
+  {
+    "Id": "544f8eb2-884b-4a80-ad95-a9b89e19d574",
+    "ContentId": "9706989e-db1c-41cc-8eb5-1ebadd5b7f30",
+    "Num": 8,
+    "Text": "",
+    "ExtraField1": "",
+    "Choices": [
+      {
+        "Id": "529b0e90-b779-4869-b6c5-04d410d8d29f",
+        "ItemId": "544f8eb2-884b-4a80-ad95-a9b89e19d574",
+        "ChoiceData": null,
+        "Num": 1,
+        "Text": "find your car"
+      },
+      {
+        "Id": "802faae9-a095-4eb3-a170-90155748e9a1",
+        "ItemId": "544f8eb2-884b-4a80-ad95-a9b89e19d574",
+        "ChoiceData": null,
+        "Num": 2,
+        "Text": "find Sparky"
+      },
+      {
+        "Id": "ad37cae0-d508-47d9-9ecd-c516a8532fbb",
+        "ItemId": "544f8eb2-884b-4a80-ad95-a9b89e19d574",
+        "ChoiceData": null,
+        "Num": 3,
+        "Text": "eat dinner"
+      },
+      {
+        "Id": "4c6d320e-b829-4365-9089-e3bedcfc497c",
+        "ItemId": "544f8eb2-884b-4a80-ad95-a9b89e19d574",
+        "ChoiceData": null,
+        "Num": 4,
+        "Text": "have a great time"
+      }
+    ]
+  },
+  {
+    "Id": "0a827605-dda0-44b9-a273-c1925d3f0af2",
+    "ContentId": "9706989e-db1c-41cc-8eb5-1ebadd5b7f30",
+    "Num": 9,
+    "Text": "",
+    "ExtraField1": "",
+    "Choices": [
+      {
+        "Id": "819399a9-b189-4bbc-aa03-f05341e5b944",
+        "ItemId": "0a827605-dda0-44b9-a273-c1925d3f0af2",
+        "ChoiceData": null,
+        "Num": 1,
+        "Text": "annoying"
+      },
+      {
+        "Id": "f36a6789-3cc0-4ca2-bd98-fc48a54d3805",
+        "ItemId": "0a827605-dda0-44b9-a273-c1925d3f0af2",
+        "ChoiceData": null,
+        "Num": 2,
+        "Text": "scary"
+      },
+      {
+        "Id": "9993179c-be0c-408a-b0fe-e14ad872d0d6",
+        "ItemId": "0a827605-dda0-44b9-a273-c1925d3f0af2",
+        "ChoiceData": null,
+        "Num": 3,
+        "Text": "relieving"
+      },
+      {
+        "Id": "7b1a759c-d839-4b84-b90b-c58e1c074b14",
+        "ItemId": "0a827605-dda0-44b9-a273-c1925d3f0af2",
+        "ChoiceData": null,
+        "Num": 4,
+        "Text": "reassuring"
+      }
+    ]
+  },
+  {
+    "Id": "fe7e9b11-be65-4af9-a454-d9f138ec90ab",
+    "ContentId": "9706989e-db1c-41cc-8eb5-1ebadd5b7f30",
+    "Num": 10,
+    "Text": "",
+    "ExtraField1": "",
+    "Choices": [
+      {
+        "Id": "7016450b-a2e0-4ce6-b3b9-1aedd43dfea4",
+        "ItemId": "fe7e9b11-be65-4af9-a454-d9f138ec90ab",
+        "ChoiceData": null,
+        "Num": 1,
+        "Text": "it was challenging at first"
+      },
+      {
+        "Id": "eccebc90-48d0-452d-b189-021774a5bb98",
+        "ItemId": "fe7e9b11-be65-4af9-a454-d9f138ec90ab",
+        "ChoiceData": null,
+        "Num": 2,
+        "Text": "this may have been a mistake"
+      },
+      {
+        "Id": "f3465779-7a31-48b2-b3c2-19d19dffd8cc",
+        "ItemId": "fe7e9b11-be65-4af9-a454-d9f138ec90ab",
+        "ChoiceData": null,
+        "Num": 3,
+        "Text": "the transition went smoothly"
+      },
+      {
+        "Id": "0a7b0484-8dae-4e88-af98-a97209f2cf57",
+        "ItemId": "fe7e9b11-be65-4af9-a454-d9f138ec90ab",
+        "ChoiceData": null,
+        "Num": 4,
+        "Text": "the job is harder than expected"
+      }
+    ]
+  },
+  {
+    "Id": "222b2d41-c67e-4fd8-9cd8-ca19ff13ecee",
+    "ContentId": "9706989e-db1c-41cc-8eb5-1ebadd5b7f30",
+    "Num": 11,
+    "Text": "",
+    "ExtraField1": "",
+    "Choices": [
+      {
+        "Id": "569a4b34-df78-4d32-aaf1-6beccdeca795",
+        "ItemId": "222b2d41-c67e-4fd8-9cd8-ca19ff13ecee",
+        "ChoiceData": null,
+        "Num": 1,
+        "Text": "chasing Sparky"
+      },
+      {
+        "Id": "f488389d-c0e6-4fac-a433-9f1a8af3cb6a",
+        "ItemId": "222b2d41-c67e-4fd8-9cd8-ca19ff13ecee",
+        "ChoiceData": null,
+        "Num": 2,
+        "Text": "eating canned vegetables"
+      },
+      {
+        "Id": "3335bd2c-6f36-487e-b079-3481166c00ac",
+        "ItemId": "222b2d41-c67e-4fd8-9cd8-ca19ff13ecee",
+        "ChoiceData": null,
+        "Num": 3,
+        "Text": "locked up in a cabin"
+      },
+      {
+        "Id": "ea86ae97-a69d-4aed-888e-64807a249dd4",
+        "ItemId": "222b2d41-c67e-4fd8-9cd8-ca19ff13ecee",
+        "ChoiceData": null,
+        "Num": 4,
+        "Text": "lost in the woods"
+      }
+    ]
+  }
+]
+</script>
+
+<div id="panelTop">
+
+    <div id="canvasName" style="float: left; font-size: 16px; font-weight: bold;">
+        Practice Test 2 - Reading Part 1: Reading Correspondence
+    </div>
+
+    <div style="float: right;" class="btnNext span1 pull-right">
+                <a href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest7/OPT7/View/3c2a4eab-1124-406f-9f0a-3531d9aa8ffc#" id="btnNext" class="btn btn-primary">NEXT</a>
+
+    </div>
+
+    <div style="float: right; display: block;" id="timer" class="hide">
+        Time remaining: <strong>10 minutes</strong>
+    </div>
+
+</div>
+
+<div id="mainContent">
+    
+
+<script id="dropDownListTemplate" type="text/template">
+{{#each this}}
+    <div class="ddrow">
+        {{Text}}
+        <div class='dd'>
+            <div class='ddToggle'>▾</div>
+            <div class='ddMenu'>
+                <ul data-id="{{Id}}">
+                {{#each Choices}}
+                    <li data-id="{{Id}}">{{Text}}</li>
+                {{/each}}
+                </ul>
+            </div>
+        </div>
+    </div>
+{{/each}}
+</script>
+
+<script id="dropDownListInlineTemplate" type="text/template">
+    <div class='dd'>
+        <div class='ddToggle'>▾</div>
+        <div class='ddMenu'>
+            <ul data-id="{{Id}}">
+            {{#each Choices}}
+                <li data-id="{{Id}}">{{Text}}</li>
+            {{/each}}
+            </ul>
+        </div>
+    </div>
+</script>
+
+<script id="dropDownListInFrontTemplate" type="text/template">
+    {{#each this}}
+    <div class="ddrow">
+        <div class='dd'>
+            <div class='ddToggle'>▾</div>
+            <div class='ddMenu'>
+                <ul data-id="{{Id}}">
+                    {{#each Choices}}
+                    <li data-id="{{Id}}">{{Text}}</li>
+                    {{/each}}
+                </ul>
+            </div>
+        </div>
+        &nbsp;-
+        {{Text}}
+    </div>
+    {{/each}}
+</script>
+
+<div id="panelLeft" style="width: 50%; height: 730px;" class="graybg">
+    <div class="row1">
+        <div class="instruction" style="margin-bottom: 30px;">Read the following message.  </div>
+        <div><p>Dear Scott,
+</p>
+<p>Has everyone adjusted to their new city yet? I know moving to Vancouver might have been difficult on your family, but you made the right choice. You would have been crazy to pass up such an amazing opportunity. That being said, the office sure isn’t the same without you!
+</p>
+<p>Anyways, you’d been asking if I had plans for the “big anniversary,” so I had to write and tell what happened. Since Kelly loves the outdoors, I had the brilliant idea of hiking in Algonquin Park. I say “brilliant” because, as you know, I’m not a nature guy—a fact which might explain why my romantic gesture went so wrong.
+</p>
+<p>We decided to bring Sparky, figuring he’d love running around off-leash. Big mistake! We’d been hiking for about 2 hours when Sparky, having spotted something interesting, suddenly tore off into the bush. Worried he’d get lost, we went chasing after him. Apparently, however, we should’ve been more worried about ourselves getting lost. By the time we’d caught up with him, the trail was nowhere in sight and we had no idea where we were. While Sparky sat wagging his tail, thinking this was the best game ever, Kelly and I panicked. Since we hadn’t told anyone where we were going, it made no sense to stay put and wait for help. So we decided to keep walking, hoping we’d picked the right direction. Five hours later, with no sight of the trail and a darkening sky, we had our doubts. Amazingly, just as we started to think all was lost, we stumbled across an abandoned ranger cabin. There wasn’t much inside, but it had the essentials: a map, a compass, a few cans of beans, and a bed. Having eaten the last of our food hours ago, we quickly dug into the beans. Then, exhausted, we collapsed into bed. The next morning we used the map and compass to lead us out of the woods. It turns out we’d only been a few kilometres from our car!
+</p>
+<p>Needless to say, I have no intention of venturing back into the woods any time soon. Make sure to be careful if you do any hiking out there. It’s easier to get lost than you think!
+</p>
+<p>Cheers,
+<br><br>
+Jim</p>
+</div>
+        
+        <div class="box hide" id="infoBox">
+    <div class="boxIcon">
+        <em class="info-icon"></em>
+    </div>
+    <div class="boxText">
+        <div>
+            <p>Click "NEXT" to continue.</p>
+        </div>
+    </div>
+</div>
+
+<div class="box hide" id="playAudioBox">
+    <div class="boxIcon">
+        <em class="play-icon"></em>
+    </div>
+    <div class="boxText">
+        <div>Playing...</div>
+        <div class="progressbar">
+            <span class="progressbar-value"><em style="left: 0%;" class="progressbar-cover"></em>
+            </span>
+        </div>
+    </div>
+</div>
+
+<div id="audioDiv"></div>
+
+
+    </div>
+</div>
+
+<div id="panelRight" style="width: 50%; height: 730px;" class="bluebg">
+    <div class="row1">
+        <div class="instruction" style="margin-bottom: 15px;">
+            Using the drop-down menu ( <span class="caret" style="margin-top:7px; border-top: 4px solid #1A578A"></span> ), choose the <span style="color: #4789AC;">best</span> option according to the information given in the message.
+        </div>
+        
+        <div id="multipleChoices" class="wellBlueBG" style="margin-bottom: 20px;">
+
+    <div class="ddrow">
+        1. Scott and his family
+        <div class="dd">
+            <div class="ddToggle">▾</div>
+            <div class="ddMenu">
+                <ul data-id="ae4f81df-8df9-4a05-8b46-428dc6c1eaa3">
+                
+                    <li data-id="a662fcef-102f-4860-b057-6c58744a34ac">have lived in Vancouver for many years.</li>
+                
+                    <li data-id="ed9350c9-17d4-4d66-a73d-e73d969987e4">will soon be moving to Vancouver.</li>
+                
+                    <li data-id="92f40c16-39de-4a33-9857-42c6953a11af">no longer live in Vancouver</li>
+                
+                    <li data-id="0836b2d0-0ec1-4883-8ec8-21bcabfafc05">recently moved to Vancouver.</li>
+                
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="ddrow">
+        2. Jim and Kelly went hiking because
+        <div class="dd">
+            <div class="ddToggle">▾</div>
+            <div class="ddMenu">
+                <ul data-id="bed5f112-143c-48f4-832d-103da84cb4be">
+                
+                    <li data-id="8e8ac966-0447-48e3-a0e0-88f9f3e8e2ac">they both love the outdoors.</li>
+                
+                    <li data-id="4998866d-b276-46ab-af2d-e5d247da2113">it is something Kelly enjoys.</li>
+                
+                    <li data-id="cb68df12-b041-45a0-8524-ca79cb83f6cc">Sparky likes to run off-leash.</li>
+                
+                    <li data-id="6b6c4d69-0642-4203-a2d0-aa27c308c397">Jim loves spending time in nature.</li>
+                
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="ddrow">
+        3. Jim wrote Scott to
+        <div class="dd">
+            <div class="ddToggle">▾</div>
+            <div class="ddMenu">
+                <ul data-id="89211ba6-ac78-4275-96c8-ff742b11cf25">
+                
+                    <li data-id="5d15ddc7-a2f8-42a3-ac08-9a1e6f1125fb">ask about his new job in Vancouver.</li>
+                
+                    <li data-id="e47e005c-834c-469e-ad21-d4227fed33f0">warn him about hiking around Vancouver.</li>
+                
+                    <li data-id="219724b1-9bbe-4f8a-9eb8-680934c9f86d">answer a question about his anniversary.</li>
+                
+                    <li data-id="9b5cf5dc-692f-4772-b86c-d57cfd9b19a4">tell how Sparky saved a bad hiking trip.</li>
+                
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="ddrow">
+        4. Jim and Kelly’s recent anniversary
+        <div class="dd">
+            <div class="ddToggle">▾</div>
+            <div class="ddMenu">
+                <ul data-id="9e164009-0d12-465c-8739-fa443cde337c">
+                
+                    <li data-id="84dc6191-31a6-4855-a96d-9e6771a32361">included staying at a cabin they had reserved.</li>
+                
+                    <li data-id="80e355c0-fed4-4889-88c5-ac7ed3ee9249">did not turn out as they had planned.</li>
+                
+                    <li data-id="a97193a4-9557-4276-afdd-af8158d301ee">was one of their favourite anniversaries ever.</li>
+                
+                    <li data-id="06d0aff9-ec1e-4f96-96f4-420155c80d57">involved a lot of driving in the car.</li>
+                
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="ddrow">
+        5. The trouble began when Jim and Kelly
+        <div class="dd">
+            <div class="ddToggle">▾</div>
+            <div class="ddMenu">
+                <ul data-id="6802b468-3ea3-489f-84f9-88d510d6064b">
+                
+                    <li data-id="eda13aa8-a410-48b2-93f0-5789e609704d">realized they had forgotten their map.</li>
+                
+                    <li data-id="e0c2b24e-6c5a-4e3a-9944-2c3c9c01934a">ran out of all their food and water.</li>
+                
+                    <li data-id="d50b04d6-283a-4a9d-a5e5-3906433e5773">went running into the woods after Sparky.</li>
+                
+                    <li data-id="ed058b3c-3638-43d2-8997-1a92fe9734e6">decided to bring Sparky to the park.</li>
+                
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="ddrow">
+        6. It was lucky that Jim and Kelly
+        <div class="dd">
+            <div class="ddToggle">▾</div>
+            <div class="ddMenu">
+                <ul data-id="c5182bc2-8ee1-440c-aa78-0faadcb04c50">
+                
+                    <li data-id="2c98ab6a-a966-429a-a5fb-7e484f881c7a">had brought a compass with them.</li>
+                
+                    <li data-id="bb1f694f-e9f0-4fb7-8be3-5260e2201a57">found shelter before it got dark out.</li>
+                
+                    <li data-id="ed8a1d74-b9a8-4c0a-9f4b-194509dc1859">had a good sleep the night before.</li>
+                
+                    <li data-id="fa445e82-b411-41e2-b1d4-b80cd5c8db75">parked their car close to the trailhead.</li>
+                
+                </ul>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+        <div class="instruction">
+            Here is a response to the message. Complete the response by filling in the blanks. Select the <span style="color: #4789AC;">best</span> choice for each blank from the drop-down 
+            <br>
+            menu ( <span class="caret" style="margin-top:7px; border-top: 4px solid #1A578A"></span> ). 
+        </div>
+
+        <div id="inlineDropDown" class="wellBlueBG" style="margin-top: 20px; margin-bottom: 20px; line-height: 2em;">Dear Jim,
+<br><br>
+It’s great to hear from you! I’ve been wondering what my 7.
+    <div class="dd">
+        <div class="ddToggle">▾</div>
+        <div class="ddMenu">
+            <ul data-id="82014b55-41a0-49a4-bd56-a40f7e00b8d4">
+            
+                <li data-id="a90b6087-ea73-4a01-a162-5833d53f5225">best employee</li>
+            
+                <li data-id="a339c53f-44a7-4a94-9764-0dd8168159ef">next-door neighbour</li>
+            
+                <li data-id="bc6aea75-d721-433e-9d75-bce2c62898ca">favorite brother</li>
+            
+                <li data-id="bfb51615-afd4-4a48-97f8-55e240a40edc">old roommate</li>
+            
+            </ul>
+        </div>
+    </div>
+ has been up to without 
+me around. However, I am sorry to hear that you did not 8.
+    <div class="dd">
+        <div class="ddToggle">▾</div>
+        <div class="ddMenu">
+            <ul data-id="544f8eb2-884b-4a80-ad95-a9b89e19d574">
+            
+                <li data-id="529b0e90-b779-4869-b6c5-04d410d8d29f">find your car</li>
+            
+                <li data-id="802faae9-a095-4eb3-a170-90155748e9a1">find Sparky</li>
+            
+                <li data-id="ad37cae0-d508-47d9-9ecd-c516a8532fbb">eat dinner</li>
+            
+                <li data-id="4c6d320e-b829-4365-9089-e3bedcfc497c">have a great time</li>
+            
+            </ul>
+        </div>
+    </div>
+ on your anniversary. 
+I can only imagine how 9.
+    <div class="dd">
+        <div class="ddToggle">▾</div>
+        <div class="ddMenu">
+            <ul data-id="0a827605-dda0-44b9-a273-c1925d3f0af2">
+            
+                <li data-id="819399a9-b189-4bbc-aa03-f05341e5b944">annoying</li>
+            
+                <li data-id="f36a6789-3cc0-4ca2-bd98-fc48a54d3805">scary</li>
+            
+                <li data-id="9993179c-be0c-408a-b0fe-e14ad872d0d6">relieving</li>
+            
+                <li data-id="7b1a759c-d839-4b84-b90b-c58e1c074b14">reassuring</li>
+            
+            </ul>
+        </div>
+    </div>
+ that must have been!
+<br><br>
+As to things here, you are right, 10.
+    <div class="dd">
+        <div class="ddToggle">▾</div>
+        <div class="ddMenu">
+            <ul data-id="fe7e9b11-be65-4af9-a454-d9f138ec90ab">
+            
+                <li data-id="7016450b-a2e0-4ce6-b3b9-1aedd43dfea4">it was challenging at first</li>
+            
+                <li data-id="eccebc90-48d0-452d-b189-021774a5bb98">this may have been a mistake</li>
+            
+                <li data-id="f3465779-7a31-48b2-b3c2-19d19dffd8cc">the transition went smoothly</li>
+            
+                <li data-id="0a7b0484-8dae-4e88-af98-a97209f2cf57">the job is harder than expected</li>
+            
+            </ul>
+        </div>
+    </div>
+. However, it seems like my family is really starting 
+to like it here. The kids have already made a list of trails and mountains they want to 
+explore. Although, after hearing your story I think we might all take an outdoor education
+course first. I sure don’t want to end up 11.
+    <div class="dd">
+        <div class="ddToggle">▾</div>
+        <div class="ddMenu">
+            <ul data-id="222b2d41-c67e-4fd8-9cd8-ca19ff13ecee">
+            
+                <li data-id="569a4b34-df78-4d32-aaf1-6beccdeca795">chasing Sparky</li>
+            
+                <li data-id="f488389d-c0e6-4fac-a433-9f1a8af3cb6a">eating canned vegetables</li>
+            
+                <li data-id="3335bd2c-6f36-487e-b079-3481166c00ac">locked up in a cabin</li>
+            
+                <li data-id="ea86ae97-a69d-4aed-888e-64807a249dd4">lost in the woods</li>
+            
+            </ul>
+        </div>
+    </div>
+ like you!
+<br><br>
+Take care,
+<br><br>
+Scott
+</div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+
+
+        paragon.pt.timer.start(660);
+
+        var items1 = paragon.pt.items.slice(0, 6);
+        var items2 = paragon.pt.items.slice(6);
+
+        if (items2.length === 0) {
+            $('.instruction')[2].hidden = true;
+            $('#inlineDropDown').hide();
+        }
+        
+        paragon.pt.dropDown.renderTemplate("/InstructionalProducts/PracticeTest7/OPT7/SaveUserResponse/", "836851e3-1eb9-4747-afc4-cc4c72da1a1b", $('#dropDownListTemplate').html(), $('#multipleChoices'), items1);
+        paragon.pt.dropDown.renderInline("/InstructionalProducts/PracticeTest7/OPT7/SaveUserResponse/", "836851e3-1eb9-4747-afc4-cc4c72da1a1b", items2, 0, items2.length - 1, $("#inlineDropDown"));
+
+        paragon.pt.dropDown.activate("/InstructionalProducts/PracticeTest7/OPT7/SaveUserResponse/", "836851e3-1eb9-4747-afc4-cc4c72da1a1b");
+
+        $.ajax({
+            type: "POST",
+            url: "/InstructionalProducts/PracticeTest7/OPT7/GetUserResponses",
+                data: { 'sectionId': '836851e3-1eb9-4747-afc4-cc4c72da1a1b', 'items': JSON.stringify(paragon.pt.items) },
+                       success: function (data) {
+                           var responses = data.responses;
+                           for (var i = 0; i < responses.length; i++) {
+                               var currentResponse = responses[i];
+                               if (currentResponse != null) {
+                                   var selected = $('ul').find('[data-id=' + currentResponse.Answer + ']');
+                                   if (selected != null) {
+                                       var toggle = $(selected).parent().parent().prev();
+                                       $(toggle).addClass('ddToggle1');
+                                       $(toggle).html(selected.html());
+                                       $(selected).addClass('selected');
+                                   }
+                               }
+                           }
+                       }
+        });
+
+        //show scroll bar
+        if (document.getElementById("multipleChoices").childElementCount > 1) {
+            paragon.pt.showScrollBar($('#panelLeft'), $('#panelRight'));
+        }
+
+        paragon.pt.showReadingAnswerKeyBtn("836851e3-1eb9-4747-afc4-cc4c72da1a1b");
+
+
+    });
+</script>
+
+</div>
+
+<div id="dlgTest" class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-header">
+        <h4>Test</h4>
+    </div>
+    <div class="modal-body">
+        <p>test</p>
+    </div>
+    <div class="modal-footer">
+        <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+    </div>
+</div>
+
+<div id="dlgUnansweredWarning" class="modal hide fade" tabindex="-1" role="dialog">
+    <div class="modal-body">
+        <p>No answer(s) selected. On the official test, if you go to the next page, you will no longer be able to answer the question(s) on this page.</p>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" data-dismiss="modal" style="color: white;">Keep working on this page</button>
+        <button class="btn" data-dismiss="modal" onclick="paragon.pt.skipToNext()">Skip and go to the next page</button>
+    </div>
+</div>
+
+</div>
+    <div class="container hide" id="footer" style="display: block;">
+        <div class="row">
+    <div id="leftBtn" class="span7" align="left"><a href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest7/OPT7/View/92c1359f-300c-4f9b-8039-48aa86cee542" id="backToResultbtn" class="btn">Answer Key</a></div>
+    <div class="span5">
+        <a href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest7/OPT7/View/3c2a4eab-1124-406f-9f0a-3531d9aa8ffc#" id="btnBack" class="btn btn1 hide btn-danger" style="display: inline;">BACK</a>
+        
+    </div>
+</div>
+
+    </div>
+    <div class="container" style="text-align: center; font-size: 0.9em; color: #53565A; padding-top: 20px;">
+        <p>Copyright 2025 - Paragon Testing Enterprises   |    <a href="https://www.celpip.ca/" target="_blank">www.celpip.ca</a>    |    <a href="https://www.celpip.ca/contact/" target="_blank">Contact Us</a></p>
+    </div>
+
+    <div id="block" class="modal-backdrop hide"></div>
+    <div id="unsupported" class="modal hide" tabindex="-1">
+        <div class="modal-body">
+            <h3>Unsupported screen resolution</h3>
+            <p>This product requires a minimum screen resolution of 1024 x 768.</p>
+        </div>
+    </div>
+
+
+    <script>
+        $(function () {
+            paragon.verifyDisplaySize();
+
+            $(window).resize(function () {
+                paragon.verifyDisplaySize();
+            });
+        });
+    </script>
+
+
+    
+    <script>
+        paragon.pt.showAlert = function (msg) {
+            $('#dlgTest .modal-body p').html(msg);
+            $('#dlgTest').modal();
+        }
+
+        paragon.pt.skipToNext = function () {
+            paragon.pt.nextItem("/InstructionalProducts/PracticeTest7/OPT7/SaveCanvasData",'', "3c2a4eab-1124-406f-9f0a-3531d9aa8ffc", "836851e3-1eb9-4747-afc4-cc4c72da1a1b", 2);
+            paragon.pt.goNext();
+        }
+
+        $(function () {
+            if (paragon.footerVisible == true) {
+                paragon.showFooter();
+            }
+
+            if (paragon.pt.backUrl.length > 0) {
+                $("#btnBack").click(function () {
+                    paragon.pt.goBack();
+                });
+                paragon.pt.showBackButton();
+            }
+
+
+            $("#btnNext").click(function () {
+                var url = "";
+                if (29  == 24 || 29  == 25) {
+                    url = "/InstructionalProducts/PracticeTest7/OPT7/GetUserResponse/";
+                }
+                else {
+                    url = "/InstructionalProducts/PracticeTest7/OPT7/GetUserResponses/";
+                }
+                var unanswered = paragon.pt.countUnansweredQuestionsFromDb(29, "836851e3-1eb9-4747-afc4-cc4c72da1a1b", url);
+                if (unanswered > 0) {
+                    $('#dlgUnansweredWarning').modal();
+                }
+                else {
+                    paragon.pt.skipToNext();
+                }
+            });
+
+            if (paragon.pt.nextUrl.length > 0) {
+                paragon.pt.showNextButton();
+            }
+
+
+        });
+
+        $(".links-main").click(function () {
+            var href = "/InstructionalProducts/PracticeTest7/OPT7/";
+            window.location = href;
+
+        });
+
+    </script>
+
+
+
+</body><grammarly-desktop-integration data-grammarly-shadow-root="true"><template shadowrootmode="open"><style>
+      div.grammarly-desktop-integration {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+        -moz-user-select: none;
+        -webkit-user-select: none;
+        -ms-user-select:none;
+        user-select:none;
+      }
+
+      div.grammarly-desktop-integration:before {
+        content: attr(data-content);
+      }
+    </style><div aria-label="grammarly-integration" role="group" tabindex="-1" class="grammarly-desktop-integration" data-content="{&quot;mode&quot;:&quot;full&quot;,&quot;isActive&quot;:true,&quot;isUserDisabled&quot;:false}"></div></template></grammarly-desktop-integration></html>

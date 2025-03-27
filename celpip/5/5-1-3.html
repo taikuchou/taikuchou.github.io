@@ -1,0 +1,1766 @@
+<!DOCTYPE html>
+<!-- saved from url=(0130)https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest5/OPT5/View/3921587e-acf8-4f16-a310-19dd6c3148af -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><style>
+    a {
+        outline: 0;
+    }
+</style>
+
+
+
+    
+    <title>Practice Test</title>
+    <meta name="description">
+    <link href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/favicon.ico" rel="shortcut icon" type="image/x-icon">
+    <meta name="viewport" content="width=device-width">
+    <link href="./5-1-3_files/bootstrap.css" rel="stylesheet">
+<link href="./5-1-3_files/Site.css" rel="stylesheet">
+
+    <script src="./5-1-3_files/399283786078546" async=""></script><script async="" src="./5-1-3_files/fbevents.js.下載"></script><script src="./5-1-3_files/jquery-1.9.1.min.js.下載"></script>
+
+    <script src="./5-1-3_files/jquery.unobtrusive-ajax.min.js.下載"></script>
+
+    <script src="./5-1-3_files/bootstrap.js.下載"></script>
+
+    <script src="./5-1-3_files/handlebars.min.js.下載"></script>
+
+    <script src="./5-1-3_files/instructional-product.js.下載"></script>
+
+    <script src="./5-1-3_files/facebook-pixel.js.下載"></script>
+
+    <script>
+    paragon.pt = paragon.pt || {};
+    paragon.pt.backUrl = "";
+    paragon.pt.nextUrl = "";
+    paragon.pt.speakingPrepTimeLeft = 0;
+    paragon.pt.speakingRecordingTimeLeft = 0;
+    paragon.pt.itemIndex = 0;
+
+    paragon.pt.showAlert = function (msg) {
+        alert(msg);
+    }
+
+    paragon.pt.showBackButton = function () {
+        $("#btnBack").show();
+    }
+
+    paragon.pt.showNextButton = function () {
+        $("#btnNext").show();
+    }
+
+    paragon.pt.hideBackButton = function () {
+        $("#btnBack").hide();
+    }
+
+    paragon.pt.hideNextButton = function () {
+        $("#btnNext").hide();
+    }
+
+    paragon.pt.goNext = function () {
+        window.location = paragon.pt.nextUrl;
+    }
+
+    paragon.pt.goBack = function () {
+        window.location = paragon.pt.backUrl;
+    }
+
+    //Timer For Listening, Reading and Writing
+    paragon.pt.timer = paragon.pt.timer || {};
+    paragon.pt.timer.totalTime = 0;
+    paragon.pt.timer.timeLeft = 0;
+    paragon.pt.timer.interval = null;
+    paragon.pt.timer.start = function (timeLeft) {
+        paragon.pt.timer.timeLeft = timeLeft;
+        paragon.pt.timer.totalTime = timeLeft
+        var minutes = Math.floor(timeLeft / 60);
+        var seconds = timeLeft - minutes * 60;
+
+        if (minutes < 1) {
+            $("#timer strong").html(seconds + " seconds");
+            $("#timer strong").attr("style", "color:red");
+        }
+        else if (minutes == 1) {
+            $("#timer strong").html(minutes + " minute");
+        }
+        else {
+            $("#timer strong").html(minutes + " minutes");
+        }
+
+        $("#timer").show();
+
+        if (paragon.pt.timer.interval)
+            window.clearInterval(paragon.pt.timer.interval);
+
+        paragon.pt.timer.interval = window.setInterval(function () { paragon.pt.timer.deductTime() }, 1000);
+
+        paragon.showFooter();
+    }
+
+    paragon.pt.timer.deductTime = function () {
+        if (paragon.pt.timer.timeLeft > 0) {
+            paragon.pt.timer.timeLeft -= 1;
+
+            var minutes = Math.floor(paragon.pt.timer.timeLeft / 60);
+            var seconds = paragon.pt.timer.timeLeft - minutes * 60;
+
+            if (minutes < 1) {
+                $("#timer strong").html(seconds + " seconds");
+                $("#timer strong").attr("style", "color:red");
+            }
+            else if (minutes == 1) {
+                $("#timer strong").html(minutes + " minute");
+            }
+            else {
+                $("#timer strong").html(minutes + " minutes");
+            }
+        }
+        else {
+            window.clearInterval(paragon.pt.timer.interval);
+            $("#timer strong").html("None");
+        }
+    }
+
+    //Timer For Speaking, work in progress
+    paragon.pt.showTimerSpeaking = function (prepTime, recordingTime) {
+        paragon.pt.speakingPrepTimeLeft = prepTime;
+        paragon.pt.speakingRecordingTimeLeft = recordingTime;
+        $("#timerSpeaking strong:first-child").html(prepTime + " seconds");
+        $("#timerSpeaking strong:last-child").html(recordingTime + " seconds");
+        $("#timerSpeaking").show();
+        paragon.showFooter();
+    }
+
+    paragon.pt.userResponse = paragon.pt.userResponse || {};
+
+    paragon.pt.uploadMultipleChoicesValue = function (url, sectionId, itemId, choiceId) {
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: { sectionId: sectionId, itemId: itemId, choiceId: choiceId },
+            dataType: "json",
+            cache: false,
+            success: function (json) {
+                console.log(json);
+                console.log("ItemId: " + itemId + ", " + "ChoiceId: " + choiceId);
+            }
+        });
+    }
+
+    paragon.pt.activateMultipleChoices = function (url, sectionId) {
+        $(document).delegate(".multipleChoices li", "click", function () {
+            var ul = $(this).parent();
+            ul.find("li").removeClass("selected");
+            $(this).addClass("selected");
+
+            paragon.pt.uploadMultipleChoicesValue(url, sectionId, ul.data("id"), $(this).data("id"));
+        });
+    }
+
+    paragon.pt.renderMultipleChoices = function (url, sectionId, item, renderItemText, hasImage, renderChoiceText) {
+        var template;
+        if (renderItemText == true) {
+            if (hasImage == true) {
+                template = Handlebars.compile($("#multipleChoicesTemplateWithItemTextAndImage").html());
+            }
+            else {
+                template = Handlebars.compile($("#multipleChoicesTemplateWithItemText").html());
+            }
+        }
+        else {
+            if (hasImage == true) {
+
+                if (renderChoiceText == true) {
+                    template = Handlebars.compile($("#multipleChoicesTemplateWithImage").html());
+                }
+                else {
+                    template = Handlebars.compile($("#multipleChoicesTemplateWithImageNoText").html());
+                }
+            }
+            else {
+                template = Handlebars.compile($("#multipleChoicesTemplate").html());
+            }
+        }
+
+        $("#multipleChoices").html(template(item));
+
+        paragon.pt.activateMultipleChoices(url, sectionId);
+    }
+
+    //Drop down list
+    paragon.pt.dropDown = paragon.pt.dropDown || {};
+    paragon.pt.dropDown.activeMenu = null;
+    paragon.pt.dropDown.renderTemplate = function (url, sectionId, templateToRender, elementToRender, items) {
+        var template = Handlebars.compile(templateToRender);
+        $(elementToRender).html(template(items));
+    }
+
+    paragon.pt.dropDown.renderInline = function (url, sectionId, items, startIndex, endIndex, elementToRender) {
+
+        var template = Handlebars.compile($("#dropDownListInlineTemplate").html());
+        var text = elementToRender[0].innerHTML;
+        for (var i = startIndex; i <= endIndex; i++) {
+            text = text.replace("{" + items[i].Num + "}", template(items[i]));
+        }
+        //Handlebars.registerHelper('renderInline', function (src, items, startIndex, endIndex, options) {
+        //    var template = Handlebars.compile($("#dropDownListInlineTemplate").html());
+        //    for (var i = startIndex; i <= endIndex; i++) {
+        //        src = src.replace("{" + (i + 1) + "}", template(items[i]));
+        //    }
+        //    return src;
+        //});
+        $(elementToRender).html(text);
+    }
+
+    paragon.pt.dropDown.activate = function (url, sectionId) {
+
+        $(document.body).click(function () {
+            $(".dd").each(function (i) {
+                if (i != paragon.pt.dropDown.activeMenu) {
+                    $(this).find(".ddMenu").hide();
+                    $(this).removeClass('active');
+                }
+            });
+        });
+
+        $(".dd").mouseover(function () {
+            paragon.pt.dropDown.activeMenu = $(".dd").index(this);
+        }).mouseout(function () {
+            paragon.pt.dropDown.activeMenu = null;
+        });
+
+        $(".ddToggle").click(function () {
+            var parent = $(this).parent();
+            parent.toggleClass("active");
+            var ddMenu = parent.find(".ddMenu");
+            ddMenu.animate({ height: 'toggle', opacity: 'toggle' }, 100);
+            var left = $(this).position().left;
+            ddMenu.css("left", Math.round(left) + "px");
+
+            //place the dropDown menu 20px below the box
+            var top = parent.position().top;
+            ddMenu.css("top", Math.round(top) + 20 + "px");
+
+        });
+
+        $('.dd li').click(function () {
+            $(this).parent().find("li").removeClass("selected");
+            $(this).addClass("selected");
+            var parent = $(this).parent().parent().parent();
+            var ddToggle = parent.find(".ddToggle");
+            ddToggle.html($(this).html());
+            ddToggle.addClass("ddToggle1");
+            parent.find(".ddMenu").animate({ height: 'toggle', opacity: 'toggle' }, 400);
+            parent.removeClass('active');
+            var ul = $(this).parent();
+            paragon.pt.uploadMultipleChoicesValue(url, sectionId, ul.data("id"), $(this).data("id"));
+        });
+    }
+
+    paragon.pt.showInfoBox = function (message) {
+        var infoBox = $("#infoBox");
+        if (message)
+            $("#infoBox .boxText p").html(message);
+        infoBox.show();
+    }
+
+    paragon.pt.hideInfoBox = function () {
+        $("#infoBox").hide();
+    }
+
+    //Audio Playback for the Listening Component
+    paragon.pt.playAudio = paragon.pt.playAudio || {};
+    paragon.pt.playAudio.player = null;
+    paragon.pt.playAudio.totalTime = 0;
+    paragon.pt.playAudio.timeLeft = 0;
+    paragon.pt.playAudio.interval = null;
+    paragon.pt.playAudio.onDone = null;
+
+    paragon.pt.playAudio.start = function (playAudioTime) {
+        paragon.pt.hideInfoBox();
+        paragon.pt.playAudio.totalTime = playAudioTime;
+        paragon.pt.playAudio.timeLeft = playAudioTime;
+        if (paragon.pt.playAudio.interval)
+            window.clearInterval(paragon.pt.playAudio.interval);
+
+        $("#playAudioBox").fadeIn(1000);
+    }
+
+
+    //recording functions
+
+    paragon.pt.recording = paragon.pt.recording || {};
+    paragon.pt.recording.totalTime = 0;
+    paragon.pt.recording.timeLeft = 0;
+    paragon.pt.recording.interval = null;
+    paragon.pt.recording.onDone = null;
+
+    paragon.pt.recording.updateProgressBar = function () {
+        var percentage = 100 - (paragon.pt.recording.timeLeft / paragon.pt.recording.totalTime) * 100;
+        $("#startRecTime .progressbar-cover").css("left", percentage + "%");
+    }
+
+    paragon.pt.recording.deductTime = function () {
+        if (paragon.pt.recording.timeLeft > 0) {
+            paragon.pt.recording.timeLeft -= 1;
+            paragon.pt.recording.updateProgressBar();
+        }
+        else {
+            window.clearInterval(paragon.pt.recording.interval);
+            $("#startRecTime").hide();
+            paragon.pt.showNextButton();
+            if (paragon.pt.recording.onDone) {
+                paragon.pt.recording.onDone();
+            }
+        }
+    }
+
+    paragon.pt.recording.start = function (playAudioTime) {
+        paragon.pt.recording.totalTime = playAudioTime;
+        paragon.pt.recording.timeLeft = playAudioTime;
+        if (paragon.pt.recording.interval)
+            window.clearInterval(paragon.pt.recording.interval);
+
+        paragon.pt.recording.interval = window.setInterval(function () { paragon.pt.recording.deductTime() }, 1000);
+        paragon.pt.recording.updateProgressBar();
+        $("#startRecTime").fadeIn(1000);
+    }
+
+    //end recording
+
+    //preperation functions
+
+    paragon.pt.preparation = paragon.pt.preparation || {};
+    paragon.pt.preparation.totalTime = 0;
+    paragon.pt.preparation.timeLeft = 0;
+    paragon.pt.preparation.interval = null;
+    paragon.pt.preparation.onDone = null;
+    paragon.pt.preparation.startRecording = null;
+
+    paragon.pt.preparation.updateProgressBar = function () {
+        $("#startPrepTime #progressTimer").html(paragon.pt.preparation.timeLeft);
+    }
+
+    paragon.pt.preparation.deductTime = function () {
+        if (paragon.pt.preparation.timeLeft > 0) {
+            paragon.pt.preparation.timeLeft -= 1;
+            paragon.pt.preparation.updateProgressBar();
+        }
+        else {
+            window.clearInterval(paragon.pt.preparation.interval);
+            $("#startPrepTime").hide();
+            paragon.pt.showNextButton();
+            if (paragon.pt.preparation.onDone) {
+                paragon.pt.preparation.onDone();
+            }
+        }
+    }
+
+    paragon.pt.preparation.start = function (playAudioTime) {
+        paragon.pt.preparation.totalTime = playAudioTime;
+        paragon.pt.preparation.timeLeft = playAudioTime;
+        if (paragon.pt.preparation.interval)
+            window.clearInterval(paragon.pt.preparation.interval);
+
+        paragon.pt.preparation.interval = window.setInterval(function () { paragon.pt.preparation.deductTime() }, 1000);
+        paragon.pt.preparation.updateProgressBar();
+        $("#startPrepTime").fadeIn(1000);
+    }
+
+    //end prep functinos
+
+    paragon.pt.createAudioPlayer = function (contentUrl, audiofile) {
+        //create player if not exists
+        if (!paragon.pt.playAudio.player) {
+            paragon.pt.playAudio.player = document.createElement('audio');
+
+            paragon.pt.playAudio.player.controls = true;
+            paragon.pt.playAudio.player.controlsList = "nodownload";
+            paragon.pt.playAudio.player.oggSrc = document.createElement('source');
+            paragon.pt.playAudio.player.oggSrc.setAttribute('type', 'audio/ogg');
+            paragon.pt.playAudio.player.appendChild(paragon.pt.playAudio.player.oggSrc);
+
+            paragon.pt.playAudio.player.mp3Src = document.createElement('source');
+            paragon.pt.playAudio.player.mp3Src.setAttribute('type', 'audio/mp3');
+            paragon.pt.playAudio.player.appendChild(paragon.pt.playAudio.player.mp3Src);
+
+            paragon.pt.playAudio.player.ontimeupdate = function () {
+                var duration = paragon.pt.playAudio.player.duration;
+                var currentTime = paragon.pt.playAudio.player.currentTime;
+                if (duration) {
+                    var progress = (currentTime / duration) * 100;
+                    $("#playAudioBox .progressbar-cover").css("left", progress + "%");
+                    if (progress >= 100) {
+                        $("#playAudioBox").hide();
+                        paragon.pt.showInfoBox();
+                        paragon.pt.showNextButton();
+                        if (paragon.pt.playAudio.onDone) {
+                            paragon.pt.playAudio.onDone();
+                        }
+                    }
+                }
+            };
+
+            paragon.pt.playAudio.player.onplay = function () {
+                paragon.pt.playAudio.start(paragon.pt.playAudio.player.duration);
+            };
+        }
+
+        paragon.pt.playAudio.player.addEventListener("loadedmetadata", function (e) {
+            if (e.target) {
+                paragon.pt.playAudio.player.play();
+                paragon.pt.playAudio.start(e.target.duration);
+            }
+        });
+
+        paragon.pt.playAudio.player.oggSrc.setAttribute('src', contentUrl + audiofile + ".ogg");
+        paragon.pt.playAudio.player.mp3Src.setAttribute('src', contentUrl + audiofile + ".mp3");
+
+        paragon.pt.playAudio.player.load();
+        return paragon.pt.playAudio.player;
+    }
+
+
+    paragon.pt.moveScrollBar = function (div, scrollSize) {
+        div.animate({
+            scrollTop: scrollSize
+        }, 1200, function () {
+            div.animate({ scrollTop: 0 }, 300, function () {
+            });
+        });
+    }
+
+    paragon.pt.showScrollBar = function (leftDiv, rightDiv) {
+
+        if (rightDiv.length && rightDiv.is(":visible") && leftDiv.length && leftDiv.is(":visible")) {
+            $.blockUI({
+                message: "Scroll up and down to see everything.",
+                css: { width: '400px', border: '2px solid #000', top: '35%', padding: '50px', color: '#1A578A', fontWeight: 'bold' },
+                showOverlay: false
+            });
+
+            var rightScrollSize = rightDiv[0].scrollHeight;
+            var leftScrollSize = leftDiv[0].scrollHeight;
+            window.setTimeout(function () {
+                paragon.pt.moveScrollBar(rightDiv, rightScrollSize);
+                paragon.pt.moveScrollBar(leftDiv, leftScrollSize);
+
+                window.setTimeout(function () { $.unblockUI(); }, 2300);
+            }, 1400);
+
+
+        }
+
+    }
+
+    paragon.pt.wordCount = function () {
+        $(".writtenTextAreaBox").keyup(countWords);
+
+        function countWords() {
+            var text = " ";
+            if (this.value != "") {
+                var wordCount = this.value.match(/\S+/g).length;
+                if (wordCount == 1) { 
+                    text = wordCount + " word"; 
+                } else { 
+                    text = wordCount + " words";
+                }
+            }
+            document.getElementById("wordCount").innerHTML = text;
+        }
+    }
+
+    paragon.pt.calcSectionNumQuestion = function (sectionID) {
+        var pt1lpSection = sectionID;
+        $.post("/InstructionalProducts/PracticeTest5/OPT5/GetNumberOfQuestions", { sectionId: pt1lpSection }, function (data) { console.log(data); document.getElementById("numQuestion").innerHTML = data.totalQuestions-1 });
+    }
+
+    paragon.pt.calcSectionNumQuestionLS = function (sectionID) {
+        var pt1lpSection = sectionID;
+        $.post("/InstructionalProducts/PracticeTest5/OPT5LS/GetNumberOfQuestions", { sectionId: pt1lpSection }, function (data) { console.log(data); document.getElementById("numQuestion").innerHTML = data.totalQuestions-1 });
+    }
+
+    paragon.pt.calcListScoreGeneral = function (sectionID) {
+
+        $.post("/InstructionalProducts/PracticeTest5/OPT5/GetScoreOnSection", { sectionId: sectionID }, function (data) {
+            console.log(data); document.getElementById("yourScore").innerHTML = data.userScore;
+
+            var userLScore = data.userScore;
+
+            paragon.pt.findListScore(userLScore);
+
+        });
+    }
+
+    paragon.pt.calcListScoreLS = function (sectionID) {
+
+        $.post("/InstructionalProducts/PracticeTest5/OPT5LS/GetScoreOnSection", { sectionId: sectionID }, function (data) {
+            console.log(data); document.getElementById("yourScore").innerHTML = data.userScore;
+
+            var userLScore = data.userScore;
+
+            paragon.pt.findListScore(userLScore);
+
+        });
+    }
+
+    paragon.pt.findListScore = function (userLScore) {
+        if (userLScore <= 7) {
+            document.getElementById("celScore").innerHTML = "M";
+            return;
+        }
+        else if (userLScore <= 12) {
+            document.getElementById("celScore").innerHTML = "3";
+            return;
+        }
+        else if (userLScore <= 18) {
+            document.getElementById("celScore").innerHTML = "4";
+            return;
+        }
+        else if (userLScore <= 23) {
+            document.getElementById("celScore").innerHTML = "5";
+            return;
+        }
+        else if (userLScore <= 28) {
+            document.getElementById("celScore").innerHTML = "6";
+            return;
+        }
+        else if (userLScore <= 31) {
+            document.getElementById("celScore").innerHTML = "7";
+            return;
+        }
+        else if (userLScore <= 33) {
+            document.getElementById("celScore").innerHTML = "8";
+            return;
+        }
+        else if (userLScore <= 35) {
+          document.getElementById("celScore").innerHTML = "9";
+          return;
+          }
+          else {
+          document.getElementById("celScore").innerHTML = "10-12";
+          }
+          }
+
+          paragon.pt.calcListScoreOnYourScore = function (sectionScore, sectionCell) {
+
+          var userLScore = sectionScore;
+
+          if (userLScore <= 7) {
+                document.getElementById(sectionCell).innerHTML = "M";
+                return;
+            }
+            else if (userLScore <= 12) {
+                document.getElementById(sectionCell).innerHTML = "3";
+                return;
+            }
+            else if (userLScore <= 18) {
+                document.getElementById(sectionCell).innerHTML = "4";
+                return;
+            }
+            else if (userLScore <= 23) {
+                document.getElementById(sectionCell).innerHTML = "5";
+                return;
+            }
+            else if (userLScore <= 28) {
+                document.getElementById(sectionCell).innerHTML = "6";
+                return;
+            }
+            else if (userLScore <= 31) {
+                document.getElementById(sectionCell).innerHTML = "7";
+                return;
+            }
+            else if (userLScore <= 33) {
+                document.getElementById(sectionCell).innerHTML = "8";
+                return;
+            }
+            else if (userLScore <= 35) {
+                document.getElementById(sectionCell).innerHTML = "9";
+                return;
+            }
+            else {
+                document.getElementById(sectionCell).innerHTML = "10-12";
+            }
+
+
+    }
+
+    paragon.pt.calcReadScore = function (sectionID) {
+
+        $.post("/InstructionalProducts/PracticeTest5/OPT5/GetScoreOnSection", { sectionId: sectionID }, function (data) {
+            console.log(data); document.getElementById("yourScore").innerHTML = data.userScore;
+
+            var userRScore = data.userScore;
+
+            if (userRScore <= 7) {
+                document.getElementById("celScore").innerHTML = "M";
+                return;
+            }
+            else if (userRScore <= 11) {
+                document.getElementById("celScore").innerHTML = "3";
+                return;
+            }
+            else if (userRScore <= 16) {
+                document.getElementById("celScore").innerHTML = "4";
+                return;
+            }
+            else if (userRScore <= 20) {
+                document.getElementById("celScore").innerHTML = "5";
+                return;
+            }
+            else if (userRScore <= 25) {
+                document.getElementById("celScore").innerHTML = "6";
+                return;
+            }
+            else if (userRScore <= 28) {
+                document.getElementById("celScore").innerHTML = "7";
+                return;
+            }
+            else if (userRScore <= 31) {
+                document.getElementById("celScore").innerHTML = "8";
+                return;
+            }
+            else if (userRScore <= 33) {
+                document.getElementById("celScore").innerHTML = "9";
+                return;
+            }
+            else {
+                document.getElementById("celScore").innerHTML = "10-12";
+            }
+
+        });
+
+    }
+    paragon.pt.calcReadScoreOnYourScore = function (sectionScore, sectionCell) {
+
+        var userRScore = sectionScore;
+
+        if (userRScore <= 7) {
+            document.getElementById(sectionCell).innerHTML = "M";
+            return;
+        }
+        else if (userRScore <= 11) {
+            document.getElementById(sectionCell).innerHTML = "3";
+            return;
+        }
+        else if (userRScore <= 16) {
+            document.getElementById(sectionCell).innerHTML = "4";
+            return;
+        }
+        else if (userRScore <= 20) {
+            document.getElementById(sectionCell).innerHTML = "5";
+            return;
+        }
+        else if (userRScore <= 25) {
+            document.getElementById(sectionCell).innerHTML = "6";
+            return;
+        }
+        else if (userRScore <= 28) {
+            document.getElementById(sectionCell).innerHTML = "7";
+            return;
+        }
+        else if (userRScore <= 31) {
+            document.getElementById(sectionCell).innerHTML = "8";
+            return;
+        }
+        else if (userRScore <= 33) {
+            document.getElementById(sectionCell).innerHTML = "9";
+            return;
+        }
+        else {
+            document.getElementById(sectionCell).innerHTML = "10-12";
+        }
+    }
+
+
+    //HARDCODED
+    paragon.pt.showListeningAnswerKeyBtn = function (sectionId) {
+        if (sectionId == "f1b42af6-de33-467d-b10f-cdec9bf95b92") {
+            $('#leftBtn').html("<a href='bf767d13-4bb6-4af8-844a-ceb178b8a226' id='backToResultbtn' class='btn'>Answer Key</a>");
+        }
+
+        if (sectionId == "6f3648e4-e614-4bee-b350-e21a267d3492") {
+            $('#leftBtn').html("<a href='44f572ee-a621-429c-b762-7eb01f326e04' id='backToResultbtn' class='btn'>Answer Key</a>");
+        }
+        if (sectionId == "35615962-cb35-43bf-a9d6-aba7e7d64ba3") {
+            $('#leftBtn').html("<a href='50fa6e3d-0f9c-4eeb-bcd3-853bb9f0bc8d' id='backToResultbtn' class='btn'>Answer Key</a>");
+        }
+
+        if (sectionId == "a5df8773-7edc-4f91-8cea-0482168a9f10") {
+            $('#leftBtn').html("<a href='98b188af-fa9c-425d-bbfa-a37cb1d1c218' id='backToResultbtn' class='btn'>Answer Key</a>");
+        }
+    }
+
+    paragon.pt.showReadingAnswerKeyBtn = function (sectionId) {
+        if (sectionId == "9e3bcb00-09c7-4bd1-a232-72bf8b6d4e03") {
+            $('#leftBtn').html("<a href='fe5cd4c8-2c43-4a70-8de1-4c1bdf8e1421' id='backToResultbtn' class='btn'>Answer Key</a>");
+        }
+
+        if (sectionId == "ecbbe55f-b677-43dc-aeff-a7ed258c2051") {
+            $('#leftBtn').html("<a href='a0a62c03-708f-458f-8d60-72cfd6a46291' id='backToResultbtn' class='btn'>Answer Key</a>");
+        }
+    }
+
+    paragon.pt.nextItem = function (url, itemId, canvasId, sectionId, activityTypeId) {
+        $.post(
+            url,
+            {
+                itemId: itemId,
+                canvasId: canvasId,
+                sectionId: sectionId,
+                activityTypeId: activityTypeId
+            },
+            function (data) {
+                console.log(data);
+            }
+        );
+    }
+
+    paragon.pt.countUnansweredQuestionsFromDb = function (canvasTypeId, sectionId, url) {
+        switch (canvasTypeId) {
+            case 24: //PT04
+            case 25: // PT05
+                return paragon.pt.countSingleUnansweredItemFromDb(sectionId, url);
+                break;
+
+            case 26: //PT06
+            case 27: //PT07
+                if ($("#panelLeft").css('display') != 'none') {
+                    return 0;
+                }
+                else {
+                    return paragon.pt.countAllUnansweredItemsFromDb(sectionId, url);
+                }
+                break;
+
+            default:
+                return paragon.pt.countAllUnansweredItemsFromDb(sectionId, url);
+        }
+    }
+
+    paragon.pt.countAllUnansweredItemsFromDb = function (sectionId, url) {
+        var unanswered = 0;
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: { 'sectionId': sectionId, 'items': JSON.stringify(paragon.pt.items) },
+            async: false,
+            success: function (data) {
+                var responses = data.responses;
+                for (var i = 0; i < responses.length; i++) {
+                    var currentResponse = responses[i];
+                    if (!currentResponse) {
+                        unanswered++;
+                    }
+                }
+            }
+        });
+        return unanswered;
+    }
+
+    paragon.pt.countSingleUnansweredItemFromDb = function (sectionId, url) {
+        var unanswered = 0;
+
+        var index = paragon.pt.itemIndex;
+        if (index > 0) {
+            index = index - 1;
+        }
+        else {
+            return unanswered;
+        }
+
+        var item = paragon.pt.items[index];
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: { "sectionId": sectionId, "itemId": item.Id },
+            async: false,
+            success: function (data) {
+                if (!data.response) {
+                    unanswered++;
+                }
+            }
+        });
+
+        return unanswered;
+    }
+
+</script>
+
+    <script src="./5-1-3_files/soundjs-0.6.0.min.js.下載"></script>
+
+
+
+    <script src="./5-1-3_files/audio.min.js.下載"></script>
+
+    <script src="./5-1-3_files/jquery.blockUI.js.下載"></script>
+
+    <script src="./5-1-3_files/jquery-ui-1.10.4.custom.min.js.下載"></script>
+
+    <script src="./5-1-3_files/jquery.cookie.js.下載"></script>
+
+
+    <link href="./5-1-3_files/font-awesome.css" rel="stylesheet">
+</head>
+<body data-new-gr-c-s-check-loaded="14.1229.0" data-gr-ext-installed="" style="">
+    <noscript>
+        <div id="noscript">
+            <div>Please turn on javascript to continue.</div>
+        </div>
+    </noscript>
+    <header>
+        <div class="navbar">
+            <div class="navbar-inner">
+                <a class="brand" href="https://www.celpip.ca/" target="_blank"> <img src="./5-1-3_files/CELPIP_H_Web.png"></a>
+
+                <div class="brand" style="margin-top:15px;">
+                    Study Materials
+                </div>
+
+                <ul class="nav" style="margin-top:8px;">
+
+                    <li class="dropdown">
+
+                        <a class="dropdown-toggle" data-toggle="dropdown" style="margin-top: 10px;">
+                            Selected Product: <span id="selected-product">CELPIP-General Practice Tests, Set 5</span>
+                            <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/FreeOnlineSampleTest/FOST">Free CELPIP-General Practice Tests (Starter Set)</a></li>
+                            <li><a href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/FreeOnlineSampleTest/FOST2">Free CELPIP-General LS Practice Tests (Starter Set)</a></li>
+
+
+                                    <li><a href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest/PT">CELPIP-General Practice Tests, Set 1</a></li>
+                                    <li><a href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest2/OPT2">CELPIP-General Practice Tests, Set 2</a></li>
+                                    <li><a href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest3/OPT3">CELPIP-General Practice Tests, Set 3</a></li>
+                                    <li><a href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest4/OPT4">CELPIP-General Practice Tests, Set 4</a></li>
+                                    <li><a href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest5/OPT5">CELPIP-General Practice Tests, Set 5</a></li>
+                                    <li><a href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest6/OPT6">CELPIP-General Practice Tests, Set 6</a></li>
+                                    <li><a href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest7/OPT7">CELPIP-General Practice Tests, Set 7</a></li>
+                                    <li><a href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest8/OPT8">CELPIP-General Practice Tests, Set 8</a></li>
+                                    <li><a href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest9/OPT9">CELPIP-General Practice Tests, Set 9</a></li>
+                                    <li><a href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest10/OPT10">CELPIP-General Practice Tests, Set 10</a></li>
+                                        <li><a target="_blank" href="https://testprep.paragontesting.ca/api/sso/v2/sso/jwt?jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6Imh5cDIyMThAZ21haWwuY29tIiwiZmlyc3RfbmFtZSI6IllpLVBpbmciLCJsYXN0X25hbWUiOiJIbyIsIm5hbWVpZCI6IjIyMzc0ODgiLCJpYXQiOjE3NDMwMTQ2ODYsImp0aSI6NDY3NDgyOTI5LCJuYmYiOjE3NDMwMTQzODZ9.w1yaJ3bzcWxwgN3wFlas15vvPlOfRTFnx6Z-udhHy_U&amp;return_to=https%3A%2F%2Ftestprep.paragontesting.ca%2Fbundles%2Fcelpip-accelerate-starter-celpip-general">CELPIP Accelerate Starter - Reading and Writing</a></li>
+                                        <li><a target="_blank" href="https://testprep.paragontesting.ca/api/sso/v2/sso/jwt?jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6Imh5cDIyMThAZ21haWwuY29tIiwiZmlyc3RfbmFtZSI6IllpLVBpbmciLCJsYXN0X25hbWUiOiJIbyIsIm5hbWVpZCI6IjIyMzc0ODgiLCJpYXQiOjE3NDMwMTQ2ODYsImp0aSI6MTkyMTMzOTkyMywibmJmIjoxNzQzMDE0Mzg2fQ.VEfB78i38Xw1gshmb7ONGcNzWKIvF83i7PhRPItcTU8&amp;return_to=https%3A%2F%2Ftestprep.paragontesting.ca%2Fbundles%2Fcelpip-accelerate-starter-celpip-general-ls">CELPIP Accelerate Starter - Listening and Speaking</a></li>
+                        </ul>
+
+                    </li>
+
+                    <li>
+                        <div style="margin-left: 19px">
+                            <ul class="nav nav-pills header-buttons">
+                                
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+
+                <ul class="nav pull-right" style="margin-top:17px">
+                        <li class="dropdown">
+                            <a class="dropdown-toggle dropdown-email" data-toggle="dropdown">
+                                <img src="./5-1-3_files/fa_cog.png" style="width:18px; height: 18px; margin-top:-5px">
+                                hyp2218@gmail.com
+                                <b class="caret"></b>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="javascript:document.getElementById(&#39;logoutForm&#39;).submit()">Sign out</a></li>
+                            </ul>
+                        </li>
+                </ul>
+            </div>
+        </div>
+<form action="https://instructionalproducts.paragontesting.ca/InstructionalProducts/Account/LogOff" id="logoutForm" method="post"></form>    </header>
+
+    <div class="container" id="main-container" style="height: 773px;">
+<link href="./5-1-3_files/ptStyle.css" rel="stylesheet" type="text/css">
+<link href="./5-1-3_files/video-js.css" rel="stylesheet">
+<script src="./5-1-3_files/video.js.下載"></script>
+<script>
+    paragon.pt.backUrl = "/InstructionalProducts/PracticeTest5/OPT5/View/3fda487d-266c-411e-bd73-7dea5612b778";
+    paragon.pt.nextUrl = "/InstructionalProducts/PracticeTest5/OPT5/View/8106527a-385c-4ae4-854c-4da37b4ba888";
+    if (paragon.pt.backUrl.length > 0 || paragon.pt.nextUrl.length > 0) {
+        paragon.footerVisible = true;
+    }
+
+    paragon.pt.items = [
+  {
+    "Id": "cd2fe3f7-299b-48e1-9c79-dc9f849a0ac6",
+    "ContentId": "e0245ae5-fed9-46ca-93e9-48c614fda82c",
+    "Num": 1,
+    "Text": "1. Skepticism has led to investigations into acupuncture’s efficacy. ",
+    "ExtraField1": "",
+    "Choices": [
+      {
+        "Id": "8b5ec4d1-fdb5-4ec3-8c26-276d0d8caa8a",
+        "ItemId": "cd2fe3f7-299b-48e1-9c79-dc9f849a0ac6",
+        "ChoiceData": null,
+        "Num": 1,
+        "Text": "A"
+      },
+      {
+        "Id": "facff5a3-2da6-41b4-af4f-0ea07109c143",
+        "ItemId": "cd2fe3f7-299b-48e1-9c79-dc9f849a0ac6",
+        "ChoiceData": null,
+        "Num": 2,
+        "Text": "B"
+      },
+      {
+        "Id": "024f8adf-4585-4a5e-ab94-e386535305cf",
+        "ItemId": "cd2fe3f7-299b-48e1-9c79-dc9f849a0ac6",
+        "ChoiceData": null,
+        "Num": 3,
+        "Text": "C"
+      },
+      {
+        "Id": "3cd7e9b9-cec6-468b-88b3-f57ddcc86fd4",
+        "ItemId": "cd2fe3f7-299b-48e1-9c79-dc9f849a0ac6",
+        "ChoiceData": null,
+        "Num": 4,
+        "Text": "D"
+      },
+      {
+        "Id": "69f90372-973f-4027-b323-03f674a22d90",
+        "ItemId": "cd2fe3f7-299b-48e1-9c79-dc9f849a0ac6",
+        "ChoiceData": null,
+        "Num": 5,
+        "Text": "E"
+      }
+    ]
+  },
+  {
+    "Id": "21b68772-2a21-4558-9471-ce5e2beb9afa",
+    "ContentId": "e0245ae5-fed9-46ca-93e9-48c614fda82c",
+    "Num": 2,
+    "Text": "2. In acupuncture, illness can be alleviated by clearing obstructions within the body. ",
+    "ExtraField1": "",
+    "Choices": [
+      {
+        "Id": "e0657147-d168-47dc-bf42-be7fae0c45df",
+        "ItemId": "21b68772-2a21-4558-9471-ce5e2beb9afa",
+        "ChoiceData": null,
+        "Num": 1,
+        "Text": "A"
+      },
+      {
+        "Id": "f4813750-be6f-4d06-9ad7-c7c4ebdf023c",
+        "ItemId": "21b68772-2a21-4558-9471-ce5e2beb9afa",
+        "ChoiceData": null,
+        "Num": 2,
+        "Text": "B"
+      },
+      {
+        "Id": "c20b5bf2-78a6-4112-b4fd-2d2b4bd0e571",
+        "ItemId": "21b68772-2a21-4558-9471-ce5e2beb9afa",
+        "ChoiceData": null,
+        "Num": 3,
+        "Text": "C"
+      },
+      {
+        "Id": "4b79aea8-c9dc-4c72-8ce3-5830da390d1b",
+        "ItemId": "21b68772-2a21-4558-9471-ce5e2beb9afa",
+        "ChoiceData": null,
+        "Num": 4,
+        "Text": "D"
+      },
+      {
+        "Id": "05b0bfd2-b950-4919-8f14-ebe242484eae",
+        "ItemId": "21b68772-2a21-4558-9471-ce5e2beb9afa",
+        "ChoiceData": null,
+        "Num": 5,
+        "Text": "E"
+      }
+    ]
+  },
+  {
+    "Id": "6ce9d781-2def-467a-9609-7da0a397da09",
+    "ContentId": "e0245ae5-fed9-46ca-93e9-48c614fda82c",
+    "Num": 3,
+    "Text": "3. Some studies have shown that acupuncture has little more than a placebo effect.",
+    "ExtraField1": "",
+    "Choices": [
+      {
+        "Id": "55e04acf-d504-4da3-8788-0ce9849cb10c",
+        "ItemId": "6ce9d781-2def-467a-9609-7da0a397da09",
+        "ChoiceData": null,
+        "Num": 1,
+        "Text": "A"
+      },
+      {
+        "Id": "7a98d64d-4462-4a63-96e6-060da5c02450",
+        "ItemId": "6ce9d781-2def-467a-9609-7da0a397da09",
+        "ChoiceData": null,
+        "Num": 2,
+        "Text": "B"
+      },
+      {
+        "Id": "f1f19c0c-c7e6-48a6-878e-589e8171af8d",
+        "ItemId": "6ce9d781-2def-467a-9609-7da0a397da09",
+        "ChoiceData": null,
+        "Num": 3,
+        "Text": "C"
+      },
+      {
+        "Id": "6a9cea7d-ee43-4f6f-a314-50c07c5dbe52",
+        "ItemId": "6ce9d781-2def-467a-9609-7da0a397da09",
+        "ChoiceData": null,
+        "Num": 4,
+        "Text": "D"
+      },
+      {
+        "Id": "10740c63-406d-4c91-8508-4153f82b5dbb",
+        "ItemId": "6ce9d781-2def-467a-9609-7da0a397da09",
+        "ChoiceData": null,
+        "Num": 5,
+        "Text": "E"
+      }
+    ]
+  },
+  {
+    "Id": "35634c03-0631-4be7-bde1-a57d19933fd9",
+    "ContentId": "e0245ae5-fed9-46ca-93e9-48c614fda82c",
+    "Num": 4,
+    "Text": "4. Some believe that acupuncture works because it causes the body to produce its own anesthetic. ",
+    "ExtraField1": "",
+    "Choices": [
+      {
+        "Id": "47abab36-4853-407a-8f64-d2de65d8eddb",
+        "ItemId": "35634c03-0631-4be7-bde1-a57d19933fd9",
+        "ChoiceData": null,
+        "Num": 1,
+        "Text": "A"
+      },
+      {
+        "Id": "0418d63e-d4cd-4cbb-98f7-dd9e7544f239",
+        "ItemId": "35634c03-0631-4be7-bde1-a57d19933fd9",
+        "ChoiceData": null,
+        "Num": 2,
+        "Text": "B"
+      },
+      {
+        "Id": "f68a456a-9a11-4702-9c24-5ac5b8721e05",
+        "ItemId": "35634c03-0631-4be7-bde1-a57d19933fd9",
+        "ChoiceData": null,
+        "Num": 3,
+        "Text": "C"
+      },
+      {
+        "Id": "ae830c44-dd8b-44f0-89c5-bf15191b3e32",
+        "ItemId": "35634c03-0631-4be7-bde1-a57d19933fd9",
+        "ChoiceData": null,
+        "Num": 4,
+        "Text": "D"
+      },
+      {
+        "Id": "c76282c7-c21c-4243-b424-e14f80fad475",
+        "ItemId": "35634c03-0631-4be7-bde1-a57d19933fd9",
+        "ChoiceData": null,
+        "Num": 5,
+        "Text": "E"
+      }
+    ]
+  },
+  {
+    "Id": "c1366ce2-6893-4d52-bb74-106dba142891",
+    "ContentId": "e0245ae5-fed9-46ca-93e9-48c614fda82c",
+    "Num": 5,
+    "Text": "5. Acupuncture is a well established medical practice in East Asia. ",
+    "ExtraField1": "",
+    "Choices": [
+      {
+        "Id": "be69048c-bd1a-423a-b2f8-16aeb0e02fc3",
+        "ItemId": "c1366ce2-6893-4d52-bb74-106dba142891",
+        "ChoiceData": null,
+        "Num": 1,
+        "Text": "A"
+      },
+      {
+        "Id": "521dba8a-f984-47ab-88a0-772a16888cd1",
+        "ItemId": "c1366ce2-6893-4d52-bb74-106dba142891",
+        "ChoiceData": null,
+        "Num": 2,
+        "Text": "B"
+      },
+      {
+        "Id": "8150a58c-88a2-4f72-9733-570dc20f99bd",
+        "ItemId": "c1366ce2-6893-4d52-bb74-106dba142891",
+        "ChoiceData": null,
+        "Num": 3,
+        "Text": "C"
+      },
+      {
+        "Id": "cbdcb93b-7e8d-4408-a88d-97cda5c3b6c2",
+        "ItemId": "c1366ce2-6893-4d52-bb74-106dba142891",
+        "ChoiceData": null,
+        "Num": 4,
+        "Text": "D"
+      },
+      {
+        "Id": "e9cba747-69ee-42b0-91a3-111d7b3cae07",
+        "ItemId": "c1366ce2-6893-4d52-bb74-106dba142891",
+        "ChoiceData": null,
+        "Num": 5,
+        "Text": "E"
+      }
+    ]
+  },
+  {
+    "Id": "95e6e0e0-ed26-4cf9-9b33-87f1b480d00f",
+    "ContentId": "e0245ae5-fed9-46ca-93e9-48c614fda82c",
+    "Num": 6,
+    "Text": "6. Only in recent years has acupuncture become an accepted treatment around the world. ",
+    "ExtraField1": "",
+    "Choices": [
+      {
+        "Id": "352ccd95-bf42-4b76-849a-61f2e411b10e",
+        "ItemId": "95e6e0e0-ed26-4cf9-9b33-87f1b480d00f",
+        "ChoiceData": null,
+        "Num": 1,
+        "Text": "A"
+      },
+      {
+        "Id": "d5461061-8cde-4bf8-869b-ab768dd4304f",
+        "ItemId": "95e6e0e0-ed26-4cf9-9b33-87f1b480d00f",
+        "ChoiceData": null,
+        "Num": 2,
+        "Text": "B"
+      },
+      {
+        "Id": "a7e36c6e-f7d0-4a73-a94f-ec9096a64c31",
+        "ItemId": "95e6e0e0-ed26-4cf9-9b33-87f1b480d00f",
+        "ChoiceData": null,
+        "Num": 3,
+        "Text": "C"
+      },
+      {
+        "Id": "e09cdd3e-3b6b-4224-9885-e2fd636216a8",
+        "ItemId": "95e6e0e0-ed26-4cf9-9b33-87f1b480d00f",
+        "ChoiceData": null,
+        "Num": 4,
+        "Text": "D"
+      },
+      {
+        "Id": "e9577dab-e609-46af-8683-a306449a3ccb",
+        "ItemId": "95e6e0e0-ed26-4cf9-9b33-87f1b480d00f",
+        "ChoiceData": null,
+        "Num": 5,
+        "Text": "E"
+      }
+    ]
+  },
+  {
+    "Id": "19b6b436-867b-4753-8874-0f31f8c9374b",
+    "ContentId": "e0245ae5-fed9-46ca-93e9-48c614fda82c",
+    "Num": 7,
+    "Text": "7. The analogy of acupuncture is akin to hydro-irrigation systems.",
+    "ExtraField1": "",
+    "Choices": [
+      {
+        "Id": "06af9ae6-6ffa-4bf0-8b2c-22e39efbc658",
+        "ItemId": "19b6b436-867b-4753-8874-0f31f8c9374b",
+        "ChoiceData": null,
+        "Num": 1,
+        "Text": "A"
+      },
+      {
+        "Id": "9ebb72b9-9351-4ea0-9914-ede2a8d7066f",
+        "ItemId": "19b6b436-867b-4753-8874-0f31f8c9374b",
+        "ChoiceData": null,
+        "Num": 2,
+        "Text": "B"
+      },
+      {
+        "Id": "015e5797-5e4f-42a6-9575-6539bb5f0b19",
+        "ItemId": "19b6b436-867b-4753-8874-0f31f8c9374b",
+        "ChoiceData": null,
+        "Num": 3,
+        "Text": "C"
+      },
+      {
+        "Id": "a151f79f-d6fa-45ce-90f0-d99f2330f0b3",
+        "ItemId": "19b6b436-867b-4753-8874-0f31f8c9374b",
+        "ChoiceData": null,
+        "Num": 4,
+        "Text": "D"
+      },
+      {
+        "Id": "3e332f9b-fa7f-4fff-904a-7cd2fba9f97c",
+        "ItemId": "19b6b436-867b-4753-8874-0f31f8c9374b",
+        "ChoiceData": null,
+        "Num": 5,
+        "Text": "E"
+      }
+    ]
+  },
+  {
+    "Id": "f144aade-9c08-4ea9-8582-d734c9ed6925",
+    "ContentId": "e0245ae5-fed9-46ca-93e9-48c614fda82c",
+    "Num": 8,
+    "Text": "8. Scientific studies are beginning to provide evidence for the efficacy of acupuncture. ",
+    "ExtraField1": "",
+    "Choices": [
+      {
+        "Id": "c656bc48-5b63-42af-811a-9580653e5e59",
+        "ItemId": "f144aade-9c08-4ea9-8582-d734c9ed6925",
+        "ChoiceData": null,
+        "Num": 1,
+        "Text": "A"
+      },
+      {
+        "Id": "0be19167-da03-4c78-8e75-2f85285f9aba",
+        "ItemId": "f144aade-9c08-4ea9-8582-d734c9ed6925",
+        "ChoiceData": null,
+        "Num": 2,
+        "Text": "B"
+      },
+      {
+        "Id": "d19fe7a0-8b39-48d1-9842-b49b40c8ed2e",
+        "ItemId": "f144aade-9c08-4ea9-8582-d734c9ed6925",
+        "ChoiceData": null,
+        "Num": 3,
+        "Text": "C"
+      },
+      {
+        "Id": "94c95691-c7c5-4287-ba63-817c7e25f590",
+        "ItemId": "f144aade-9c08-4ea9-8582-d734c9ed6925",
+        "ChoiceData": null,
+        "Num": 4,
+        "Text": "D"
+      },
+      {
+        "Id": "64a15c0b-ce85-4a5d-a601-9ee026366736",
+        "ItemId": "f144aade-9c08-4ea9-8582-d734c9ed6925",
+        "ChoiceData": null,
+        "Num": 5,
+        "Text": "E"
+      }
+    ]
+  },
+  {
+    "Id": "4a6b19a2-ed59-459e-8510-4592177166b9",
+    "ContentId": "e0245ae5-fed9-46ca-93e9-48c614fda82c",
+    "Num": 9,
+    "Text": "9. Scientific evidence shows that acupuncture cures damaged nerves and muscles. ",
+    "ExtraField1": "",
+    "Choices": [
+      {
+        "Id": "40ab52de-a420-4354-819a-6257587261eb",
+        "ItemId": "4a6b19a2-ed59-459e-8510-4592177166b9",
+        "ChoiceData": null,
+        "Num": 1,
+        "Text": "A"
+      },
+      {
+        "Id": "d6a57d9a-185a-4335-b2cb-8b0943991043",
+        "ItemId": "4a6b19a2-ed59-459e-8510-4592177166b9",
+        "ChoiceData": null,
+        "Num": 2,
+        "Text": "B"
+      },
+      {
+        "Id": "59f0ab7d-16d9-491e-b23f-62fa23b091ce",
+        "ItemId": "4a6b19a2-ed59-459e-8510-4592177166b9",
+        "ChoiceData": null,
+        "Num": 3,
+        "Text": "C"
+      },
+      {
+        "Id": "875396c3-618e-49a1-a69e-b4eb3653200f",
+        "ItemId": "4a6b19a2-ed59-459e-8510-4592177166b9",
+        "ChoiceData": null,
+        "Num": 4,
+        "Text": "D"
+      },
+      {
+        "Id": "92d50022-0ee0-49fe-b06f-ea62dc8289b5",
+        "ItemId": "4a6b19a2-ed59-459e-8510-4592177166b9",
+        "ChoiceData": null,
+        "Num": 5,
+        "Text": "E"
+      }
+    ]
+  }
+]
+</script>
+
+<div id="panelTop">
+
+    <div id="canvasName" style="float: left; font-size: 16px; font-weight: bold;">
+        Practice Test 1 - Reading Part 3: Reading for Information
+    </div>
+
+    <div style="float: right;" class="btnNext span1 pull-right">
+                <a href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest5/OPT5/View/3921587e-acf8-4f16-a310-19dd6c3148af#" id="btnNext" class="btn btn-primary">NEXT</a>
+
+    </div>
+
+    <div style="float: right; display: block;" id="timer" class="hide">
+        Time remaining: <strong>9 minutes</strong>
+    </div>
+
+</div>
+
+<div id="mainContent">
+    
+
+<script id="dropDownListTemplate" type="text/template">
+{{#each this}}
+    <div class="ddrow">
+        {{Text}}
+        <div class='dd'>
+            <div class='ddToggle'>▾</div>
+            <div class='ddMenu'>
+                <ul data-id="{{Id}}">
+                {{#each Choices}}
+                    <li data-id="{{Id}}">{{Text}}</li>
+                {{/each}}
+                </ul>
+            </div>
+        </div>
+    </div>
+{{/each}}
+</script>
+
+<script id="dropDownListInlineTemplate" type="text/template">
+    <div class='dd'>
+        <div class='ddToggle'>▾</div>
+        <div class='ddMenu'>
+            <ul data-id="{{Id}}">
+            {{#each Choices}}
+                <li data-id="{{Id}}">{{Text}}</li>
+            {{/each}}
+            </ul>
+        </div>
+    </div>
+</script>
+
+<script id="dropDownListInFrontTemplate" type="text/template">
+    {{#each this}}
+    <div class="ddrow">
+        <div class='dd'>
+            <div class='ddToggle'>▾</div>
+            <div class='ddMenu'>
+                <ul data-id="{{Id}}">
+                    {{#each Choices}}
+                    <li data-id="{{Id}}">{{Text}}</li>
+                    {{/each}}
+                </ul>
+            </div>
+        </div>
+        &nbsp;-
+        {{Text}}
+    </div>
+    {{/each}}
+</script>
+
+<div id="panelLeft" style="width: 50%; height: 730px;" class="graybg">
+    <div class="row1">
+        <div class="instruction" style="margin-bottom: 30px;">Read the following passage.</div>
+        <div><strong>A.</strong> For some, it may be hard to imagine how a small stainless steel needle put into one’s left palm can soothe a stomachache. Yet in the practice of acupuncture, such fine needles are used to pierce specific points on the body for pain relief or therapeutic purposes. Acupuncture began in China thousands of years ago and remains a leading form of medical treatment in some Asian cultures. However, the practice of acupuncture has only taken hold beyond its traditional homelands over the last three decades. Over that time, its popularity in Western culture has greatly increased. It is now being hailed by many Westerners as a safe, drug-free remedy for ailments such as arthritis, chronic pain, addiction, and depression.<br><br>
+
+<strong>B.</strong> Traditional acupuncture is based on the East Asian belief that the body’s internal organs are connected by a system of energy channels. A very simple explanation is that vital energy travels along these channels in the body, like water in a stream. Diseases are caused by a blockage in these natural energy flows, just as a fallen tree would obstruct a stream. The acupuncturist must find the obstruction, isolate the area, and clear the blockage. To do this, fine stainless steel needles are inserted into a related acupuncture point. These disposable needles are gently twirled and then removed, and the energy flow can be restored to a natural state.<br><br>
+
+<strong>C.</strong> People who have been helped by acupuncture have little problem accepting its success. Yet some in the Western medical community find the unfamiliar concepts of energy and channels hard to believe. As a result, experts in this community have tried to find more scientific reasons for how acupuncture works. After decades of research, some Western medical researchers have proposed theories.<br><br>
+
+<strong>D.</strong> Experimental research suggests that acupuncture needles put into certain points on the body can stimulate the central nervous system (brain and spinal cord). Once stimulated, the central nervous system can release “feel good” chemicals into the muscles, spinal cord, and brain. These natural painkillers block pain signals from going to the brain, leading to a feeling of physical and emotional well-being. In light of the research, a growing number of scientists and medical practitioners are suggesting the use of acupuncture under certain conditions. In fact, it is becoming so popular that many people in North America are using it to treat their ailing household pets!<br><br>
+
+<strong>E. Not given in any of the above paragraphs.</strong></div>
+      
+    </div>
+</div>
+
+<div id="panelRight" style="width: 50%; height: 730px;" class="bluebg">
+    <div class="row1">
+        <div class="instruction" style="margin-bottom: 15px;">Decide which paragraph, A to D, has the information given in each statement below. Select E if the information is not given in any of the paragraphs.</div>
+        
+        <div id="multipleChoices" class="wellBlueBG" style="margin-bottom: 20px;">
+    
+    <div class="ddrow">
+        <div class="dd">
+            <div class="ddToggle">▾</div>
+            <div class="ddMenu">
+                <ul data-id="cd2fe3f7-299b-48e1-9c79-dc9f849a0ac6">
+                    
+                    <li data-id="8b5ec4d1-fdb5-4ec3-8c26-276d0d8caa8a">A</li>
+                    
+                    <li data-id="facff5a3-2da6-41b4-af4f-0ea07109c143">B</li>
+                    
+                    <li data-id="024f8adf-4585-4a5e-ab94-e386535305cf">C</li>
+                    
+                    <li data-id="3cd7e9b9-cec6-468b-88b3-f57ddcc86fd4">D</li>
+                    
+                    <li data-id="69f90372-973f-4027-b323-03f674a22d90">E</li>
+                    
+                </ul>
+            </div>
+        </div>
+        &nbsp;-
+        1. Skepticism has led to investigations into acupuncture’s efficacy. 
+    </div>
+    
+    <div class="ddrow">
+        <div class="dd">
+            <div class="ddToggle">▾</div>
+            <div class="ddMenu">
+                <ul data-id="21b68772-2a21-4558-9471-ce5e2beb9afa">
+                    
+                    <li data-id="e0657147-d168-47dc-bf42-be7fae0c45df">A</li>
+                    
+                    <li data-id="f4813750-be6f-4d06-9ad7-c7c4ebdf023c">B</li>
+                    
+                    <li data-id="c20b5bf2-78a6-4112-b4fd-2d2b4bd0e571">C</li>
+                    
+                    <li data-id="4b79aea8-c9dc-4c72-8ce3-5830da390d1b">D</li>
+                    
+                    <li data-id="05b0bfd2-b950-4919-8f14-ebe242484eae">E</li>
+                    
+                </ul>
+            </div>
+        </div>
+        &nbsp;-
+        2. In acupuncture, illness can be alleviated by clearing obstructions within the body. 
+    </div>
+    
+    <div class="ddrow">
+        <div class="dd">
+            <div class="ddToggle">▾</div>
+            <div class="ddMenu">
+                <ul data-id="6ce9d781-2def-467a-9609-7da0a397da09">
+                    
+                    <li data-id="55e04acf-d504-4da3-8788-0ce9849cb10c">A</li>
+                    
+                    <li data-id="7a98d64d-4462-4a63-96e6-060da5c02450">B</li>
+                    
+                    <li data-id="f1f19c0c-c7e6-48a6-878e-589e8171af8d">C</li>
+                    
+                    <li data-id="6a9cea7d-ee43-4f6f-a314-50c07c5dbe52">D</li>
+                    
+                    <li data-id="10740c63-406d-4c91-8508-4153f82b5dbb">E</li>
+                    
+                </ul>
+            </div>
+        </div>
+        &nbsp;-
+        3. Some studies have shown that acupuncture has little more than a placebo effect.
+    </div>
+    
+    <div class="ddrow">
+        <div class="dd">
+            <div class="ddToggle">▾</div>
+            <div class="ddMenu">
+                <ul data-id="35634c03-0631-4be7-bde1-a57d19933fd9">
+                    
+                    <li data-id="47abab36-4853-407a-8f64-d2de65d8eddb">A</li>
+                    
+                    <li data-id="0418d63e-d4cd-4cbb-98f7-dd9e7544f239">B</li>
+                    
+                    <li data-id="f68a456a-9a11-4702-9c24-5ac5b8721e05">C</li>
+                    
+                    <li data-id="ae830c44-dd8b-44f0-89c5-bf15191b3e32">D</li>
+                    
+                    <li data-id="c76282c7-c21c-4243-b424-e14f80fad475">E</li>
+                    
+                </ul>
+            </div>
+        </div>
+        &nbsp;-
+        4. Some believe that acupuncture works because it causes the body to produce its own anesthetic. 
+    </div>
+    
+    <div class="ddrow">
+        <div class="dd">
+            <div class="ddToggle">▾</div>
+            <div class="ddMenu">
+                <ul data-id="c1366ce2-6893-4d52-bb74-106dba142891">
+                    
+                    <li data-id="be69048c-bd1a-423a-b2f8-16aeb0e02fc3">A</li>
+                    
+                    <li data-id="521dba8a-f984-47ab-88a0-772a16888cd1">B</li>
+                    
+                    <li data-id="8150a58c-88a2-4f72-9733-570dc20f99bd">C</li>
+                    
+                    <li data-id="cbdcb93b-7e8d-4408-a88d-97cda5c3b6c2">D</li>
+                    
+                    <li data-id="e9cba747-69ee-42b0-91a3-111d7b3cae07">E</li>
+                    
+                </ul>
+            </div>
+        </div>
+        &nbsp;-
+        5. Acupuncture is a well established medical practice in East Asia. 
+    </div>
+    
+    <div class="ddrow">
+        <div class="dd">
+            <div class="ddToggle">▾</div>
+            <div class="ddMenu">
+                <ul data-id="95e6e0e0-ed26-4cf9-9b33-87f1b480d00f">
+                    
+                    <li data-id="352ccd95-bf42-4b76-849a-61f2e411b10e">A</li>
+                    
+                    <li data-id="d5461061-8cde-4bf8-869b-ab768dd4304f">B</li>
+                    
+                    <li data-id="a7e36c6e-f7d0-4a73-a94f-ec9096a64c31">C</li>
+                    
+                    <li data-id="e09cdd3e-3b6b-4224-9885-e2fd636216a8">D</li>
+                    
+                    <li data-id="e9577dab-e609-46af-8683-a306449a3ccb">E</li>
+                    
+                </ul>
+            </div>
+        </div>
+        &nbsp;-
+        6. Only in recent years has acupuncture become an accepted treatment around the world. 
+    </div>
+    
+    <div class="ddrow">
+        <div class="dd">
+            <div class="ddToggle">▾</div>
+            <div class="ddMenu">
+                <ul data-id="19b6b436-867b-4753-8874-0f31f8c9374b">
+                    
+                    <li data-id="06af9ae6-6ffa-4bf0-8b2c-22e39efbc658">A</li>
+                    
+                    <li data-id="9ebb72b9-9351-4ea0-9914-ede2a8d7066f">B</li>
+                    
+                    <li data-id="015e5797-5e4f-42a6-9575-6539bb5f0b19">C</li>
+                    
+                    <li data-id="a151f79f-d6fa-45ce-90f0-d99f2330f0b3">D</li>
+                    
+                    <li data-id="3e332f9b-fa7f-4fff-904a-7cd2fba9f97c">E</li>
+                    
+                </ul>
+            </div>
+        </div>
+        &nbsp;-
+        7. The analogy of acupuncture is akin to hydro-irrigation systems.
+    </div>
+    
+    <div class="ddrow">
+        <div class="dd">
+            <div class="ddToggle">▾</div>
+            <div class="ddMenu">
+                <ul data-id="f144aade-9c08-4ea9-8582-d734c9ed6925">
+                    
+                    <li data-id="c656bc48-5b63-42af-811a-9580653e5e59">A</li>
+                    
+                    <li data-id="0be19167-da03-4c78-8e75-2f85285f9aba">B</li>
+                    
+                    <li data-id="d19fe7a0-8b39-48d1-9842-b49b40c8ed2e">C</li>
+                    
+                    <li data-id="94c95691-c7c5-4287-ba63-817c7e25f590">D</li>
+                    
+                    <li data-id="64a15c0b-ce85-4a5d-a601-9ee026366736">E</li>
+                    
+                </ul>
+            </div>
+        </div>
+        &nbsp;-
+        8. Scientific studies are beginning to provide evidence for the efficacy of acupuncture. 
+    </div>
+    
+    <div class="ddrow">
+        <div class="dd">
+            <div class="ddToggle">▾</div>
+            <div class="ddMenu">
+                <ul data-id="4a6b19a2-ed59-459e-8510-4592177166b9">
+                    
+                    <li data-id="40ab52de-a420-4354-819a-6257587261eb">A</li>
+                    
+                    <li data-id="d6a57d9a-185a-4335-b2cb-8b0943991043">B</li>
+                    
+                    <li data-id="59f0ab7d-16d9-491e-b23f-62fa23b091ce">C</li>
+                    
+                    <li data-id="875396c3-618e-49a1-a69e-b4eb3653200f">D</li>
+                    
+                    <li data-id="92d50022-0ee0-49fe-b06f-ea62dc8289b5">E</li>
+                    
+                </ul>
+            </div>
+        </div>
+        &nbsp;-
+        9. Scientific evidence shows that acupuncture cures damaged nerves and muscles. 
+    </div>
+    
+</div>
+
+    </div>
+</div>
+
+<script>
+    $(function () {
+        paragon.pt.timer.start(600);
+
+
+        paragon.pt.dropDown.renderTemplate("/InstructionalProducts/PracticeTest5/OPT5/SaveUserResponse/", "9e3bcb00-09c7-4bd1-a232-72bf8b6d4e03", $('#dropDownListInFrontTemplate').html(), $('#multipleChoices'), paragon.pt.items);
+
+
+        paragon.pt.dropDown.activate("/InstructionalProducts/PracticeTest5/OPT5/SaveUserResponse/", "9e3bcb00-09c7-4bd1-a232-72bf8b6d4e03");
+
+        $.ajax({
+            type: "POST",
+            url: "/InstructionalProducts/PracticeTest5/OPT5/GetUserResponses",
+            data: { 'sectionId': '9e3bcb00-09c7-4bd1-a232-72bf8b6d4e03', 'items': JSON.stringify(paragon.pt.items) },
+                       success: function (data) {
+                           var responses = data.responses;
+                           for (var i = 0; i < responses.length; i++) {
+                               var currentResponse = responses[i];
+                               if (currentResponse != null) {
+                                   var selected = $('ul').find('[data-id=' + currentResponse.Answer + ']');
+                                   if (selected != null) {
+                                       var toggle = $(selected).parent().parent().prev();
+                                       $(toggle).addClass('ddToggle1');
+                                       $(toggle).html(selected.html());
+                                       $(selected).addClass('selected');
+                                   }
+                               }
+                           }
+                       }
+                   });
+        //show scrollbar
+        paragon.pt.showScrollBar($('#panelLeft'), $('#panelRight'));
+        paragon.pt.showReadingAnswerKeyBtn("9e3bcb00-09c7-4bd1-a232-72bf8b6d4e03");
+
+
+    });
+
+
+
+</script>
+
+</div>
+
+<div id="dlgTest" class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-header">
+        <h4>Test</h4>
+    </div>
+    <div class="modal-body">
+        <p>test</p>
+    </div>
+    <div class="modal-footer">
+        <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+    </div>
+</div>
+
+<div id="dlgUnansweredWarning" class="modal hide fade" tabindex="-1" role="dialog">
+    <div class="modal-body">
+        <p>No answer(s) selected. On the official test, if you go to the next page, you will no longer be able to answer the question(s) on this page.</p>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" data-dismiss="modal" style="color: white;">Keep working on this page</button>
+        <button class="btn" data-dismiss="modal" onclick="paragon.pt.skipToNext()">Skip and go to the next page</button>
+    </div>
+</div>
+
+</div>
+    <div class="container hide" id="footer" style="display: block;">
+        <div class="row">
+    <div id="leftBtn" class="span7" align="left"><a href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest5/OPT5/View/fe5cd4c8-2c43-4a70-8de1-4c1bdf8e1421" id="backToResultbtn" class="btn">Answer Key</a></div>
+    <div class="span5">
+        <a href="https://instructionalproducts.paragontesting.ca/InstructionalProducts/PracticeTest5/OPT5/View/3921587e-acf8-4f16-a310-19dd6c3148af#" id="btnBack" class="btn btn1 hide btn-danger" style="display: inline;">BACK</a>
+        
+    </div>
+</div>
+
+    </div>
+    <div class="container" style="text-align: center; font-size: 0.9em; color: #53565A; padding-top: 20px;">
+        <p>Copyright 2025 - Paragon Testing Enterprises   |    <a href="https://www.celpip.ca/" target="_blank">www.celpip.ca</a>    |    <a href="https://www.celpip.ca/contact/" target="_blank">Contact Us</a></p>
+    </div>
+
+    <div id="block" class="modal-backdrop hide"></div>
+    <div id="unsupported" class="modal hide" tabindex="-1">
+        <div class="modal-body">
+            <h3>Unsupported screen resolution</h3>
+            <p>This product requires a minimum screen resolution of 1024 x 768.</p>
+        </div>
+    </div>
+
+
+    <script>
+        $(function () {
+            paragon.verifyDisplaySize();
+
+            $(window).resize(function () {
+                paragon.verifyDisplaySize();
+            });
+        });
+    </script>
+
+
+    
+    <script>
+        paragon.pt.showAlert = function (msg) {
+            $('#dlgTest .modal-body p').html(msg);
+            $('#dlgTest').modal();
+        }
+
+        paragon.pt.skipToNext = function () {
+            paragon.pt.nextItem("/InstructionalProducts/PracticeTest5/OPT5/SaveCanvasData",'', "3921587e-acf8-4f16-a310-19dd6c3148af", "9e3bcb00-09c7-4bd1-a232-72bf8b6d4e03", 2);
+            paragon.pt.goNext();
+        }
+
+        $(function () {
+            if (paragon.footerVisible == true) {
+                paragon.showFooter();
+            }
+
+            if (paragon.pt.backUrl.length > 0) {
+                $("#btnBack").click(function () {
+                    paragon.pt.goBack();
+                });
+                paragon.pt.showBackButton();
+            }
+
+            $("#btnNext").click(function () {
+                var url = "";
+                if (31  == 24 || 31  == 25) {
+                    url = "/InstructionalProducts/PracticeTest5/OPT5/GetUserResponse/";
+                }
+                else {
+                    url = "/InstructionalProducts/PracticeTest5/OPT5/GetUserResponses/";
+                }
+                var unanswered = paragon.pt.countUnansweredQuestionsFromDb(31, "9e3bcb00-09c7-4bd1-a232-72bf8b6d4e03", url);
+                if (unanswered > 0) {
+                    $('#dlgUnansweredWarning').modal();
+                }
+                else {
+                    paragon.pt.skipToNext();
+                }
+            });
+
+            if (paragon.pt.nextUrl.length > 0) {
+                paragon.pt.showNextButton();
+            }
+
+
+        });
+
+        $(".links-main").click(function () {
+            var href = "/InstructionalProducts/PracticeTest5/OPT5/";
+            window.location = href;
+
+        });
+
+    </script>
+
+
+
+</body><grammarly-desktop-integration data-grammarly-shadow-root="true"><template shadowrootmode="open"><style>
+      div.grammarly-desktop-integration {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+        -moz-user-select: none;
+        -webkit-user-select: none;
+        -ms-user-select:none;
+        user-select:none;
+      }
+
+      div.grammarly-desktop-integration:before {
+        content: attr(data-content);
+      }
+    </style><div aria-label="grammarly-integration" role="group" tabindex="-1" class="grammarly-desktop-integration" data-content="{&quot;mode&quot;:&quot;full&quot;,&quot;isActive&quot;:true,&quot;isUserDisabled&quot;:false}"></div></template></grammarly-desktop-integration></html>
