@@ -159,6 +159,9 @@ function getListHTML(text, separator = "，", isFufan = false, isRemoveDuplicate
             } else if (content.indexOf("[") != -1 && content.indexOf("]") != -1) {
                 licontent = specialStyle1(content)
                 li.html(licontent)
+            } else if (content.indexOf("{IMAGE_LINK}") != -1) {
+                content = content.replaceAll("{IMAGE_LINK}", "")
+                li.html("<img src='./in_images/" + content + ".png'/>")
             } else {
                 li.text(content)
             }
@@ -205,7 +208,7 @@ function getDiv(dict) {
     formBox.append(row)
     addGrpup(row, dict)
     addTitle(row, dict)
-    console.log(dict)
+    // console.log(dict)
     addTwoColunmnListRow(formBox, dict, "Treatment Principles", "Symptoms and Signs", "EFFECT", "ACTIONS_INDICATIONS", "•", "•")
     addTwoColunmnListRow(formBox, dict, "Point Prescription", "Formula", "LATIN_NAME", "PINYIN_NAME", "•", "•")
     addTwoColunmnListRow(formBox, dict, "Formula Pattern", "Formula Actions", "NAME", "COMMON_NAME", "•", "•")
@@ -218,7 +221,7 @@ function replaceDuplicate(str, delimiter = ":") {
     let numCount = array.length
     if (numCount >= 2) {
         title = array[0]
-        console.log(title)
+        // console.log(title)
         if (title.indexOf("、") != -1) {
             channels = title.split("、")
             ret = str.replaceAll("、", "").replaceAll(":", "")
@@ -230,7 +233,7 @@ function replaceDuplicate(str, delimiter = ":") {
             str = title + ":" + ret
         } else {
             strReplaced = array[1].replaceAll(title, "")
-            console.log(strReplaced)
+            // console.log(strReplaced)
             str = title + strReplaced + (array[2] == undefined ? "" : array[2]);
         }
     }
@@ -294,7 +297,7 @@ function searchFieldsHandler(list, text, searchfields) {
             for (k = 0; k < searchfields.length; k++) {
                 key = searchfields[k].toUpperCase()
                 if (dict[key].indexOf(text) != -1) {
-                    console.log(key)
+                    // console.log(key)
                     ret.push(list[j])
                     break
                 }

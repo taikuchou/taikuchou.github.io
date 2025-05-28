@@ -231,6 +231,9 @@ function getListHTML(text, separator = "，", isFufan = false, isRemoveDuplicate
             } else if (content.indexOf("[") != -1 && content.indexOf("]") != -1) {
                 licontent = specialStyle1(content)
                 li.html(licontent)
+            } else if (content.indexOf("{IMAGE_LINK}") != -1) {
+                content = content.replaceAll("{IMAGE_LINK}", "")
+                li.html("<img src='./in_images/" + content + ".png'/>")
             } else {
                 li.text(content)
             }
@@ -245,7 +248,7 @@ $(function () {
     showList($("#menuroot"), alldata.dafanGroup, alldata.groups)
     $("a.level3").click(function () {
         pname = $(this).attr("data")
-        console.log(pname)
+        // console.log(pname)
         pdata = getDafan(pname)
         if (pdata != undefined) {
             //console.log(pdata)
