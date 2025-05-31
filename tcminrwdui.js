@@ -133,7 +133,7 @@ function getListHTML(text, separator = "，", isFufan = false, isRemoveDuplicate
             continue
         }
         li = $("<li class='wrap'></li>")
-        content = list[i].trim().replaceAll("–", "").replaceAll("|", "").replaceAll("◦", "")//.replaceAll("，", ", ")
+        content = list[i].trim().replaceAll("|", "").replaceAll("◦", "")//.replaceAll("，", ", ")
         //Ken:isRemoveDuplicate
         if (isRemoveDuplicate) {
             content = replaceDuplicate(content)
