@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TCM Clinic Schedule</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="tab-navigation">
+            <button class="tab-button active" onclick="switchTab('cards')">📅 Today's Shift</button>
+            <button class="tab-button" onclick="switchTab('table')">📋 All Shifts</button>
+        </div>
+
+        <div class="content-wrapper">
+            <!-- Cards Tab Content -->
+            <div id="cardsTab" class="tab-content active">
+                <div class="cards-container active" id="cardsContainer">
+                    <!-- Cards will be populated by JavaScript -->
+                </div>
+            </div>
+
+            <!-- Table Tab Content -->
+            <div id="tableTab" class="tab-content">
+                <div class="filters">
+                    <div class="filter-group">
+                        <label for="searchInput">Search:</label>
+                        <input type="text" id="searchInput" placeholder="Search by name or role...">
+                    </div>
+                    <div class="filter-group">
+                        <label for="monthFilter">Month:</label>
+                        <select id="monthFilter">
+                            <option value="">All Months</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label for="roleFilter">Role:</label>
+                        <select id="roleFilter">
+                            <option value="">All Roles</option>
+                            <option value="Dispensary">Dispensary</option>
+                            <option value="Clean-Up">Clean-Up</option>
+                            <option value="Reception">Reception</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="table-container">
+                    <table id="scheduleTable">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Dispensary</th>
+                                <th>Clean-Up</th>
+                                <th>Reception</th>
+                            </tr>
+                        </thead>
+                        <tbody id="scheduleBody">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let scheduleData = [];
+        let filteredData = [];
+
+        // Load schedule data from JSON file
+        async function loadScheduleData() {
+            try {
+                const response = await fetch('schedule_data.json');
+                scheduleData = await response.json();
+                filteredData = [...scheduleData];
+                
+                // Initialize after data is loaded
+                populateMonthFilter();
+                renderCurrentTab();
+            } catch (error) {
+                console.error('Error loading schedule data:', error);
+            }
+        }
+
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleDateString('en-US', {
+                month: 'short',
+                day: 'numeric',
+                year: 'numeric'
+            });
+        }
+
+        function populateMonthFilter() {
+            const months = [...new Set(scheduleData.map(item => {
+                const date = new Date(item.date);
+                return date.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+            }))].sort();
+
+            const monthFilter = document.getElementById('monthFilter');
+            months.forEach(month => {
+                const option = document.createElement('option');
+                option.value = month;
+                option.textContent = month;
+                monthFilter.appendChild(option);
+            });
+        }
+
+        function renderTable(data) {
+            const tbody = document.getElementById('scheduleBody');
+            tbody.innerHTML = '';
+
+            data.forEach(item => {
+                const row = document.createElement('tr');
+                
+                const formattedDate = formatDate(item.date);
+                
+                row.innerHTML = `
+                    <td class="schedule-cell">
+                        <div class="schedule-date">${formattedDate}</div>
+                    </td>
+                    <td class="person-cell role-dispensary">${item.Dispensary || '<span class="empty-cell">Unassigned</span>'}</td>
+                    <td class="person-cell role-cleanup">${item['Clean-Up'] || '<span class="empty-cell">Unassigned</span>'}</td>
+                    <td class="person-cell role-reception">${item.Reception || '<span class="empty-cell">Unassigned</span>'}</td>
+                `;
+                
+                tbody.appendChild(row);
+            });
+        }
+
+        function renderCards(data) {
+            const cardsContainer = document.getElementById('cardsContainer');
+            cardsContainer.innerHTML = '';
+
+            if (data.length === 0) {
+                cardsContainer.innerHTML = `
+                    <div class="no-shift-message">
+                        <div class="no-shift-icon">🏥</div>
+                        <div>No Shift Today!</div>
+                    </div>
+                `;
+                return;
+            }
+
+            data.forEach(item => {
+                const formattedDate = formatDate(item.date);
+                
+                const card = document.createElement('div');
+                card.className = 'schedule-card';
+                
+                card.innerHTML = `
+                    <div class="card-header">
+                        <div>
+                            <div class="card-date">${formattedDate}</div>
+                            <div class="card-weekday">${item.weekday}</div>
+                        </div>
+                        <div class="card-time">${getTimeIcon(item.time)} ${item.time}</div>
+                    </div>
+                    
+                    <div class="card-roles">
+                        <div class="card-role">
+                            <div class="role-icon dispensary">💊</div>
+                            <div class="role-info">
+                                <div class="role-title">Dispensary</div>
+                                <div class="role-person ${!item.Dispensary ? 'empty' : ''}">${item.Dispensary || 'Unassigned'}</div>
+                            </div>
+                        </div>
+                        
+                        <div class="card-role">
+                            <div class="role-icon cleanup">🧹</div>
+                            <div class="role-info">
+                                <div class="role-title">Clean-Up</div>
+                                <div class="role-person ${!item['Clean-Up'] ? 'empty' : ''}">${item['Clean-Up'] || 'Unassigned'}</div>
+                            </div>
+                        </div>
+                        
+                        <div class="card-role">
+                            <div class="role-icon reception">👋</div>
+                            <div class="role-info">
+                                <div class="role-title">Reception</div>
+                                <div class="role-person ${!item.Reception ? 'empty' : ''}">${item.Reception || 'Unassigned'}</div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                cardsContainer.appendChild(card);
+            });
+        }
+
+
+        function updateStats(data, statsId) {
+            const totalShifts = data.length;
+            const uniqueStaff = new Set();
+            let unassignedShifts = 0;
+
+            data.forEach(item => {
+                if (item.Dispensary) uniqueStaff.add(item.Dispensary);
+                else unassignedShifts++;
+                if (item['Clean-Up']) uniqueStaff.add(item['Clean-Up']);
+                if (item.Reception) uniqueStaff.add(item.Reception);
+            });
+
+            const statsContainer = document.getElementById(statsId);
+            statsContainer.innerHTML = `
+                <div class="stat-item">
+                    <div class="stat-number">${totalShifts}</div>
+                    <div class="stat-label">Total Shifts</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">${uniqueStaff.size}</div>
+                    <div class="stat-label">Staff Members</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">${unassignedShifts}</div>
+                    <div class="stat-label">Unassigned</div>
+                </div>
+            `;
+        }
+
+        function filterData() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const monthFilter = document.getElementById('monthFilter').value;
+            const roleFilter = document.getElementById('roleFilter').value;
+
+            filteredData = scheduleData.filter(item => {
+                // Search filter
+                const matchesSearch = !searchTerm || 
+                    item.Dispensary.toLowerCase().includes(searchTerm) ||
+                    item['Clean-Up'].toLowerCase().includes(searchTerm) ||
+                    item.Reception.toLowerCase().includes(searchTerm);
+
+                // Month filter
+                const itemMonth = new Date(item.date).toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+                const matchesMonth = !monthFilter || itemMonth === monthFilter;
+
+                // Role filter
+                let matchesRole = !roleFilter;
+                if (roleFilter) {
+                    if (roleFilter === 'Dispensary' && item.Dispensary.toLowerCase().includes(searchTerm)) matchesRole = true;
+                    if (roleFilter === 'Clean-Up' && item['Clean-Up'].toLowerCase().includes(searchTerm)) matchesRole = true;
+                    if (roleFilter === 'Reception' && item.Reception.toLowerCase().includes(searchTerm)) matchesRole = true;
+                }
+
+                return matchesSearch && matchesMonth && (roleFilter ? matchesRole : true);
+            });
+
+            renderCurrentTab();
+        }
+
+        function showTodaysShift(tabType) {
+            const today = new Date();
+            const todayString = today.toISOString().split('T')[0]; // YYYY-MM-DD format
+            
+            filteredData = scheduleData.filter(item => item.date === todayString);
+            
+            if (filteredData.length === 0) {
+                // If no shift today, show next upcoming shift
+                const upcomingShifts = scheduleData.filter(item => new Date(item.date) >= today);
+                if (upcomingShifts.length > 0) {
+                    // Sort by date and get the earliest
+                    upcomingShifts.sort((a, b) => new Date(a.date) - new Date(b.date));
+                    filteredData = [upcomingShifts[0]];
+                }
+            }
+            
+            // Clear form filters to show pure date-based result (only for table tab)
+            if (tabType === 'table') {
+                document.getElementById('searchInput').value = '';
+                document.getElementById('monthFilter').value = '';
+                document.getElementById('roleFilter').value = '';
+            }
+            
+            renderCurrentTab();
+        }
+
+        function resetFilters(tabType) {
+            if (tabType === 'table') {
+                document.getElementById('searchInput').value = '';
+                document.getElementById('monthFilter').value = '';
+                document.getElementById('roleFilter').value = '';
+            }
+            filteredData = [...scheduleData];
+            renderCurrentTab();
+        }
+
+        let currentTab = 'cards';
+
+        function switchTab(tabName) {
+            // Update tab buttons
+            const tabButtons = document.querySelectorAll('.tab-button');
+            tabButtons.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            // Update tab content
+            const tabContents = document.querySelectorAll('.tab-content');
+            tabContents.forEach(content => content.classList.remove('active'));
+            document.getElementById(tabName + 'Tab').classList.add('active');
+
+            currentTab = tabName;
+            renderCurrentTab();
+        }
+
+        function getTimeIcon(timeString) {
+            if (timeString.includes('9 am') || timeString.includes('1 pm')) {
+                return '🌅'; // Morning shift icon
+            } else if (timeString.includes('2 pm') || timeString.includes('6 pm')) {
+                return '🌆'; // Afternoon shift icon
+            }
+            return '🕐'; // Default clock icon
+        }
+
+        function renderCurrentTab() {
+            if (currentTab === 'table') {
+                renderTable(filteredData);
+            } else {
+                // For cards tab, always show only today's shift
+                const today = new Date();
+                const todayString = today.toISOString().split('T')[0];
+                const todayData = scheduleData.filter(item => item.date === todayString);
+                renderCards(todayData);
+            }
+        }
+
+        // Event listeners for filters
+        document.getElementById('searchInput').addEventListener('input', filterData);
+        document.getElementById('monthFilter').addEventListener('change', filterData);
+        document.getElementById('roleFilter').addEventListener('change', filterData);
+
+        // Initialize by loading data
+        loadScheduleData();
+    </script>
+</body>
+</html>

@@ -1,0 +1,282 @@
+[
+    {
+        "date": "2025-09-15",
+        "weekday": "Monday",
+        "time": "2 pm - 6 pm",
+        "Dispensary": "Sekhon, Harneesh",
+        "Clean-Up": "Walser, Lauryn",
+        "Reception": "To, Soi"
+    },
+    {
+        "date": "2025-09-17",
+        "weekday": "Wednesday",
+        "time": "9 am - 1 pm",
+        "Dispensary": "Sharpe, Mia",
+        "Clean-Up": "Wu, Shu-Hui (Kate)",
+        "Reception": "Wang, Yuchen"
+    },
+    {
+        "date": "2025-09-18",
+        "weekday": "Thursday",
+        "time": "2 pm - 6 pm",
+        "Dispensary": "Baird, Jessica",
+        "Clean-Up": "Karimpour, Masoud",
+        "Reception": "Ho, Yi-Ping (Nicole)"
+    },
+    {
+        "date": "2025-09-22",
+        "weekday": "Monday",
+        "time": "2 pm - 6 pm",
+        "Dispensary": "Smith, Annice",
+        "Clean-Up": "Salib, Monica",
+        "Reception": "Sekhon, Harneesh"
+    },
+    {
+        "date": "2025-09-24",
+        "weekday": "Wednesday",
+        "time": "9 am - 1 pm",
+        "Dispensary": "To, Soi",
+        "Clean-Up": "Sharpe, Mia",
+        "Reception": "Smith, Annice"
+    },
+    {
+        "date": "2025-09-25",
+        "weekday": "Thursday",
+        "time": "2 pm - 6 pm",
+        "Dispensary": "Fan, Qingdian (Alan)",
+        "Clean-Up": "Al-Juboori, Sarah",
+        "Reception": "Luo, Ziwen (Flora)"
+    },
+    {
+        "date": "2025-09-29",
+        "weekday": "Monday",
+        "time": "2 pm - 6 pm",
+        "Dispensary": "Wang, Yuchen",
+        "Clean-Up": "To, Soi",
+        "Reception": "Walser, Lauryn"
+    },
+    {
+        "date": "2025-10-01",
+        "weekday": "Wednesday",
+        "time": "9 am - 1 pm",
+        "Dispensary": "Walser, Lauryn",
+        "Clean-Up": "Wang, Yuchen",
+        "Reception": "Wu, Shu-Hui (Kate)"
+    },
+    {
+        "date": "2025-10-02",
+        "weekday": "Thursday",
+        "time": "2 pm - 6 pm",
+        "Dispensary": "Feng, Nan (Kenna)",
+        "Clean-Up": "Fan, Qingdian (Alan)",
+        "Reception": "Baird, Jessica"
+    },
+    {
+        "date": "2025-10-06",
+        "weekday": "Monday",
+        "time": "2 pm - 6 pm",
+        "Dispensary": "Wu, Shu-Hui (Kate)",
+        "Clean-Up": "Ho, Yi-Ping (Nicole)",
+        "Reception": "Karimpour, Masoud"
+    },
+    {
+        "date": "2025-10-08",
+        "weekday": "Wednesday",
+        "time": "9 am - 1 pm",
+        "Dispensary": "Ho, Yi-Ping (Nicole)",
+        "Clean-Up": "Luo, Ziwen (Flora)",
+        "Reception": "To, Soi"
+    },
+    {
+        "date": "2025-10-09",
+        "weekday": "Thursday",
+        "time": "2 pm - 6 pm",
+        "Dispensary": "Al-Juboori, Sarah",
+        "Clean-Up": "Salib, Monica",
+        "Reception": "Feng, Nan (Kenna)"
+    },
+    {
+        "date": "2025-10-15",
+        "weekday": "Wednesday",
+        "time": "9 am - 1 pm",
+        "Dispensary": "Karimpour, Masoud",
+        "Clean-Up": "Walser, Lauryn",
+        "Reception": "Wang, Yuchen"
+    },
+    {
+        "date": "2025-10-16",
+        "weekday": "Thursday",
+        "time": "2 pm - 6 pm",
+        "Dispensary": "Baird, Jessica",
+        "Clean-Up": "Sekhon, Harneesh",
+        "Reception": "Sharpe, Mia"
+    },
+    {
+        "date": "2025-10-27",
+        "weekday": "Monday",
+        "time": "2 pm - 6 pm",
+        "Dispensary": "Luo, Ziwen (Flora)",
+        "Clean-Up": "Wu, Shu-Hui (Kate)",
+        "Reception": "Ho, Yi-Ping (Nicole)"
+    },
+    {
+        "date": "2025-10-29",
+        "weekday": "Wednesday",
+        "time": "9 am - 1 pm",
+        "Dispensary": "To, Soi",
+        "Clean-Up": "Karimpour, Masoud",
+        "Reception": "Luo, Ziwen (Flora)"
+    },
+    {
+        "date": "2025-10-30",
+        "weekday": "Thursday",
+        "time": "2 pm - 6 pm",
+        "Dispensary": "Fan, Qingdian (Alan)",
+        "Clean-Up": "Smith, Annice",
+        "Reception": "Al-Juboori, Sarah"
+    },
+    {
+        "date": "2025-11-03",
+        "weekday": "Monday",
+        "time": "2 pm - 6 pm",
+        "Dispensary": "Feng, Nan (Kenna)",
+        "Clean-Up": "Baird, Jessica",
+        "Reception": "Fan, Qingdian (Alan)"
+    },
+    {
+        "date": "2025-11-05",
+        "weekday": "Wednesday",
+        "time": "9 am - 1 pm",
+        "Dispensary": "Sekhon, Harneesh",
+        "Clean-Up": "Feng, Nan (Kenna)",
+        "Reception": "Salib, Monica"
+    },
+    {
+        "date": "2025-11-06",
+        "weekday": "Thursday",
+        "time": "2 pm - 6 pm",
+        "Dispensary": "Wang, Yuchen",
+        "Clean-Up": "To, Soi",
+        "Reception": "Walser, Lauryn"
+    },
+    {
+        "date": "2025-11-10",
+        "weekday": "Monday",
+        "time": "2 pm - 6 pm",
+        "Dispensary": "Salib, Monica",
+        "Clean-Up": "Sekhon, Harneesh",
+        "Reception": "Sharpe, Mia"
+    },
+    {
+        "date": "2025-11-12",
+        "weekday": "Wednesday",
+        "time": "9 am - 1 pm",
+        "Dispensary": "Sekhon, Harneesh",
+        "Clean-Up": "Al-Juboori, Sarah",
+        "Reception": "Smith, Annice"
+    },
+    {
+        "date": "2025-11-13",
+        "weekday": "Thursday",
+        "time": "2 pm - 6 pm",
+        "Dispensary": "Walser, Lauryn",
+        "Clean-Up": "Wang, Yuchen",
+        "Reception": "Wu, Shu-Hui (Kate)"
+    },
+    {
+        "date": "2025-11-17",
+        "weekday": "Monday",
+        "time": "2 pm - 6 pm",
+        "Dispensary": "Sharpe, Mia",
+        "Clean-Up": "Fan, Qingdian (Alan)",
+        "Reception": "Baird, Jessica"
+    },
+    {
+        "date": "2025-11-19",
+        "weekday": "Wednesday",
+        "time": "9 am - 1 pm",
+        "Dispensary": "Smith, Annice",
+        "Clean-Up": "Salib, Monica",
+        "Reception": "Feng, Nan (Kenna)"
+    },
+    {
+        "date": "2025-11-20",
+        "weekday": "Thursday",
+        "time": "2 pm - 6 pm",
+        "Dispensary": "Wu, Shu-Hui (Kate)",
+        "Clean-Up": "Ho, Yi-Ping (Nicole)",
+        "Reception": "Karimpour, Masoud"
+    },
+    {
+        "date": "2025-11-24",
+        "weekday": "Monday",
+        "time": "2 pm - 6 pm",
+        "Dispensary": "Baird, Jessica",
+        "Clean-Up": "Luo, Ziwen (Flora)",
+        "Reception": "Al-Juboori, Sarah"
+    },
+    {
+        "date": "2025-11-26",
+        "weekday": "Wednesday",
+        "time": "9 am - 1 pm",
+        "Dispensary": "Karimpour, Masoud",
+        "Clean-Up": "Baird, Jessica",
+        "Reception": "Fan, Qingdian (Alan)"
+    },
+    {
+        "date": "2025-11-27",
+        "weekday": "Thursday",
+        "time": "2 pm - 6 pm",
+        "Dispensary": "",
+        "Clean-Up": "Walser, Lauryn",
+        "Reception": "To, Soi"
+    },
+    {
+        "date": "2025-12-01",
+        "weekday": "Monday",
+        "time": "2 pm - 6 pm",
+        "Dispensary": "Al-Juboori, Sarah",
+        "Clean-Up": "Feng, Nan (Kenna)",
+        "Reception": "Ho, Yi-Ping (Nicole)"
+    },
+    {
+        "date": "2025-12-03",
+        "weekday": "Wednesday",
+        "time": "9 am - 1 pm",
+        "Dispensary": "Ho, Yi-Ping (Nicole)",
+        "Clean-Up": "Luo, Ziwen (Flora)",
+        "Reception": "Karimpour, Masoud"
+    },
+    {
+        "date": "2025-12-04",
+        "weekday": "Thursday",
+        "time": "2 pm - 6 pm",
+        "Dispensary": "To, Soi",
+        "Clean-Up": "Wu, Shu-Hui (Kate)",
+        "Reception": "Wang, Yuchen"
+    },
+    {
+        "date": "2025-12-08",
+        "weekday": "Monday",
+        "time": "2 pm - 6 pm",
+        "Dispensary": "Fan, Qingdian (Alan)",
+        "Clean-Up": "Al-Juboori, Sarah",
+        "Reception": "Baird, Jessica"
+    },
+    {
+        "date": "2025-12-10",
+        "weekday": "Wednesday",
+        "time": "9 am - 1 pm",
+        "Dispensary": "Luo, Ziwen (Flora)",
+        "Clean-Up": "Fan, Qingdian (Alan)",
+        "Reception": "Feng, Nan (Kenna)"
+    },
+    {
+        "date": "2025-12-11",
+        "weekday": "Thursday",
+        "time": "2 pm - 6 pm",
+        "Dispensary": "Wang, Yuchen",
+        "Clean-Up": "Sekhon, Harneesh",
+        "Reception": "Salib, Monica"
+    }
+]
