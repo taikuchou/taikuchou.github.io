@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>卷2 出餐紀錄 + 成分筆記</title>
+  <style>
+    :root{
+      --bg:#f7f7fb; --card:#fff; --text:#222; --muted:#666;
+      --border:#e6e6ef; --primary:#2b7cff; --success:#129c6e; --danger:#d33;
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,"Noto Sans TC",sans-serif}
+    header{padding:18px 16px 6px}
+    h1{margin:0;font-size:26px}
+    .sub{color:var(--muted);margin-top:6px}
+    .wrap{max-width:980px;margin:0 auto;padding:10px 16px 28px}
+    .card{background:var(--card);border:1px solid var(--border);border-radius:14px;box-shadow:0 1px 2px rgba(0,0,0,.05)}
+    .toolbar{display:flex;gap:12px;align-items:center;justify-content:space-between;padding:12px 14px;border-bottom:1px solid var(--border)}
+    .pill{font-size:13px;color:var(--muted)}
+    .btn{border:1px solid var(--border);background:#fff;padding:8px 12px;border-radius:10px;cursor:pointer;font-weight:600}
+    .btn.primary{background:var(--primary);color:#fff;border-color:var(--primary)}
+    .btn.ghost{background:#fff}
+    .btn:disabled{opacity:.45;cursor:not-allowed}
+    table{width:100%;border-collapse:collapse}
+    th,td{padding:12px 14px;border-bottom:1px solid var(--border);text-align:left;vertical-align:top}
+    th{font-size:13px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);background:#fafafe}
+    .name{font-weight:700}
+    .note{color:var(--muted);font-size:12px}
+    .count{font-variant-numeric:tabular-nums}
+    .status{font-size:13px}
+    .ok{color:var(--success);font-weight:700}
+    .badge{display:inline-block;padding:2px 8px;border-radius:999px;font-size:12px;border:1px solid var(--border);color:var(--muted)}
+    details{margin-top:6px}
+    summary{cursor:pointer;font-size:13px;color:#0b6bcb;outline:none}
+    .ing{margin:6px 0 0 0;padding-left:18px}
+    .ing li{margin:2px 0}
+    .footer{padding:10px 14px;color:var(--muted);font-size:12px}
+    @media (max-width:720px){
+      th:nth-child(2), td:nth-child(2){display:none;} /* 隱藏「每日目標」欄位，壓縮行動裝置寬度 */
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>卷2 出餐紀錄 + 成分筆記</h1>
+    <div class="sub">點「出餐 1 份」會把剩餘數量 −1；為 0 時顯示「出餐成功」並停用按鈕。點「查看成分」可展開食材。</div>
+  </header>
+
+  <div class="wrap">
+    <div class="card">
+      <div class="toolbar">
+        <div class="pill">
+          總剩餘：<strong class="count" id="total-remaining">0</strong> 份
+          <span class="badge" id="done-badge" style="display:none;margin-left:8px;">全部出餐完成 ✅</span>
+        </div>
+        <div style="display:flex;gap:8px;">
+          <button class="btn ghost" id="expand-all">全部展開成分</button>
+          <button class="btn ghost" id="collapse-all">全部收合成分</button>
+          <button class="btn" id="reset-btn" title="把所有剩餘恢復成每日目標值">全部重設</button>
+        </div>
+      </div>
+
+      <table id="list">
+        <thead>
+          <tr>
+            <th style="width:38%;">產品</th>
+            <th style="width:12%;">每日目標</th>
+            <th style="width:12%;">剩餘</th>
+            <th style="width:18%;">操作</th>
+            <th>狀態 / 成分</th>
+          </tr>
+        </thead>
+        <tbody id="tbody"></tbody>
+      </table>
+
+      <div class="footer">資料保存在此裝置的瀏覽器（localStorage）。若同名產品出現多批，系統會自動加註「批次」供分辨。</div>
+    </div>
+  </div>
+
+  <script>
+    // ===== 成分庫（依你的「壽司卷筆記」整理） =====
+    // 說明：
+    // - 「加州卷」對應：加州卷（2號反卷）
+    // - 「白加州」對應：白加州卷（2號反卷）
+    // - 「三文小卷」對應：小三文魚卷（1號正卷）
+    // - 「海鮮」對應：海鮮卷 for 雜錦組合（2號反卷）
+    // 若未來要補「加州卷（綠草版）」的成分，可把 '加州卷-綠草' 欄位填上對應內容。
+    const INGREDIENTS = {
+      "加州卷": [
+        "（2號反卷）",
+        "白芝麻、橙魚子",
+        "蟹肉碎 60g、青瓜 10g、牛油果 15g"
+      ],
+      "加州卷-綠草": [
+        "（2號反卷 / 綠草版）",
+        "※（待補）"
+      ],
+      "白加州": [
+        "（2號反卷）",
+        "蟹肉碎 60g、青瓜 25g"
+      ],
+      "三文小卷": [
+        "（1號正卷）",
+        "三文魚 30g"
+      ],
+      "海鮮": [
+        "（2號反卷 / 雜錦組合）",
+        "白芝麻、橙魚子",
+        "青瓜 10g、蟹肉碎 20g、三文魚 15g、玉子蛋 10g"
+      ]
+    };
+
+    // ===== 最新產品與目標（依你最後回覆） =====
+    // 備註僅做標示，不影響計數與成分（成分採用上方 INGREDIENTS 配對）
+    const initialItems = [
+      { name: "白加州",       target: 9,  note: "没魚子 5、橙魚子 4", ingKey: "白加州" },
+      { name: "加州卷",       target: 20, note: "綠草 4、橙魚子 16",  ingKey: "加州卷" }, // 如需改為綠草版，將 ingKey 改為 "加州卷-綠草"
+      { name: "三文小卷",     target: 12, note: "",                   ingKey: "三文小卷" },
+      { name: "加州卷",       target: 10, note: "",                   ingKey: "加州卷" },
+      { name: "海鮮",         target: 5,  note: "",                   ingKey: "海鮮" },
+      { name: "加州卷",       target: 15, note: "",                   ingKey: "加州卷" },
+      { name: "三文小卷",     target: 10, note: "",                   ingKey: "三文小卷" }
+    ].map((it, idx) => ({ id: String(idx+1), remaining: it.target, ...it }));
+
+    const STORAGE_KEY = "juan2-orders-with-ingredients-v1";
+
+    function loadState(){
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if(!raw) return initialItems;
+      try{
+        const parsed = JSON.parse(raw);
+        // 以當前清單為主，帶回既有 remaining
+        return initialItems.map(it => {
+          const found = parsed.find(p => p.id === it.id);
+          return found ? { ...it, remaining: Math.max(0, found.remaining) } : it;
+        });
+      }catch(e){
+        return initialItems;
+      }
+    }
+    function saveState(state){
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    }
+
+    const state = loadState();
+    const tbody = document.getElementById("tbody");
+    const totalRemainingEl = document.getElementById("total-remaining");
+    const doneBadge = document.getElementById("done-badge");
+
+    function displayLabel(item, indexForName){
+      return indexForName > 1 ? `${item.name}（批次${indexForName}）` : item.name;
+    }
+
+    function render(){
+      tbody.innerHTML = "";
+      const nameCounter = {};
+      let totalRemaining = 0;
+
+      for(const item of state){
+        nameCounter[item.name] = (nameCounter[item.name] || 0) + 1;
+        const idxForName = nameCounter[item.name];
+        const isDone = item.remaining <= 0;
+
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td class="name">
+            ${displayLabel(item, idxForName)}
+            ${item.note ? `<div class="note">備註：${item.note}</div>` : ""}
+          </td>
+          <td class="count">${item.target}</td>
+          <td class="count" id="remain-${item.id}">${item.remaining}</td>
+          <td>
+            <button class="btn primary" id="btn-${item.id}" ${isDone ? "disabled": ""}>出餐 1 份</button>
+          </td>
+          <td class="status" id="status-${item.id}">
+            ${isDone ? '<span class="ok">出餐成功 ✅</span>' : '<span>尚未完成</span>'}
+            <details id="dtl-${item.id}" ${isDone ? "" : ""} >
+              <summary>查看成分</summary>
+              ${renderIngredients(item.ingKey)}
+            </details>
+          </td>
+        `;
+
+        tbody.appendChild(tr);
+
+        const btn = tr.querySelector(`#btn-${item.id}`);
+        btn.addEventListener("click", () => {
+          if(item.remaining > 0){
+            item.remaining -= 1;
+            document.getElementById(`remain-${item.id}`).textContent = item.remaining;
+            if(item.remaining <= 0){
+              document.getElementById(`status-${item.id}`).innerHTML =
+                '<span class="ok">出餐成功 ✅</span>' + document.getElementById(`status-${item.id}`).querySelector("details").outerHTML;
+              btn.disabled = true;
+            }
+            saveState(state);
+            updateTotals();
+          }
+        });
+
+        totalRemaining += Math.max(0, item.remaining);
+      }
+
+      totalRemainingEl.textContent = totalRemaining;
+      doneBadge.style.display = totalRemaining === 0 ? "inline-block" : "none";
+    }
+
+    function renderIngredients(key){
+      const lines = INGREDIENTS[key] || ["（成分待補）"];
+      const lis = lines.map(t => `<li>${escapeHTML(t)}</li>`).join("");
+      return `<ul class="ing">${lis}</ul>`;
+    }
+
+    function updateTotals(){
+      const total = state.reduce((s,it) => s + Math.max(0, it.remaining), 0);
+      totalRemainingEl.textContent = total;
+      doneBadge.style.display = total === 0 ? "inline-block" : "none";
+    }
+
+    // 工具：簡易跳脫
+    function escapeHTML(str){
+      return String(str).replace(/[&<>"']/g, s => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[s]));
+    }
+
+    // 全部重設
+    document.getElementById("reset-btn").addEventListener("click", () => {
+      if(confirm("確認要將所有剩餘恢復成每日目標值嗎？")){
+        for(const it of state){ it.remaining = it.target; }
+        saveState(state);
+        render();
+      }
+    });
+
+    // 全部展開/收合成分
+    document.getElementById("expand-all").addEventListener("click", () => {
+      document.querySelectorAll("details").forEach(d => d.open = true);
+    });
+    document.getElementById("collapse-all").addEventListener("click", () => {
+      document.querySelectorAll("details").forEach(d => d.open = false);
+    });
+
+    render();
+  </script>
+</body>
+</html>
+
