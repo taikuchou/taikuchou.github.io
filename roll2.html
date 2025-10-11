@@ -78,7 +78,7 @@
         <table id="list">
           <thead>
             <tr>
-              <th style="width:30%;">產品</th>
+              <th style="width:20%;">產品</th>
               <th style="width:10%;">每日目標</th>
               <th style="width:10%;">剩餘</th>
               <th style="width:40%;">操作</th>
@@ -173,7 +173,7 @@
         tr.innerHTML = `
           <td class="name">
             <span class="tap" id="tap-${item.id}" title="點擊展開/收合成分">${displayLabel(item, idxForName)}</span>
-            ${item.note ? `<div class="note">備註：${item.note}</div>` : ""}
+            ${item.note ? `<div class="note">${item.note}</div>` : ""}
           </td>
           <td class="count">${item.target}</td>
           <td class="count" id="remain-${item.id}">${item.remaining}</td>
