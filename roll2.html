@@ -31,7 +31,7 @@
       border:1px solid var(--border);background:#fff;padding:12px 16px;border-radius:12px;cursor:pointer;font-weight:700;
       min-height:44px; min-width:44px; touch-action:manipulation;
     }
-    .btn.primary{background:var(--primary);color:#fff;border-color:var(--primary)}
+    .btn.primary{background:var(--primary);color:#fff;border-color:var(--primary);font-size:clamp(32px,3.4vw + 20px,28px)}
     .btn:disabled{opacity:.5;cursor:not-allowed}
     .table-wrap{width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch}
     table{width:100%;border-collapse:collapse;min-width:600px}
@@ -178,7 +178,7 @@
           <td class="count">${item.target}</td>
           <td class="count" id="remain-${item.id}">${item.remaining}</td>
           <td>
-            <button class="btn primary" id="btn-${item.id}" aria-label="為『${item.name}』出餐 1 份">出餐 1 份</button>
+            <button class="btn primary" id="btn-${item.id}" aria-label="為『${item.name}』出餐 1 份">出</button>
           </td>
         `;
         tbody.appendChild(tr);
