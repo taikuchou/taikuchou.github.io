@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover,user-scalable=no" />
+  <meta name="theme-color" content="#3182ce" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="apple-mobile-web-app-title" content="壽司筆記" />
+  <title>壽司卷筆記</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Navigation Bar -->
+  <nav class="nav-bar">
+    <div class="nav-container">
+      <a href="roll1.html" class="nav-link">
+        <span>卷1</span>
+      </a>
+      <a href="roll2.html" class="nav-link">
+        <span>卷2</span>
+      </a>
+      <a href="sushinotes.html" class="nav-link active">
+        <span>筆記</span>
+      </a>
+    </div>
+  </nav>
+
+  <header style="text-align: center;">
+    <h1>壽司卷筆記</h1>
+    <div class="sub">快速查看各款壽司卷的詳細成分</div>
+  </header>
+
+  <div class="wrap">
+    <div class="card">
+      <div class="toolbar">
+        <select id="picker" title="選擇壽司卷" aria-label="選擇壽司卷"></select>
+        <button class="btn primary" id="view-btn">查看</button>
+      </div>
+
+      <div class="content">
+        <div id="result" class="empty">請從上方選單選擇一款壽司卷</div>
+      </div>
+    </div>
+  </div>
+
+  <script src="sushinotes.js"></script>
+</body>
+</html>
