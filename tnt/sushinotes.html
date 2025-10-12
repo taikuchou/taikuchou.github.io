@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <title>壽司卷筆記</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <h1>壽司卷筆記</h1>
+    <!-- <div class="sub">從下拉選單挑選一款壽司卷，即可查看詳細成分（字大、按鈕大、手機閱讀更清楚）。</div> -->
+  </header>
+
+  <div class="wrap">
+    <div class="card">
+      <div class="toolbar">
+        <select id="picker" title="選擇壽司卷"></select>
+        <button class="btn primary" id="view-btn">查</button>
+      </div>
+
+      <div class="content">
+        <div id="result" class="empty">請選擇一款壽司卷。</div>
+      </div>
+    </div>
+  </div>
+
+  <script src="sushinotes.js"></script>
+</body>
+</html>
