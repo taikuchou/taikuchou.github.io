@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover,user-scalable=no" />
+  <meta name="theme-color" content="#3182ce" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="apple-mobile-web-app-title" content="工作流程" />
+  <title>壽司部門幫廚｜一日工作流程</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    /* Additional styles for checklist */
+    .checklist-item {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      background: white;
+      border: 2px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 16px;
+      margin-bottom: 12px;
+      transition: all 0.2s ease;
+      -webkit-touch-callout: none;
+      user-select: none;
+    }
+
+    .checklist-item:active {
+      transform: scale(0.99);
+      background: var(--border-light);
+    }
+
+    .checklist-item.checked {
+      background: var(--border-light);
+      border-color: var(--success);
+      opacity: 0.7;
+    }
+
+    .checklist-item input[type="checkbox"] {
+      width: 24px;
+      height: 24px;
+      margin-top: 0;
+      flex-shrink: 0;
+      cursor: pointer;
+      accent-color: var(--success);
+    }
+
+    .checklist-item label {
+      flex: 1;
+      font-size: 16px;
+      line-height: 1.5;
+      cursor: pointer;
+      color: var(--text);
+    }
+
+    .checklist-item.checked label {
+      text-decoration: line-through;
+      color: var(--muted);
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+    }
+
+    .section-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--text);
+      margin: 0;
+    }
+
+    .section-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      background: var(--border-light);
+      border: 2px solid var(--border);
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--muted);
+    }
+
+    .section-badge.complete {
+      background: #f0fdf4;
+      border-color: #bbf7d0;
+      color: var(--success);
+    }
+
+    .section-actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .btn-sm {
+      padding: 8px 14px;
+      font-size: 14px;
+      min-height: 38px;
+      border-radius: 10px;
+    }
+
+    .timer-card {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border: none;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+
+    .timer-display {
+      font-size: 48px;
+      font-weight: 900;
+      font-variant-numeric: tabular-nums;
+      text-align: center;
+      margin: 16px 0;
+      letter-spacing: 0.02em;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .timer-controls {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .timer-controls .btn {
+      background: white;
+      color: #667eea;
+      border: none;
+      font-weight: 700;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    }
+
+    .timer-controls .btn:active {
+      transform: scale(0.95);
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+    }
+
+    .timer-label {
+      text-align: center;
+      font-size: 14px;
+      opacity: 0.9;
+      margin-bottom: 8px;
+    }
+
+    .progress-summary {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .progress-card {
+      background: white;
+      border: 2px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 16px;
+      text-align: center;
+    }
+
+    .progress-label {
+      font-size: 13px;
+      color: var(--muted);
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .progress-value {
+      font-size: 32px;
+      font-weight: 900;
+      color: var(--primary);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .progress-value.complete {
+      color: var(--success);
+    }
+
+    .section-content {
+      padding: 0;
+    }
+
+    @media (max-width: 428px) {
+      .checklist-item {
+        padding: 14px;
+      }
+
+      .checklist-item label {
+        font-size: 15px;
+      }
+
+      .timer-display {
+        font-size: 42px;
+      }
+
+      .section-title {
+        font-size: 18px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation Bar -->
+  <nav class="nav-bar">
+    <div class="nav-container">
+      <a href="roll1.html" class="nav-link">
+        <span>卷1</span>
+      </a>
+      <a href="roll2.html" class="nav-link">
+        <span>卷2</span>
+      </a>
+      <a href="sushinotes.html" class="nav-link">
+        <span>筆記</span>
+      </a>
+      <a href="r2_checklist.html" class="nav-link active">
+        <span>流程</span>
+      </a>
+    </div>
+  </nav>
+
+  <header style="text-align: center;">
+    <h1>壽司部門幫廚</h1>
+    <div class="sub">一日工作流程（可勾選）</div>
+  </header>
+
+  <div class="wrap">
+    <!-- Progress Summary -->
+    <div class="progress-summary">
+      <div class="progress-card">
+        <div class="progress-label">今日完成</div>
+        <div class="progress-value" id="overall-done">0</div>
+        <div style="font-size: 13px; color: var(--muted); margin-top: 4px;">
+          共 <span id="overall-total">0</span> 項
+        </div>
+      </div>
+      <div class="progress-card">
+        <div class="progress-label">完成率</div>
+        <div class="progress-value" id="completion-rate">0%</div>
+      </div>
+    </div>
+
+    <!-- Global Actions -->
+    <div class="card">
+      <div class="toolbar" style="justify-content: center;">
+        <button class="btn" id="reset-today">今日重設</button>
+      </div>
+    </div>
+
+    <!-- Timer Card -->
+    <div class="card timer-card">
+      <div class="timer-label">⏱ 便當「兩小時回查」計時器</div>
+      <div class="timer-display" id="bento-remaining">--:--:--</div>
+      <div class="timer-controls">
+        <button class="btn" id="start-bento">開始計時</button>
+        <button class="btn" id="stop-bento">停止</button>
+      </div>
+    </div>
+
+    <!-- 準備前 -->
+    <section class="card" data-section="prep">
+      <div class="toolbar" style="border-bottom: none; padding-bottom: 8px;">
+        <div class="section-header" style="width: 100%;">
+          <h2 class="section-title">
+            <span>🟡</span>
+            <span>準備前</span>
+          </h2>
+          <span class="section-badge" id="badge-prep">0/0</span>
+        </div>
+      </div>
+      <div class="section-content" style="padding: 0 16px 16px;">
+        <div class="section-actions">
+          <button class="btn btn-sm" data-check="prep">全選</button>
+          <button class="btn btn-sm" data-uncheck="prep">全不選</button>
+        </div>
+        <div id="list-prep"></div>
+      </div>
+    </section>
+
+    <!-- 準備中 -->
+    <section class="card" data-section="during">
+      <div class="toolbar" style="border-bottom: none; padding-bottom: 8px;">
+        <div class="section-header" style="width: 100%;">
+          <h2 class="section-title">
+            <span>🔵</span>
+            <span>準備中</span>
+          </h2>
+          <span class="section-badge" id="badge-during">0/0</span>
+        </div>
+      </div>
+      <div class="section-content" style="padding: 0 16px 16px;">
+        <div class="section-actions">
+          <button class="btn btn-sm" data-check="during">全選</button>
+          <button class="btn btn-sm" data-uncheck="during">全不選</button>
+        </div>
+        <div id="list-during"></div>
+      </div>
+    </section>
+
+    <!-- 準備後 -->
+    <section class="card" data-section="post">
+      <div class="toolbar" style="border-bottom: none; padding-bottom: 8px;">
+        <div class="section-header" style="width: 100%;">
+          <h2 class="section-title">
+            <span>🟢</span>
+            <span>準備後</span>
+          </h2>
+          <span class="section-badge" id="badge-post">0/0</span>
+        </div>
+      </div>
+      <div class="section-content" style="padding: 0 16px 16px;">
+        <div class="section-actions">
+          <button class="btn btn-sm" data-check="post">全選</button>
+          <button class="btn btn-sm" data-uncheck="post">全不選</button>
+        </div>
+        <div id="list-post"></div>
+      </div>
+    </section>
+
+    <footer class="footer" style="margin-top: 20px; padding: 16px; text-align: center; color: var(--muted); font-size: 13px;">
+      資料保存在此裝置的瀏覽器（localStorage）<br>
+      每日自動換日重設
+    </footer>
+  </div>
+
+  <script src="r2_checklist.js"></script>
+</body>
+</html>
