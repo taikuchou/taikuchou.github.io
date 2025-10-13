@@ -15,16 +15,16 @@
   <nav class="nav-bar">
     <div class="nav-container">
       <a href="#" class="nav-link" data-page="checklist">
-        <span>流程</span>
+        <span data-i18n="nav.checklist">流程</span>
       </a>
       <a href="#" class="nav-link" data-page="roll2">
-        <span>卷2</span>
+        <span data-i18n="nav.roll2">卷2</span>
       </a>
       <a href="#" class="nav-link active" data-page="roll1">
-        <span>卷1</span>
+        <span data-i18n="nav.roll1">卷1</span>
       </a>
       <a href="#" class="nav-link" data-page="notes">
-        <span>筆記</span>
+        <span data-i18n="nav.notes">筆記</span>
       </a>
     </div>
   </nav>
@@ -32,17 +32,17 @@
   <!-- Page: Roll 1 -->
   <div id="page-roll1" class="page-content active">
     <header style="text-align: center;">
-      <h1>卷1 出餐紀錄</h1>
+      <h1 data-i18n="roll1.title">卷1 出餐紀錄</h1>
     </header>
 
     <div class="wrap">
       <div class="card">
         <div class="toolbar">
           <div class="pill">
-            總剩餘：<strong class="count" id="roll1-total-remaining">0</strong> 份
-            <span class="badge" id="roll1-done-badge" style="display:none;">完成 ✓</span>
+            <span data-i18n="roll1.totalRemaining">總剩餘</span>：<strong class="count" id="roll1-total-remaining">0</strong> <span data-i18n="roll1.portions">份</span>
+            <span class="badge" id="roll1-done-badge" style="display:none;" data-i18n="roll1.complete">完成 ✓</span>
           </div>
-          <button class="btn" id="roll1-reset-btn" title="恢復每日目標">重設</button>
+          <button class="btn" id="roll1-reset-btn" data-i18n-title="roll1.resetTooltip" data-i18n="roll1.reset" title="恢復每日目標">重設</button>
         </div>
 
         <div class="table-wrap">
@@ -53,10 +53,10 @@
           <table id="roll1-list">
             <thead>
               <tr>
-                <th style="width:25%;">產品</th>
-                <th style="width:12%;">目標</th>
-                <th style="width:12%;text-align: right;">剩餘</th>
-                <th style="width:20%;">操作</th>
+                <th style="width:25%;" data-i18n="roll1.product">產品</th>
+                <th style="width:12%;" data-i18n="roll1.target">目標</th>
+                <th style="width:12%;text-align: right;" data-i18n="roll1.remaining">剩餘</th>
+                <th style="width:20%;" data-i18n="roll1.actions">操作</th>
               </tr>
             </thead>
             <tbody id="roll1-tbody"></tbody>
@@ -69,17 +69,17 @@
   <!-- Page: Roll 2 -->
   <div id="page-roll2" class="page-content">
     <header style="text-align: center;">
-      <h1>卷2 出餐紀錄</h1>
+      <h1 data-i18n="roll2.title">卷2 出餐紀錄</h1>
     </header>
 
     <div class="wrap">
       <div class="card">
         <div class="toolbar">
           <div class="pill">
-            總剩餘：<strong class="count" id="roll2-total-remaining">0</strong> 份
-            <span class="badge" id="roll2-done-badge" style="display:none;">完成 ✓</span>
+            <span data-i18n="roll2.totalRemaining">總剩餘</span>：<strong class="count" id="roll2-total-remaining">0</strong> <span data-i18n="roll2.portions">份</span>
+            <span class="badge" id="roll2-done-badge" style="display:none;" data-i18n="roll2.complete">完成 ✓</span>
           </div>
-          <button class="btn" id="roll2-reset-btn" title="恢復每日目標">重設</button>
+          <button class="btn" id="roll2-reset-btn" data-i18n-title="roll2.resetTooltip" data-i18n="roll2.reset" title="恢復每日目標">重設</button>
         </div>
 
         <div class="table-wrap">
@@ -90,10 +90,10 @@
           <table id="roll2-list">
             <thead>
               <tr>
-                <th style="width:25%;">產品</th>
-                <th style="width:12%;">每日目標</th>
-                <th style="width:12%;text-align: right;">剩餘</th>
-                <th style="width:20%;">操作</th>
+                <th style="width:25%;" data-i18n="roll2.product">產品</th>
+                <th style="width:12%;" data-i18n="roll2.dailyTarget">每日目標</th>
+                <th style="width:12%;text-align: right;" data-i18n="roll2.remaining">剩餘</th>
+                <th style="width:20%;" data-i18n="roll2.actions">操作</th>
               </tr>
             </thead>
             <tbody id="roll2-tbody"></tbody>
@@ -106,19 +106,18 @@
   <!-- Page: Notes -->
   <div id="page-notes" class="page-content">
     <header style="text-align: center;">
-      <h1>壽司卷筆記</h1>
-      <div class="sub">快速查看各款壽司卷的詳細成分</div>
+      <h1 data-i18n="notes.title">壽司卷筆記</h1>
     </header>
 
     <div class="wrap">
       <div class="card">
         <div class="toolbar">
-          <select id="notes-picker" title="選擇壽司卷" aria-label="選擇壽司卷"></select>
-          <button class="btn primary" id="notes-view-btn">查看</button>
+          <select id="notes-picker" data-i18n-title="notes.selectSushi" title="選擇壽司卷" aria-label="選擇壽司卷"></select>
+          <button class="btn primary" id="notes-view-btn" data-i18n="notes.view">查看</button>
         </div>
 
         <div class="content">
-          <div id="notes-result" class="empty">請從上方選單選擇一款壽司卷</div>
+          <div id="notes-result" class="empty" data-i18n="notes.empty">請從上方選單選擇一款壽司卷</div>
         </div>
       </div>
     </div>
@@ -127,22 +126,21 @@
   <!-- Page: Checklist -->
   <div id="page-checklist" class="page-content">
     <header style="text-align: center;">
-      <h1>壽司部門幫廚</h1>
-      <div class="sub">一日工作流程（可勾選）</div>
+      <h1 data-i18n="checklist.title">壽司部門幫廚</h1>
     </header>
 
     <div class="wrap">
       <!-- Progress Summary -->
       <div class="progress-summary">
         <div class="progress-card">
-          <div class="progress-label">今日完成</div>
+          <div class="progress-label" data-i18n="checklist.todayComplete">今日完成</div>
           <div class="progress-value" id="checklist-overall-done">0</div>
           <div style="font-size: 13px; color: var(--muted); margin-top: 4px;">
-            共 <span id="checklist-overall-total">0</span> 項
+            <span data-i18n="checklist.total">共</span> <span id="checklist-overall-total">0</span> <span data-i18n="checklist.items">項</span>
           </div>
         </div>
         <div class="progress-card">
-          <div class="progress-label">完成率</div>
+          <div class="progress-label" data-i18n="checklist.completionRate">完成率</div>
           <div class="progress-value" id="checklist-completion-rate">0%</div>
         </div>
       </div>
@@ -150,18 +148,18 @@
       <!-- Global Actions -->
       <div class="card">
         <div class="toolbar" style="justify-content: center;">
-          <button class="btn" id="checklist-reset-today">今日重設</button>
+          <button class="btn" id="checklist-reset-today" data-i18n="checklist.resetToday">今日重設</button>
         </div>
       </div>
 
       <!-- Timer Card -->
       <div class="card timer-card" id="checklist-timer-card">
-        <div class="timer-label">⏱ 便當「兩小時回查」計時器</div>
+        <div class="timer-label" data-i18n="checklist.timerLabel">⏱ 便當「兩小時回查」計時器</div>
         <div class="timer-display" id="checklist-bento-remaining">--:--:--</div>
-        <div class="timer-status" id="checklist-timer-status">待啟動</div>
+        <div class="timer-status" id="checklist-timer-status" data-i18n="checklist.timerStatusPending">待啟動</div>
         <div class="timer-controls">
-          <button class="btn" id="checklist-start-bento">開始計時</button>
-          <button class="btn" id="checklist-stop-bento">停止</button>
+          <button class="btn" id="checklist-start-bento" data-i18n="checklist.startTimer">開始計時</button>
+          <button class="btn" id="checklist-stop-bento" data-i18n="checklist.stopTimer">停止</button>
         </div>
       </div>
 
@@ -171,15 +169,15 @@
           <div class="section-header" style="width: 100%;">
             <h2 class="section-title">
               <span>🟡</span>
-              <span>準備前</span>
+              <span data-i18n="checklist.prep">準備前</span>
             </h2>
             <span class="section-badge" id="checklist-badge-prep">0/0</span>
           </div>
         </div>
         <div class="section-content" style="padding: 0 16px 16px;">
           <div class="section-actions">
-            <button class="btn btn-sm" data-check="prep">全選</button>
-            <button class="btn btn-sm" data-uncheck="prep">全不選</button>
+            <button class="btn btn-sm" data-check="prep" data-i18n="checklist.selectAll">全選</button>
+            <button class="btn btn-sm" data-uncheck="prep" data-i18n="checklist.deselectAll">全不選</button>
           </div>
           <div id="checklist-list-prep"></div>
         </div>
@@ -191,15 +189,15 @@
           <div class="section-header" style="width: 100%;">
             <h2 class="section-title">
               <span>🔵</span>
-              <span>準備中</span>
+              <span data-i18n="checklist.during">準備中</span>
             </h2>
             <span class="section-badge" id="checklist-badge-during">0/0</span>
           </div>
         </div>
         <div class="section-content" style="padding: 0 16px 16px;">
           <div class="section-actions">
-            <button class="btn btn-sm" data-check="during">全選</button>
-            <button class="btn btn-sm" data-uncheck="during">全不選</button>
+            <button class="btn btn-sm" data-check="during" data-i18n="checklist.selectAll">全選</button>
+            <button class="btn btn-sm" data-uncheck="during" data-i18n="checklist.deselectAll">全不選</button>
           </div>
           <div id="checklist-list-during"></div>
         </div>
@@ -211,27 +209,35 @@
           <div class="section-header" style="width: 100%;">
             <h2 class="section-title">
               <span>🟢</span>
-              <span>準備後</span>
+              <span data-i18n="checklist.post">準備後</span>
             </h2>
             <span class="section-badge" id="checklist-badge-post">0/0</span>
           </div>
         </div>
         <div class="section-content" style="padding: 0 16px 16px;">
           <div class="section-actions">
-            <button class="btn btn-sm" data-check="post">全選</button>
-            <button class="btn btn-sm" data-uncheck="post">全不選</button>
+            <button class="btn btn-sm" data-check="post" data-i18n="checklist.selectAll">全選</button>
+            <button class="btn btn-sm" data-uncheck="post" data-i18n="checklist.deselectAll">全不選</button>
           </div>
           <div id="checklist-list-post"></div>
         </div>
       </section>
 
-      <footer class="footer" style="margin-top: 20px; padding: 16px; text-align: center; color: var(--muted); font-size: 13px;">
+      <footer class="footer" style="margin-top: 20px; padding: 16px; text-align: center; color: var(--muted); font-size: 13px;" data-i18n-html="checklist.footer">
         資料保存在此裝置的瀏覽器（localStorage）<br>
         每日自動換日重設
       </footer>
     </div>
   </div>
 
+  <!-- Language Selector (Bottom) -->
+  <div class="lang-selector">
+    <button class="lang-btn" data-lang="zh-TW" title="繁體中文">繁</button>
+    <button class="lang-btn" data-lang="zh-CN" title="简体中文">简</button>
+    <button class="lang-btn" data-lang="en" title="English">EN</button>
+  </div>
+
+  <script src="i18n.js"></script>
   <script src="sushi_assistant.js"></script>
 </body>
 </html>

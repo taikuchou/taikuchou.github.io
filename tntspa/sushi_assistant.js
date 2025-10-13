@@ -1,4 +1,53 @@
 // ========================================
+// i18n Initialization & Language Switcher
+// ========================================
+(function() {
+  // Initialize i18n on page load
+  document.addEventListener('DOMContentLoaded', () => {
+    i18n.updateUI();
+
+    // Set active language button
+    const currentLang = i18n.getCurrentLanguage();
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+      if (btn.getAttribute('data-lang') === currentLang) {
+        btn.classList.add('active');
+      }
+    });
+  });
+
+  // Language switcher
+  document.querySelectorAll('.lang-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const lang = btn.getAttribute('data-lang');
+
+      // Remove active from all buttons
+      document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+
+      // Add active to clicked button
+      btn.classList.add('active');
+
+      // Change language
+      i18n.setLanguage(lang);
+    });
+  });
+
+  // Listen for language changes to update dynamic content
+  window.addEventListener('languageChanged', (e) => {
+    const lang = e.detail.lang;
+
+    // Update HTML lang attribute
+    document.documentElement.lang = lang === 'zh-TW' ? 'zh-Hant' :
+                                     lang === 'zh-CN' ? 'zh-Hans' : 'en';
+
+    // Re-render all sections to update dynamic content
+    if (window.roll1Render) window.roll1Render();
+    if (window.roll2Render) window.roll2Render();
+    if (window.notesRebuild) window.notesRebuild();
+    if (window.checklistRebuild) window.checklistRebuild();
+  });
+})();
+
+// ========================================
 // SPA Navigation System
 // ========================================
 (function() {
@@ -56,48 +105,148 @@
 // Roll 1 - 出餐紀錄
 // ========================================
 (function() {
-  // 成分庫
-  const INGREDIENTS = {
-    "加州卷": ["(2號反卷)", "白芝麻、橙魚子", "蟹肉碎 60g、青瓜 10g、牛油果 15g"],
-    "白加州": ["(2號反卷)", "蟹肉碎 60g、青瓜 25g"],
-    "三文魚牛油果": ["(2號反卷)", "白芝麻、海藻", "牛油果 20g、三文魚 40g"],
-    "香辣海鮮卷": ["(2號反卷)", "白芝麻、橙魚子", "青瓜 10g、蟹肉碎 20g、三文魚 15g、玉子蛋 10g"],
-    "海鮮": ["(2號反卷 / 雜錦)", "白芝麻、橙魚子", "青瓜 10g、蟹肉碎 20g、三文魚 15g、玉子蛋 10g"],
-    "牛油果卷": ["(2號反卷)", "白芝麻、海藻", "牛油果 60g"],
-    "青瓜牛油卷": ["(2號反卷)", "白芝麻、海藻", "牛油果 30g、青瓜 30g"],
-    "脆龍卷": ["(2號反卷)", "青瓜 10g、蟹肉碎 10g、一對炸蝦"],
-    "小蝦卷": ["(2號反卷)", "白芝麻", "青瓜 20g、一對炸蝦"],
-    "大炸蝦卷": ["(3號反卷)", "白芝麻", "生菜 2片、青瓜 25g、胡蘿蔔絲 15g、一對炸蝦、蟹肉碎"],
-    "田園卷": [
-      "(多款)",
-      "第一條(1號反/邊補米)：黑白芝麻；黃蘿蔔 30g、紅椒絲 25g",
-      "第二條(1號反/邊補米)：黑白芝麻；青瓜 20g、牛油果 25g",
-      "第三條(1號反/邊補米)：黑白芝麻；青瓜 20g、紅椒絲 10g、胡蘿蔔絲 20g",
-      "第四條(3號正)：生菜 2片、青瓜 30g、牛油果 20g、黃蘿蔔 30g、紅椒絲 20g、胡蘿蔔絲 15g"
-    ],
-    "小青瓜卷": ["(1號正卷)", "青瓜 30g"],
-    "三文小卷": ["(1號正卷)", "三文魚 30g"],
-    "熟三文魚卷": ["(2號反卷)", "白芝麻", "熟三文魚、青瓜", "備註：千島壽司盤可加紅魚子"],
-    "太卷": ["(3號正卷)", "蟹肉碎、青瓜、蛋、醃竹筍、紅魚子"],
-    "蛋卷": ["(2號反卷)", "玉子蛋"]
+  // Ingredient data with translation keys
+  const INGREDIENTS_DATA = {
+    "california": {
+      type: "ing.type2Inside",
+      toppings: ["ing.whiteSesame", "ing.orangeTobiko"],
+      fillings: ["ing.crabmeat 60g", "ing.cucumber 10g", "ing.avocado 15g"]
+    },
+    "whiteCalifornia": {
+      type: "ing.type2Inside",
+      fillings: ["ing.crabmeat 60g", "ing.cucumber 25g"]
+    },
+    "salmonAvocado": {
+      type: "ing.type2Inside",
+      toppings: ["ing.whiteSesame", "ing.seaweed"],
+      fillings: ["ing.avocado 20g", "ing.salmon 40g"]
+    },
+    "spicySeafood": {
+      type: "ing.type2Inside",
+      toppings: ["ing.whiteSesame", "ing.orangeTobiko"],
+      fillings: ["ing.cucumber 10g", "ing.crabmeat 20g", "ing.salmon 15g", "ing.tamago 10g"]
+    },
+    "seafood": {
+      type: "ing.type2Inside",
+      toppings: ["ing.whiteSesame", "ing.orangeTobiko"],
+      fillings: ["ing.cucumber 10g", "ing.crabmeat 20g", "ing.salmon 15g", "ing.tamago 10g"]
+    },
+    "avocado": {
+      type: "ing.type2Inside",
+      toppings: ["ing.whiteSesame", "ing.seaweed"],
+      fillings: ["ing.avocado 60g"]
+    },
+    "cucumberAvocado": {
+      type: "ing.type2Inside",
+      toppings: ["ing.whiteSesame", "ing.seaweed"],
+      fillings: ["ing.avocado 30g", "ing.cucumber 30g"]
+    },
+    "crispyDragon": {
+      type: "ing.type2Inside",
+      fillings: ["ing.cucumber 10g", "ing.crabmeat 10g", "ing.shrimpPair"]
+    },
+    "miniShrimp": {
+      type: "ing.type2Inside",
+      toppings: ["ing.whiteSesame"],
+      fillings: ["ing.cucumber 20g", "ing.shrimpPair"]
+    },
+    "largeTempuraShrimp": {
+      type: "ing.type3Inside",
+      toppings: ["ing.whiteSesame"],
+      fillings: ["ing.lettuce 2", "ing.cucumber 25g", "ing.carrotJulienne 15g", "ing.shrimpPair", "ing.crabmeat"]
+    },
+    "gardenDelight": {
+      type: "ing.multiType",
+      variants: ["instruction.roll1Type1", "instruction.roll2Type1", "instruction.roll3Type1", "instruction.roll4Type3"]
+    },
+    "miniCucumber": {
+      type: "ing.type1Outside",
+      fillings: ["ing.cucumber 30g"]
+    },
+    "miniSalmon": {
+      type: "ing.type1Outside",
+      fillings: ["ing.salmon 30g"]
+    },
+    "cookedSalmon": {
+      type: "ing.type2Inside",
+      toppings: ["ing.whiteSesame"],
+      fillings: ["ing.cookedSalmon", "ing.cucumber"],
+      note: "instruction.note"
+    },
+    "futomaki": {
+      type: "ing.type3Outside",
+      fillings: ["ing.crabmeat", "ing.cucumber", "ing.egg", "ing.pickledRadish", "ing.redTobiko"]
+    },
+    "egg": {
+      type: "ing.type2Inside",
+      fillings: ["ing.tamago"]
+    }
   };
 
-  // 最新清單
-  const initialItems = [
-    { name: "田園卷", target: 1, note: "", ingKey: "田園卷" },
-    { name: "牛油果卷", target: 4, note: "", ingKey: "牛油果卷" },
-    { name: "青瓜牛油捲", target: 2, note: "", ingKey: "青瓜牛油卷" },
-    { name: "青瓜卷", target: 16, note: "4條中秋", ingKey: "小青瓜卷" },
-    { name: "蛋卷", target: 5, note: "4條中秋，1條水滴", ingKey: "蛋卷" },
-    { name: "豆皮-海鮮卷", target: 5, note: "", ingKey: "海鮮" },
-    { name: "三文魚牛油果", target: 12, note: "3條三角形-加拿大A／2-雜錦／2-千島／5-ST2", ingKey: "三文魚牛油果" },
-    { name: "太卷", target: 1, note: "", ingKey: "太卷" },
-    { name: "熟三文魚卷", target: 9, note: "2條紅魚子-千島／2-炭燒三文魚／5-ST2", ingKey: "熟三文魚卷" },
-    { name: "小蝦卷", target: 1, note: "水滴", ingKey: "小蝦卷" },
-    { name: "脆龍卷", target: 4, note: "", ingKey: "脆龍卷" },
-    { name: "大蝦卷", target: 6, note: "", ingKey: "大炸蝦卷" },
-    { name: "青瓜卷", target: 8, note: "", ingKey: "小青瓜卷" }
-  ].map((it, i) => ({ id: String(i + 1), remaining: it.target, ...it }));
+  // Function to get translated ingredients
+  function getTranslatedIngredients(key) {
+    const data = INGREDIENTS_DATA[key];
+    if (!data) return [i18n.t('ingredients.notAvailable')];
+
+    const result = [];
+    result.push(i18n.t(data.type));
+
+    if (data.variants) {
+      return [i18n.t(data.type), ...data.variants.map(v => i18n.t(v))];
+    }
+
+    if (data.toppings && data.toppings.length > 0) {
+      result.push(data.toppings.map(t => i18n.t(t)).join('、'));
+    }
+
+    if (data.fillings && data.fillings.length > 0) {
+      result.push(data.fillings.map(f => {
+        const parts = f.split(' ');
+        if (parts.length > 1) {
+          return i18n.t(parts[0]) + ' ' + parts[1];
+        }
+        return i18n.t(f);
+      }).join('、'));
+    }
+
+    if (data.note) {
+      result.push(i18n.t(data.note));
+    }
+
+    return result;
+  }
+
+  // Initial items definition with translation keys
+  const initialItemsData = [
+    { nameKey: "gardenDelight", target: 1, note: "", ingKey: "gardenDelight" },
+    { nameKey: "avocado", target: 4, note: "", ingKey: "avocado" },
+    { nameKey: "cucumberAvocado", target: 2, note: "", ingKey: "cucumberAvocado" },
+    { nameKey: "miniCucumber", target: 16, noteKey: "note.midAutumn 4", ingKey: "miniCucumber" },
+    { nameKey: "egg", target: 5, noteKey: "note.midAutumn 4, note.dropShape 1", ingKey: "egg" },
+    { nameKey: "tofuSeafood", target: 5, note: "", ingKey: "seafood" },
+    { nameKey: "salmonAvocado", target: 12, noteKey: "note.triangle 3 - note.canadaA／2 - note.thousandIsland／2／5-ST2", ingKey: "salmonAvocado" },
+    { nameKey: "futomaki", target: 1, note: "", ingKey: "futomaki" },
+    { nameKey: "cookedSalmon", target: 9, noteKey: "note.redTobiko 2 - note.thousandIsland／2 - note.chargrilled／5-ST2", ingKey: "cookedSalmon" },
+    { nameKey: "miniShrimp", target: 1, noteKey: "note.dropShape", ingKey: "miniShrimp" },
+    { nameKey: "crispyDragon", target: 4, note: "", ingKey: "crispyDragon" },
+    { nameKey: "largeShrimp", target: 6, note: "", ingKey: "largeTempuraShrimp" },
+    { nameKey: "miniCucumber", target: 8, note: "", ingKey: "miniCucumber" }
+  ];
+
+  function buildInitialItems() {
+    return initialItemsData.map((it, i) => ({
+      id: String(i + 1),
+      remaining: it.target,
+      name: i18n.t(`product.${it.nameKey}`),
+      note: it.noteKey ? it.noteKey.split(',').map(n => {
+        const parts = n.trim().split(' ');
+        return parts.length > 1 ? i18n.t(parts[0]) + ' ' + parts[1] : i18n.t(n.trim());
+      }).join('，') : it.note,
+      ...it
+    }));
+  }
+
+  let initialItems = buildInitialItems();
 
   const STORAGE_KEY = "roll1-orders-spa";
 
@@ -130,7 +279,7 @@
   }
 
   function renderIngredients(key) {
-    const lines = INGREDIENTS[key] || ["（成分待補）"];
+    const lines = getTranslatedIngredients(key);
     return `<ul class="ing-list">${lines.map(t => `<li>${t}</li>`).join("")}</ul>`;
   }
 
@@ -174,12 +323,12 @@
           ${item.note ? `<p class="item-note">${item.note}</p>` : ""}
         </div>
         <div class="item-counts">
-          <span class="item-target">目標: ${item.target}</span>
+          <span class="item-target"><span data-i18n="common.targetLabel">${i18n.t('common.targetLabel')}</span>: ${item.target}</span>
           <span class="item-remaining ${remainingClass}" id="roll1-mobile-remain-${item.id}">${item.remaining}</span>
         </div>
       </div>
       <div class="item-actions">
-        <button class="btn primary" id="roll1-mobile-btn-${item.id}" aria-label="為『${item.name}』出餐 1 份">出餐 1 份</button>
+        <button class="btn primary" id="roll1-mobile-btn-${item.id}" data-i18n="roll1.serveOne" aria-label="${i18n.t('roll1.serveOne')}">${i18n.t('roll1.serveOne')}</button>
       </div>
       <div class="ing-panel" id="roll1-mobile-ing-${item.id}">
         ${renderIngredients(item.ingKey)}
@@ -206,13 +355,13 @@
       tr.dataset.id = item.id;
       tr.innerHTML = `
         <td class="name">
-          <span class="tap" id="roll1-tap-${item.id}" title="點擊展開/收合成分">${displayLabel(item, idxForName)}</span>
+          <span class="tap" id="roll1-tap-${item.id}" data-i18n-title="roll1.clickToExpand" title="${i18n.t('roll1.clickToExpand')}">${displayLabel(item, idxForName)}</span>
           ${item.note ? `<div class="note">${item.note}</div>` : ""}
         </td>
         <td class="count">${item.target}</td>
         <td class="count" id="roll1-remain-${item.id}">${item.remaining}</td>
         <td>
-          <button class="btn primary" id="roll1-btn-${item.id}" aria-label="為『${item.name}』出餐 1 份">出</button>
+          <button class="btn primary" id="roll1-btn-${item.id}" data-i18n="roll1.serve" aria-label="${i18n.t('roll1.serveOne')}">${i18n.t('roll1.serve')}</button>
         </td>
       `;
       tbody.appendChild(tr);
@@ -282,13 +431,35 @@
   }
 
   document.getElementById("roll1-reset-btn").addEventListener("click", () => {
-    if (confirm("確認恢復所有剩餘至每日目標？")) {
+    if (confirm(i18n.t('roll1.confirmReset'))) {
       state = state.map(it => ({ ...it, remaining: it.target }));
       saveState(state);
       render();
       updateTotals();
     }
   });
+
+  // Expose rebuild function for i18n updates
+  window.roll1Render = function() {
+    // Rebuild initialItems with new translations
+    initialItems = buildInitialItems();
+
+    // Update state with new translations while preserving remaining counts
+    state = state.map(item => {
+      const newItem = initialItems.find(it => it.id === item.id);
+      if (newItem) {
+        return {
+          ...newItem,
+          remaining: item.remaining
+        };
+      }
+      return item;
+    });
+
+    // Re-render the UI
+    render();
+    updateTotals();
+  };
 
   render();
 })();
@@ -297,25 +468,91 @@
 // Roll 2 - 出餐紀錄
 // ========================================
 (function() {
-  // 成分庫
-  const INGREDIENTS = {
-    "加州卷": ["2號反卷", "白芝麻、橙魚子", "蟹肉碎 60g、青瓜 10g、牛油果 15g"],
-    "加州卷-綠草": ["2號反卷 / 綠草版", "※（待補）"],
-    "白加州": ["2號反卷", "蟹肉碎 60g、青瓜 25g"],
-    "三文小卷": ["1號正卷", "三文魚 30g"],
-    "海鮮": ["2號反卷 / 雜錦組合", "白芝麻、橙魚子", "青瓜 10g、蟹肉碎 20g、三文魚 15g、玉子蛋 10g"]
+  // 成分庫 with translation keys
+  const INGREDIENTS_DATA = {
+    "california": {
+      type: "ing.type2Inside",
+      toppings: ["ing.whiteSesame", "ing.orangeTobiko"],
+      fillings: ["ing.crabmeat 60g", "ing.cucumber 10g", "ing.avocado 15g"]
+    },
+    "californiaGreenGrass": {
+      variants: ["ing.californiaGreenGrass"]
+    },
+    "whiteCalifornia": {
+      type: "ing.type2Inside",
+      fillings: ["ing.crabmeat 60g", "ing.cucumber 25g"]
+    },
+    "miniSalmon": {
+      type: "ing.type1Normal",
+      fillings: ["ing.salmon 30g"]
+    },
+    "seafood": {
+      type: "ing.seafoodMix",
+      toppings: ["ing.whiteSesame", "ing.orangeTobiko"],
+      fillings: ["ing.cucumber 10g", "ing.crabmeat 20g", "ing.salmon 15g", "ing.tamagoyaki 10g"]
+    }
   };
 
-  // 最新清單
-  const initialItems = [
-    { name: "白加州", target: 9, note: "没魚子 5、橙魚子 4", ingKey: "白加州" },
-    { name: "加州卷", target: 20, note: "綠草 4、橙魚子 16", ingKey: "加州卷" },
-    { name: "三文小卷", target: 12, note: "", ingKey: "三文小卷" },
-    { name: "加州卷", target: 10, note: "", ingKey: "加州卷" },
-    { name: "海鮮", target: 5, note: "", ingKey: "海鮮" },
-    { name: "加州卷", target: 15, note: "", ingKey: "加州卷" },
-    { name: "三文小卷", target: 10, note: "", ingKey: "三文小卷" }
-  ].map((it, i) => ({ id: String(i + 1), remaining: it.target, ...it }));
+  function getTranslatedIngredients(key) {
+    const data = INGREDIENTS_DATA[key];
+    if (!data) return [i18n.t('ingredients.notAvailable')];
+
+    const result = [];
+
+    if (data.variants) {
+      return data.variants.map(v => i18n.t(v));
+    }
+
+    if (data.type) {
+      result.push(i18n.t(data.type));
+    }
+
+    if (data.toppings && data.toppings.length > 0) {
+      result.push(data.toppings.map(t => i18n.t(t)).join('、'));
+    }
+
+    if (data.fillings && data.fillings.length > 0) {
+      result.push(data.fillings.map(f => {
+        const parts = f.split(' ');
+        if (parts.length > 1) {
+          return i18n.t(parts[0]) + ' ' + parts[1];
+        }
+        return i18n.t(f);
+      }).join('、'));
+    }
+
+    if (data.note) {
+      result.push(i18n.t(data.note));
+    }
+
+    return result;
+  }
+
+  // Initial items definition with translation keys
+  const initialItemsData = [
+    { nameKey: "whiteCalifornia", target: 9, noteKey: "ing.noTobiko 5, ing.orangeTobiko 4", ingKey: "whiteCalifornia" },
+    { nameKey: "california", target: 20, noteKey: "ing.greenGrass 4, ing.orangeTobiko 16", ingKey: "california" },
+    { nameKey: "miniSalmon", target: 12, note: "", ingKey: "miniSalmon" },
+    { nameKey: "california", target: 10, note: "", ingKey: "california" },
+    { nameKey: "seafood", target: 5, note: "", ingKey: "seafood" },
+    { nameKey: "california", target: 15, note: "", ingKey: "california" },
+    { nameKey: "miniSalmon", target: 10, note: "", ingKey: "miniSalmon" }
+  ];
+
+  function buildInitialItems() {
+    return initialItemsData.map((it, i) => ({
+      id: String(i + 1),
+      remaining: it.target,
+      name: i18n.t(`product.${it.nameKey}`),
+      note: it.noteKey ? it.noteKey.split(',').map(n => {
+        const parts = n.trim().split(' ');
+        return parts.length > 1 ? i18n.t(parts[0]) + ' ' + parts[1] : i18n.t(n.trim());
+      }).join('，') : it.note,
+      ...it
+    }));
+  }
+
+  let initialItems = buildInitialItems();
 
   const STORAGE_KEY = "roll2-orders-spa";
 
@@ -348,7 +585,7 @@
   }
 
   function renderIngredients(key) {
-    const lines = INGREDIENTS[key] || ["（成分待補）"];
+    const lines = getTranslatedIngredients(key);
     return `<ul class="ing-list">${lines.map(t => `<li>${t}</li>`).join("")}</ul>`;
   }
 
@@ -392,12 +629,12 @@
           ${item.note ? `<p class="item-note">${item.note}</p>` : ""}
         </div>
         <div class="item-counts">
-          <span class="item-target">目標: ${item.target}</span>
+          <span class="item-target"><span data-i18n="common.targetLabel">${i18n.t('common.targetLabel')}</span>: ${item.target}</span>
           <span class="item-remaining ${remainingClass}" id="roll2-mobile-remain-${item.id}">${item.remaining}</span>
         </div>
       </div>
       <div class="item-actions">
-        <button class="btn primary" id="roll2-mobile-btn-${item.id}" aria-label="為『${item.name}』出餐 1 份">出餐 1 份</button>
+        <button class="btn primary" id="roll2-mobile-btn-${item.id}" data-i18n="roll2.serveOne" aria-label="${i18n.t('roll2.serveOne')}">${i18n.t('roll2.serveOne')}</button>
       </div>
       <div class="ing-panel" id="roll2-mobile-ing-${item.id}">
         ${renderIngredients(item.ingKey)}
@@ -424,13 +661,13 @@
       tr.dataset.id = item.id;
       tr.innerHTML = `
         <td class="name">
-          <span class="tap" id="roll2-tap-${item.id}" title="點擊展開/收合成分">${displayLabel(item, idxForName)}</span>
+          <span class="tap" id="roll2-tap-${item.id}" data-i18n-title="roll2.clickToExpand" title="${i18n.t('roll2.clickToExpand')}">${displayLabel(item, idxForName)}</span>
           ${item.note ? `<div class="note">${item.note}</div>` : ""}
         </td>
         <td class="count">${item.target}</td>
         <td class="count" id="roll2-remain-${item.id}">${item.remaining}</td>
         <td>
-          <button class="btn primary" id="roll2-btn-${item.id}" aria-label="為『${item.name}』出餐 1 份">出</button>
+          <button class="btn primary" id="roll2-btn-${item.id}" data-i18n="roll2.serve" aria-label="${i18n.t('roll2.serveOne')}">${i18n.t('roll2.serve')}</button>
         </td>
       `;
       tbody.appendChild(tr);
@@ -500,13 +737,35 @@
   }
 
   document.getElementById("roll2-reset-btn").addEventListener("click", () => {
-    if (confirm("確認恢復所有剩餘至每日目標？")) {
+    if (confirm(i18n.t('roll2.confirmReset'))) {
       state = state.map(it => ({ ...it, remaining: it.target }));
       saveState(state);
       render();
       updateTotals();
     }
   });
+
+  // Expose rebuild function for i18n updates
+  window.roll2Render = function() {
+    // Rebuild initialItems with new translations
+    initialItems = buildInitialItems();
+
+    // Update state with new translations while preserving remaining counts
+    state = state.map(item => {
+      const newItem = initialItems.find(it => it.id === item.id);
+      if (newItem) {
+        return {
+          ...newItem,
+          remaining: item.remaining
+        };
+      }
+      return item;
+    });
+
+    // Re-render the UI
+    render();
+    updateTotals();
+  };
 
   render();
 })();
@@ -515,34 +774,64 @@
 // Notes - 壽司卷筆記
 // ========================================
 (function() {
-  const DATA = [
-    { name: "加州卷", style: "2號反卷", toppings: ["白芝麻", "橙魚子"], fillings: ["蟹肉碎 60g", "青瓜 10g", "牛油果 15g"] },
-    { name: "白加州卷", style: "2號反卷", toppings: [], fillings: ["蟹肉碎 60g", "青瓜 25g"] },
-    { name: "三文魚牛油果", style: "2號反卷", toppings: ["白芝麻", "海藻"], fillings: ["牛油果 20g", "三文魚 40g"] },
-    { name: "香辣海鮮卷", style: "2號反卷", toppings: ["白芝麻", "橙魚子"], fillings: ["青瓜 10g", "蟹肉碎 20g", "三文魚 15g", "玉子蛋 10g"] },
-    { name: "海鮮卷（雜錦）", style: "2號反卷", toppings: ["白芝麻", "橙魚子"], fillings: ["青瓜 10g", "蟹肉碎 20g", "三文魚 15g", "玉子蛋 10g"] },
-    { name: "牛油果卷", style: "2號反卷", toppings: ["白芝麻", "海藻"], fillings: ["牛油果 60g"] },
-    { name: "青瓜牛油卷", style: "2號反卷", toppings: ["白芝麻", "海藻"], fillings: ["牛油果 30g", "青瓜 30g"] },
-    { name: "脆龍卷", style: "2號反卷", toppings: [], fillings: ["青瓜 10g", "蟹肉碎 10g", "一對炸蝦"] },
-    { name: "小蝦卷", style: "2號反卷", toppings: ["白芝麻"], fillings: ["青瓜 20g", "一對炸蝦"] },
-    { name: "大炸蝦卷（供天婦羅/辣炸蝦）", style: "3號反卷", toppings: ["白芝麻"], fillings: ["生菜 2片", "青瓜 25g", "胡蘿蔔絲 15g", "一對炸蝦", "蟹肉碎"] },
+  const DATA_KEYS = [
+    { nameKey: "california", styleKey: "ing.type2Inside", toppingsKeys: ["ing.whiteSesame", "ing.orangeTobiko"], fillingsKeys: ["ing.crabmeat 60g", "ing.cucumber 10g", "ing.avocado 15g"] },
+    { nameKey: "whiteCalifornia", styleKey: "ing.type2Inside", toppingsKeys: [], fillingsKeys: ["ing.crabmeat 60g", "ing.cucumber 25g"] },
+    { nameKey: "salmonAvocado", styleKey: "ing.type2Inside", toppingsKeys: ["ing.whiteSesame", "ing.seaweed"], fillingsKeys: ["ing.avocado 20g", "ing.salmon 40g"] },
+    { nameKey: "spicySeafood", styleKey: "ing.type2Inside", toppingsKeys: ["ing.whiteSesame", "ing.orangeTobiko"], fillingsKeys: ["ing.cucumber 10g", "ing.crabmeat 20g", "ing.salmon 15g", "ing.tamagoyaki 10g"] },
+    { nameKey: "seafood", styleKey: "ing.type2Inside", toppingsKeys: ["ing.whiteSesame", "ing.orangeTobiko"], fillingsKeys: ["ing.cucumber 10g", "ing.crabmeat 20g", "ing.salmon 15g", "ing.tamagoyaki 10g"] },
+    { nameKey: "avocado", styleKey: "ing.type2Inside", toppingsKeys: ["ing.whiteSesame", "ing.seaweed"], fillingsKeys: ["ing.avocado 60g"] },
+    { nameKey: "cucumberAvocado", styleKey: "ing.type2Inside", toppingsKeys: ["ing.whiteSesame", "ing.seaweed"], fillingsKeys: ["ing.avocado 30g", "ing.cucumber 30g"] },
+    { nameKey: "spiderRoll", styleKey: "ing.type2Inside", toppingsKeys: [], fillingsKeys: ["ing.cucumber 10g", "ing.crabmeat 10g", "ing.onePairShrimp"] },
+    { nameKey: "miniShrimp", styleKey: "ing.type2Inside", toppingsKeys: ["ing.whiteSesame"], fillingsKeys: ["ing.cucumber 20g", "ing.onePairShrimp"] },
+    { nameKey: "largeTempuraShrimp", styleKey: "ing.type3Inside", toppingsKeys: ["ing.whiteSesame"], fillingsKeys: ["ing.lettuce 2pcs", "ing.cucumber 25g", "ing.carrotShred 15g", "ing.onePairShrimp", "ing.crabmeat"] },
     {
-      name: "田園喜悅",
-      style: "多款",
+      nameKey: "gardenDelight",
+      styleKey: "note.multipleTypes",
       variants: [
-        { title: "第一條（1號反卷，邊緣補米飯）", toppings: ["黑白芝麻"], fillings: ["黃蘿蔔 30g", "紅椒絲 25g"] },
-        { title: "第二條（1號反卷，邊緣補米飯）", toppings: ["黑白芝麻"], fillings: ["青瓜 20g", "牛油果 25g"] },
-        { title: "第三條（1號反卷，邊緣補米飯）", toppings: ["黑白芝麻"], fillings: ["青瓜 20g", "紅椒絲 10g", "胡蘿蔔絲 20g"] },
-        { title: "第四條（3號正卷）", toppings: [], fillings: ["生菜 2片", "青瓜 30g", "牛油果 20g", "黃蘿蔔 30g", "紅椒絲 20g", "胡蘿蔔絲 15g"] }
+        { titleKey: "note.gardenDelight1", toppingsKeys: ["ing.blackWhiteSesame"], fillingsKeys: ["ing.pickledRadish 30g", "ing.redPepperShred 25g"] },
+        { titleKey: "note.gardenDelight2", toppingsKeys: ["ing.blackWhiteSesame"], fillingsKeys: ["ing.cucumber 20g", "ing.avocado 25g"] },
+        { titleKey: "note.gardenDelight3", toppingsKeys: ["ing.blackWhiteSesame"], fillingsKeys: ["ing.cucumber 20g", "ing.redPepperShred 10g", "ing.carrotShred 20g"] },
+        { titleKey: "note.gardenDelight4", toppingsKeys: [], fillingsKeys: ["ing.lettuce 2pcs", "ing.cucumber 30g", "ing.avocado 20g", "ing.pickledRadish 30g", "ing.redPepperShred 20g", "ing.carrotShred 15g"] }
       ]
     },
-    { name: "小三文魚卷", style: "1號正卷", toppings: [], fillings: ["三文魚 30g"] },
-    { name: "小青瓜卷", style: "1號正卷", toppings: [], fillings: ["青瓜 30g"] },
-    { name: "楓葉卷", style: "3號反卷", toppings: ["白芝麻", "橙魚子"], fillings: ["蟹肉碎/蟹棒/玉子/三文魚/青瓜"] },
-    { name: "熟三文魚卷", style: "2號反卷", toppings: ["白芝麻"], fillings: ["熟三文魚", "青瓜"], notes: "千島壽司盤，加紅魚子" },
-    { name: "太卷", style: "3號正卷", toppings: [], fillings: ["蟹肉碎", "青瓜", "蛋", "醃竹筍", "紅魚子"] },
-    { name: "辣吞拿魚卷", style: "2號反卷", toppings: ["白芝麻"], fillings: ["吞拿魚刺身切碎（少量拉差醬拌）", "青瓜"] }
+    { nameKey: "miniSalmon", styleKey: "ing.type1Normal", toppingsKeys: [], fillingsKeys: ["ing.salmon 30g"] },
+    { nameKey: "miniCucumber", styleKey: "ing.type1Normal", toppingsKeys: [], fillingsKeys: ["ing.cucumber 30g"] },
+    { nameKey: "mapleLeafRoll", styleKey: "ing.type3Inside", toppingsKeys: ["ing.whiteSesame", "ing.orangeTobiko"], fillingsKeys: ["note.mapleLeafFilling"] },
+    { nameKey: "cookedSalmon", styleKey: "ing.type2Inside", toppingsKeys: ["ing.whiteSesame"], fillingsKeys: ["ing.cookedSalmon", "ing.cucumber"], notesKey: "note.cookedSalmonNote" },
+    { nameKey: "bigRoll", styleKey: "ing.type3Normal", toppingsKeys: [], fillingsKeys: ["ing.crabmeat", "ing.cucumber", "ing.egg", "ing.pickledBamboo", "ing.redTobiko"] },
+    { nameKey: "spicyTunaRoll", styleKey: "ing.type2Inside", toppingsKeys: ["ing.whiteSesame"], fillingsKeys: ["ing.tunaSashimi", "ing.cucumber"] }
   ];
+
+  function buildData() {
+    return DATA_KEYS.map(item => ({
+      name: i18n.t(`product.${item.nameKey}`),
+      style: i18n.t(item.styleKey),
+      toppings: item.toppingsKeys ? item.toppingsKeys.map(k => {
+        const parts = k.split(' ');
+        return parts.length > 1 ? i18n.t(parts[0]) + ' ' + parts[1] : i18n.t(k);
+      }) : [],
+      fillings: item.fillingsKeys ? item.fillingsKeys.map(k => {
+        const parts = k.split(' ');
+        return parts.length > 1 ? i18n.t(parts[0]) + ' ' + parts[1] : i18n.t(k);
+      }) : [],
+      notes: item.notesKey ? i18n.t(item.notesKey) : undefined,
+      variants: item.variants ? item.variants.map(v => ({
+        title: i18n.t(v.titleKey),
+        toppings: v.toppingsKeys ? v.toppingsKeys.map(k => {
+          const parts = k.split(' ');
+          return parts.length > 1 ? i18n.t(parts[0]) + ' ' + parts[1] : i18n.t(k);
+        }) : [],
+        fillings: v.fillingsKeys ? v.fillingsKeys.map(k => {
+          const parts = k.split(' ');
+          return parts.length > 1 ? i18n.t(parts[0]) + ' ' + parts[1] : i18n.t(k);
+        }) : []
+      })) : undefined,
+      nameKey: item.nameKey
+    }));
+  }
+
+  let DATA = buildData();
 
   const picker = document.getElementById("notes-picker");
   const result = document.getElementById("notes-result");
@@ -595,6 +884,13 @@
     const idx = parseInt(picker.value, 10);
     renderItem(DATA[idx]);
   });
+
+  // Expose rebuild function for i18n language changes
+  window.notesRebuild = function() {
+    DATA = buildData();
+    buildPicker();
+    result.innerHTML = `<div class="empty">${i18n.t('notes.empty')}</div>`;
+  };
 })();
 
 // ========================================
@@ -605,42 +901,46 @@
   const STORAGE_KEY = "checklist-spa-" + VERSION;
   const TODAY = new Date().toISOString().slice(0, 10);
 
-  const DATA = {
-    meta: {
-      title: "壽司部門幫廚｜一日工作流程",
-      date: TODAY,
-      shift: "08:30–17:30"
-    },
-    sections: {
-      prep: [
-        "一早拌三鍋醋飯（加入前一天剩餘的醋飯）",
-        "煮兩鍋白飯 + 一鍋醋飯",
-        "記錄兩張表：出餐表、醋飯酸鹼度（8:00／中午／16:00）",
-        "送三文魚 + 兩份烤雞至熱廚部加熱"
-      ],
-      during: [
-        "開始做手捲：先切牛油果",
-        "依「卷2」早上卷 81 卷壽司",
-        "09:30–10:00 準備便當：6 三文魚／6 鰻魚／12 烤雞",
-        "便當貼公司標籤與價格，打包後用鐵籤戳洞",
-        "確認下午便當素材：3 條鰻魚、3 盒雞腿排、2 盒鰻魚片",
-        "續煮三鍋飯：2 白飯 + 1 壽司飯",
-        "煮完飯後休息吃飯"
-      ],
-      post: [
-        "下午備壽司料",
-        "檢查庫存（含冷凍櫃），適當品項移至冷藏；庫存含：玉子燒／雞肉／鰻魚；冷藏含：薑片／雞汁／雞醬油",
-        "送 3 盒烤雞 + 1 盒三文魚給後廚（炸／加熱）",
-        "製作下午便當",
-        "（便當出完）啟動 2 小時回查；逾時貼折價標籤",
-        "準備明日：檢查鰻魚片／雞肉片；至少切 2 盒雞肉；冷藏保有 3 包雞塊、6 份鰻魚",
-        "若鰻魚汁不足，請 Toby 申請",
-        "補醬料與玉米粒",
-        "打掃所有廚具",
-        "拍照上傳到群組"
-      ]
-    }
-  };
+  function buildData() {
+    return {
+      meta: {
+        title: i18n.t('checklist.title'),
+        date: TODAY,
+        shift: "08:30–17:30"
+      },
+      sections: {
+        prep: [
+          i18n.t('checklist.task.prep1'),
+          i18n.t('checklist.task.prep2'),
+          i18n.t('checklist.task.prep3'),
+          i18n.t('checklist.task.prep4')
+        ],
+        during: [
+          i18n.t('checklist.task.during1'),
+          i18n.t('checklist.task.during2'),
+          i18n.t('checklist.task.during3'),
+          i18n.t('checklist.task.during4'),
+          i18n.t('checklist.task.during5'),
+          i18n.t('checklist.task.during6'),
+          i18n.t('checklist.task.during7')
+        ],
+        post: [
+          i18n.t('checklist.task.post1'),
+          i18n.t('checklist.task.post2'),
+          i18n.t('checklist.task.post3'),
+          i18n.t('checklist.task.post4'),
+          i18n.t('checklist.task.post5'),
+          i18n.t('checklist.task.post6'),
+          i18n.t('checklist.task.post7'),
+          i18n.t('checklist.task.post8'),
+          i18n.t('checklist.task.post9'),
+          i18n.t('checklist.task.post10')
+        ]
+      }
+    };
+  }
+
+  let DATA = buildData();
 
   function defaultState() {
     const s = { date: TODAY, checks: { prep: [], during: [], post: [] }, bentoTimer: null };
@@ -770,7 +1070,7 @@
   });
 
   els.resetToday.addEventListener("click", () => {
-    if (confirm("確定要將今天的勾選與計時器全部重設嗎？")) {
+    if (confirm(i18n.t('checklist.confirmReset'))) {
       state = defaultState();
       saveState();
       for (const k of Object.keys(DATA.sections)) renderSection(k);
@@ -787,9 +1087,9 @@
 
     els.startBento.disabled = true;
     els.stopBento.disabled = false;
-    els.startBento.textContent = "計時中...";
+    els.startBento.textContent = i18n.t('checklist.timerRunning');
     els.timerCard.classList.add("active");
-    els.timerStatus.textContent = "計時進行中";
+    els.timerStatus.textContent = i18n.t('checklist.timerStatusActive');
 
     tickBento();
     if (!bentoTick) bentoTick = setInterval(tickBento, 500);
@@ -808,9 +1108,9 @@
     els.bentoRemaining.textContent = "--:--:--";
     els.startBento.disabled = false;
     els.stopBento.disabled = true;
-    els.startBento.textContent = "開始計時";
+    els.startBento.textContent = i18n.t('checklist.startTimer');
     els.timerCard.classList.remove("active");
-    els.timerStatus.textContent = "待啟動";
+    els.timerStatus.textContent = i18n.t('checklist.timerStatusPending');
   }
 
   function tickBento() {
@@ -832,7 +1132,7 @@
         console.log("Vibration not supported");
       }
 
-      alert("⏱️ 便當兩小時回查\n\n便當已超過 2 小時\n請檢查並貼上折價標籤");
+      alert(i18n.t('checklist.timerAlert'));
       return;
     }
 
@@ -863,12 +1163,27 @@
   if (state.bentoTimer?.active) {
     els.startBento.disabled = true;
     els.stopBento.disabled = false;
-    els.startBento.textContent = "計時中...";
+    els.startBento.textContent = i18n.t('checklist.timerRunning');
     els.timerCard.classList.add("active");
-    els.timerStatus.textContent = "計時進行中";
+    els.timerStatus.textContent = i18n.t('checklist.timerStatusActive');
     tickBento();
     bentoTick = setInterval(tickBento, 500);
   } else {
-    els.timerStatus.textContent = "待啟動";
+    els.timerStatus.textContent = i18n.t('checklist.timerStatusPending');
   }
+
+  // Expose rebuild function for i18n language changes
+  window.checklistRebuild = function() {
+    DATA = buildData();
+    for (const k of Object.keys(DATA.sections)) renderSection(k);
+    updateBadges();
+
+    // Update timer button texts
+    if (state.bentoTimer?.active) {
+      els.startBento.textContent = i18n.t('checklist.timerRunning');
+      els.timerStatus.textContent = i18n.t('checklist.timerStatusActive');
+    } else {
+      els.timerStatus.textContent = i18n.t('checklist.timerStatusPending');
+    }
+  };
 })();
