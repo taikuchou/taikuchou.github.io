@@ -77,6 +77,12 @@ const translations = {
     // Common
     "common.targetLabel": "目標",
 
+    // Footer
+    "footer.appName": "壽司助手",
+    "footer.version": "版本",
+    "footer.copyright": "版權所有",
+    "footer.author": "戴谷州",
+
     // Product Names
     "product.california": "加州卷",
     "product.whiteCalifornia": "白加州",
@@ -263,6 +269,12 @@ const translations = {
     // Common
     "common.targetLabel": "目标",
 
+    // Footer
+    "footer.appName": "寿司助手",
+    "footer.version": "版本",
+    "footer.copyright": "版权所有",
+    "footer.author": "戴谷州",
+
     // Product Names (Simplified Chinese)
     "product.california": "加州卷",
     "product.whiteCalifornia": "白加州",
@@ -448,6 +460,12 @@ const translations = {
 
     // Common
     "common.targetLabel": "Target",
+
+    // Footer
+    "footer.appName": "Sushi Assistant",
+    "footer.version": "Version",
+    "footer.copyright": "Copyright",
+    "footer.author": "Kuchou Tai",
 
     // Product Names (English)
     "product.california": "California Roll",
