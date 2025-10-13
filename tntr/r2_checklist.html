@@ -115,6 +115,12 @@
       border: none;
       padding: 20px;
       margin-bottom: 20px;
+      transition: all 0.3s ease;
+    }
+
+    .timer-card.active {
+      background: linear-gradient(135deg, #38a169 0%, #2f855a 100%);
+      box-shadow: 0 4px 16px rgba(56, 161, 105, 0.4);
     }
 
     .timer-display {
@@ -125,6 +131,10 @@
       margin: 16px 0;
       letter-spacing: 0.02em;
       text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      min-height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     .timer-controls {
@@ -140,11 +150,21 @@
       border: none;
       font-weight: 700;
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+      min-width: 120px;
     }
 
-    .timer-controls .btn:active {
+    .timer-controls .btn:active:not(:disabled) {
       transform: scale(0.95);
       box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+    }
+
+    .timer-controls .btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .timer-card.active .timer-controls .btn {
+      color: #38a169;
     }
 
     .timer-label {
@@ -152,6 +172,14 @@
       font-size: 14px;
       opacity: 0.9;
       margin-bottom: 8px;
+    }
+
+    .timer-status {
+      text-align: center;
+      font-size: 13px;
+      opacity: 0.8;
+      margin-top: 8px;
+      font-weight: 600;
     }
 
     .progress-summary {
@@ -258,9 +286,10 @@
     </div>
 
     <!-- Timer Card -->
-    <div class="card timer-card">
+    <div class="card timer-card" id="timer-card">
       <div class="timer-label">⏱ 便當「兩小時回查」計時器</div>
       <div class="timer-display" id="bento-remaining">--:--:--</div>
+      <div class="timer-status" id="timer-status">待啟動</div>
       <div class="timer-controls">
         <button class="btn" id="start-bento">開始計時</button>
         <button class="btn" id="stop-bento">停止</button>

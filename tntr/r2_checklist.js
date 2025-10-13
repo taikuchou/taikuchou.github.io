@@ -91,11 +91,24 @@ const els = {
   startBento: document.getElementById("start-bento"),
   stopBento: document.getElementById("stop-bento"),
   bentoRemaining: document.getElementById("bento-remaining"),
+  timerCard: document.getElementById("timer-card"),
+  timerStatus: document.getElementById("timer-status"),
   resetToday: document.getElementById("reset-today")
 };
 
+// Debug: Check if timer elements exist
+console.log("Timer elements check:", {
+  startBento: !!els.startBento,
+  stopBento: !!els.stopBento,
+  bentoRemaining: !!els.bentoRemaining,
+  timerCard: !!els.timerCard,
+  timerStatus: !!els.timerStatus
+});
+
 let state = loadState();
 let bentoTick = null;
+
+console.log("Initial state:", state);
 
 /** ========= 渲染函數 ========= **/
 function renderSection(key) {
@@ -188,8 +201,18 @@ function startBentoTimer() {
   const now = Date.now();
   state.bentoTimer = { start: now, end: now + twoHours, active: true };
   saveState();
+
+  // Update UI immediately
+  els.startBento.disabled = true;
+  els.stopBento.disabled = false;
+  els.startBento.textContent = "計時中...";
+  els.timerCard.classList.add("active");
+  els.timerStatus.textContent = "計時進行中";
+
   tickBento();
   if (!bentoTick) bentoTick = setInterval(tickBento, 500);
+
+  console.log("Timer started:", new Date(now), "→", new Date(now + twoHours));
 }
 
 function stopBentoTimer(clearOnly = false) {
@@ -201,7 +224,16 @@ function stopBentoTimer(clearOnly = false) {
   if (!clearOnly) {
     saveState();
   }
+
+  // Update UI
   els.bentoRemaining.textContent = "--:--:--";
+  els.startBento.disabled = false;
+  els.stopBento.disabled = true;
+  els.startBento.textContent = "開始計時";
+  els.timerCard.classList.remove("active");
+  els.timerStatus.textContent = "待啟動";
+
+  console.log("Timer stopped");
 }
 
 function tickBento() {
@@ -214,14 +246,18 @@ function tickBento() {
 
   if (remain <= 0) {
     stopBentoTimer();
-    // Visual and audio alert
-    if (Notification.permission === "granted") {
-      new Notification("⏱ 便當兩小時回查", {
-        body: "請檢查並貼上折價標籤",
-        icon: "/favicon.ico"
-      });
+
+    // iOS-compatible notification with vibration
+    try {
+      if (navigator.vibrate) {
+        navigator.vibrate([200, 100, 200, 100, 200]);
+      }
+    } catch (e) {
+      console.log("Vibration not supported");
     }
-    alert("⏱ 便當已超過 2 小時，請檢查並貼上折價標籤。");
+
+    // Alert with clear message
+    alert("⏱️ 便當兩小時回查\n\n便當已超過 2 小時\n請檢查並貼上折價標籤");
     return;
   }
 
@@ -236,22 +272,35 @@ function fmtHHMMSS(ms) {
   return [h, m, s].map(n => String(n).padStart(2, "0")).join(":");
 }
 
+// Event listeners
 els.startBento.addEventListener("click", () => {
-  // Request notification permission
-  if (Notification.permission === "default") {
-    Notification.requestPermission();
-  }
+  console.log("Start button clicked");
   startBentoTimer();
 });
 
-els.stopBento.addEventListener("click", () => stopBentoTimer());
+els.stopBento.addEventListener("click", () => {
+  console.log("Stop button clicked");
+  stopBentoTimer();
+});
 
 /** ========= 初始渲染 ========= **/
 for (const k of Object.keys(DATA.sections)) renderSection(k);
 updateBadges();
 
+// 初始化按鈕狀態
+els.stopBento.disabled = true;
+
 // 恢復計時器
 if (state.bentoTimer?.active) {
+  console.log("Restoring timer from state");
+  els.startBento.disabled = true;
+  els.stopBento.disabled = false;
+  els.startBento.textContent = "計時中...";
+  els.timerCard.classList.add("active");
+  els.timerStatus.textContent = "計時進行中";
   tickBento();
   bentoTick = setInterval(tickBento, 500);
+} else {
+  console.log("No active timer in state");
+  els.timerStatus.textContent = "待啟動";
 }
