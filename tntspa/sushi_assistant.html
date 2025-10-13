@@ -7,20 +7,20 @@
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <meta name="apple-mobile-web-app-title" content="壽司助手" />
-  <title>壽司助手 - 出餐管理系統</title>
+  <title data-i18n="page.title">壽司助手 - 出餐管理系統</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <!-- Navigation Bar -->
   <nav class="nav-bar">
     <div class="nav-container">
-      <a href="#" class="nav-link" data-page="checklist">
+      <a href="#" class="nav-link active" data-page="checklist">
         <span data-i18n="nav.checklist">流程</span>
       </a>
       <a href="#" class="nav-link" data-page="roll2">
         <span data-i18n="nav.roll2">卷2</span>
       </a>
-      <a href="#" class="nav-link active" data-page="roll1">
+      <a href="#" class="nav-link" data-page="roll1">
         <span data-i18n="nav.roll1">卷1</span>
       </a>
       <a href="#" class="nav-link" data-page="notes">
@@ -30,7 +30,7 @@
   </nav>
 
   <!-- Page: Roll 1 -->
-  <div id="page-roll1" class="page-content active">
+  <div id="page-roll1" class="page-content">
     <header style="text-align: center;">
       <h1 data-i18n="roll1.title">卷1 出餐紀錄</h1>
     </header>
@@ -157,7 +157,7 @@
   </div>
 
   <!-- Page: Checklist -->
-  <div id="page-checklist" class="page-content">
+  <div id="page-checklist" class="page-content active">
     <header style="text-align: center;">
       <h1 data-i18n="checklist.title">壽司部門幫廚</h1>
     </header>
@@ -209,8 +209,8 @@
         </div>
         <div class="section-content" style="padding: 0 16px 16px;">
           <div class="section-actions">
-            <button class="btn btn-sm" data-check="prep" data-i18n="checklist.selectAll">全選</button>
-            <button class="btn btn-sm" data-uncheck="prep" data-i18n="checklist.deselectAll">全不選</button>
+            <button class="btn btn-sm fun_btn" data-check="prep" data-i18n="checklist.selectAll">全選</button>
+            <button class="btn btn-sm fun_btn" data-uncheck="prep" data-i18n="checklist.deselectAll">全不選</button>
           </div>
           <div id="checklist-list-prep"></div>
         </div>
@@ -229,8 +229,8 @@
         </div>
         <div class="section-content" style="padding: 0 16px 16px;">
           <div class="section-actions">
-            <button class="btn btn-sm" data-check="during" data-i18n="checklist.selectAll">全選</button>
-            <button class="btn btn-sm" data-uncheck="during" data-i18n="checklist.deselectAll">全不選</button>
+            <button class="btn btn-sm fun_btn" data-check="during" data-i18n="checklist.selectAll">全選</button>
+            <button class="btn btn-sm fun_btn" data-uncheck="during" data-i18n="checklist.deselectAll">全不選</button>
           </div>
           <div id="checklist-list-during"></div>
         </div>
@@ -249,8 +249,8 @@
         </div>
         <div class="section-content" style="padding: 0 16px 16px;">
           <div class="section-actions">
-            <button class="btn btn-sm" data-check="post" data-i18n="checklist.selectAll">全選</button>
-            <button class="btn btn-sm" data-uncheck="post" data-i18n="checklist.deselectAll">全不選</button>
+            <button class="btn btn-sm fun_btn" data-check="post" data-i18n="checklist.selectAll">全選</button>
+            <button class="btn btn-sm fun_btn" data-uncheck="post" data-i18n="checklist.deselectAll">全不選</button>
           </div>
           <div id="checklist-list-post"></div>
         </div>

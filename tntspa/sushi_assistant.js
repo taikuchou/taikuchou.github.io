@@ -1,7 +1,7 @@
 // ========================================
 // i18n Initialization & Language Switcher
 // ========================================
-(function() {
+(function () {
   // Initialize i18n on page load
   document.addEventListener('DOMContentLoaded', () => {
     i18n.updateUI();
@@ -37,7 +37,7 @@
 
     // Update HTML lang attribute
     document.documentElement.lang = lang === 'zh-TW' ? 'zh-Hant' :
-                                     lang === 'zh-CN' ? 'zh-Hans' : 'en';
+      lang === 'zh-CN' ? 'zh-Hans' : 'en';
 
     // Re-render all sections to update dynamic content
     if (window.roll1Render) window.roll1Render();
@@ -50,7 +50,7 @@
 // ========================================
 // SPA Navigation System
 // ========================================
-(function() {
+(function () {
   const navLinks = document.querySelectorAll('.nav-link');
   const pages = document.querySelectorAll('.page-content');
 
@@ -96,7 +96,7 @@
 
   // Initialize from URL hash on load
   const initialHash = window.location.hash.slice(1);
-  if (initialHash && ['roll1', 'roll2', 'notes', 'checklist'].includes(initialHash)) {
+  if (initialHash && ['checklist', 'roll2', 'notes', 'roll1'].includes(initialHash)) {
     switchPage(initialHash);
   }
 })();
@@ -104,7 +104,7 @@
 // ========================================
 // Roll 1 - 出餐紀錄
 // ========================================
-(function() {
+(function () {
   // Ingredient data with translation keys
   const INGREDIENTS_DATA = {
     "california": {
@@ -275,7 +275,7 @@
   const doneBadge = document.getElementById("roll1-done-badge");
 
   function displayLabel(item, idxForName) {
-    return idxForName > 1 ? `${item.name}（批次${idxForName}）` : item.name;
+    return idxForName > 1 ? `${item.name}（${i18n.t('product.batch')} ${idxForName}）` : item.name;
   }
 
   function renderIngredients(key) {
@@ -440,7 +440,7 @@
   });
 
   // Expose rebuild function for i18n updates
-  window.roll1Render = function() {
+  window.roll1Render = function () {
     // Rebuild initialItems with new translations
     initialItems = buildInitialItems();
 
@@ -467,7 +467,7 @@
 // ========================================
 // Roll 2 - 出餐紀錄
 // ========================================
-(function() {
+(function () {
   // 成分庫 with translation keys
   const INGREDIENTS_DATA = {
     "california": {
@@ -581,7 +581,7 @@
   const doneBadge = document.getElementById("roll2-done-badge");
 
   function displayLabel(item, idxForName) {
-    return idxForName > 1 ? `${item.name}（批次${idxForName}）` : item.name;
+    return idxForName > 1 ? `${item.name}（${i18n.t('product.batch')} ${idxForName}）` : item.name;
   }
 
   function renderIngredients(key) {
@@ -607,8 +607,8 @@
   }
 
   function toggleMobileIngredients(cardEl) {
-    const panel = cardEl.querySelector('.ing-panel');
-    if (panel.classList.contains('show')) {
+    const panel = cardEl.querySelectoowr('.ing-panel');
+    if (panel.classList.contains('sh')) {
       panel.classList.remove('show');
     } else {
       panel.classList.add('show');
@@ -746,7 +746,7 @@
   });
 
   // Expose rebuild function for i18n updates
-  window.roll2Render = function() {
+  window.roll2Render = function () {
     // Rebuild initialItems with new translations
     initialItems = buildInitialItems();
 
@@ -773,7 +773,7 @@
 // ========================================
 // Notes - 壽司卷筆記
 // ========================================
-(function() {
+(function () {
   const DATA_KEYS = [
     { nameKey: "california", styleKey: "ing.type2Inside", toppingsKeys: ["ing.whiteSesame", "ing.orangeTobiko"], fillingsKeys: ["ing.crabmeat 60g", "ing.cucumber 10g", "ing.avocado 15g"] },
     { nameKey: "whiteCalifornia", styleKey: "ing.type2Inside", toppingsKeys: [], fillingsKeys: ["ing.crabmeat 60g", "ing.cucumber 25g"] },
@@ -886,7 +886,7 @@
   });
 
   // Expose rebuild function for i18n language changes
-  window.notesRebuild = function() {
+  window.notesRebuild = function () {
     DATA = buildData();
     buildPicker();
     result.innerHTML = `<div class="empty">${i18n.t('notes.empty')}</div>`;
@@ -896,7 +896,7 @@
 // ========================================
 // Checklist - 工作流程
 // ========================================
-(function() {
+(function () {
   const VERSION = "v2.0";
   const STORAGE_KEY = "checklist-spa-" + VERSION;
   const TODAY = new Date().toISOString().slice(0, 10);
@@ -1173,7 +1173,7 @@
   }
 
   // Expose rebuild function for i18n language changes
-  window.checklistRebuild = function() {
+  window.checklistRebuild = function () {
     DATA = buildData();
     for (const k of Object.keys(DATA.sections)) renderSection(k);
     updateBadges();

@@ -3,6 +3,9 @@
 // ========================================
 const translations = {
   "zh-TW": {
+    //Page title
+    "page.title": "壽司助手 🍣 - 壽司部門幫廚",
+
     // Navigation
     "nav.checklist": "流程",
     "nav.roll2": "卷2",
@@ -107,6 +110,7 @@ const translations = {
     "product.mapleLeafRoll": "楓葉卷",
     "product.spicyTunaRoll": "辣吞拿魚卷",
     "product.bigRoll": "太卷",
+    "product.batch": "批次",
 
     // Ingredient Components
     "ing.type2Inside": "(2號反卷)",
@@ -195,6 +199,8 @@ const translations = {
   },
 
   "zh-CN": {
+    //Page title
+    "page.title": "寿司助手 🍣 - 寿司部门帮厨",
     // Navigation
     "nav.checklist": "流程",
     "nav.roll2": "卷2",
@@ -299,6 +305,7 @@ const translations = {
     "product.mapleLeafRoll": "枫叶卷",
     "product.spicyTunaRoll": "辣吞拿鱼卷",
     "product.bigRoll": "太卷",
+    "product.batch": "批次",
 
     // Ingredient Components (Simplified Chinese)
     "ing.type2Inside": "(2号反卷)",
@@ -387,6 +394,9 @@ const translations = {
   },
 
   "en": {
+    //Page title
+    "page.title": "Sushi Assistant 🍣 - Kitchen Helper in Sushi Department",
+
     // Navigation
     "nav.checklist": "Workflow",
     "nav.roll2": "Roll 2",
@@ -491,6 +501,7 @@ const translations = {
     "product.bigRoll": "Big Roll",
     "product.largeShrimp": "Large Shrimp",
     "product.cucumber": "Cucumber",
+    "product.batch": "Batch",
 
     // Ingredient Components (English)
     "ing.type2Inside": "(Type 2 Inside-Out)",
