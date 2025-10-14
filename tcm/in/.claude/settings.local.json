@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(open newtcmin.html)",
+      "Bash(open newtcminall.html)",
+      "Read(//Users/crystalbravo/Documents/Projects/資元科技顧問/專案/2026/TCM/**)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
