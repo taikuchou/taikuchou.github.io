@@ -608,7 +608,7 @@
 
   function toggleMobileIngredients(cardEl) {
     const panel = cardEl.querySelectoowr('.ing-panel');
-    if (panel.classList.contains('sh')) {
+    if (panel.classList.contains('show')) {
       panel.classList.remove('show');
     } else {
       panel.classList.add('show');
