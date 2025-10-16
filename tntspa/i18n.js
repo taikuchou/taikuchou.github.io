@@ -175,20 +175,23 @@ const translations = {
     "instruction.note": "備註：千島壽司盤可加紅魚子",
 
     // Checklist Items
+    "checklist.task.prep0": "進冷藏檢查庫存，雞肉，雞汁醬，鰻魚，確認食材足夠",
     "checklist.task.prep1": "一早拌三鍋醋飯（加入前一天剩餘的醋飯）",
     "checklist.task.prep2": "煮兩鍋白飯 + 一鍋醋飯",
-    "checklist.task.prep3": "記錄兩張表：出餐表、醋飯酸鹼度（8:00／中午／16:00）",
+    "checklist.task.prep3": "記錄兩張表：出餐表、醋飯酸鹼度（8:00／12:00／16:00）",
     "checklist.task.prep4": "送三文魚 + 兩份烤雞至熱廚部加熱",
     "checklist.task.during1": "開始做手捲：先切牛油果",
     "checklist.task.during2": "依「卷2」早上卷 81 卷壽司",
     "checklist.task.during3": "09:30–10:00 準備便當：6 三文魚／6 鰻魚／12 烤雞",
     "checklist.task.during4": "便當貼公司標籤與價格，打包後用鐵籤戳洞",
     "checklist.task.during5": "確認下午便當素材：3 條鰻魚、3 盒雞腿排、2 盒鰻魚片",
-    "checklist.task.during6": "續煮三鍋飯：2 白飯 + 1 壽司飯",
-    "checklist.task.during7": "煮完飯後休息吃飯",
+    "checklist.task.during6": "準備明日：檢查鰻魚片／雞肉片；至少切 2 盒雞肉；冷藏保有 3 包雞塊、6 份鰻魚",
+    "checklist.task.during7": "續煮三鍋飯：2 白飯 + 1 壽司飯",
+    "checklist.task.during8": "視狀況做冷飯和小菜",
+    "checklist.task.during9": "煮完飯後休息吃飯",
     "checklist.task.post1": "下午備壽司料",
     "checklist.task.post2": "檢查庫存（含冷凍櫃），適當品項移至冷藏；庫存含：玉子燒／雞肉／鰻魚；冷藏含：薑片／雞汁／雞醬油",
-    "checklist.task.post3": "送 3 盒烤雞 + 1 盒三文魚給後廚（炸／加熱）",
+    "checklist.task.post3": "送 3 盒烤雞 + 1 盒三文魚給後廚（加熱／炸）",
     "checklist.task.post4": "製作下午便當",
     "checklist.task.post5": "（便當出完）啟動 2 小時回查；逾時貼折價標籤",
     "checklist.task.post6": "準備明日：檢查鰻魚片／雞肉片；至少切 2 盒雞肉；冷藏保有 3 包雞塊、6 份鰻魚",
@@ -370,6 +373,7 @@ const translations = {
     "instruction.note": "备注：千岛寿司盘可加红鱼子",
 
     // Checklist Items (Simplified Chinese)
+    "checklist.task.prep0": "进冷藏检查库存，鸡肉，鸡汁酱，鳗鱼，确认食材足够",
     "checklist.task.prep1": "一早拌三锅醋饭（加入前一天剩余的醋饭）",
     "checklist.task.prep2": "煮两锅白饭 + 一锅醋饭",
     "checklist.task.prep3": "记录两张表：出餐表、醋饭酸碱度（8:00／中午／16:00）",
@@ -379,18 +383,21 @@ const translations = {
     "checklist.task.during3": "09:30–10:00 准备便当：6 三文鱼／6 鳗鱼／12 烤鸡",
     "checklist.task.during4": "便当贴公司标签与价格，打包后用铁签戳洞",
     "checklist.task.during5": "确认下午便当素材：3 条鳗鱼、3 盒鸡腿排、2 盒鳗鱼片",
-    "checklist.task.during6": "续煮三锅饭：2 白饭 + 1 寿司饭",
-    "checklist.task.during7": "煮完饭后休息吃饭",
+    "checklist.task.during6": "准备明日：检查鳗鱼片／鸡肉片；至少切 2 盒鸡肉；冷藏保有 3 包鸡块、6 份鳗鱼",
+    "checklist.task.during7": "续煮三锅饭：2 白饭 + 1 寿司饭",
+    "checklist.task.during8": "视情况制作冷饭和小菜",
+    "checklist.task.during9": "煮完饭后休息吃饭",
     "checklist.task.post1": "下午备寿司料",
     "checklist.task.post2": "检查库存（含冷冻柜），适当品项移至冷藏；库存含：玉子烧／鸡肉／鳗鱼；冷藏含：姜片／鸡汁／鸡酱油",
-    "checklist.task.post3": "送 3 盒烤鸡 + 1 盒三文鱼给后厨（炸／加热）",
+    "checklist.task.post3": "送 3 盒烤鸡 + 1 盒三文鱼给后厨（加热／炸）",
     "checklist.task.post4": "制作下午便当",
     "checklist.task.post5": "（便当出完）启动 2 小时回查；逾时贴折价标签",
     "checklist.task.post6": "准备明日：检查鳗鱼片／鸡肉片；至少切 2 盒鸡肉；冷藏保有 3 包鸡块、6 份鳗鱼",
     "checklist.task.post7": "若鳗鱼汁不足，请 Toby 申请",
     "checklist.task.post8": "补酱料与玉米粒",
     "checklist.task.post9": "打扫所有厨具",
-    "checklist.task.post10": "拍照上传到群组"
+    "checklist.task.post10": "进冷藏检查库存，鸡肉，鸡汁酱，鳗鱼，确认食材足够",
+    "checklist.task.post11": "拍照上传到群组"
   },
 
   "en": {
@@ -566,6 +573,7 @@ const translations = {
     "instruction.note": "Note: Thousand Island platter can add red tobiko",
 
     // Checklist Items (English)
+    "checklist.task.prep0": "Check inventory in the refrigerator — chicken, chicken sauce, and eel — and confirm that ingredients are sufficient.",
     "checklist.task.prep1": "Mix three pots of sushi rice early (add previous day's leftover rice)",
     "checklist.task.prep2": "Cook two pots of white rice + one pot of sushi rice",
     "checklist.task.prep3": "Record on two sheets: Service log, Rice pH (8:00/Noon/16:00)",
@@ -575,18 +583,21 @@ const translations = {
     "checklist.task.during3": "09:30–10:00 Prepare bento: 6 salmon / 6 eel / 12 grilled chicken",
     "checklist.task.during4": "Label bento with company sticker and price, poke holes with skewer after packing",
     "checklist.task.during5": "Confirm afternoon bento ingredients: 3 eels, 3 boxes chicken thighs, 2 boxes eel fillets",
-    "checklist.task.during6": "Continue cooking three pots: 2 white rice + 1 sushi rice",
-    "checklist.task.during7": "Rest and eat after cooking rice",
+    "checklist.task.during6": "Prepare for tomorrow: Check eel/chicken fillets; cut at least 2 boxes chicken; keep 3 packs chicken, 6 portions eel in fridge",
+    "checklist.task.during7": "Continue cooking three pots: 2 white rice + 1 sushi rice",
+    "checklist.task.during8": "Prepare cold rice and side dishes as needed",
+    "checklist.task.during9": "Rest and eat after cooking rice",
     "checklist.task.post1": "Prepare sushi ingredients in afternoon",
     "checklist.task.post2": "Check inventory (incl. freezer), move items to fridge as appropriate; Inventory: Tamago/Chicken/Eel; Fridge: Ginger/Chicken sauce/Chicken soy sauce",
-    "checklist.task.post3": "Send 3 boxes grilled chicken + 1 box salmon to back kitchen (fry/heat)",
+    "checklist.task.post3": "Send 3 boxes grilled chicken + 1 box salmon to back kitchen (heat/fry)",
     "checklist.task.post4": "Make afternoon bento",
     "checklist.task.post5": "(After bento finished) Start 2-hour check; apply discount label if overdue",
     "checklist.task.post6": "Prepare for tomorrow: Check eel/chicken fillets; cut at least 2 boxes chicken; keep 3 packs chicken, 6 portions eel in fridge",
     "checklist.task.post7": "If eel sauce insufficient, ask Toby to request",
     "checklist.task.post8": "Refill sauces and corn",
     "checklist.task.post9": "Clean all kitchen utensils",
-    "checklist.task.post10": "Take photos and upload to group"
+    "checklist.task.post10": "Check inventory in the refrigerator — chicken, chicken sauce, and eel — and confirm that ingredients are sufficient.",
+    "checklist.task.post11": "Take photos and upload to group"
   }
 };
 

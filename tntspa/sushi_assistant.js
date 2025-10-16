@@ -530,12 +530,12 @@
 
   // Initial items definition with translation keys
   const initialItemsData = [
-    { nameKey: "whiteCalifornia", target: 9, noteKey: "ing.noTobiko 5, ing.orangeTobiko 4", ingKey: "whiteCalifornia" },
-    { nameKey: "california", target: 20, noteKey: "ing.greenGrass 4, ing.orangeTobiko 16", ingKey: "california" },
+    { nameKey: "whiteCalifornia", target: 9, noteKey: "ing.noTobiko 3, ing.orangeTobiko 6", ingKey: "whiteCalifornia" },
+    { nameKey: "california", target: 20, noteKey: "ing.greenGrass 0, ing.orangeTobiko 20", ingKey: "california" },
     { nameKey: "miniSalmon", target: 12, note: "", ingKey: "miniSalmon" },
-    { nameKey: "california", target: 10, note: "", ingKey: "california" },
+    { nameKey: "california", target: 10, noteKey: "ing.orangeTobiko", ingKey: "california" },
     { nameKey: "seafood", target: 5, note: "", ingKey: "seafood" },
-    { nameKey: "california", target: 15, note: "", ingKey: "california" },
+    { nameKey: "california", target: 15, noteKey: "ing.orangeTobiko", ingKey: "california" },
     { nameKey: "miniSalmon", target: 10, note: "", ingKey: "miniSalmon" }
   ];
 
@@ -910,6 +910,7 @@
       },
       sections: {
         prep: [
+          i18n.t('checklist.task.prep0'),
           i18n.t('checklist.task.prep1'),
           i18n.t('checklist.task.prep2'),
           i18n.t('checklist.task.prep3'),
@@ -922,7 +923,9 @@
           i18n.t('checklist.task.during4'),
           i18n.t('checklist.task.during5'),
           i18n.t('checklist.task.during6'),
-          i18n.t('checklist.task.during7')
+          i18n.t('checklist.task.during7'),
+          i18n.t('checklist.task.during8'),
+          i18n.t('checklist.task.during9')
         ],
         post: [
           i18n.t('checklist.task.post1'),
