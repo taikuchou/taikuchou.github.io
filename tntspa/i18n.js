@@ -8,7 +8,7 @@ const translations = {
 
     // Navigation
     "nav.checklist": "流程",
-    "nav.checklist2": "流程二",
+    "nav.checklist2": "流程2",
     "nav.roll2": "卷2",
     "nav.roll1": "卷1",
     "nav.notes": "筆記",
