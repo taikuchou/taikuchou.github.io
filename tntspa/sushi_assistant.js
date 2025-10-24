@@ -44,6 +44,7 @@
     if (window.roll2Render) window.roll2Render();
     if (window.notesRebuild) window.notesRebuild();
     if (window.checklistRebuild) window.checklistRebuild();
+    if (window.checklist2Rebuild) window.checklist2Rebuild();
   });
 })();
 
@@ -96,7 +97,7 @@
 
   // Initialize from URL hash on load
   const initialHash = window.location.hash.slice(1);
-  if (initialHash && ['checklist', 'roll2', 'notes', 'roll1'].includes(initialHash)) {
+  if (initialHash && ['checklist', 'checklist2', 'roll2', 'notes', 'roll1'].includes(initialHash)) {
     switchPage(initialHash);
   }
 })();
@@ -530,12 +531,12 @@
 
   // Initial items definition with translation keys
   const initialItemsData = [
-    { nameKey: "whiteCalifornia", target: 9, noteKey: "ing.noTobiko 3, ing.orangeTobiko 6", ingKey: "whiteCalifornia" },
-    { nameKey: "california", target: 20, noteKey: "ing.greenGrass 0, ing.orangeTobiko 20", ingKey: "california" },
+    { nameKey: "whiteCalifornia", target: 9, noteKey: "ing.noTobiko 5, ing.orangeTobiko 4", ingKey: "whiteCalifornia" },
+    { nameKey: "california", target: 20, noteKey: "ing.greenGrass 4, ing.orangeTobiko 16", ingKey: "california" },
     { nameKey: "miniSalmon", target: 12, note: "", ingKey: "miniSalmon" },
-    { nameKey: "california", target: 10, noteKey: "ing.orangeTobiko", ingKey: "california" },
+    { nameKey: "california", target: 10, note: "", ingKey: "california" },
     { nameKey: "seafood", target: 5, note: "", ingKey: "seafood" },
-    { nameKey: "california", target: 15, noteKey: "ing.orangeTobiko", ingKey: "california" },
+    { nameKey: "california", target: 15, note: "", ingKey: "california" },
     { nameKey: "miniSalmon", target: 10, note: "", ingKey: "miniSalmon" }
   ];
 
@@ -906,15 +907,14 @@
       meta: {
         title: i18n.t('checklist.title'),
         date: TODAY,
-        shift: "08:30–17:30"
+        shift: "08:30–17:00"
       },
       sections: {
         prep: [
-          i18n.t('checklist.task.prep0'),
           i18n.t('checklist.task.prep1'),
           i18n.t('checklist.task.prep2'),
-          i18n.t('checklist.task.prep3'),
-          i18n.t('checklist.task.prep4')
+          // i18n.t('checklist.task.prep3'),
+          // i18n.t('checklist.task.prep4')
         ],
         during: [
           i18n.t('checklist.task.during1'),
@@ -922,10 +922,8 @@
           i18n.t('checklist.task.during3'),
           i18n.t('checklist.task.during4'),
           i18n.t('checklist.task.during5'),
-          i18n.t('checklist.task.during6'),
-          i18n.t('checklist.task.during7'),
-          i18n.t('checklist.task.during8'),
-          i18n.t('checklist.task.during9')
+          // i18n.t('checklist.task.during6'),
+          // i18n.t('checklist.task.during7')
         ],
         post: [
           i18n.t('checklist.task.post1'),
@@ -934,10 +932,11 @@
           i18n.t('checklist.task.post4'),
           i18n.t('checklist.task.post5'),
           i18n.t('checklist.task.post6'),
-          i18n.t('checklist.task.post7'),
-          i18n.t('checklist.task.post8'),
-          i18n.t('checklist.task.post9'),
-          i18n.t('checklist.task.post10')
+          // i18n.t('checklist.task.post7'),
+          // i18n.t('checklist.task.post8'),
+          // i18n.t('checklist.task.post9'),
+          // i18n.t('checklist.task.post11'),
+          // i18n.t('checklist.task.post10')
         ]
       }
     };
@@ -1177,6 +1176,302 @@
 
   // Expose rebuild function for i18n language changes
   window.checklistRebuild = function () {
+    DATA = buildData();
+    for (const k of Object.keys(DATA.sections)) renderSection(k);
+    updateBadges();
+
+    // Update timer button texts
+    if (state.bentoTimer?.active) {
+      els.startBento.textContent = i18n.t('checklist.timerRunning');
+      els.timerStatus.textContent = i18n.t('checklist.timerStatusActive');
+    } else {
+      els.timerStatus.textContent = i18n.t('checklist.timerStatusPending');
+    }
+  };
+})();
+
+// ========================================
+// Checklist 2 - 工作流程二
+// ========================================
+(function () {
+  const VERSION = "v2.0";
+  const STORAGE_KEY = "checklist2-spa-" + VERSION;
+  const TODAY = new Date().toISOString().slice(0, 10);
+
+  function buildData() {
+    return {
+      meta: {
+        title: i18n.t('checklist2.title'),
+        date: TODAY,
+        shift: "08:30–17:30"
+      },
+      sections: {
+        prep: [
+          i18n.t('checklist2.task.prep1'),
+          i18n.t('checklist2.task.prep2'),
+          i18n.t('checklist2.task.prep3'),
+          i18n.t('checklist2.task.prep4')
+        ],
+        during: [
+          i18n.t('checklist2.task.during1'),
+          i18n.t('checklist2.task.during2'),
+          i18n.t('checklist2.task.during3'),
+          i18n.t('checklist2.task.during4'),
+          i18n.t('checklist2.task.during5'),
+          i18n.t('checklist2.task.during6'),
+          i18n.t('checklist2.task.during7')
+        ],
+        post: [
+          i18n.t('checklist2.task.post1'),
+          i18n.t('checklist2.task.post2'),
+          i18n.t('checklist2.task.post3'),
+          i18n.t('checklist2.task.post4'),
+          i18n.t('checklist2.task.post5'),
+          i18n.t('checklist2.task.post6'),
+          i18n.t('checklist2.task.post7'),
+          i18n.t('checklist2.task.post8'),
+          i18n.t('checklist2.task.post9'),
+          i18n.t('checklist2.task.post11'),
+          i18n.t('checklist2.task.post10')
+        ]
+      }
+    };
+  }
+
+  let DATA = buildData();
+
+  function defaultState() {
+    const s = { date: TODAY, checks: { prep: [], during: [], post: [] }, bentoTimer: null };
+    for (const key of Object.keys(DATA.sections)) {
+      s.checks[key] = DATA.sections[key].map(() => false);
+    }
+    return s;
+  }
+
+  function loadState() {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return defaultState();
+    try {
+      const parsed = JSON.parse(raw);
+      if (parsed.date !== TODAY) return defaultState();
+      for (const k of Object.keys(DATA.sections)) {
+        if (!Array.isArray(parsed.checks?.[k]) || parsed.checks[k].length !== DATA.sections[k].length) {
+          parsed.checks = parsed.checks || {};
+          parsed.checks[k] = DATA.sections[k].map(() => false);
+        }
+      }
+      return parsed;
+    } catch (e) {
+      return defaultState();
+    }
+  }
+
+  function saveState() {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  }
+
+  const els = {
+    lists: {
+      prep: document.getElementById("checklist2-list-prep"),
+      during: document.getElementById("checklist2-list-during"),
+      post: document.getElementById("checklist2-list-post")
+    },
+    badges: {
+      prep: document.getElementById("checklist2-badge-prep"),
+      during: document.getElementById("checklist2-badge-during"),
+      post: document.getElementById("checklist2-badge-post")
+    },
+    overallDone: document.getElementById("checklist2-overall-done"),
+    overallTotal: document.getElementById("checklist2-overall-total"),
+    completionRate: document.getElementById("checklist2-completion-rate"),
+    startBento: document.getElementById("checklist2-start-bento"),
+    stopBento: document.getElementById("checklist2-stop-bento"),
+    bentoRemaining: document.getElementById("checklist2-bento-remaining"),
+    timerCard: document.getElementById("checklist2-timer-card"),
+    timerStatus: document.getElementById("checklist2-timer-status"),
+    resetToday: document.getElementById("checklist2-reset-today")
+  };
+
+  let state = loadState();
+  let bentoTick = null;
+
+  function renderSection(key) {
+    const items = DATA.sections[key];
+    const list = els.lists[key];
+    list.innerHTML = "";
+
+    items.forEach((text, idx) => {
+      const id = `checklist2-${key}-${idx}`;
+      const isChecked = state.checks[key][idx];
+
+      const wrap = document.createElement("div");
+      wrap.className = `checklist-item${isChecked ? " checked" : ""}`;
+      wrap.innerHTML = `
+        <input type="checkbox" id="${id}" ${isChecked ? "checked" : ""} />
+        <label for="${id}">${text}</label>
+      `;
+
+      const cb = wrap.querySelector("input");
+      cb.addEventListener("change", () => {
+        state.checks[key][idx] = cb.checked;
+        wrap.classList.toggle("checked", cb.checked);
+        saveState();
+        updateBadges();
+      });
+
+      list.appendChild(wrap);
+    });
+  }
+
+  function updateBadges() {
+    let total = 0, done = 0;
+
+    for (const k of Object.keys(DATA.sections)) {
+      const arr = state.checks[k];
+      const t = arr.length;
+      const d = arr.filter(Boolean).length;
+
+      const badge = els.badges[k];
+      badge.textContent = `${d}/${t}`;
+      badge.classList.toggle("complete", d === t && t > 0);
+
+      total += t;
+      done += d;
+    }
+
+    els.overallTotal.textContent = total;
+    els.overallDone.textContent = done;
+
+    const percentage = total > 0 ? Math.round((done / total) * 100) : 0;
+    els.completionRate.textContent = `${percentage}%`;
+    els.completionRate.classList.toggle("complete", percentage === 100);
+  }
+
+  document.querySelectorAll("[data-check2]").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const k = btn.getAttribute("data-check2");
+      state.checks[k] = state.checks[k].map(() => true);
+      saveState();
+      renderSection(k);
+      updateBadges();
+    });
+  });
+
+  document.querySelectorAll("[data-uncheck2]").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const k = btn.getAttribute("data-uncheck2");
+      state.checks[k] = state.checks[k].map(() => false);
+      saveState();
+      renderSection(k);
+      updateBadges();
+    });
+  });
+
+  els.resetToday.addEventListener("click", () => {
+    if (confirm(i18n.t('checklist.confirmReset'))) {
+      state = defaultState();
+      saveState();
+      for (const k of Object.keys(DATA.sections)) renderSection(k);
+      updateBadges();
+      stopBentoTimer(true);
+    }
+  });
+
+  function startBentoTimer() {
+    const twoHours = 2 * 60 * 60 * 1000;
+    const now = Date.now();
+    state.bentoTimer = { start: now, end: now + twoHours, active: true };
+    saveState();
+
+    els.startBento.disabled = true;
+    els.stopBento.disabled = false;
+    els.startBento.textContent = i18n.t('checklist.timerRunning');
+    els.timerCard.classList.add("active");
+    els.timerStatus.textContent = i18n.t('checklist.timerStatusActive');
+
+    tickBento();
+    if (!bentoTick) bentoTick = setInterval(tickBento, 500);
+  }
+
+  function stopBentoTimer(clearOnly = false) {
+    if (bentoTick) {
+      clearInterval(bentoTick);
+      bentoTick = null;
+    }
+    state.bentoTimer = null;
+    if (!clearOnly) {
+      saveState();
+    }
+
+    els.bentoRemaining.textContent = "--:--:--";
+    els.startBento.disabled = false;
+    els.stopBento.disabled = true;
+    els.startBento.textContent = i18n.t('checklist.startTimer');
+    els.timerCard.classList.remove("active");
+    els.timerStatus.textContent = i18n.t('checklist.timerStatusPending');
+  }
+
+  function tickBento() {
+    if (!state.bentoTimer?.active) {
+      els.bentoRemaining.textContent = "--:--:--";
+      return;
+    }
+
+    const remain = state.bentoTimer.end - Date.now();
+
+    if (remain <= 0) {
+      stopBentoTimer();
+
+      try {
+        if (navigator.vibrate) {
+          navigator.vibrate([200, 100, 200, 100, 200]);
+        }
+      } catch (e) {
+        console.log("Vibration not supported");
+      }
+
+      alert(i18n.t('checklist.timerAlert'));
+      return;
+    }
+
+    els.bentoRemaining.textContent = fmtHHMMSS(remain);
+  }
+
+  function fmtHHMMSS(ms) {
+    const total = Math.floor(ms / 1000);
+    const h = Math.floor(total / 3600);
+    const m = Math.floor((total % 3600) / 60);
+    const s = total % 60;
+    return [h, m, s].map(n => String(n).padStart(2, "0")).join(":");
+  }
+
+  els.startBento.addEventListener("click", () => {
+    startBentoTimer();
+  });
+
+  els.stopBento.addEventListener("click", () => {
+    stopBentoTimer();
+  });
+
+  for (const k of Object.keys(DATA.sections)) renderSection(k);
+  updateBadges();
+
+  els.stopBento.disabled = true;
+
+  if (state.bentoTimer?.active) {
+    els.startBento.disabled = true;
+    els.stopBento.disabled = false;
+    els.startBento.textContent = i18n.t('checklist.timerRunning');
+    els.timerCard.classList.add("active");
+    els.timerStatus.textContent = i18n.t('checklist.timerStatusActive');
+    tickBento();
+    bentoTick = setInterval(tickBento, 500);
+  } else {
+    els.timerStatus.textContent = i18n.t('checklist.timerStatusPending');
+  }
+
+  // Expose rebuild function for i18n language changes
+  window.checklist2Rebuild = function () {
     DATA = buildData();
     for (const k of Object.keys(DATA.sections)) renderSection(k);
     updateBadges();

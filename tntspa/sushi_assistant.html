@@ -14,26 +14,21 @@
   <!-- Navigation Bar -->
   <nav class="nav-bar">
     <div class="nav-container">
-      
-      
-      
       <a href="#" class="nav-link active" data-page="checklist">
         <span data-i18n="nav.checklist">流程</span>
       </a>
-
-      <a href="#" class="nav-link" data-page="roll2">
-        <span data-i18n="nav.roll2">卷2</span>
-      </a>
-
       <a href="#" class="nav-link" data-page="roll1">
         <span data-i18n="nav.roll1">卷1</span>
       </a>
-
+      <a href="#" class="nav-link" data-page="checklist2">
+        <span data-i18n="nav.checklist2">流程二</span>
+      </a>
+      <a href="#" class="nav-link" data-page="roll2">
+        <span data-i18n="nav.roll2">卷2</span>
+      </a>
       <a href="#" class="nav-link" data-page="notes">
         <span data-i18n="nav.notes">筆記</span>
       </a>
-
-      
     </div>
   </nav>
 
@@ -76,7 +71,7 @@
       <footer style="text-align: center; padding: 16px; color: var(--muted, #718096); font-size: 12px; margin-top: 20px; margin-bottom: 60px;">
         <div>
           <span data-i18n="footer.appName">壽司助手</span>
-          <span data-i18n="footer.version">版本</span> 2.0
+          <span data-i18n="footer.version">版本</span> 3.0
         </div>
         <div style="margin-top: 4px;">
           © 2026 <span data-i18n="footer.copyright">版權所有</span> <span data-i18n="footer.author">戴谷州</span>
@@ -194,7 +189,7 @@
       </div>
 
       <!-- Timer Card -->
-      <div class="card timer-card" id="checklist-timer-card">
+      <div class="card timer-card" id="checklist-timer-card" style="display: none;">
         <div class="timer-label" data-i18n="checklist.timerLabel">⏱ 便當「兩小時回查」計時器</div>
         <div class="timer-display" id="checklist-bento-remaining">--:--:--</div>
         <div class="timer-status" id="checklist-timer-status" data-i18n="checklist.timerStatusPending">待啟動</div>
@@ -261,6 +256,119 @@
             <button class="btn btn-sm fun_btn" data-uncheck="post" data-i18n="checklist.deselectAll">全不選</button>
           </div>
           <div id="checklist-list-post"></div>
+        </div>
+      </section>
+
+      <!-- Version Info -->
+      <footer style="text-align: center; padding: 16px; color: var(--muted, #718096); font-size: 12px; margin-top: 20px; margin-bottom: 60px;">
+        <div>
+          <span data-i18n="footer.appName">壽司助手</span>
+          <span data-i18n="footer.version">版本</span> 2.0
+        </div>
+        <div style="margin-top: 4px;">
+          © 2026 <span data-i18n="footer.copyright">版權所有</span> <span data-i18n="footer.author">戴谷州</span>
+        </div>
+      </footer>
+    </div>
+  </div>
+
+  <!-- Page: Checklist 2 -->
+  <div id="page-checklist2" class="page-content">
+    <header style="text-align: center;">
+      <h1 data-i18n="checklist2.title">壽司部門幫廚 - 流程二</h1>
+    </header>
+
+    <div class="wrap">
+      <!-- Progress Summary -->
+      <div class="progress-summary">
+        <div class="progress-card">
+          <div class="progress-label" data-i18n="checklist.todayComplete">今日完成</div>
+          <div class="progress-value" id="checklist2-overall-done">0</div>
+          <div style="font-size: 13px; color: var(--muted); margin-top: 4px;">
+            <span data-i18n="checklist.total">共</span> <span id="checklist2-overall-total">0</span> <span data-i18n="checklist.items">項</span>
+          </div>
+        </div>
+        <div class="progress-card">
+          <div class="progress-label" data-i18n="checklist.completionRate">完成率</div>
+          <div class="progress-value" id="checklist2-completion-rate">0%</div>
+        </div>
+      </div>
+
+      <!-- Global Actions -->
+      <div class="card">
+        <div class="toolbar" style="justify-content: center;">
+          <button class="btn" id="checklist2-reset-today" data-i18n="checklist.resetToday">今日重設</button>
+        </div>
+      </div>
+
+      <!-- Timer Card -->
+      <div class="card timer-card" id="checklist2-timer-card">
+        <div class="timer-label" data-i18n="checklist.timerLabel">⏱ 便當「兩小時回查」計時器</div>
+        <div class="timer-display" id="checklist2-bento-remaining">--:--:--</div>
+        <div class="timer-status" id="checklist2-timer-status" data-i18n="checklist.timerStatusPending">待啟動</div>
+        <div class="timer-controls">
+          <button class="btn" id="checklist2-start-bento" data-i18n="checklist.startTimer">開始計時</button>
+          <button class="btn" id="checklist2-stop-bento" data-i18n="checklist.stopTimer">停止</button>
+        </div>
+      </div>
+
+      <!-- 準備前 -->
+      <section class="card" data-section="prep">
+        <div class="toolbar" style="border-bottom: none; padding-bottom: 8px;">
+          <div class="section-header" style="width: 100%;">
+            <h2 class="section-title">
+              <span>🟡</span>
+              <span data-i18n="checklist.prep">準備前</span>
+            </h2>
+            <span class="section-badge" id="checklist2-badge-prep">0/0</span>
+          </div>
+        </div>
+        <div class="section-content" style="padding: 0 16px 16px;">
+          <div class="section-actions">
+            <button class="btn btn-sm fun_btn" data-check2="prep" data-i18n="checklist.selectAll">全選</button>
+            <button class="btn btn-sm fun_btn" data-uncheck2="prep" data-i18n="checklist.deselectAll">全不選</button>
+          </div>
+          <div id="checklist2-list-prep"></div>
+        </div>
+      </section>
+
+      <!-- 準備中 -->
+      <section class="card" data-section="during">
+        <div class="toolbar" style="border-bottom: none; padding-bottom: 8px;">
+          <div class="section-header" style="width: 100%;">
+            <h2 class="section-title">
+              <span>🔵</span>
+              <span data-i18n="checklist.during">準備中</span>
+            </h2>
+            <span class="section-badge" id="checklist2-badge-during">0/0</span>
+          </div>
+        </div>
+        <div class="section-content" style="padding: 0 16px 16px;">
+          <div class="section-actions">
+            <button class="btn btn-sm fun_btn" data-check2="during" data-i18n="checklist.selectAll">全選</button>
+            <button class="btn btn-sm fun_btn" data-uncheck2="during" data-i18n="checklist.deselectAll">全不選</button>
+          </div>
+          <div id="checklist2-list-during"></div>
+        </div>
+      </section>
+
+      <!-- 準備後 -->
+      <section class="card" data-section="post">
+        <div class="toolbar" style="border-bottom: none; padding-bottom: 8px;">
+          <div class="section-header" style="width: 100%;">
+            <h2 class="section-title">
+              <span>🟢</span>
+              <span data-i18n="checklist.post">準備後</span>
+            </h2>
+            <span class="section-badge" id="checklist2-badge-post">0/0</span>
+          </div>
+        </div>
+        <div class="section-content" style="padding: 0 16px 16px;">
+          <div class="section-actions">
+            <button class="btn btn-sm fun_btn" data-check2="post" data-i18n="checklist.selectAll">全選</button>
+            <button class="btn btn-sm fun_btn" data-uncheck2="post" data-i18n="checklist.deselectAll">全不選</button>
+          </div>
+          <div id="checklist2-list-post"></div>
         </div>
       </section>
 
