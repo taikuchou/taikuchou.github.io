@@ -55,7 +55,7 @@ const translations = {
 
     // Checklist
     "checklist.title": "壽司部門幫廚",
-    "checklist2.title": "壽司部門幫廚 - 流程二",
+    "checklist2.title": "壽司部門幫廚 - 流程2",
     "checklist.todayComplete": "今日完成",
     "checklist.total": "共",
     "checklist.items": "項",
@@ -186,7 +186,7 @@ const translations = {
     "checklist.task.during3": "確認素材：紅椒、黃蘿蔔、青瓜條、胡蘿蔔絲、青菜是否足夠",
     "checklist.task.during4": "蒸熱三文魚",
     "checklist.task.during5": "卷完後休息吃飯",
-    "checklist.task.during6": "",
+    "checklist.task.during6": "完成「卷2」未完成壽司",
     "checklist.task.during7": "",
     "checklist.task.during8": "",
     "checklist.task.post1": "下午備壽司料：紅椒、黃蘿蔔、青瓜條(八條)、胡蘿蔔絲、青菜",
@@ -231,7 +231,7 @@ const translations = {
     "page.title": "寿司助手 🍣 - 寿司部门帮厨",
     // Navigation
     "nav.checklist": "流程",
-    "nav.checklist2": "流程二",
+    "nav.checklist2": "流程2",
     "nav.roll2": "卷2",
     "nav.roll1": "卷1",
     "nav.notes": "笔记",
@@ -278,7 +278,7 @@ const translations = {
 
     // Checklist
     "checklist.title": "寿司部门帮厨",
-    "checklist2.title": "寿司部门帮厨 - 流程二",
+    "checklist2.title": "寿司部门帮厨 - 流程2",
     "checklist.todayComplete": "今日完成",
     "checklist.total": "共",
     "checklist.items": "项",
@@ -409,7 +409,7 @@ const translations = {
     "checklist.task.during3": "确认素材：红椒、黄萝卜、青瓜条、胡萝卜丝、青菜是否足够",
     "checklist.task.during4": "蒸热三文鱼",
     "checklist.task.during5": "卷完后休息吃饭",
-    "checklist.task.during6": "",
+    "checklist.task.during6": "完成「卷2」未完成寿司",
     "checklist.task.during7": "",
     "checklist.task.post1": "下午备寿司料：红椒、黄萝卜、青瓜条（八条）、胡萝卜丝、青菜",
     "checklist.task.post2": "接受额外订单",
@@ -635,7 +635,7 @@ const translations = {
     "checklist.task.during3": "Check ingredients: ensure red pepper, yellow radish, cucumber strips, shredded carrot, and greens are sufficient.",
     "checklist.task.during4": "Steam and heat the salmon.",
     "checklist.task.during5": "Take a lunch break after finishing the rolls.",
-    "checklist.task.during6": "",
+    "checklist.task.during6": "Finish the remaining sushi from 'Roll 2'.",
     "checklist.task.during7": "",
     "checklist.task.post1": "Prepare afternoon sushi ingredients: red pepper, yellow radish, cucumber strips (8 pieces), shredded carrot, greens.",
     "checklist.task.post2": "Accept additional orders.",
