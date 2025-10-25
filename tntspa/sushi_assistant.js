@@ -223,8 +223,8 @@
     { nameKey: "avocado", target: 4, note: "", ingKey: "avocado" },
     { nameKey: "cucumberAvocado", target: 2, note: "", ingKey: "cucumberAvocado" },
     { nameKey: "miniCucumber", target: 16, noteKey: "note.midAutumn 4", ingKey: "miniCucumber" },
-    { nameKey: "egg", target: 5, noteKey: "note.midAutumn 4, note.dropShape 1", ingKey: "egg" },
-    { nameKey: "tofuSeafood", target: 5, note: "", ingKey: "seafood" },
+    { nameKey: "egg", target: 1, noteKey: "note.midAutumn 4, note.dropShape 1", ingKey: "egg" },
+    // { nameKey: "tofuSeafood", target: 5, note: "", ingKey: "seafood" },
     { nameKey: "salmonAvocado", target: 12, noteKey: "note.triangle 3 - note.canadaA／2 - note.thousandIsland／2／5-ST2", ingKey: "salmonAvocado" },
     { nameKey: "futomaki", target: 1, note: "", ingKey: "futomaki" },
     { nameKey: "cookedSalmon", target: 9, noteKey: "note.redTobiko 2 - note.thousandIsland／2 - note.chargrilled／5-ST2", ingKey: "cookedSalmon" },
@@ -923,8 +923,8 @@
           i18n.t('checklist.task.during3'),
           i18n.t('checklist.task.during4'),
           i18n.t('checklist.task.during5'),
-
-          // i18n.t('checklist.task.during7')
+          i18n.t('checklist.task.during6'),
+          i18n.t('checklist.task.during7')
         ],
         post: [
           i18n.t('checklist.task.post1'),
