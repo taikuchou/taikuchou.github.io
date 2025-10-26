@@ -179,7 +179,7 @@
       fillings: ["ing.crabmeat", "ing.cucumber", "ing.egg", "ing.pickledRadish", "ing.redTobiko"]
     },
     "egg": {
-      type: "ing.type2Inside",
+      type: "ing.type1Normal",
       fillings: ["ing.tamago"]
     }
   };
@@ -330,6 +330,7 @@
       </div>
       <div class="item-actions">
         <button class="btn primary" id="roll1-mobile-btn-${item.id}" data-i18n="roll1.serveOne" aria-label="${i18n.t('roll1.serveOne')}">${i18n.t('roll1.serveOne')}</button>
+        <button class="btn" id="roll1-mobile-all-btn-${item.id}" data-i18n="roll1.serveAll" aria-label="${i18n.t('roll1.serveAll')}">${i18n.t('roll1.serveAll')}</button>
       </div>
       <div class="ing-panel" id="roll1-mobile-ing-${item.id}">
         ${renderIngredients(item.ingKey)}
@@ -345,24 +346,31 @@
     const nameCounter = {};
     let totalRemaining = 0;
 
-    for (const item of state) {
-      if (item.remaining <= 0) continue;
+    // Sort items: non-zero first, then zero items at the end
+    const sortedState = [...state].sort((a, b) => {
+      if (a.remaining === 0 && b.remaining > 0) return 1;
+      if (a.remaining > 0 && b.remaining === 0) return -1;
+      return 0;
+    });
 
+    for (const item of sortedState) {
       nameCounter[item.name] = (nameCounter[item.name] || 0) + 1;
       const idxForName = nameCounter[item.name];
 
       // Desktop table row
       const tr = document.createElement("tr");
       tr.dataset.id = item.id;
+      const isZero = item.remaining === 0;
       tr.innerHTML = `
         <td class="name">
           <span class="tap" id="roll1-tap-${item.id}" data-i18n-title="roll1.clickToExpand" title="${i18n.t('roll1.clickToExpand')}">${displayLabel(item, idxForName)}</span>
           ${item.note ? `<div class="note">${item.note}</div>` : ""}
         </td>
         <td class="count">${item.target}</td>
-        <td class="count" id="roll1-remain-${item.id}">${item.remaining}</td>
+        <td class="count ${isZero ? 'zero' : ''}" id="roll1-remain-${item.id}">${item.remaining}</td>
         <td>
-          <button class="btn primary" id="roll1-btn-${item.id}" data-i18n="roll1.serve" aria-label="${i18n.t('roll1.serveOne')}">${i18n.t('roll1.serve')}</button>
+          <button class="btn primary" id="roll1-btn-${item.id}" ${isZero ? 'disabled' : ''} data-i18n="roll1.serve" aria-label="${i18n.t('roll1.serveOne')}">${i18n.t('roll1.serve')}</button>
+          <button class="btn" id="roll1-all-btn-${item.id}" ${isZero ? 'disabled' : ''} data-i18n="roll1.serveAll" aria-label="${i18n.t('roll1.serveAll')}">${i18n.t('roll1.serveAll')}</button>
         </td>
       `;
       tbody.appendChild(tr);
@@ -384,11 +392,41 @@
           saveState(state);
           if (item.remaining <= 0) {
             removeIngredientRowIfAny(tr);
-            tr.remove();
-            const mobileCard = mobileItems.querySelector(`.item-card[data-id="${item.id}"]`);
-            if (mobileCard) mobileCard.remove();
+            btn.disabled = true;
+            const mobileBtn = document.getElementById(`roll1-mobile-btn-${item.id}`);
+            if (mobileBtn) mobileBtn.disabled = true;
+            const allBtn = document.getElementById(`roll1-all-btn-${item.id}`);
+            if (allBtn) allBtn.disabled = true;
+            const mobileAllBtn = document.getElementById(`roll1-mobile-all-btn-${item.id}`);
+            if (mobileAllBtn) mobileAllBtn.disabled = true;
+            // Re-render to move zero items to end
+            render();
+            return;
           }
           updateTotals();
+        }
+      });
+
+      const allBtn = tr.querySelector(`#roll1-all-btn-${item.id}`);
+      allBtn.addEventListener("click", () => {
+        if (item.remaining > 0) {
+          item.remaining = 0;
+          document.getElementById(`roll1-remain-${item.id}`).textContent = item.remaining;
+          const mobileRemain = document.getElementById(`roll1-mobile-remain-${item.id}`);
+          if (mobileRemain) {
+            mobileRemain.textContent = item.remaining;
+            mobileRemain.className = 'item-remaining zero';
+          }
+          saveState(state);
+          removeIngredientRowIfAny(tr);
+          btn.disabled = true;
+          allBtn.disabled = true;
+          const mobileBtn = document.getElementById(`roll1-mobile-btn-${item.id}`);
+          if (mobileBtn) mobileBtn.disabled = true;
+          const mobileAllBtn = document.getElementById(`roll1-mobile-all-btn-${item.id}`);
+          if (mobileAllBtn) mobileAllBtn.disabled = true;
+          // Re-render to move zero items to end
+          render();
         }
       });
 
@@ -401,6 +439,11 @@
       });
 
       const mobileBtn = mobileCard.querySelector(`#roll1-mobile-btn-${item.id}`);
+      const mobileAllBtn = mobileCard.querySelector(`#roll1-mobile-all-btn-${item.id}`);
+      if (isZero) {
+        mobileBtn.disabled = true;
+        mobileAllBtn.disabled = true;
+      }
       mobileBtn.addEventListener("click", () => {
         if (item.remaining > 0) {
           item.remaining -= 1;
@@ -411,10 +454,37 @@
           saveState(state);
           if (item.remaining <= 0) {
             removeIngredientRowIfAny(tr);
-            tr.remove();
-            mobileCard.remove();
+            mobileBtn.disabled = true;
+            mobileAllBtn.disabled = true;
+            const desktopBtn = document.getElementById(`roll1-btn-${item.id}`);
+            if (desktopBtn) desktopBtn.disabled = true;
+            const desktopAllBtn = document.getElementById(`roll1-all-btn-${item.id}`);
+            if (desktopAllBtn) desktopAllBtn.disabled = true;
+            // Re-render to move zero items to end
+            render();
+            return;
           }
           updateTotals();
+        }
+      });
+
+      mobileAllBtn.addEventListener("click", () => {
+        if (item.remaining > 0) {
+          item.remaining = 0;
+          const desktopRemain = document.getElementById(`roll1-remain-${item.id}`);
+          if (desktopRemain) desktopRemain.textContent = item.remaining;
+          document.getElementById(`roll1-mobile-remain-${item.id}`).textContent = item.remaining;
+          document.getElementById(`roll1-mobile-remain-${item.id}`).className = 'item-remaining zero';
+          saveState(state);
+          removeIngredientRowIfAny(tr);
+          mobileBtn.disabled = true;
+          mobileAllBtn.disabled = true;
+          const desktopBtn = document.getElementById(`roll1-btn-${item.id}`);
+          if (desktopBtn) desktopBtn.disabled = true;
+          const desktopAllBtn = document.getElementById(`roll1-all-btn-${item.id}`);
+          if (desktopAllBtn) desktopAllBtn.disabled = true;
+          // Re-render to move zero items to end
+          render();
         }
       });
 
@@ -636,6 +706,7 @@
       </div>
       <div class="item-actions">
         <button class="btn primary" id="roll2-mobile-btn-${item.id}" data-i18n="roll2.serveOne" aria-label="${i18n.t('roll2.serveOne')}">${i18n.t('roll2.serveOne')}</button>
+        <button class="btn" id="roll2-mobile-all-btn-${item.id}" data-i18n="roll2.serveAll" aria-label="${i18n.t('roll2.serveAll')}">${i18n.t('roll2.serveAll')}</button>
       </div>
       <div class="ing-panel" id="roll2-mobile-ing-${item.id}">
         ${renderIngredients(item.ingKey)}
@@ -651,24 +722,31 @@
     const nameCounter = {};
     let totalRemaining = 0;
 
-    for (const item of state) {
-      if (item.remaining <= 0) continue;
+    // Sort items: non-zero first, then zero items at the end
+    const sortedState = [...state].sort((a, b) => {
+      if (a.remaining === 0 && b.remaining > 0) return 1;
+      if (a.remaining > 0 && b.remaining === 0) return -1;
+      return 0;
+    });
 
+    for (const item of sortedState) {
       nameCounter[item.name] = (nameCounter[item.name] || 0) + 1;
       const idxForName = nameCounter[item.name];
 
       // Desktop table row
       const tr = document.createElement("tr");
       tr.dataset.id = item.id;
+      const isZero = item.remaining === 0;
       tr.innerHTML = `
         <td class="name">
           <span class="tap" id="roll2-tap-${item.id}" data-i18n-title="roll2.clickToExpand" title="${i18n.t('roll2.clickToExpand')}">${displayLabel(item, idxForName)}</span>
           ${item.note ? `<div class="note">${item.note}</div>` : ""}
         </td>
         <td class="count">${item.target}</td>
-        <td class="count" id="roll2-remain-${item.id}">${item.remaining}</td>
+        <td class="count ${isZero ? 'zero' : ''}" id="roll2-remain-${item.id}">${item.remaining}</td>
         <td>
-          <button class="btn primary" id="roll2-btn-${item.id}" data-i18n="roll2.serve" aria-label="${i18n.t('roll2.serveOne')}">${i18n.t('roll2.serve')}</button>
+          <button class="btn primary" id="roll2-btn-${item.id}" ${isZero ? 'disabled' : ''} data-i18n="roll2.serve" aria-label="${i18n.t('roll2.serveOne')}">${i18n.t('roll2.serve')}</button>
+          <button class="btn" id="roll2-all-btn-${item.id}" ${isZero ? 'disabled' : ''} data-i18n="roll2.serveAll" aria-label="${i18n.t('roll2.serveAll')}">${i18n.t('roll2.serveAll')}</button>
         </td>
       `;
       tbody.appendChild(tr);
@@ -690,11 +768,41 @@
           saveState(state);
           if (item.remaining <= 0) {
             removeIngredientRowIfAny(tr);
-            tr.remove();
-            const mobileCard = mobileItems.querySelector(`.item-card[data-id="${item.id}"]`);
-            if (mobileCard) mobileCard.remove();
+            btn.disabled = true;
+            const mobileBtn = document.getElementById(`roll2-mobile-btn-${item.id}`);
+            if (mobileBtn) mobileBtn.disabled = true;
+            const allBtn = document.getElementById(`roll2-all-btn-${item.id}`);
+            if (allBtn) allBtn.disabled = true;
+            const mobileAllBtn = document.getElementById(`roll2-mobile-all-btn-${item.id}`);
+            if (mobileAllBtn) mobileAllBtn.disabled = true;
+            // Re-render to move zero items to end
+            render();
+            return;
           }
           updateTotals();
+        }
+      });
+
+      const allBtn = tr.querySelector(`#roll2-all-btn-${item.id}`);
+      allBtn.addEventListener("click", () => {
+        if (item.remaining > 0) {
+          item.remaining = 0;
+          document.getElementById(`roll2-remain-${item.id}`).textContent = item.remaining;
+          const mobileRemain = document.getElementById(`roll2-mobile-remain-${item.id}`);
+          if (mobileRemain) {
+            mobileRemain.textContent = item.remaining;
+            mobileRemain.className = 'item-remaining zero';
+          }
+          saveState(state);
+          removeIngredientRowIfAny(tr);
+          btn.disabled = true;
+          allBtn.disabled = true;
+          const mobileBtn = document.getElementById(`roll2-mobile-btn-${item.id}`);
+          if (mobileBtn) mobileBtn.disabled = true;
+          const mobileAllBtn = document.getElementById(`roll2-mobile-all-btn-${item.id}`);
+          if (mobileAllBtn) mobileAllBtn.disabled = true;
+          // Re-render to move zero items to end
+          render();
         }
       });
 
@@ -707,6 +815,11 @@
       });
 
       const mobileBtn = mobileCard.querySelector(`#roll2-mobile-btn-${item.id}`);
+      const mobileAllBtn = mobileCard.querySelector(`#roll2-mobile-all-btn-${item.id}`);
+      if (isZero) {
+        mobileBtn.disabled = true;
+        mobileAllBtn.disabled = true;
+      }
       mobileBtn.addEventListener("click", () => {
         if (item.remaining > 0) {
           item.remaining -= 1;
@@ -717,10 +830,37 @@
           saveState(state);
           if (item.remaining <= 0) {
             removeIngredientRowIfAny(tr);
-            tr.remove();
-            mobileCard.remove();
+            mobileBtn.disabled = true;
+            mobileAllBtn.disabled = true;
+            const desktopBtn = document.getElementById(`roll2-btn-${item.id}`);
+            if (desktopBtn) desktopBtn.disabled = true;
+            const desktopAllBtn = document.getElementById(`roll2-all-btn-${item.id}`);
+            if (desktopAllBtn) desktopAllBtn.disabled = true;
+            // Re-render to move zero items to end
+            render();
+            return;
           }
           updateTotals();
+        }
+      });
+
+      mobileAllBtn.addEventListener("click", () => {
+        if (item.remaining > 0) {
+          item.remaining = 0;
+          const desktopRemain = document.getElementById(`roll2-remain-${item.id}`);
+          if (desktopRemain) desktopRemain.textContent = item.remaining;
+          document.getElementById(`roll2-mobile-remain-${item.id}`).textContent = item.remaining;
+          document.getElementById(`roll2-mobile-remain-${item.id}`).className = 'item-remaining zero';
+          saveState(state);
+          removeIngredientRowIfAny(tr);
+          mobileBtn.disabled = true;
+          mobileAllBtn.disabled = true;
+          const desktopBtn = document.getElementById(`roll2-btn-${item.id}`);
+          if (desktopBtn) desktopBtn.disabled = true;
+          const desktopAllBtn = document.getElementById(`roll2-all-btn-${item.id}`);
+          if (desktopAllBtn) desktopAllBtn.disabled = true;
+          // Re-render to move zero items to end
+          render();
         }
       });
 

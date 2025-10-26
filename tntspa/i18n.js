@@ -25,6 +25,7 @@ const translations = {
     "roll1.remaining": "剩餘",
     "roll1.actions": "操作",
     "roll1.serve": "出",
+    "roll1.serveAll": "全",
     "roll1.serveOne": "出餐 1 份",
     "roll1.confirmReset": "確認恢復所有剩餘至每日目標？",
     "roll1.clickToExpand": "點擊展開/收合成分",
@@ -41,6 +42,7 @@ const translations = {
     "roll2.remaining": "剩餘",
     "roll2.actions": "操作",
     "roll2.serve": "出",
+    "roll2.serveAll": "全",
     "roll2.serveOne": "出餐 1 份",
     "roll2.confirmReset": "確認恢復所有剩餘至每日目標？",
     "roll2.clickToExpand": "點擊展開/收合成分",
@@ -87,6 +89,7 @@ const translations = {
     "footer.version": "版本",
     "footer.copyright": "版權所有",
     "footer.author": "戴谷州",
+    "footer.version.number": "4.0",
 
     // Product Names
     "product.california": "加州卷",
@@ -248,6 +251,7 @@ const translations = {
     "roll1.remaining": "剩余",
     "roll1.actions": "操作",
     "roll1.serve": "出",
+    "roll1.serveAll": "全",
     "roll1.serveOne": "出餐 1 份",
     "roll1.confirmReset": "确认恢复所有剩余至每日目标？",
     "roll1.clickToExpand": "点击展开/收合成分",
@@ -264,6 +268,7 @@ const translations = {
     "roll2.remaining": "剩余",
     "roll2.actions": "操作",
     "roll2.serve": "出",
+    "roll2.serveAll": "全",
     "roll2.serveOne": "出餐 1 份",
     "roll2.confirmReset": "确认恢复所有剩余至每日目标？",
     "roll2.clickToExpand": "点击展开/收合成分",
@@ -310,6 +315,7 @@ const translations = {
     "footer.version": "版本",
     "footer.copyright": "版权所有",
     "footer.author": "戴谷州",
+    "footer.version.number": "4.0",
 
     // Product Names (Simplified Chinese)
     "product.california": "加州卷",
@@ -475,6 +481,7 @@ const translations = {
     "roll1.remaining": "Remaining",
     "roll1.actions": "Actions",
     "roll1.serve": "Serve",
+    "roll1.serveAll": "All",
     "roll1.serveOne": "Serve 1 Portion",
     "roll1.confirmReset": "Confirm restoring all remaining to daily targets?",
     "roll1.clickToExpand": "Click to expand/collapse ingredients",
@@ -491,6 +498,7 @@ const translations = {
     "roll2.remaining": "Remaining",
     "roll2.actions": "Actions",
     "roll2.serve": "Serve",
+    "roll2.serveAll": "All",
     "roll2.serveOne": "Serve 1 Portion",
     "roll2.confirmReset": "Confirm restoring all remaining to daily targets?",
     "roll2.clickToExpand": "Click to expand/collapse ingredients",
@@ -537,6 +545,7 @@ const translations = {
     "footer.version": "Version",
     "footer.copyright": "Copyright",
     "footer.author": "Kuchou Tai",
+    "footer.version.number": "4.0",
 
     // Product Names (English)
     "product.california": "California Roll",
