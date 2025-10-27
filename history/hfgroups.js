@@ -1,1 +1,0 @@
-var groups = ["Exterior Wind-Cold", "Exterior Wind-Heat ", "Purgation", "Harmonizing", "Clearing Heat", "Warming Interior", "Interior-Exterior", "Tonifying Qi"]
