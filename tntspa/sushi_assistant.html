@@ -136,8 +136,36 @@
 
     <div class="wrap">
       <div class="card">
-        <div class="toolbar">
+        <!-- Mode Toggle Button -->
+        <div class="mode-toggle-container">
+          <button class="btn mode-toggle-btn" id="notes-mode-toggle">
+            <span id="notes-mode-icon">🔍</span>
+            <span id="notes-mode-text" data-i18n="notes.switchToSearch">切換到搜尋</span>
+          </button>
+          <div class="mode-indicator">
+            <span id="notes-current-mode" data-i18n="notes.modeSelect">單選模式</span>
+          </div>
+        </div>
+
+        <!-- Select Mode UI -->
+        <div id="notes-select-mode" class="toolbar" style="gap: 10px;">
           <select id="notes-picker" data-i18n-title="notes.selectSushi" title="選擇壽司卷" aria-label="選擇壽司卷"></select>
+        </div>
+
+        <!-- Search Mode UI -->
+        <div id="notes-search-mode" class="toolbar" style="gap: 10px; display: none;">
+          <div style="display: flex; gap: 8px; flex: 1; min-width: 200px;">
+            <input
+              type="text"
+              id="notes-search-input"
+              class="search-input"
+              data-i18n-placeholder="notes.searchPlaceholder"
+              placeholder="搜尋壽司卷名稱或成分..."
+              aria-label="搜尋壽司卷"
+            />
+            <button class="btn primary" id="notes-search-btn" data-i18n="notes.searchButton">搜尋</button>
+            <button class="btn" id="notes-clear-btn" data-i18n="notes.clearSearch">清除</button>
+          </div>
         </div>
 
         <div class="content">

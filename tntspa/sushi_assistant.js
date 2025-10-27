@@ -930,10 +930,10 @@
       nameKey: "gardenDelight",
       styleKey: "note.multipleTypes",
       variants: [
-        { titleKey: "note.gardenDelight1", styleKey: "ing.type3Normal", toppingsKeys: ["ing.blackWhiteSesame"], fillingsKeys: ["ing.pickledRadish 30g", "ing.redPepperShred 25g"] },
-        { titleKey: "note.gardenDelight2", styleKey: "ing.type3Normal", toppingsKeys: ["ing.blackWhiteSesame"], fillingsKeys: ["ing.cucumber 20g", "ing.avocado 25g"] },
-        { titleKey: "note.gardenDelight3", styleKey: "ing.type3Normal", toppingsKeys: ["ing.blackWhiteSesame"], fillingsKeys: ["ing.cucumber 20g", "ing.redPepperShred 10g", "ing.carrotShred 20g"] },
-        { titleKey: "note.gardenDelight4", styleKey: "ing.type3Normal", toppingsKeys: [], fillingsKeys: ["ing.lettuce 2pcs", "ing.cucumber 30g", "ing.avocado 20g", "ing.pickledRadish 30g", "ing.redPepperShred 20g", "ing.carrotShred 15g"] }
+        { titleKey: "note.gardenDelight1", styleKey: "ing.type1Inside", toppingsKeys: ["ing.blackWhiteSesame"], fillingsKeys: ["ing.pickledRadish 30g", "ing.redPepperShred 25g"] },
+        { titleKey: "note.gardenDelight2", styleKey: "ing.type1Inside", toppingsKeys: ["ing.blackWhiteSesame"], fillingsKeys: ["ing.cucumber 20g", "ing.avocado 25g"] },
+        { titleKey: "note.gardenDelight3", styleKey: "ing.type1Inside", toppingsKeys: ["ing.blackWhiteSesame"], fillingsKeys: ["ing.cucumber 20g", "ing.redPepperShred 10g", "ing.carrotShred 20g"] },
+        { titleKey: "note.gardenDelight4", styleKey: "ing.type3Normal", toppingsKeys: [], fillingsKeys: ["ing.lettuce 2pcs", "ing.cucumber 30g", "ing.avocado 20g", "ing.yellowPickle 30g", "ing.redPepperShred 20g", "ing.carrotShred 15g"] }
       ]
     },
     { nameKey: "miniSalmon", styleKey: "ing.type1Normal", toppingsKeys: [], fillingsKeys: ["ing.salmon 30g"] },
@@ -959,6 +959,7 @@
       notes: item.notesKey ? i18n.t(item.notesKey) : undefined,
       variants: item.variants ? item.variants.map(v => ({
         title: i18n.t(v.titleKey),
+        style: i18n.t(v.styleKey),
         toppings: v.toppingsKeys ? v.toppingsKeys.map(k => {
           const parts = k.split(' ');
           return parts.length > 1 ? i18n.t(parts[0]) + ' ' + parts[1] : i18n.t(k);
@@ -976,6 +977,46 @@
 
   const picker = document.getElementById("notes-picker");
   const result = document.getElementById("notes-result");
+  const searchInput = document.getElementById("notes-search-input");
+  const searchBtn = document.getElementById("notes-search-btn");
+  const clearBtn = document.getElementById("notes-clear-btn");
+
+  // Mode toggle elements
+  const modeToggleBtn = document.getElementById("notes-mode-toggle");
+  const modeIcon = document.getElementById("notes-mode-icon");
+  const modeText = document.getElementById("notes-mode-text");
+  const currentModeText = document.getElementById("notes-current-mode");
+  const selectModeUI = document.getElementById("notes-select-mode");
+  const searchModeUI = document.getElementById("notes-search-mode");
+
+  let currentMode = "select"; // "select" or "search"
+
+  // Toggle between select and search modes
+  function toggleMode() {
+    if (currentMode === "select") {
+      // Switch to search mode
+      currentMode = "search";
+      selectModeUI.style.display = "none";
+      searchModeUI.style.display = "flex";
+      modeIcon.textContent = "📋";
+      modeText.textContent = i18n.t('notes.switchToSelect');
+      currentModeText.textContent = i18n.t('notes.modeSearch');
+      result.innerHTML = `<div class="empty">${i18n.t('notes.emptySearch')}</div>`;
+      // Clear select picker
+      picker.value = "";
+    } else {
+      // Switch to select mode
+      currentMode = "select";
+      selectModeUI.style.display = "flex";
+      searchModeUI.style.display = "none";
+      modeIcon.textContent = "🔍";
+      modeText.textContent = i18n.t('notes.switchToSearch');
+      currentModeText.textContent = i18n.t('notes.modeSelect');
+      result.innerHTML = `<div class="empty">${i18n.t('notes.empty')}</div>`;
+      // Clear search input
+      searchInput.value = "";
+    }
+  }
 
   function renderList(arr) {
     if (!arr || !arr.length) return `<div class="meta">${i18n.t('notes.none')}</div>`;
@@ -1009,20 +1050,111 @@
           <div class="title">${item.name}</div>
           ${item.variants.map(v => {
         const hasToppings = v.toppings && v.toppings.length > 0;
+        console.log(v)
         return `
             <div class="sec" style="border-top:1px dashed var(--border);padding-top:10px;margin-top:10px;">
               <div class="meta"><strong>${v.title}</strong></div>
-              <div class="sec">
-                <span class="tag">${v.style || i18n.t('notes.styleUnknown')}</span>&nbsp;&nbsp;
-                  ${hasToppings ? `
-                <span class="tag">${(v.toppings)}</span>
-                ` : ''}
-                  ${renderList(v.fillings)}
+              <div class="grid">
+                <div class="sec">
+                  <span class="tag">${i18n.t(v.style) || i18n.t('notes.styleUnknown')}</span>&nbsp;&nbsp;
+                    ${hasToppings ? `
+                  <span class="tag">${(v.toppings)}</span>
+                  ` : ''}
+                    ${renderList(v.fillings)}
+                </div>
               </div>
             </div>`;
       }).join("")}
         </div>`;
     }
+  }
+
+  // Search function - filters DATA based on search term
+  function searchSushi(searchTerm) {
+    if (!searchTerm || searchTerm.trim() === "") {
+      return [];
+    }
+
+    const term = searchTerm.toLowerCase().trim();
+    return DATA.filter(item => {
+      // Search in name
+      if (item.name.toLowerCase().includes(term)) return true;
+
+      // Search in style
+      if (item.style && item.style.toLowerCase().includes(term)) return true;
+
+      // Search in toppings
+      if (item.toppings && item.toppings.some(t => t.toLowerCase().includes(term))) return true;
+
+      // Search in fillings
+      if (item.fillings && item.fillings.some(f => f.toLowerCase().includes(term))) return true;
+
+      // Search in notes
+      if (item.notes && item.notes.toLowerCase().includes(term)) return true;
+
+      // Search in variants
+      if (item.variants) {
+        return item.variants.some(v => {
+          if (v.title && v.title.toLowerCase().includes(term)) return true;
+          if (v.toppings && v.toppings.some(t => t.toLowerCase().includes(term))) return true;
+          if (v.fillings && v.fillings.some(f => f.toLowerCase().includes(term))) return true;
+          return false;
+        });
+      }
+
+      return false;
+    });
+  }
+
+  // Render multiple items
+  function renderMultipleItems(items) {
+    if (!items || items.length === 0) {
+      result.innerHTML = `<div class="empty">${i18n.t('notes.noResults')}</div>`;
+      return;
+    }
+
+    const header = `<div class="meta" style="margin-bottom:15px;"><strong>${i18n.t('notes.searchResults')}</strong>: ${items.length} ${i18n.t('notes.selectSushi')}</div>`;
+
+    const cardsHtml = items.map(item => {
+      if (!item.variants) {
+        const hasToppings = item.toppings && item.toppings.length > 0;
+        return `
+          <div class="note-card" style="margin-bottom:20px;">
+            <div class="title">${item.name}&nbsp;&nbsp;</div>
+            <div class="grid">
+              <div class="sec">
+               <span class="tag">${item.style || i18n.t('notes.styleUnknown')}</span>&nbsp;&nbsp;
+                ${hasToppings ? `
+               <span class="tag">${(item.toppings)}</span>
+              ` : ''}
+                ${renderList(item.fillings)}
+              </div>
+            </div>
+            ${item.notes ? `<div class="meta" style="margin-top:10px;padding-top:10px;border-top:1px dashed var(--border);"><strong>備註：</strong>${item.notes}</div>` : ''}
+          </div>`;
+      } else {
+        return `
+          <div class="note-card" style="margin-bottom:20px;">
+            <div class="title">${item.name}</div>
+            ${item.variants.map(v => {
+          const hasToppings = v.toppings && v.toppings.length > 0;
+          return `
+              <div class="sec" style="border-top:1px dashed var(--border);padding-top:10px;margin-top:10px;">
+                <div class="meta"><strong>${v.title}</strong></div>
+                <div class="sec">
+                  <span class="tag">${v.style || i18n.t('notes.styleUnknown')}</span>&nbsp;&nbsp;
+                    ${hasToppings ? `
+                  <span class="tag">${(v.toppings)}</span>
+                  ` : ''}
+                    ${renderList(v.fillings)}
+                </div>
+              </div>`;
+        }).join("")}
+          </div>`;
+      }
+    }).join("");
+
+    result.innerHTML = header + cardsHtml;
   }
 
   function buildPicker() {
@@ -1046,6 +1178,13 @@
   }
 
   buildPicker();
+
+  // Mode toggle button handler
+  modeToggleBtn.addEventListener("click", () => {
+    toggleMode();
+  });
+
+  // Select mode: picker change handler
   picker.addEventListener("change", () => {
     if (picker.value === "") {
       result.innerHTML = `<div class="empty">${i18n.t('notes.empty')}</div>`;
@@ -1055,14 +1194,46 @@
     renderItem(DATA[idx]);
   });
 
-  // Show empty message by default
+  // Search mode: search button click handler
+  searchBtn.addEventListener("click", () => {
+    const searchTerm = searchInput.value;
+    const results = searchSushi(searchTerm);
+    renderMultipleItems(results);
+  });
+
+  // Search mode: clear button click handler
+  clearBtn.addEventListener("click", () => {
+    searchInput.value = "";
+    result.innerHTML = `<div class="empty">${i18n.t('notes.emptySearch')}</div>`;
+  });
+
+  // Search mode: enter key in search input
+  searchInput.addEventListener("keypress", (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      searchBtn.click();
+    }
+  });
+
+  // Show empty message by default (select mode)
   result.innerHTML = `<div class="empty">${i18n.t('notes.empty')}</div>`;
 
   // Expose rebuild function for i18n language changes
   window.notesRebuild = function () {
     DATA = buildData();
     buildPicker();
-    result.innerHTML = `<div class="empty">${i18n.t('notes.empty')}</div>`;
+    searchInput.placeholder = i18n.t('notes.searchPlaceholder');
+
+    // Update mode toggle button text based on current mode
+    if (currentMode === "select") {
+      modeText.textContent = i18n.t('notes.switchToSearch');
+      currentModeText.textContent = i18n.t('notes.modeSelect');
+      result.innerHTML = `<div class="empty">${i18n.t('notes.empty')}</div>`;
+    } else {
+      modeText.textContent = i18n.t('notes.switchToSelect');
+      currentModeText.textContent = i18n.t('notes.modeSearch');
+      result.innerHTML = `<div class="empty">${i18n.t('notes.emptySearch')}</div>`;
+    }
   };
 })();
 
