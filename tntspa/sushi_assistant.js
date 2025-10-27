@@ -181,7 +181,11 @@
     "egg": {
       type: "ing.type1Normal",
       fillings: ["ing.tamago"]
-    }
+    },
+    "tunaSashimi": {
+      type: "ing.type2Inside",
+      fillings: ["ing.tunaSashimi 60g", "ing.cucumber 25g"]
+    },
   };
 
   // Function to get translated ingredients
@@ -224,7 +228,7 @@
     { nameKey: "cucumberAvocado", target: 2, note: "", ingKey: "cucumberAvocado" },
     { nameKey: "miniCucumber", target: 16, noteKey: "note.midAutumn 4", ingKey: "miniCucumber" },
     { nameKey: "egg", target: 1, noteKey: "note.midAutumn 4, note.dropShape 1", ingKey: "egg" },
-    // { nameKey: "tofuSeafood", target: 5, note: "", ingKey: "seafood" },
+    { nameKey: "spicyTunaRoll", target: 2, noteKey: "note.tunaSashimi", ingKey: "tunaSashimi" },
     { nameKey: "salmonAvocado", target: 12, noteKey: "note.triangle 3 - note.canadaA／2 - note.thousandIsland／2／5-ST2", ingKey: "salmonAvocado" },
     { nameKey: "futomaki", target: 1, note: "", ingKey: "futomaki" },
     { nameKey: "cookedSalmon", target: 9, noteKey: "note.redTobiko 2 - note.thousandIsland／2 - note.chargrilled／5-ST2", ingKey: "cookedSalmon" },
