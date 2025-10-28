@@ -1258,10 +1258,11 @@
       },
       sections: {
         prep: [
+          i18n.t('checklist.task.prep3'),
+          i18n.t('checklist.task.prep4'),
           i18n.t('checklist.task.prep1'),
           i18n.t('checklist.task.prep2'),
-          // i18n.t('checklist.task.prep3'),
-          // i18n.t('checklist.task.prep4')
+
         ],
         during: [
           i18n.t('checklist.task.during1'),
@@ -1278,8 +1279,8 @@
           i18n.t('checklist.task.post2'),
           i18n.t('checklist.task.post3'),
           i18n.t('checklist.task.post4'),
-          i18n.t('checklist.task.post5'),
           i18n.t('checklist.task.post6'),
+          i18n.t('checklist.task.post5'),
           // i18n.t('checklist.task.post7'),
           // i18n.t('checklist.task.post8'),
           // i18n.t('checklist.task.post9'),
@@ -1558,7 +1559,7 @@
           i18n.t('checklist2.task.prep1'),
           i18n.t('checklist2.task.prep2'),
           i18n.t('checklist2.task.prep3'),
-          i18n.t('checklist2.task.prep4')
+          // i18n.t('checklist2.task.prep4')
         ],
         during: [
           i18n.t('checklist2.task.during1'),
@@ -1567,7 +1568,9 @@
           i18n.t('checklist2.task.during4'),
           i18n.t('checklist2.task.during5'),
           i18n.t('checklist2.task.during6'),
-          i18n.t('checklist2.task.during7')
+          i18n.t('checklist2.task.during7'),
+          i18n.t('checklist2.task.during8'),
+          i18n.t('checklist2.task.during9'),
         ],
         post: [
           i18n.t('checklist2.task.post1'),
@@ -1579,7 +1582,6 @@
           i18n.t('checklist2.task.post7'),
           i18n.t('checklist2.task.post8'),
           i18n.t('checklist2.task.post9'),
-          i18n.t('checklist2.task.post11'),
           i18n.t('checklist2.task.post10')
         ]
       }
