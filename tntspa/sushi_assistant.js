@@ -1267,11 +1267,11 @@
           i18n.t('checklist.task.during1'),
           i18n.t('checklist.task.during2'),
           i18n.t('checklist.task.during6'),
-          i18n.t('checklist.task.during3'),
-          i18n.t('checklist.task.during4'),
+          // i18n.t('checklist.task.during3'),
+          // i18n.t('checklist.task.during4'),
+          // i18n.t('checklist.task.during6'),
+          i18n.t('checklist.task.during7'),
           i18n.t('checklist.task.during5'),
-          i18n.t('checklist.task.during6'),
-          i18n.t('checklist.task.during7')
         ],
         post: [
           i18n.t('checklist.task.post1'),

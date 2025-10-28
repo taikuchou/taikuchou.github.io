@@ -207,7 +207,7 @@ const translations = {
     "checklist.task.during4": "蒸熱三文魚",
     "checklist.task.during5": "卷完後休息吃飯",
     "checklist.task.during6": "完成「卷2」未完成壽司",
-    "checklist.task.during7": "第二輪：加州20，三文牛油，10，小三文10，大蝦4，脆龍2",
+    "checklist.task.during7": "第二輪：加州20，三文牛油10，小三文10，大蝦4，脆龍2",
     "checklist.task.during8": "",
     "checklist.task.post1": "下午備壽司料：紅椒、黃蘿蔔、青瓜條(15條)、胡蘿蔔絲、青菜、",
     "checklist.task.post2": "確認：熟三文魚",
