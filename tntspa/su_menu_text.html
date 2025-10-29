@@ -30,9 +30,9 @@
       let output = '';
 
       // Header
-      output += '═══════════════════════════════════\n';
-      output += '              壽司卷菜單\n';
-      output += '═══════════════════════════════════\n';
+      output += '════════════════════════════════\n';
+      output += '            壽司卷菜單\n';
+      output += '════════════════════════════════\n';
       output += `更新日期：${menuData.generated_at}\n\n`;
 
       // Menu items
@@ -93,7 +93,7 @@
           }
         }
 
-        output += '\n' + '─'.repeat(36) + '\n\n';
+        output += '\n' + '─'.repeat(32) + '\n\n';
       });
 
       document.getElementById('menu-text').textContent = output;
