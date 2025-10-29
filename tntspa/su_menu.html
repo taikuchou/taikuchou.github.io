@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <title>壽司卷菜單</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang TC", "Microsoft JhengHei", sans-serif;
+      background: #f5f5f5;
+      color: #333;
+      padding: 16px;
+      line-height: 1.6;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 2px solid #2196F3;
+    }
+
+    .header h1 {
+      font-size: 28px;
+      color: #2196F3;
+      margin-bottom: 8px;
+    }
+
+    .header .date {
+      font-size: 16px;
+      color: #666;
+    }
+
+    .menu-item {
+      background: white;
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 16px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    .menu-item-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid #eee;
+    }
+
+    .menu-item-name {
+      font-size: 22px;
+      font-weight: 600;
+      color: #2196F3;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 5px 10px;
+      border-radius: 4px;
+      font-size: 15px;
+      font-weight: 500;
+      margin-left: 8px;
+    }
+
+    .badge-info {
+      background: #e3f2fd;
+      color: #1976d2;
+    }
+
+    .section {
+      margin-bottom: 12px;
+    }
+
+    .section-title {
+      font-size: 17px;
+      font-weight: 600;
+      color: #666;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+    }
+
+    .section-title::before {
+      content: "●";
+      color: #2196F3;
+      margin-right: 6px;
+      font-size: 12px;
+    }
+
+    .section-content {
+      font-size: 16px;
+      color: #444;
+      padding-left: 14px;
+    }
+
+    .topping-list, .filling-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 4px;
+    }
+
+    .tag {
+      background: #f0f0f0;
+      padding: 6px 12px;
+      border-radius: 16px;
+      font-size: 16px;
+      color: #555;
+    }
+
+    .filling-item {
+      background: #fff3e0;
+      padding: 8px 14px;
+      border-radius: 6px;
+      font-size: 16px;
+      color: #e65100;
+      border: 1px solid #ffe0b2;
+      margin-bottom: 4px;
+    }
+
+    .quantity {
+      font-weight: 600;
+      color: #ff6f00;
+    }
+
+    .prep-note {
+      font-size: 15px;
+      color: #f57c00;
+      font-style: italic;
+      margin-top: 2px;
+    }
+
+    .notes {
+      background: #fff9c4;
+      padding: 10px;
+      border-radius: 6px;
+      font-size: 16px;
+      color: #f57f17;
+      border-left: 3px solid #fbc02d;
+      margin-top: 8px;
+    }
+
+    .composite-item {
+      background: #fafafa;
+      border-left: 3px solid #2196F3;
+      padding: 12px;
+      margin-bottom: 12px;
+      border-radius: 4px;
+    }
+
+    .composite-item:last-child {
+      margin-bottom: 0;
+    }
+
+    .composite-label {
+      font-size: 18px;
+      font-weight: 600;
+      color: #1976d2;
+      margin-bottom: 8px;
+    }
+
+    .type-badge {
+      background: #e8f5e9;
+      color: #2e7d32;
+      padding: 5px 12px;
+      border-radius: 4px;
+      font-size: 15px;
+      font-weight: 500;
+      display: inline-block;
+      margin-bottom: 12px;
+    }
+
+    @media (max-width: 320px) {
+      body {
+        padding: 12px;
+      }
+
+      .menu-item {
+        padding: 12px;
+      }
+
+      .menu-item-name {
+        font-size: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>壽司卷菜單</h1>
+    <div class="date" id="generated-date"></div>
+  </div>
+
+  <div id="menu-container"></div>
+
+  <script src="menu-data.js"></script>
+  <script>
+    // Load and display menu
+    document.addEventListener('DOMContentLoaded', function() {
+      // Display generated date
+      document.getElementById('generated-date').textContent = `更新日期：${menuData.generated_at}`;
+
+      // Render menu
+      const container = document.getElementById('menu-container');
+      menuData.menu.forEach(item => {
+        container.appendChild(createMenuItem(item));
+      });
+    });
+
+    function createMenuItem(item) {
+      const div = document.createElement('div');
+      div.className = 'menu-item';
+
+      // Check if composite item
+      if (item.type === '綜合' && item.items) {
+        div.innerHTML = `
+          <div class="menu-item-header">
+            <div>
+              <span class="menu-item-name">${item.name}</span>
+              <span class="type-badge">${item.type}</span>
+            </div>
+          </div>
+          ${item.items.map(subItem => createCompositeItem(subItem)).join('')}
+        `;
+      } else {
+        div.innerHTML = `
+          <div class="menu-item-header">
+            <span class="menu-item-name">${item.name}</span>
+            <div>
+              ${item.roll_number || item.orientation ? `<span class="badge badge-info">${item.roll_number ? item.roll_number + '號' : ''}${item.orientation || ''}</span>` : ''}
+            </div>
+          </div>
+
+          ${item.toppings && item.toppings.length > 0 ? `
+            <div class="section">
+              <div class="section-title">面料</div>
+              <div class="section-content">
+                <div class="topping-list">
+                  ${item.toppings.map(topping => `<span class="tag">${topping}</span>`).join('')}
+                </div>
+              </div>
+            </div>
+          ` : ''}
+
+          ${item.fillings && item.fillings.length > 0 ? `
+            <div class="section">
+              <div class="section-title">內餡</div>
+              <div class="section-content">
+                ${item.fillings.map(filling => formatFilling(filling)).join('')}
+              </div>
+            </div>
+          ` : ''}
+
+          ${item.notes && item.notes.length > 0 ? `
+            <div class="notes">
+              ${item.notes.join('；')}
+            </div>
+          ` : ''}
+        `;
+      }
+
+      return div;
+    }
+
+    function createCompositeItem(subItem) {
+      return `
+        <div class="composite-item">
+          <div class="composite-label">${subItem.label}</div>
+          ${subItem.roll_number || subItem.orientation ? `
+          <div style="margin-bottom:8px;">
+            <span class="badge badge-info">${subItem.roll_number ? subItem.roll_number + '號' : ''}${subItem.orientation || ''}</span>
+          </div>
+          ` : ''}
+
+          ${subItem.toppings && subItem.toppings.length > 0 ? `
+            <div class="section">
+              <div class="section-title">面料</div>
+              <div class="section-content">
+                <div class="topping-list">
+                  ${subItem.toppings.map(topping => `<span class="tag">${topping}</span>`).join('')}
+                </div>
+              </div>
+            </div>
+          ` : ''}
+
+          ${subItem.fillings && subItem.fillings.length > 0 ? `
+            <div class="section">
+              <div class="section-title">內餡</div>
+              <div class="section-content">
+                ${subItem.fillings.map(filling => formatFilling(filling)).join('')}
+              </div>
+            </div>
+          ` : ''}
+
+          ${subItem.notes && subItem.notes.length > 0 ? `
+            <div class="notes">
+              ${subItem.notes.join('；')}
+            </div>
+          ` : ''}
+        </div>
+      `;
+    }
+
+    function formatFilling(filling) {
+      if (typeof filling === 'string') {
+        return `<div class="filling-item">${filling}</div>`;
+      }
+
+      let text = filling.ingredient;
+
+      if (filling.quantity && filling.unit) {
+        text += ` <span class="quantity">${filling.quantity}${filling.unit}</span>`;
+      } else if (filling.quantity) {
+        text += ` <span class="quantity">${filling.quantity}</span>`;
+      }
+
+      if (filling.notes) {
+        text += ` <span style="color:#666;font-size:14px;">(${filling.notes})</span>`;
+      }
+
+      let result = `<div class="filling-item">${text}</div>`;
+
+      if (filling.prep) {
+        result += `<div class="prep-note">製作：${filling.prep}</div>`;
+      }
+
+      return result;
+    }
+  </script>
+</body>
+</html>

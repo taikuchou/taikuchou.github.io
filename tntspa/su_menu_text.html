@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>壽司卷菜單 - 文字版</title>
+  <style>
+    body {
+      font-family: monospace;
+      padding: 10px;
+      line-height: 1.8;
+      max-width: 100%;
+      margin: 0;
+      font-size: 18px;
+    }
+    pre {
+      white-space: pre-wrap;
+      word-wrap: break-word;
+      margin: 0;
+      font-size: 18px;
+    }
+  </style>
+</head>
+<body>
+  <pre id="menu-text"></pre>
+
+  <script src="menu-data.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      let output = '';
+
+      // Header
+      output += '═══════════════════════════════════════\n';
+      output += '                壽司卷菜單\n';
+      output += '═══════════════════════════════════════\n';
+      output += `更新日期：${menuData.generated_at}\n\n`;
+
+      // Menu items
+      menuData.menu.forEach((item, index) => {
+        output += `【${index + 1}】${item.name}\n`;
+
+        // Check if composite item
+        if (item.type === '綜合' && item.items) {
+          output += `    類型：${item.type}\n`;
+
+          item.items.forEach((subItem, subIndex) => {
+            output += `\n    ▸ ${subItem.label}\n`;
+
+            if (subItem.roll_number || subItem.orientation) {
+              output += `      規格：`;
+              if (subItem.roll_number) output += `${subItem.roll_number}號`;
+              if (subItem.orientation) output += `${subItem.orientation}`;
+              output += '\n';
+            }
+
+            if (subItem.toppings && subItem.toppings.length > 0) {
+              output += `      面料：${subItem.toppings.join('、')}\n`;
+            }
+
+            if (subItem.fillings && subItem.fillings.length > 0) {
+              output += `      內餡：\n`;
+              subItem.fillings.forEach(filling => {
+                output += `        - ${formatFilling(filling)}\n`;
+              });
+            }
+
+            if (subItem.notes && subItem.notes.length > 0) {
+              output += `      註記：${subItem.notes.join('；')}\n`;
+            }
+          });
+        } else {
+          // Regular item
+          if (item.roll_number || item.orientation) {
+            output += `    規格：`;
+            if (item.roll_number) output += `${item.roll_number}號`;
+            if (item.orientation) output += `${item.orientation}`;
+            output += '\n';
+          }
+
+          if (item.toppings && item.toppings.length > 0) {
+            output += `    面料：${item.toppings.join('、')}\n`;
+          }
+
+          if (item.fillings && item.fillings.length > 0) {
+            output += `    內餡：\n`;
+            item.fillings.forEach(filling => {
+              output += `      - ${formatFilling(filling)}\n`;
+            });
+          }
+
+          if (item.notes && item.notes.length > 0) {
+            output += `    註記：${item.notes.join('；')}\n`;
+          }
+        }
+
+        output += '\n' + '─'.repeat(40) + '\n\n';
+      });
+
+      document.getElementById('menu-text').textContent = output;
+    });
+
+    function formatFilling(filling) {
+      if (typeof filling === 'string') {
+        return filling;
+      }
+
+      let text = filling.ingredient;
+
+      if (filling.quantity && filling.unit) {
+        text += ` ${filling.quantity}${filling.unit}`;
+      } else if (filling.quantity) {
+        text += ` ${filling.quantity}`;
+      }
+
+      if (filling.notes) {
+        text += ` (${filling.notes})`;
+      }
+
+      if (filling.prep) {
+        text += ` [製作：${filling.prep}]`;
+      }
+
+      return text;
+    }
+  </script>
+</body>
+</html>

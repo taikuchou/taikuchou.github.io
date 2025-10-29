@@ -154,7 +154,7 @@
     "largeTempuraShrimp": {
       type: "ing.type3Inside",
       toppings: ["ing.whiteSesame"],
-      fillings: ["ing.lettuce 2", "ing.cucumber 25g", "ing.carrotJulienne 15g", "ing.shrimpPair", "ing.crabstick 2"]
+      fillings: ["ing.lettuce 2", "ing.cucumber 30g", "ing.carrotJulienne 15g", "ing.shrimpPair", "ing.crabstick 2"]
     },
     "gardenDelight": {
       type: "ing.multiType",
@@ -944,7 +944,7 @@
     { nameKey: "miniCucumber", styleKey: "ing.type1Normal", toppingsKeys: [], fillingsKeys: ["ing.cucumber 30g"] },
     { nameKey: "mapleLeafRoll", styleKey: "ing.type3Inside", toppingsKeys: ["ing.whiteSesame", "ing.orangeTobiko"], fillingsKeys: ["note.mapleLeafFilling"] },
     { nameKey: "cookedSalmon", styleKey: "ing.type2Inside", toppingsKeys: ["ing.whiteSesame"], fillingsKeys: ["ing.cookedSalmon", "ing.cucumber"], notesKey: "note.cookedSalmonNote" },
-    { nameKey: "bigRoll", styleKey: "ing.type3Normal", toppingsKeys: [], fillingsKeys: ["ing.crabstick 2", "ing.cucumber 25g", "ing.egg 30g", "ing.pickledRadish 2", "ing.redTobiko"] },
+    { nameKey: "bigRoll", styleKey: "ing.type3Normal", toppingsKeys: [], fillingsKeys: ["ing.crabstick 2", "ing.cucumber 30g", "ing.egg 30g", "ing.pickledRadish 2", "ing.redTobiko"] },
     { nameKey: "spicyTunaRoll", styleKey: "ing.type2Inside", toppingsKeys: ["ing.whiteSesame"], fillingsKeys: ["ing.tunaSashimi", "ing.cucumber"] }
   ];
 
