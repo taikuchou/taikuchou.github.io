@@ -154,7 +154,7 @@
     "largeTempuraShrimp": {
       type: "ing.type3Inside",
       toppings: ["ing.whiteSesame"],
-      fillings: ["ing.lettuce 2", "ing.cucumber 30g", "ing.carrotJulienne 15g", "ing.shrimpPair", "ing.crabstick 2"]
+      fillings: ["ing.lettuce 2", "ing.cucumber 30g", "ing.carrotJulienne 15g", "ing.shrimpPair", "ing.crabmeat 30g"]
     },
     "gardenDelight": {
       type: "ing.multiType",
@@ -226,16 +226,15 @@
     { nameKey: "gardenDelight", target: 1, note: "", ingKey: "gardenDelight" },
     { nameKey: "avocado", target: 4, note: "", ingKey: "avocado" },
     { nameKey: "cucumberAvocado", target: 2, note: "", ingKey: "cucumberAvocado" },
-    { nameKey: "miniCucumber", target: 16, noteKey: "note.midAutumn 4", ingKey: "miniCucumber" },
+    { nameKey: "miniCucumber", target: 20, noteKey: "note.midAutumn 4", ingKey: "miniCucumber" },
     { nameKey: "egg", target: 1, noteKey: "note.midAutumn 4, note.dropShape 1", ingKey: "egg" },
     { nameKey: "spicyTunaRoll", target: 2, noteKey: "note.tunaSashimi", ingKey: "tunaSashimi" },
     { nameKey: "salmonAvocado", target: 12, noteKey: "note.triangle 3 - note.canadaA／2 - note.thousandIsland／2／5-ST2", ingKey: "salmonAvocado" },
     { nameKey: "futomaki", target: 1, note: "", ingKey: "futomaki" },
     { nameKey: "cookedSalmon", target: 9, noteKey: "note.redTobiko 2 - note.thousandIsland／2 - note.chargrilled／5-ST2", ingKey: "cookedSalmon" },
-    { nameKey: "miniShrimp", target: 1, noteKey: "note.dropShape", ingKey: "miniShrimp" },
+    { nameKey: "miniShrimp", target: 2, noteKey: "note.dropShape", ingKey: "miniShrimp" },
     { nameKey: "crispyDragon", target: 4, note: "", ingKey: "crispyDragon" },
-    { nameKey: "largeShrimp", target: 6, note: "", ingKey: "largeTempuraShrimp" },
-    { nameKey: "miniCucumber", target: 8, note: "", ingKey: "miniCucumber" }
+    { nameKey: "largeShrimp", target: 6, note: "", ingKey: "largeTempuraShrimp" }
   ];
 
   function buildInitialItems() {
@@ -606,12 +605,11 @@
   // Initial items definition with translation keys
   const initialItemsData = [
     { nameKey: "whiteCalifornia", target: 9, noteKey: "ing.noTobiko 3, ing.orangeTobiko 6", ingKey: "whiteCalifornia" },
-    { nameKey: "california", target: 20, noteKey: "ing.orangeTobiko 20", ingKey: "california" },
-    { nameKey: "miniSalmon", target: 12, note: "", ingKey: "miniSalmon" },
-    { nameKey: "california", target: 10, note: "", ingKey: "california" },
+    { nameKey: "california", target: 10, noteKey: "ing.orangeTobiko", ingKey: "california" },
+    { nameKey: "miniSalmon", target: 22, note: "", ingKey: "miniSalmon" },
     { nameKey: "seafood", target: 5, note: "", ingKey: "seafood" },
-    { nameKey: "california", target: 15, note: "", ingKey: "california" },
-    { nameKey: "miniSalmon", target: 10, note: "", ingKey: "miniSalmon" }
+    { nameKey: "california", target: 10, noteKey: "ing.orangeTobiko", ingKey: "california" },
+    { nameKey: "california", target: 25, noteKey: "ing.orangeTobiko", ingKey: "california" },
   ];
 
   function buildInitialItems() {
