@@ -193,7 +193,7 @@ const translations = {
     "instruction.roll1Type1": "第一條(1號反/邊補米)：黑白芝麻；黃蘿蔔 30g、紅椒絲 25g",
     "instruction.roll2Type1": "第二條(1號反/邊補米)：黑白芝麻；青瓜 20g、牛油果 25g",
     "instruction.roll3Type1": "第三條(1號反/邊補米)：黑白芝麻；青瓜 20g、紅椒絲 10g、胡蘿蔔絲 20g",
-    "instruction.roll4Type3": "第四條(3號正)：生菜 2片、青瓜 30g、牛油果 20g、黃蘿蔔 30g、紅椒絲 20g、胡蘿蔔絲 15g",
+    "instruction.roll4Type3": "第四條(3號正)：黃蘿蔔 30g、生菜 2片、紅椒絲 20g、青瓜 30g、牛油果 20g、胡蘿蔔絲 15g",
     "instruction.note": "備註：千島壽司盤可加紅魚子",
 
     // Checklist Items
@@ -439,7 +439,7 @@ const translations = {
     "instruction.roll1Type1": "第一条(1号反/边补米)：黑白芝麻；黄萝卜 30g、红椒丝 25g",
     "instruction.roll2Type1": "第二条(1号反/边补米)：黑白芝麻；青瓜 20g、牛油果 25g",
     "instruction.roll3Type1": "第三条(1号反/边补米)：黑白芝麻；青瓜 20g、红椒丝 10g、胡萝卜丝 20g",
-    "instruction.roll4Type3": "第四条(3号正)：生菜 2片、青瓜 30g、牛油果 20g、黄萝卜 30g、红椒丝 20g、胡萝卜丝 15g",
+    "instruction.roll4Type3": "第四条(3号正)：黄萝卜 30g、生菜 2片、红椒丝 20g、青瓜 30g、牛油果 20g、胡萝卜丝 15g",
     "instruction.note": "备注：千岛寿司盘可加红鱼子",
 
     // Checklist Items (Simplified Chinese)
@@ -685,7 +685,7 @@ const translations = {
     "instruction.roll1Type1": "Roll 1 (Type 1 Inside-Out/Edge Rice): Black & White Sesame; Yellow Pickle 30g, Red Pepper 25g",
     "instruction.roll2Type1": "Roll 2 (Type 1 Inside-Out/Edge Rice): Black & White Sesame; Cucumber 20g, Avocado 25g",
     "instruction.roll3Type1": "Roll 3 (Type 1 Inside-Out/Edge Rice): Black & White Sesame; Cucumber 20g, Red Pepper 10g, Carrot 20g",
-    "instruction.roll4Type3": "Roll 4 (Type 3 Regular): Lettuce 2 leaves, Cucumber 30g, Avocado 20g, Yellow Pickle 30g, Red Pepper 20g, Carrot 15g",
+    "instruction.roll4Type3": "Roll 4 (Type 3 Regular): Yellow Pickle 30g, Lettuce 2 leaves, Red Pepper 20g, Cucumber 30g, Avocado 20g, Carrot 15g",
     "instruction.note": "Note: Thousand Island platter can add red tobiko",
 
 
