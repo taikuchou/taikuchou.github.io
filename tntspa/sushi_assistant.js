@@ -149,7 +149,7 @@
     "miniShrimp": {
       type: "ing.type2Inside",
       toppings: ["ing.whiteSesame"],
-      fillings: ["ing.cucumber 20g", "ing.shrimpPair"]
+      fillings: ["ing.cucumber 20g", "ing.shrimpPair", "ing.crabstick 2"]
     },
     "largeTempuraShrimp": {
       type: "ing.type3Inside",
@@ -926,7 +926,7 @@
     { nameKey: "avocado", styleKey: "ing.type2Inside", toppingsKeys: ["ing.whiteSesame", "ing.seaweed"], fillingsKeys: ["ing.avocado 60g"] },
     { nameKey: "cucumberAvocado", styleKey: "ing.type2Inside", toppingsKeys: ["ing.whiteSesame", "ing.seaweed"], fillingsKeys: ["ing.avocado 30g", "ing.cucumber 30g"] },
     { nameKey: "spiderRoll", styleKey: "ing.type2Inside", toppingsKeys: [], fillingsKeys: ["ing.cucumber 15g", "ing.crabstick 2", "ing.onePairShrimp"] },
-    { nameKey: "miniShrimp", styleKey: "ing.type2Inside", toppingsKeys: ["ing.whiteSesame"], fillingsKeys: ["ing.cucumber 20g", "ing.onePairShrimp"] },
+    { nameKey: "miniShrimp", styleKey: "ing.type2Inside", toppingsKeys: ["ing.whiteSesame"], fillingsKeys: ["ing.cucumber 20g", "ing.onePairShrimp", "ing.crabstick 2"] },
     { nameKey: "largeTempuraShrimp", styleKey: "ing.type3Inside", toppingsKeys: ["ing.whiteSesame"], fillingsKeys: ["ing.lettuce 2pcs", "ing.cucumber 25g", "ing.carrotShred 15g", "ing.onePairShrimp", "ing.crabmeat"] },
     {
       nameKey: "gardenDelight",

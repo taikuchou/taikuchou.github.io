@@ -169,7 +169,7 @@ const translations = {
     "ing.pickledRadish": "日式蘿蔔條",
     "ing.pickledBamboo": "醃竹筍",
     "ing.egg": "蛋",
-    "ing.tunaSashimi": "吞拿魚刺身切碎（少量拉差醬拌）",
+    "ing.tunaSashimi": "吞拿魚刺身切碎（少量拉差醬拌），加天婦羅碎",
     "ing.californiaGreenGrass": "(2號反卷 / 綠草版)",
 
     // Notes
@@ -415,7 +415,7 @@ const translations = {
     "ing.pickledRadish": "日式萝卜条",
     "ing.pickledBamboo": "腌竹笋",
     "ing.egg": "蛋",
-    "ing.tunaSashimi": "吞拿鱼刺身切碎（少量拉差酱拌）",
+    "ing.tunaSashimi": "吞拿鱼刺身切碎（少量沙拉酱拌），加天妇罗碎",
     "ing.californiaGreenGrass": "(2号反卷 / 绿草版)",
 
     // Notes (Simplified Chinese)
@@ -661,7 +661,7 @@ const translations = {
     "ing.pickledRadish": "Japanese Pickled Radish",
     "ing.pickledBamboo": "Pickled Bamboo",
     "ing.egg": "Egg",
-    "ing.tunaSashimi": "Minced Tuna Sashimi (with Sriracha)",
+    "ing.tunaSashimi": "Chopped tuna sashimi (mixed with a small amount of Sriracha sauce), topped with tempura flakes",
     "ing.californiaGreenGrass": "(Type 2 Inside-Out / Green Grass Version)",
 
     // Notes (English)
