@@ -149,12 +149,12 @@
     "miniShrimp": {
       type: "ing.type2Inside",
       toppings: ["ing.whiteSesame"],
-      fillings: ["ing.cucumber 20g", "ing.shrimpPair", "ing.crabstick 2"]
+      fillings: ["ing.cucumber 20g", "ing.crabstick 1", "ing.shrimpPair"]
     },
     "largeTempuraShrimp": {
       type: "ing.type3Inside",
       toppings: ["ing.whiteSesame"],
-      fillings: ["ing.lettuce 2", "ing.cucumber 30g", "ing.carrotJulienne 15g", "ing.shrimpPair", "ing.crabmeat 30g"]
+      fillings: ["ing.cucumber 30g", "ing.crabmeat 30g", "ing.carrotJulienne 15g", "ing.shrimpPair", "ing.lettuce 2"]
     },
     "gardenDelight": {
       type: "ing.multiType",
@@ -176,7 +176,7 @@
     },
     "futomaki": {
       type: "ing.type3Outside",
-      fillings: ["ing.crabstick 2", "ing.cucumber 25g", "ing.egg 30g", "ing.pickledRadish 2", "ing.yellowPickle 30g", "ing.redTobiko"]
+      fillings: ["ing.redTobiko", "ing.yellowPickle 30g", "ing.cucumber 25g", "ing.egg 30g", "ing.crabstick 2", "ing.pickledRadish 2"]
     },
     "egg": {
       type: "ing.type1Normal",
@@ -184,7 +184,11 @@
     },
     "tunaSashimi": {
       type: "ing.type2Inside",
-      fillings: ["ing.tunaSashimi 60g", "ing.cucumber 25g"]
+      fillings: ["ing.tunaSashimi 80g", "ing.cucumber 25g"]
+    },
+    "salmonSashimi": {
+      type: "ing.type2Inside",
+      fillings: ["ing.salmonSashimi 80g", "ing.cucumber 25g"]
     },
   };
 
@@ -224,17 +228,18 @@
   // Initial items definition with translation keys
   const initialItemsData = [
     { nameKey: "gardenDelight", target: 1, note: "", ingKey: "gardenDelight" },
-    { nameKey: "avocado", target: 4, note: "", ingKey: "avocado" },
-    { nameKey: "cucumberAvocado", target: 2, note: "", ingKey: "cucumberAvocado" },
-    { nameKey: "miniCucumber", target: 20, noteKey: "note.midAutumn 4", ingKey: "miniCucumber" },
-    { nameKey: "egg", target: 1, noteKey: "note.midAutumn 4, note.dropShape 1", ingKey: "egg" },
-    { nameKey: "spicyTunaRoll", target: 2, noteKey: "note.tunaSashimi", ingKey: "tunaSashimi" },
-    { nameKey: "salmonAvocado", target: 12, noteKey: "note.triangle 3 - note.canadaA／2 - note.thousandIsland／2／5-ST2", ingKey: "salmonAvocado" },
     { nameKey: "futomaki", target: 1, note: "", ingKey: "futomaki" },
-    { nameKey: "cookedSalmon", target: 9, noteKey: "note.redTobiko 2 - note.thousandIsland／2 - note.chargrilled／5-ST2", ingKey: "cookedSalmon" },
+    { nameKey: "largeShrimp", target: 6, note: "", ingKey: "largeTempuraShrimp" },
+    { nameKey: "avocado", target: 3, note: "", ingKey: "avocado" },
+    { nameKey: "cucumberAvocado", target: 2, note: "", ingKey: "cucumberAvocado" },
+    { nameKey: "miniCucumber", target: 18, noteKey: "note.midAutumn 4", ingKey: "miniCucumber" },
+    { nameKey: "egg", target: 1, noteKey: "note.midAutumn 4, note.dropShape 1", ingKey: "egg" },
+    { nameKey: "salmonAvocado", target: 12, noteKey: "note.triangle 3 - note.canadaA／2 - note.thousandIsland／2／5-ST2", ingKey: "salmonAvocado" },
     { nameKey: "miniShrimp", target: 2, noteKey: "note.dropShape", ingKey: "miniShrimp" },
+    { nameKey: "cookedSalmon", target: 8, noteKey: "note.redTobiko 2 - note.thousandIsland／2 - note.chargrilled／5-ST2", ingKey: "cookedSalmon" },
     { nameKey: "crispyDragon", target: 4, note: "", ingKey: "crispyDragon" },
-    { nameKey: "largeShrimp", target: 6, note: "", ingKey: "largeTempuraShrimp" }
+    { nameKey: "spicyTunaRoll", target: 2, noteKey: "note.tunaSashimi", ingKey: "tunaSashimi" },
+    { nameKey: "spicySalmonRoll", target: 5, noteKey: "note.salmonSashimi", ingKey: "salmonSashimi" },
   ];
 
   function buildInitialItems() {
@@ -935,15 +940,16 @@
         { titleKey: "note.gardenDelight1", styleKey: "ing.type1Inside", toppingsKeys: ["ing.blackWhiteSesame"], fillingsKeys: ["ing.pickledRadish 30g", "ing.redPepperShred 25g"] },
         { titleKey: "note.gardenDelight2", styleKey: "ing.type1Inside", toppingsKeys: ["ing.blackWhiteSesame"], fillingsKeys: ["ing.cucumber 20g", "ing.avocado 25g"] },
         { titleKey: "note.gardenDelight3", styleKey: "ing.type1Inside", toppingsKeys: ["ing.blackWhiteSesame"], fillingsKeys: ["ing.cucumber 20g", "ing.redPepperShred 10g", "ing.carrotShred 20g"] },
-        { titleKey: "note.gardenDelight4", styleKey: "ing.type3Normal", toppingsKeys: [], fillingsKeys: ["ing.lettuce 2pcs", "ing.cucumber 30g", "ing.avocado 20g", "ing.yellowPickle 30g", "ing.redPepperShred 20g", "ing.carrotShred 15g"] }
+        { titleKey: "note.gardenDelight4", styleKey: "ing.type3Normal", toppingsKeys: [], fillingsKeys: ["ing.cucumber 30g", "ing.yellowPickle 30g", "ing.redPepperShred 20g", "ing.avocado 20g", "ing.carrotShred 15g", "ing.lettuce 2pcs"] }
       ]
     },
     { nameKey: "miniSalmon", styleKey: "ing.type1Normal", toppingsKeys: [], fillingsKeys: ["ing.salmon 30g"] },
     { nameKey: "miniCucumber", styleKey: "ing.type1Normal", toppingsKeys: [], fillingsKeys: ["ing.cucumber 30g"] },
     { nameKey: "mapleLeafRoll", styleKey: "ing.type3Inside", toppingsKeys: ["ing.whiteSesame", "ing.orangeTobiko"], fillingsKeys: ["note.mapleLeafFilling"] },
     { nameKey: "cookedSalmon", styleKey: "ing.type2Inside", toppingsKeys: ["ing.whiteSesame"], fillingsKeys: ["ing.cookedSalmon", "ing.cucumber"], notesKey: "note.cookedSalmonNote" },
-    { nameKey: "bigRoll", styleKey: "ing.type3Normal", toppingsKeys: [], fillingsKeys: ["ing.crabstick 2", "ing.cucumber 30g", "ing.egg 30g", "ing.pickledRadish 2", "ing.redTobiko"] },
-    { nameKey: "spicyTunaRoll", styleKey: "ing.type2Inside", toppingsKeys: ["ing.whiteSesame"], fillingsKeys: ["ing.tunaSashimi", "ing.cucumber"] }
+    { nameKey: "bigRoll", styleKey: "ing.type3Normal", toppingsKeys: [], fillingsKeys: ["ing.redTobiko", , "ing.yellowPickle 30g", "ing.cucumber 30g", "ing.egg 30g", "ing.crabstick 2", "ing.pickledRadish 2"] },
+    { nameKey: "spicyTunaRoll", styleKey: "ing.type2Inside", toppingsKeys: ["ing.whiteSesame"], fillingsKeys: ["ing.tunaSashimi", "ing.cucumber"] },
+    { nameKey: "spicySalmonRoll", styleKey: "ing.type2Inside", toppingsKeys: ["ing.whiteSesame"], fillingsKeys: ["ing.salmonSashimi", "ing.cucumber"] }
   ];
 
   function buildData() {

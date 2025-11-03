@@ -92,6 +92,7 @@ const translations = {
     "product.cucumber": "青瓜卷",
     "product.mapleLeafRoll": "楓葉卷",
     "product.spicyTunaRoll": "辣吞拿魚卷",
+    "product.spicySalmonRoll": "辣三文魚卷",
     "product.bigRoll": "太卷",
     "product.batch": "批次",
 
@@ -132,7 +133,8 @@ const translations = {
     "ing.pickledRadish": "日式蘿蔔條",
     "ing.pickledBamboo": "醃竹筍",
     "ing.egg": "蛋",
-    "ing.tunaSashimi": "吞拿魚刺身切碎（少量拉差醬拌），加天婦羅碎",
+    "ing.tunaSashimi": "吞拿魚刺身切碎（少量拉差醬拌）",
+    "ing.salmonSashimi": "三文魚刺身切碎（少量拉差醬拌），加天婦羅碎",
     "ing.californiaGreenGrass": "(2號反卷 / 綠草版)",
 
     // Notes
@@ -147,6 +149,7 @@ const translations = {
     "note.mapleLeafFilling": "蟹肉碎/蟹棒/玉子/三文魚/青瓜",
     "note.cookedSalmonNote": "千島壽司盤，加紅魚子",
     "note.tunaSashimi": "吞拿魚刺身切碎（少量拉差醬拌）",
+    "note.salmonSashimi": "三文魚刺身切碎（少量拉差醬拌），加天婦羅碎",
     "note.gardenDelight1": "第一條（1號反卷，邊緣補米飯）",
     "note.gardenDelight2": "第二條（1號反卷，邊緣補米飯）",
     "note.gardenDelight3": "第三條（1號反卷，邊緣補米飯）",
@@ -156,7 +159,7 @@ const translations = {
     "instruction.roll1Type1": "第一條(1號反/邊補米)：黑白芝麻；黃蘿蔔 30g、紅椒絲 25g",
     "instruction.roll2Type1": "第二條(1號反/邊補米)：黑白芝麻；青瓜 20g、牛油果 25g",
     "instruction.roll3Type1": "第三條(1號反/邊補米)：黑白芝麻；青瓜 20g、紅椒絲 10g、胡蘿蔔絲 20g",
-    "instruction.roll4Type3": "第四條(3號正)：黃蘿蔔 30g、生菜 2片、紅椒絲 20g、青瓜 30g、牛油果 20g、胡蘿蔔絲 15g",
+    "instruction.roll4Type3": "第四條(3號正)：黃蘿蔔 30g、青瓜 30g、紅椒絲 20g、牛油果 20g、胡蘿蔔絲 15g、生菜 2片",
     "instruction.note": "備註：千島壽司盤可加紅魚子",
 
     // Checklist Items
@@ -299,6 +302,7 @@ const translations = {
     "product.cucumber": "青瓜卷",
     "product.mapleLeafRoll": "枫叶卷",
     "product.spicyTunaRoll": "辣吞拿鱼卷",
+    "product.spicySalmonRoll": "辣三文鱼卷",
     "product.bigRoll": "太卷",
     "product.batch": "批次",
 
@@ -339,7 +343,8 @@ const translations = {
     "ing.pickledRadish": "日式萝卜条",
     "ing.pickledBamboo": "腌竹笋",
     "ing.egg": "蛋",
-    "ing.tunaSashimi": "吞拿鱼刺身切碎（少量沙拉酱拌），加天妇罗碎",
+    "ing.tunaSashimi": "吞拿鱼刺身切碎（少量沙拉酱拌）",
+    "ing.salmonSashimi": "三文鱼刺身切碎（少量沙拉酱拌），加天妇罗碎",
     "ing.californiaGreenGrass": "(2号反卷 / 绿草版)",
 
     // Notes (Simplified Chinese)
@@ -354,6 +359,7 @@ const translations = {
     "note.mapleLeafFilling": "蟹肉碎/蟹棒/玉子/三文鱼/青瓜",
     "note.cookedSalmonNote": "千岛寿司盘，加红鱼子",
     "note.tunaSashimi": "吞拿鱼刺身切碎（少量拉差酱拌）",
+    "note.salmonSashimi": "三文鱼刺身切碎（少量拉差酱拌）",
     "note.gardenDelight1": "第一条（1号反卷，边缘补米饭）",
     "note.gardenDelight2": "第二条（1号反卷，边缘补米饭）",
     "note.gardenDelight3": "第三条（1号反卷，边缘补米饭）",
@@ -363,7 +369,7 @@ const translations = {
     "instruction.roll1Type1": "第一条(1号反/边补米)：黑白芝麻；黄萝卜 30g、红椒丝 25g",
     "instruction.roll2Type1": "第二条(1号反/边补米)：黑白芝麻；青瓜 20g、牛油果 25g",
     "instruction.roll3Type1": "第三条(1号反/边补米)：黑白芝麻；青瓜 20g、红椒丝 10g、胡萝卜丝 20g",
-    "instruction.roll4Type3": "第四条(3号正)：黄萝卜 30g、生菜 2片、红椒丝 20g、青瓜 30g、牛油果 20g、胡萝卜丝 15g",
+    "instruction.roll4Type3": "第四条(3号正)：黄萝卜 30g、青瓜 30g、红椒丝 20g、牛油果 20g、胡萝卜丝 15g、生菜 2片",
     "instruction.note": "备注：千岛寿司盘可加红鱼子",
 
     // Checklist Items (Simplified Chinese)
@@ -504,6 +510,7 @@ const translations = {
     "product.tofuSeafood": "Tofu Skin Seafood",
     "product.mapleLeafRoll": "Maple Leaf Roll",
     "product.spicyTunaRoll": "Spicy Tuna Roll",
+    "product.spicySalmonRoll": "Spicy Salmon Roll",
     "product.bigRoll": "Big Roll",
     "product.largeShrimp": "Large Shrimp",
     "product.cucumber": "Cucumber",
@@ -546,7 +553,8 @@ const translations = {
     "ing.pickledRadish": "Japanese Pickled Radish",
     "ing.pickledBamboo": "Pickled Bamboo",
     "ing.egg": "Egg",
-    "ing.tunaSashimi": "Minced Tuna Sashimi (with Sriracha), with Tempura Bits",
+    "ing.tunaSashimi": "Minced Tuna Sashimi (with Sriracha)",
+    "ing.salmonSashimi": "Minced Salmon Sashimi (with Sriracha), with Tempura Bits",
     "ing.californiaGreenGrass": "(Type 2 Inside-Out / Green Grass Version)",
 
     // Notes (English)
@@ -561,6 +569,7 @@ const translations = {
     "note.mapleLeafFilling": "Crabmeat/Crab Stick/Tamago/Salmon/Cucumber",
     "note.cookedSalmonNote": "Thousand Island Platter, with Red Tobiko",
     "note.tunaSashimi": "Minced Tuna Sashimi (with Sriracha)",
+    "note.salmonSashimi": "Minced Salmon Sashimi (with Sriracha), with Tempura Bits",
     "note.gardenDelight1": "Roll 1 (Type 1 Inside-Out, rice edges)",
     "note.gardenDelight2": "Roll 2 (Type 1 Inside-Out, rice edges)",
     "note.gardenDelight3": "Roll 3 (Type 1 Inside-Out, rice edges)",
@@ -570,7 +579,7 @@ const translations = {
     "instruction.roll1Type1": "Roll 1 (Type 1 Inside-Out/Edge Rice): Black & White Sesame; Yellow Pickle 30g, Red Pepper 25g",
     "instruction.roll2Type1": "Roll 2 (Type 1 Inside-Out/Edge Rice): Black & White Sesame; Cucumber 20g, Avocado 25g",
     "instruction.roll3Type1": "Roll 3 (Type 1 Inside-Out/Edge Rice): Black & White Sesame; Cucumber 20g, Red Pepper 10g, Carrot 20g",
-    "instruction.roll4Type3": "Roll 4 (Type 3 Regular): Yellow Pickle 30g, Lettuce 2 leaves, Red Pepper 20g, Cucumber 30g, Avocado 20g, Carrot 15g",
+    "instruction.roll4Type3": "Roll 4 (Type 3 Regular): Yellow Pickle 30g, Cucumber 30g, Red Pepper 20g, Avocado 20g, Carrot 15g, Lettuce 2 leaves",
     "instruction.note": "Note: Thousand Island platter can add red tobiko",
 
 

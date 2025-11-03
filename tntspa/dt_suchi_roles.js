@@ -124,7 +124,7 @@
         { titleKey: "note.gardenDelight1", styleKey: "ing.type1Inside", toppingsKeys: ["ing.blackWhiteSesame"], fillingsKeys: ["ing.pickledRadish 30g", "ing.redPepperShred 25g"] },
         { titleKey: "note.gardenDelight2", styleKey: "ing.type1Inside", toppingsKeys: ["ing.blackWhiteSesame"], fillingsKeys: ["ing.cucumber 20g", "ing.avocado 25g"] },
         { titleKey: "note.gardenDelight3", styleKey: "ing.type1Inside", toppingsKeys: ["ing.blackWhiteSesame"], fillingsKeys: ["ing.cucumber 20g", "ing.redPepperShred 10g", "ing.carrotShred 20g"] },
-        { titleKey: "note.gardenDelight4", styleKey: "ing.type3Normal", toppingsKeys: [], fillingsKeys: ["ing.lettuce 2pcs", "ing.cucumber 30g", "ing.avocado 20g", "ing.yellowPickle 30g", "ing.redPepperShred 20g", "ing.carrotShred 15g"] }
+        { titleKey: "note.gardenDelight4", styleKey: "ing.type3Normal", toppingsKeys: [], fillingsKeys: ["ing.yellowPickle 30g", "ing.cucumber 30g", "ing.redPepperShred 20g", "ing.avocado 20g", "ing.carrotShred 15g", "ing.lettuce 2pcs"] }
       ]
     },
     { nameKey: "miniSalmon", styleKey: "ing.type1Normal", toppingsKeys: [], fillingsKeys: ["ing.salmon 30g"] },
@@ -132,7 +132,8 @@
     { nameKey: "mapleLeafRoll", styleKey: "ing.type3Inside", toppingsKeys: ["ing.whiteSesame", "ing.orangeTobiko"], fillingsKeys: ["note.mapleLeafFilling"] },
     { nameKey: "cookedSalmon", styleKey: "ing.type2Inside", toppingsKeys: ["ing.whiteSesame"], fillingsKeys: ["ing.cookedSalmon", "ing.cucumber"], notesKey: "note.cookedSalmonNote" },
     { nameKey: "bigRoll", styleKey: "ing.type3Normal", toppingsKeys: [], fillingsKeys: ["ing.crabstick 2", "ing.cucumber 30g", "ing.egg 30g", "ing.pickledRadish 2", "ing.redTobiko"] },
-    { nameKey: "spicyTunaRoll", styleKey: "ing.type2Inside", toppingsKeys: ["ing.whiteSesame"], fillingsKeys: ["ing.tunaSashimi", "ing.cucumber"] }
+    { nameKey: "spicyTunaRoll", styleKey: "ing.type2Inside", toppingsKeys: ["ing.whiteSesame"], fillingsKeys: ["ing.tunaSashimi 80g", "ing.cucumber"] },
+    { nameKey: "spicySalmonRoll", styleKey: "ing.type2Inside", toppingsKeys: ["ing.whiteSesame"], fillingsKeys: ["ing.salmonSashimi 80g", "ing.cucumber"] }
   ];
 
   function buildData() {
