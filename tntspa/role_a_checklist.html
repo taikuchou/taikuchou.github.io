@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <title>出餐A工作流程清單</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --primary-color: #2c5f8d;
+      --secondary-color: #4a90c5;
+      --success-color: #28a745;
+      --danger-color: #dc3545;
+      --warning-color: #ffc107;
+      --light-bg: #f8f9fa;
+      --card-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      --border-radius: 8px;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Microsoft JhengHei', sans-serif;
+      background: var(--light-bg);
+      padding: 1rem;
+      padding-bottom: env(safe-area-inset-bottom);
+      line-height: 1.6;
+    }
+
+    .header {
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+      color: white;
+      padding: 1.5rem;
+      border-radius: var(--border-radius);
+      margin-bottom: 1rem;
+      box-shadow: var(--card-shadow);
+    }
+
+    .header h1 {
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .progress-summary {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 1rem;
+      padding-top: 1rem;
+      border-top: 1px solid rgba(255,255,255,0.3);
+    }
+
+    .progress-bar-container {
+      flex: 1;
+      height: 24px;
+      background: rgba(255,255,255,0.2);
+      border-radius: 12px;
+      overflow: hidden;
+      margin: 0 1rem;
+    }
+
+    .progress-bar {
+      height: 100%;
+      background: var(--success-color);
+      transition: width 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: bold;
+      font-size: 0.85rem;
+    }
+
+    .section {
+      background: white;
+      border-radius: var(--border-radius);
+      padding: 1rem;
+      margin-bottom: 1rem;
+      box-shadow: var(--card-shadow);
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 2px solid var(--primary-color);
+    }
+
+    .section-title {
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: var(--primary-color);
+    }
+
+    .section-progress {
+      font-size: 0.9rem;
+      color: #666;
+      font-weight: 600;
+    }
+
+    .task-item {
+      display: flex;
+      align-items: flex-start;
+      padding: 0.75rem;
+      margin-bottom: 0.5rem;
+      background: var(--light-bg);
+      border-radius: 6px;
+      border-left: 4px solid transparent;
+      transition: all 0.2s ease;
+    }
+
+    .task-item:hover {
+      background: #e9ecef;
+    }
+
+    .task-item.checked {
+      background: #d4edda;
+      border-left-color: var(--success-color);
+    }
+
+    .task-item.checked .task-text {
+      text-decoration: line-through;
+      color: #6c757d;
+    }
+
+    .task-checkbox {
+      width: 24px;
+      height: 24px;
+      margin-right: 0.75rem;
+      cursor: pointer;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .task-text {
+      flex: 1;
+      font-size: 0.95rem;
+      color: #333;
+      white-space: pre-wrap;
+    }
+
+    .task-number {
+      font-weight: bold;
+      color: var(--primary-color);
+      margin-right: 0.5rem;
+    }
+
+    .subtask {
+      margin-left: 2rem;
+      font-size: 0.9rem;
+      color: #555;
+      padding: 0.25rem 0;
+    }
+
+    .controls {
+      position: sticky;
+      bottom: 0;
+      background: white;
+      padding: 1rem;
+      margin: -1rem -1rem 0 -1rem;
+      border-top: 2px solid #e9ecef;
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      flex: 1;
+      min-width: 120px;
+      padding: 0.75rem 1rem;
+      border: none;
+      border-radius: 6px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      text-align: center;
+    }
+
+    .btn-primary {
+      background: var(--primary-color);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: #1e4a6d;
+    }
+
+    .btn-danger {
+      background: var(--danger-color);
+      color: white;
+    }
+
+    .btn-danger:hover {
+      background: #c82333;
+    }
+
+    .btn-success {
+      background: var(--success-color);
+      color: white;
+    }
+
+    .btn-success:hover {
+      background: #218838;
+    }
+
+    .section-controls {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .btn-sm {
+      padding: 0.5rem 0.75rem;
+      font-size: 0.85rem;
+      border-radius: 4px;
+      border: none;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.2s ease;
+    }
+
+    .btn-outline {
+      background: white;
+      color: var(--primary-color);
+      border: 2px solid var(--primary-color);
+    }
+
+    .btn-outline:hover {
+      background: var(--primary-color);
+      color: white;
+    }
+
+    .image-preview {
+      margin-top: 0.5rem;
+      margin-left: 2rem;
+      max-width: 100%;
+      border-radius: 6px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .image-preview img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 6px;
+    }
+
+    @media (max-width: 768px) {
+      body {
+        padding: 0.5rem;
+      }
+
+      .header {
+        padding: 1rem;
+      }
+
+      .header h1 {
+        font-size: 1.25rem;
+      }
+
+      .section {
+        padding: 0.75rem;
+      }
+
+      .btn {
+        min-width: 100px;
+        font-size: 0.9rem;
+      }
+
+      .subtask {
+        margin-left: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <h1>A角工作流程清單</h1>
+    <div class="progress-summary">
+      <span id="completedCount">0/0</span>
+      <div class="progress-bar-container">
+        <div class="progress-bar" id="totalProgress">0%</div>
+      </div>
+    </div>
+  </div>
+
+  <div id="checklistContainer"></div>
+
+  <div class="section">
+    <div class="controls">
+      <button class="btn btn-success" onclick="selectAll()">全選</button>
+      <button class="btn btn-primary" onclick="deselectAll()">取消全選</button>
+      <button class="btn btn-danger" onclick="resetChecklist()">重設</button>
+    </div>
+  </div>
+
+  <script>
+    const STORAGE_KEY = 'role-a-checklist-v1.0';
+
+    // Workflow data structure based on PDF
+    const workflowData = [
+      {
+        section: "準備工作",
+        tasks: [
+          {
+            id: 1,
+            text: "煮三鍋醋飯＋洗三鍋米"
+          },
+          {
+            id: 2,
+            text: "送炸蝦40尾，填寫展櫃、冷凍櫃，出餐卷位冰箱溫度"
+          },
+          {
+            id: 3,
+            text: "整理展示櫃",
+            subtasks: [
+              "記錄丟棄商品",
+              "拿出醬油，哇沙比和薑",
+              "刺身包給卷位",
+              "特價飯糰打標",
+              "補小菜，移除即將過期小菜"
+            ]
+          },
+          {
+            id: 4,
+            text: "大鐵盤、壽司竹卷，白盒子上保鮮膜"
+          },
+          {
+            id: 5,
+            text: "蒸飯"
+          },
+          {
+            id: 6,
+            text: "拿刀，占版，容器加水吞拿退冰"
+          },
+          {
+            id: 7,
+            text: "打標刺生，切吞拿",
+            subtasks: [
+              "魚生8片 * 4",
+              "雙色(吞拿+三文)、Coho、鴛鴦(coho+三文)各2"
+            ]
+          },
+          {
+            id: 8,
+            text: "煮三鍋米(1醋，2白飯)"
+          }
+        ]
+      },
+      {
+        section: "壽司製作 - 第一輪",
+        tasks: [
+          {
+            id: 9,
+            text: "聖誕盤*2",
+            image: "images/christmas_plate.jpeg",
+            subtasks: [
+              "切：加州*2、海鮮*2、小三文、小青瓜、白加州*2",
+              "三文生魚大片(炙燒)＋美乃滋＋紅魚子＋蔥",
+              "醬料：醬3、薑2、哇2",
+              "甜蝦*4隻，三文刺身*6片",
+              "海鮮",
+              "鰻魚司*4，吞拿司*2，coho司*2",
+              "干貝司(剖半不切斷)*2，三文司*2",
+              "白加州＋生魚大片(炙燒)＋美乃滋＋紅魚子＋蔥",
+              "(小三文、小青瓜各1片)*4組",
+              "加州(4+3[平]+1)片"
+            ]
+          },
+          {
+            id: 10,
+            text: "辣三文魚生*3(三文魚片＋白加州)",
+            subtasks: [
+              "Topping: 美乃滋＋辣美乃滋＋紅魚子"
+            ]
+          },
+          {
+            id: 11,
+            text: "玉子*6",
+            image: "images/tamago.jpeg",
+            subtasks: [
+              "切：加州*6、海鮮*2、小三文*3、小青瓜*3",
+              "醬料：醬3、薑1、哇1",
+              "甜蝦*隻，三文刺身*12片",
+              "加州6片(平立平平立平)",
+              "蛋司，蟹肉司，鰻魚司，蝦司",
+              "(小三文、小青瓜各1片)*3組"
+            ]
+          },
+          {
+            id: 12,
+            text: "切太卷和卷物",
+            subtasks: [
+              "太卷10片，切1/2，並排，切1/5 -> 2/5 -> 1/5",
+              "三文牛油*2條、加州*2條",
+              "「熟三文(無芝麻)＋魚子」*2條"
+            ]
+          }
+        ]
+      },
+      {
+        section: "壽司製作 - 第二輪",
+        tasks: [
+          {
+            id: 13,
+            text: "千島之愛*2",
+            image: "images/thousand_island.jpeg",
+            subtasks: [
+              "醬料：醬3、薑1、哇1",
+              "三文司*3",
+              "三文牛油*6片",
+              "「熟三文(無芝麻)＋魚子」*6片",
+              "加州*7片",
+              "太卷*2片"
+            ]
+          },
+          {
+            id: 14,
+            text: "切蛋、小三文、小青瓜、加州*2條、三文牛油*2條、熟三文*2條、小蝦*2條"
+          },
+          {
+            id: 15,
+            text: "綜合卷物*2",
+            images: ["images/assorted_rolls_1.jpeg", "images/assorted_rolls_2.jpeg"],
+            subtasks: [
+              "加州*8片",
+              "太卷*3片",
+              "小蝦*4片(美奶滋)",
+              "小三文*2片+小青瓜*4片 or 蛋*2片+小三文*2片+小青瓜*2片",
+              "「熟三文(無芝麻)＋魚子」*4片＋三文牛油*4片 or 熟三文*8片(黑芝麻＋辣美奶滋)"
+            ]
+          },
+          {
+            id: 16,
+            text: "刺身和卷*2",
+            image: "images/sashimi_rolls.jpeg",
+            subtasks: [
+              "醬料：醬2、薑1、哇1",
+              "三文刺身*4",
+              "小三文*3片+小青瓜*2片",
+              "加州*6片(平平立立平平)"
+            ]
+          },
+          {
+            id: 17,
+            text: "水滴*2",
+            image: "images/sashimi_rolls.jpeg",
+            subtasks: [
+              "醬料：醬2、薑1、哇1",
+              "蛋*3片+小三文*3片+小青瓜*3片",
+              "三文司*3、蝦司*3、鰻魚司*3、北寄貝司*3",
+              "小蝦*4片(美奶滋＋紅魚子)"
+            ]
+          },
+          {
+            id: 18,
+            text: "春彩錦*2",
+            image: "images/spring_color.jpeg",
+            subtasks: [
+              "切：加州*2條、小三文、小青瓜",
+              "醬料：醬2、薑1、哇1",
+              "蛋*3片+小三文*3片+小青瓜*3片三文刺身*4片",
+              "小三文*3片+小青瓜*3片",
+              "三文司*2、吞拿司*2",
+              "加州4片立",
+              "加州4片平"
+            ]
+          }
+        ]
+      },
+      {
+        section: "收尾工作",
+        tasks: [
+          {
+            id: 19,
+            text: "填寫出貨溫度表"
+          },
+          {
+            id: 20,
+            text: "備料",
+            subtasks: [
+              "北寄貝",
+              "干貝",
+              "章魚片",
+              "鰻魚",
+              "吞拿片？",
+              "甜蝦",
+              "蝦片"
+            ]
+          },
+          {
+            id: 21,
+            text: "切魚(coho*1 ,三文*3)"
+          },
+          {
+            id: 22,
+            text: "填寫出貨溫度表"
+          },
+          {
+            id: 23,
+            text: "擦PC桌面，打包機，冷凍櫃門"
+          }
+        ]
+      }
+    ];
+
+    let checklistState = {};
+
+    // Initialize
+    function init() {
+      loadState();
+      renderChecklist();
+      updateProgress();
+    }
+
+    // Load state from localStorage
+    function loadState() {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (saved) {
+        try {
+          const data = JSON.parse(saved);
+          const today = new Date().toDateString();
+
+          // Reset if it's a new day
+          if (data.date !== today) {
+            checklistState = { date: today, tasks: {} };
+            saveState();
+          } else {
+            checklistState = data;
+          }
+        } catch (e) {
+          checklistState = { date: new Date().toDateString(), tasks: {} };
+        }
+      } else {
+        checklistState = { date: new Date().toDateString(), tasks: {} };
+      }
+    }
+
+    // Save state to localStorage
+    function saveState() {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(checklistState));
+    }
+
+    // Render checklist
+    function renderChecklist() {
+      const container = document.getElementById('checklistContainer');
+      container.innerHTML = '';
+
+      workflowData.forEach((section, sectionIndex) => {
+        const sectionDiv = document.createElement('div');
+        sectionDiv.className = 'section';
+
+        const sectionHeader = document.createElement('div');
+        sectionHeader.className = 'section-header';
+
+        const sectionTitle = document.createElement('div');
+        sectionTitle.className = 'section-title';
+        sectionTitle.textContent = section.section;
+
+        const sectionProgress = document.createElement('div');
+        sectionProgress.className = 'section-progress';
+        sectionProgress.id = `section-progress-${sectionIndex}`;
+
+        sectionHeader.appendChild(sectionTitle);
+        sectionHeader.appendChild(sectionProgress);
+
+        const sectionControls = document.createElement('div');
+        sectionControls.className = 'section-controls';
+
+        const selectAllBtn = document.createElement('button');
+        selectAllBtn.className = 'btn-sm btn-outline';
+        selectAllBtn.textContent = '全選此區';
+        selectAllBtn.onclick = () => selectSection(sectionIndex);
+
+        const deselectAllBtn = document.createElement('button');
+        deselectAllBtn.className = 'btn-sm btn-outline';
+        deselectAllBtn.textContent = '取消此區';
+        deselectAllBtn.onclick = () => deselectSection(sectionIndex);
+
+        sectionControls.appendChild(selectAllBtn);
+        sectionControls.appendChild(deselectAllBtn);
+
+        sectionDiv.appendChild(sectionHeader);
+        sectionDiv.appendChild(sectionControls);
+
+        section.tasks.forEach(task => {
+          const taskDiv = document.createElement('div');
+          taskDiv.className = 'task-item';
+          if (checklistState.tasks[task.id]) {
+            taskDiv.classList.add('checked');
+          }
+
+          const checkbox = document.createElement('input');
+          checkbox.type = 'checkbox';
+          checkbox.className = 'task-checkbox';
+          checkbox.checked = checklistState.tasks[task.id] || false;
+          checkbox.onchange = () => toggleTask(task.id);
+
+          const textDiv = document.createElement('div');
+          textDiv.className = 'task-text';
+
+          const taskNumber = document.createElement('span');
+          taskNumber.className = 'task-number';
+          taskNumber.textContent = `${task.id}.`;
+
+          textDiv.appendChild(taskNumber);
+          textDiv.appendChild(document.createTextNode(task.text));
+
+          taskDiv.appendChild(checkbox);
+          taskDiv.appendChild(textDiv);
+
+          sectionDiv.appendChild(taskDiv);
+
+          // Add image(s) if any
+          if (task.image) {
+            const imageDiv = document.createElement('div');
+            imageDiv.className = 'image-preview';
+            const img = document.createElement('img');
+            img.src = task.image;
+            img.alt = task.text;
+            img.loading = 'lazy';
+            imageDiv.appendChild(img);
+            sectionDiv.appendChild(imageDiv);
+          } else if (task.images && task.images.length > 0) {
+            task.images.forEach(imageSrc => {
+              const imageDiv = document.createElement('div');
+              imageDiv.className = 'image-preview';
+              const img = document.createElement('img');
+              img.src = imageSrc;
+              img.alt = task.text;
+              img.loading = 'lazy';
+              imageDiv.appendChild(img);
+              sectionDiv.appendChild(imageDiv);
+            });
+          }
+
+          // Add subtasks if any
+          if (task.subtasks && task.subtasks.length > 0) {
+            task.subtasks.forEach(subtask => {
+              const subtaskDiv = document.createElement('div');
+              subtaskDiv.className = 'subtask';
+              subtaskDiv.textContent = `• ${subtask}`;
+              sectionDiv.appendChild(subtaskDiv);
+            });
+          }
+        });
+
+        container.appendChild(sectionDiv);
+        updateSectionProgress(sectionIndex);
+      });
+    }
+
+    // Toggle task
+    function toggleTask(taskId) {
+      checklistState.tasks[taskId] = !checklistState.tasks[taskId];
+      saveState();
+      renderChecklist();
+      updateProgress();
+    }
+
+    // Update total progress
+    function updateProgress() {
+      const totalTasks = workflowData.reduce((sum, section) => sum + section.tasks.length, 0);
+      const completedTasks = Object.values(checklistState.tasks).filter(v => v).length;
+      const percentage = totalTasks > 0 ? Math.round((completedTasks / totalTasks) * 100) : 0;
+
+      document.getElementById('completedCount').textContent = `${completedTasks}/${totalTasks}`;
+      const progressBar = document.getElementById('totalProgress');
+      progressBar.style.width = `${percentage}%`;
+      progressBar.textContent = `${percentage}%`;
+    }
+
+    // Update section progress
+    function updateSectionProgress(sectionIndex) {
+      const section = workflowData[sectionIndex];
+      const totalTasks = section.tasks.length;
+      const completedTasks = section.tasks.filter(task => checklistState.tasks[task.id]).length;
+      const progressEl = document.getElementById(`section-progress-${sectionIndex}`);
+      progressEl.textContent = `${completedTasks}/${totalTasks}`;
+    }
+
+    // Select all tasks
+    function selectAll() {
+      workflowData.forEach(section => {
+        section.tasks.forEach(task => {
+          checklistState.tasks[task.id] = true;
+        });
+      });
+      saveState();
+      renderChecklist();
+      updateProgress();
+    }
+
+    // Deselect all tasks
+    function deselectAll() {
+      checklistState.tasks = {};
+      saveState();
+      renderChecklist();
+      updateProgress();
+    }
+
+    // Select section
+    function selectSection(sectionIndex) {
+      const section = workflowData[sectionIndex];
+      section.tasks.forEach(task => {
+        checklistState.tasks[task.id] = true;
+      });
+      saveState();
+      renderChecklist();
+      updateProgress();
+    }
+
+    // Deselect section
+    function deselectSection(sectionIndex) {
+      const section = workflowData[sectionIndex];
+      section.tasks.forEach(task => {
+        checklistState.tasks[task.id] = false;
+      });
+      saveState();
+      renderChecklist();
+      updateProgress();
+    }
+
+    // Reset checklist
+    function resetChecklist() {
+      if (confirm('確定要重設所有項目嗎？')) {
+        checklistState = { date: new Date().toDateString(), tasks: {} };
+        saveState();
+        renderChecklist();
+        updateProgress();
+      }
+    }
+
+    // Initialize on load
+    init();
+  </script>
+
+</body>
+</html>
