@@ -31,7 +31,9 @@
             border-radius: 16px 16px 0 0;
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
             padding: 24px;
+            padding-right: 200px;
             text-align: center;
+            position: relative;
         }
 
         .main-title {
@@ -39,6 +41,7 @@
             font-size: 28px;
             font-weight: 700;
             margin-bottom: 12px;
+            padding-right: 40px;
         }
 
         .main-subtitle {
@@ -57,11 +60,12 @@
         /* Tab Navigation */
         .tab-navigation {
             background: white;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
             display: flex;
             justify-content: center;
             gap: 0;
             margin-bottom: 20px;
+            border-radius: 0 0 16px 16px;
         }
 
         .tab-button {
@@ -85,17 +89,17 @@
         }
 
         .tab-button.active {
-            color: #006838;
-            border-bottom-color: #006838;
-            background: #e8f5f0;
+            color: white;
+            border-bottom-color: #00a854;
+            background: #00a854;
         }
 
         .tab-button:first-child {
-            border-radius: 0 0 0 16px;
+            border-radius: 0 0 0 14px;
         }
 
         .tab-button:last-child {
-            border-radius: 0 0 16px 0;
+            border-radius: 0 0 14px 0;
         }
 
         /* Tab Content */
@@ -207,22 +211,79 @@
             margin-right: 8px;
         }
 
+        /* Language Switcher */
+        .lang-switcher {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            display: flex;
+            gap: 8px;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 6px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            z-index: 10;
+        }
+
+        .lang-button {
+            padding: 6px 12px;
+            background: #f3f4f6;
+            border: 2px solid transparent;
+            border-radius: 6px;
+            color: #6b7280;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-family: inherit;
+        }
+
+        .lang-button:hover {
+            background: #e5e7eb;
+            color: #374151;
+        }
+
+        .lang-button.active {
+            background: #006838;
+            color: white;
+            border-color: #006838;
+        }
+
+
         @media (max-width: 768px) {
+            .lang-switcher {
+                top: 10px;
+                right: 10px;
+                padding: 4px;
+                gap: 4px;
+            }
+
+            .lang-button {
+                padding: 4px 8px;
+                font-size: 11px;
+            }
+
             .container {
                 padding: 12px;
             }
 
             .main-header {
                 padding: 16px;
+                padding-right: 110px;
                 border-radius: 12px 12px 0 0;
             }
 
             .main-title {
-                font-size: 22px;
+                font-size: 20px;
+                padding-right: 0;
             }
 
             .main-subtitle {
                 font-size: 14px;
+            }
+
+            .tab-navigation {
+                border-radius: 0 0 12px 12px;
             }
 
             .tab-button {
@@ -231,11 +292,11 @@
             }
 
             .tab-button:first-child {
-                border-radius: 0 0 0 12px;
+                border-radius: 0 0 0 10px;
             }
 
             .tab-button:last-child {
-                border-radius: 0 0 12px 0;
+                border-radius: 0 0 10px 0;
             }
 
             .card {
@@ -268,9 +329,16 @@
     <div class="container">
         <!-- Main Header -->
         <div class="main-header">
+            <!-- Language Switcher -->
+            <div class="lang-switcher">
+                <button class="lang-button active" onclick="switchLanguage('zh-TW')" data-lang="zh-TW">繁</button>
+                <button class="lang-button" onclick="switchLanguage('zh-CN')" data-lang="zh-CN">简</button>
+                <button class="lang-button" onclick="switchLanguage('en')" data-lang="en">EN</button>
+            </div>
+
             <div class="main-title">🍣 DT店 壽司部門完整指南</div>
-            <div class="main-subtitle">工作要求 & 崗位安排</div>
-            <div class="publish-info">📅 最後更新：2025/10/31</div>
+            <!-- <div class="main-subtitle">工作要求 & 崗位安排</div> -->
+            <div class="publish-info">📅 最後更新：2025/11/29 | © By Ken Tai</div>
         </div>
 
         <!-- Tab Navigation -->
@@ -280,6 +348,9 @@
             </button>
             <button class="tab-button" onclick="switchTab('assignments')">
                 <span class="tab-icon">👥</span>崗位安排
+            </button>
+            <button class="tab-button" onclick="switchTab('cleaning')">
+                <span class="tab-icon">🧹</span>清潔工作安排
             </button>
         </div>
 
@@ -416,13 +487,13 @@
                     </div>
                     <div class="section-content">
                         <ul class="task-list">
-                            <li><span class="task-number">1.</span>煮飯 3锅 、並准備洗好下一輪煮飯3锅的米和做第二轮的飯。蒸熱醋飯。开打包機、清潔和處理展櫃食物。補好小菜。取回蒸飯。</li>
-                            <li><span class="task-number">2.</span>出餐 剌身、特價盘、組合盤（按第一轮要求的數量。與B位互相配合）。A-E盤（如果在有訂單時完成）。</li>
+                            <li><span class="task-number">1.</span>煮飯 3鍋、並準備洗好下一輪煮飯3鍋的米和做第二輪的飯。蒸熱醋飯。開打包機、清潔和處理展櫃食物。補好小菜。取回蒸飯。</li>
+                            <li><span class="task-number">2.</span>出餐 刺身、特價盤、組合盤（按第一輪要求的數量。與B位互相配合）。A-E盤（如果在有訂單時完成）。</li>
                             <li><span class="task-number">3.</span>在12點前安排午餐。</li>
                             <li><span class="task-number">4.</span>午餐後接替出餐B午餐。繼續補出餐 A、B位的出餐。直到出餐B回來。</li>
-                            <li><span class="task-number">5.</span>切三文魚3、COHO魚1。（數量根据剩余量和銷售情況確定切魚的數量）。</li>
+                            <li><span class="task-number">5.</span>切三文魚3、COHO魚1。（數量根據剩餘量和銷售情況確定切魚的數量）。</li>
                             <li><span class="task-number">6.</span>填寫早上溫度表和出餐溫度表。</li>
-                            <li><span class="task-number">7.</span>备出餐的材料。清潔。</li>
+                            <li><span class="task-number">7.</span>備出餐的材料。清潔。</li>
                         </ul>
                     </div>
                 </div>
@@ -435,11 +506,11 @@
                     <div class="section-content">
                         <ul class="task-list">
                             <li><span class="task-number">1.</span>拍打飯粒。</li>
-                            <li><span class="task-number">2.</span>出餐ST2 .ST4.ST5 (按第一轮要求的數量。與A位互相配合）。在十一點半前完成並拍照上群。</li>
-                            <li><span class="task-number">3.</span>根據銷售情況，繼續補A.B位的出餐。直到A位回來午餐。</li>
-                            <li><span class="task-number">4.</span>午餐後繼續A.B位的出餐。</li>
-                            <li><span class="task-number">5.</span>备料（刨蘿卜絲和洗生菜）。在5點拍照上群。</li>
-                            <li><span class="task-number">6.</span>處理当天剩飯。最後清潔壽司部總清潔。</li>
+                            <li><span class="task-number">2.</span>出餐ST2、ST4、ST5（按第一輪要求的數量。與A位互相配合）。在十一點半前完成並拍照上群。</li>
+                            <li><span class="task-number">3.</span>根據銷售情況，繼續補A、B位的出餐。直到A位回來午餐。</li>
+                            <li><span class="task-number">4.</span>午餐後繼續A、B位的出餐。</li>
+                            <li><span class="task-number">5.</span>備料（刨蘿蔔絲和洗生菜）。在5點拍照上群。</li>
+                            <li><span class="task-number">6.</span>處理當天剩飯。最後清潔壽司部總清潔。</li>
                         </ul>
                     </div>
                 </div>
@@ -451,11 +522,11 @@
                     </div>
                     <div class="section-content">
                         <ul class="task-list">
-                            <li><span class="task-number">1.</span>組裝包卷機并加油。打包壽司托盤、寿司卷席。</li>
-                            <li><span class="task-number">2.</span>完成第一輪包卷要求。（与卷2協調進度）。完成三角飯的貼價錢和擺到展櫃。</li>
-                            <li><span class="task-number">3.</span>在完成第一輪包卷數量後。根據需要繼續准备出餐用卷。</li>
+                            <li><span class="task-number">1.</span>組裝包卷機並加油。打包壽司托盤、壽司卷席。</li>
+                            <li><span class="task-number">2.</span>完成第一輪包卷要求。（與卷2協調進度）。完成三角飯的貼價錢和擺到展櫃。</li>
+                            <li><span class="task-number">3.</span>在完成第一輪包卷數量後。根據需要繼續準備出餐用卷。</li>
                             <li><span class="task-number">4.</span>在12點前午餐。</li>
-                            <li><span class="task-number">5.</span>准备包卷用的材料。</li>
+                            <li><span class="task-number">5.</span>準備包卷用的材料。</li>
                             <li><span class="task-number">6.</span>切三文魚3。</li>
                             <li><span class="task-number">7.</span>繼續完成晚間出餐用卷。</li>
                             <li><span class="task-number">8.</span>清潔。</li>
@@ -470,16 +541,75 @@
                     </div>
                     <div class="section-content">
                         <ul class="task-list">
-                            <li><span class="task-number">1.</span>將煮好的第一轮飯打成壽司飯。做好壽司飯酸鹼度測試。</li>
-                            <li><span class="task-number">2.</span>完成包卷數量。（白加州9 、加州40、 三文魚卷20、海鮮卷5）</li>
-                            <li><span class="task-number">3.</span>在10點左右先將飯合用的雞和三文魚拿到廚房加工。</li>
-                            <li><span class="task-number">4.</span>打第二轮壽司饭。</li>
-                            <li><span class="task-number">5.</span>開始做Bento飯（雞飯6-三文魚飯6-鳗魚飯6-雞飯6）。</li>
+                            <li><span class="task-number">1.</span>將煮好的第一輪飯打成壽司飯。做好壽司飯酸鹼度測試。</li>
+                            <li><span class="task-number">2.</span>完成包卷數量。（白加州9、加州36、三文魚卷18、海鮮卷5）</li>
+                            <li><span class="task-number">3.</span>在10點左右先將飯盒用的雞和三文魚拿到廚房加工。</li>
+                            <li><span class="task-number">4.</span>打第二輪壽司飯。</li>
+                            <li><span class="task-number">5.</span>開始做Bento飯（雞飯6-三文魚飯6-鰻魚飯6-雞飯6）。</li>
                             <li><span class="task-number">6.</span>做鰻魚冷飯6-8。</li>
-                            <li><span class="task-number">7.</span>备小菜和切雞、鰻魚。（小菜量架上4备貨4）。</li>
+                            <li><span class="task-number">7.</span>備小菜和切雞、鰻魚。（小菜量架上4備貨4）。</li>
                             <li><span class="task-number">8.</span>再煮三鍋飯。午餐。</li>
                             <li><span class="task-number">9.</span>打壽司飯。送雞、三文魚到廚房加工。繼續完成晚餐BENTO。（雞飯6-三文魚飯6-鰻魚飯6-雞飯6-12）。</li>
-                            <li><span class="task-number">10.</span>备貨、清潔。</li>
+                            <li><span class="task-number">10.</span>備貨、清潔。</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab Content: Cleaning -->
+        <div id="cleaning" class="tab-content">
+            <div class="card">
+                <div class="section-content" style="padding-left: 0; margin-bottom: 24px; line-height: 1.8;">
+                    為了符合公共食品衛生安全的要求，並為各位同事提供一個乾淨、衛生、安全的工作環境，請壽司部的同事齊心協力，共同做好每日、每週、每月的清潔衛生工作。
+                </div>
+
+                <div class="section">
+                    <div class="section-title">
+                        <span class="section-number">1</span>
+                        每日衛生工作
+                    </div>
+                    <div class="section-content">
+                        <ul class="task-list">
+                            <li><span class="task-number">1.</span><strong>外場展示櫃清潔：</strong>由<strong>早班同事(出餐A位同事)</strong>負責。</li>
+                            <li><span class="task-number">2.</span><strong>洗水盤清潔：</strong>長期保持清潔，盡量不要存放雜物。誰使用誰盡快清潔整理，以免影響其他人使用。最後清潔由<strong>晚班同事(出餐B位同事)</strong>負責。</li>
+                            <li><span class="task-number">3.</span><strong>飯鍋、飯鍋桌子和底下架子、拌飯保溫箱和大米存放箱、壽司醋量杯等的清潔：</strong>由<strong>煮飯的同事</strong>每次負責清潔。</li>
+                            <li><span class="task-number">4.</span><strong>工作桌面衛生清潔：</strong>希望大家養成<strong>「誰使用誰負責」</strong>的習慣。卷位和出餐位由各自同事負責清潔。</li>
+                            <li><span class="task-number">5.</span><strong>鋪飯機的衛生清潔：</strong>由<strong>卷1位同事</strong>使用後清潔。</li>
+                            <li><span class="task-number">6.</span><strong>卷位1號雪櫃外表和內部清潔：</strong>由<strong>卷1位同事</strong>下班前清潔。</li>
+                            <li><span class="task-number">7.</span><strong>2號雪櫃、冰櫃外表和內部清潔：</strong>由<strong>出餐B同事</strong>清潔。</li>
+                            <li><span class="task-number">8.</span><strong>地面衛生清洗清潔：</strong>由<strong>晚班同事(出餐B位同事)</strong>負責。</li>
+                            <li><span class="task-number">9.</span><strong>手推車衛生清潔、板的盤位置：</strong>由<strong>晚班同事(出餐B位同事)</strong>負責。</li>
+                            <li><span class="task-number">10.</span><strong>電腦桌和包裝機、急速冷凍機衛生清潔：</strong>由<strong>晚班同事(出餐B位同事)</strong>負責。</li>
+                        </ul>
+                        <!-- <div class="highlight" style="margin-top: 16px;">
+                            <strong>晚班同事負責最後的總體清潔</strong>
+                        </div> -->
+                    </div>
+                </div>
+
+                <div class="section">
+                    <div class="section-title">
+                        <span class="section-number">2</span>
+                        每週衛生工作（星期一下午）
+                    </div>
+                    <div class="section-content">
+                        <ul class="task-list">
+                            <li><span class="task-number">1.</span><strong>雪櫃和冰櫃內部徹底清潔：</strong>1號雪櫃由<strong>卷1位同事</strong>負責2號雪櫃和冰櫃由<strong>出餐A位同事</strong>負責。</li>
+                            <li><span class="task-number">2.</span><strong>出餐工作台下包裝物整理、擦洗清潔：</strong>由<strong>出餐同事</strong>負責。</li>
+                            <li><span class="task-number">3.</span><strong>牆櫃包裝物整理、牆櫃內外擦洗清潔，以及卷位台下包裝物整理、擦洗清潔：</strong>由<strong>卷位同事</strong>負責。</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <div class="section-title">
+                        <span class="section-number">3</span>
+                        每月衛生工作（每月的最後一天）
+                    </div>
+                    <div class="section-content">
+                        <ul class="task-list">
+                            <li><span class="task-number">1.</span><strong>後場大雪櫃和冷凍櫃內貨架整理徹底清潔、展示櫃頂的清潔：</strong>由當天上班同事共同負責（根據當天具體情況，由主管安排兩位同事進行）。</li>
                         </ul>
                     </div>
                 </div>
@@ -488,6 +618,543 @@
     </div>
 
     <script>
+        // i18n Translation Data
+        const translations = {
+            'zh-TW': {
+                // Header
+                'header.title': '🍣 DT店 壽司部門完整指南',
+                'header.lastUpdate': '📅 最後更新：2025/11/29 | © By Ken Tai',
+
+                // Tabs
+                'tab.requirements': '工作要求',
+                'tab.assignments': '崗位安排',
+                'tab.cleaning': '清潔工作安排',
+
+                // Requirements Tab
+                'req.section1.title': '產品質量與衛生標準',
+                'req.section1.content': '為確保壽司產品的品質與銷量，所有員工需以認真、專業的態度，嚴格遵循壽司製作要求及衛生標準，精心完成每一份壽司產品。',
+
+                'req.section2.title': '團隊合作與庫存管理',
+                'req.section2.content': '為保證壽司部門正常運作，員工需在完成本崗位職責的基礎上，發揮團隊合作精神，互相包容。請密切留意崗位庫存情況，及時向主管反映缺貨問題，以便安排訂貨。每天下班前，務必檢查冰箱內次日所需食材，互相提醒，確保準備充分。',
+
+                'req.section3.title': '飯量控制',
+                'req.section3.content': '煮飯員工需特別注意飯量供應，確保下午3點左右不缺飯，同時避免剩飯過多。請根據每日需求靈活調整飯量，保持用心。',
+
+                'req.section4.title': '壽司卷處理',
+                'req.section4.content': '包好的壽司卷應盡快切成成品。若無法立即處理，需放入冰箱保存，必要時可使用急速冷凍機降溫以保持新鮮。',
+
+                'req.section5.title': '壽司陳列與調整',
+                'req.section5.content': '員工需經常檢查並整理壽司陳列框，遵循「少量多補」原則，及時補充缺貨品項。發現牛油果變黑等品質問題應立即處理。根據天氣、日期、人流量及季節，靈活調整晚餐壽司的製作時間與產量，確保產品新鮮。',
+
+                'req.section6.title': '小菜管理',
+                'req.section6.content': '確保小菜備貨充足，避免補貨時缺貨。若小菜銷量較低，需定期檢查貨架上小菜的品質，而非僅依賴保質期。切壽司蛋的刀具與砧板必須保持乾淨，以防蛋品變質。',
+
+                'req.section7.title': '三文魚與帶子處理',
+                'req.section7.content': '當天切好的三文魚應盡量於次日使用，避免多次解凍影響新鮮度。帶子需同樣謹慎處理。',
+
+                'req.section8.title': '產品優先順序',
+                'req.section8.content': '工作優先順序如下：',
+                'req.section8.priority1': '第一優先：',
+                'req.section8.priority1.value': 'Weekly Promotion（每週促銷產品）',
+                'req.section8.priority2': '第二優先：',
+                'req.section8.priority2.value': 'Top Sales（熱銷產品）',
+                'req.section8.priority3': '第三優先：',
+                'req.section8.priority3.value': 'Must Carry（必備產品）',
+                'req.section8.priority4': '最後：',
+                'req.section8.priority4.value': '常規產品',
+
+                'req.section9.title': '熱飯盒製作與管理',
+                'req.section9.content': '熱飯盒需在每天上午11點前及下午5點前完成，具體數量如下：',
+                'req.section9.item1': '燒雞飯：12份',
+                'req.section9.item2': '鰻魚飯：6份',
+                'req.section9.item3': '日式三文飯：6份',
+                'req.section9.note': '週六、週日中午需根據當天人流情況適當增減數量。若熱飯盒銷量較快，需及時補貨；若存放超過兩小時，需進行減價處理。',
+
+                'req.section10.title': '素食壽司製作',
+                'req.section10.content': '製作素食壽司卷時，刀具與砧板必須徹底清洗乾淨，確保符合全素食客人的食品安全需求。',
+
+                // Assignments Tab
+                'assign.section1.title': '出餐 A',
+                'assign.section1.task1': '煮飯 3鍋、並準備洗好下一輪煮飯3鍋的米和做第二輪的飯。蒸熱醋飯。開打包機、清潔和處理展櫃食物。補好小菜。取回蒸飯。',
+                'assign.section1.task2': '出餐 刺身、特價盤、組合盤（按第一輪要求的數量。與B位互相配合）。A-E盤（如果在有訂單時完成）。',
+                'assign.section1.task3': '在12點前安排午餐。',
+                'assign.section1.task4': '午餐後接替出餐B午餐。繼續補出餐 A、B位的出餐。直到出餐B回來。',
+                'assign.section1.task5': '切三文魚3、COHO魚1。（數量根據剩餘量和銷售情況確定切魚的數量）。',
+                'assign.section1.task6': '填寫早上溫度表和出餐溫度表。',
+                'assign.section1.task7': '備出餐的材料。清潔。',
+                'assign.section2.title': '出餐 B',
+                'assign.section2.task1': '拍打飯粒。',
+                'assign.section2.task2': '出餐ST2、ST4、ST5（按第一輪要求的數量。與A位互相配合）。在十一點半前完成並拍照上群。',
+                'assign.section2.task3': '根據銷售情況，繼續補A、B位的出餐。直到A位回來午餐。',
+                'assign.section2.task4': '午餐後繼續A、B位的出餐。',
+                'assign.section2.task5': '備料（刨蘿蔔絲和洗生菜）。在5點拍照上群。',
+                'assign.section2.task6': '處理當天剩飯。最後清潔壽司部總清潔。',
+                'assign.section3.title': '卷1',
+                'assign.section3.task1': '組裝包卷機並加油。打包壽司托盤、壽司卷席。',
+                'assign.section3.task2': '完成第一輪包卷要求。（與卷2協調進度）。完成三角飯的貼價錢和擺到展櫃。',
+                'assign.section3.task3': '在完成第一輪包卷數量後。根據需要繼續準備出餐用卷。',
+                'assign.section3.task4': '在12點前午餐。',
+                'assign.section3.task5': '準備包卷用的材料。',
+                'assign.section3.task6': '切三文魚3。',
+                'assign.section3.task7': '繼續完成晚間出餐用卷。',
+                'assign.section3.task8': '清潔。',
+                'assign.section4.title': '卷2',
+                'assign.section4.task1': '將煮好的第一輪飯打成壽司飯。做好壽司飯酸鹼度測試。',
+                'assign.section4.task2': '完成包卷數量。（白加州9、加州36、三文魚卷18、海鮮卷5）',
+                'assign.section4.task3': '在10點左右先將飯盒用的雞和三文魚拿到廚房加工。',
+                'assign.section4.task4': '打第二輪壽司飯。',
+                'assign.section4.task5': '開始做Bento飯（雞飯6-三文魚飯6-鰻魚飯6-雞飯6）。',
+                'assign.section4.task6': '做鰻魚冷飯6-8。',
+                'assign.section4.task7': '備小菜和切雞、鰻魚。（小菜量架上4備貨4）。',
+                'assign.section4.task8': '再煮三鍋飯。午餐。',
+                'assign.section4.task9': '打壽司飯。送雞、三文魚到廚房加工。繼續完成晚餐BENTO。（雞飯6-三文魚飯6-鰻魚飯6-雞飯6-12）。',
+                'assign.section4.task10': '備貨、清潔。',
+
+                // Cleaning Tab
+                'clean.intro': '為了符合公共食品衛生安全的要求，並為各位同事提供一個乾淨、衛生、安全的工作環境，請壽司部的同事齊心協力，共同做好每日、每週、每月的清潔衛生工作。',
+                'clean.section1.title': '每日衛生工作',
+                'clean.section1.task1': '<strong>外場展示櫃清潔：</strong>由<strong>早班同事(出餐A位同事)</strong>負責。',
+                'clean.section1.task2': '<strong>洗水盤清潔：</strong>長期保持清潔，盡量不要存放雜物。誰使用誰盡快清潔整理，以免影響其他人使用。最後清潔由<strong>晚班同事(出餐B位同事)</strong>負責。',
+                'clean.section1.task3': '<strong>飯鍋、飯鍋桌子和底下架子、拌飯保溫箱和大米存放箱、壽司醋量杯等的清潔：</strong>由<strong>煮飯的同事</strong>每次負責清潔。',
+                'clean.section1.task4': '<strong>工作桌面衛生清潔：</strong>希望大家養成<strong>「誰使用誰負責」</strong>的習慣。卷位和出餐位由各自同事負責清潔。',
+                'clean.section1.task5': '<strong>鋪飯機的衛生清潔：</strong>由<strong>卷1位同事</strong>使用後清潔。',
+                'clean.section1.task6': '<strong>卷位1號雪櫃外表和內部清潔：</strong>由<strong>卷1位同事</strong>下班前清潔。',
+                'clean.section1.task7': '<strong>2號雪櫃、冰櫃外表和內部清潔：</strong>由<strong>出餐B同事</strong>清潔。',
+                'clean.section1.task8': '<strong>地面衛生清洗清潔：</strong>由<strong>晚班同事(出餐B位同事)</strong>負責。',
+                'clean.section1.task9': '<strong>手推車衛生清潔、砧板的盤位置：</strong>由<strong>晚班同事(出餐B位同事)</strong>負責。',
+                'clean.section1.task10': '<strong>電腦桌和包裝機、急速冷凍機衛生清潔：</strong>由<strong>晚班同事(出餐B位同事)</strong>負責。',
+                'clean.section2.title': '每週衛生工作（星期一下午）',
+                'clean.section2.task1': '<strong>雪櫃和冰櫃內部徹底清潔：</strong>1號雪櫃由<strong>卷1位同事</strong>負責；2號雪櫃和冰櫃由<strong>出餐A位同事</strong>負責。',
+                'clean.section2.task2': '<strong>出餐工作台下包裝物整理、擦洗清潔：</strong>由<strong>出餐同事</strong>負責。',
+                'clean.section2.task3': '<strong>牆櫃包裝物整理、牆櫃內外擦洗清潔，以及卷位台下包裝物整理、擦洗清潔：</strong>由<strong>卷位同事</strong>負責。',
+                'clean.section3.title': '每月衛生工作（每月的最後一天）',
+                'clean.section3.task1': '<strong>後場大雪櫃和冷凍櫃內貨架整理徹底清潔、展示櫃頂的清潔：</strong>由當天上班同事共同負責（根據當天具體情況，由主管安排兩位同事進行）。',
+            },
+            'zh-CN': {
+                // Header
+                'header.title': '🍣 DT店 寿司部门完整指南',
+                'header.lastUpdate': '📅 最后更新：2025/11/29 | © By Ken Tai',
+
+                // Tabs
+                'tab.requirements': '工作要求',
+                'tab.assignments': '岗位安排',
+                'tab.cleaning': '清洁工作安排',
+
+                // Requirements Tab
+                'req.section1.title': '产品质量与卫生标准',
+                'req.section1.content': '为确保寿司产品的品质与销量，所有员工需以认真、专业的态度，严格遵循寿司制作要求及卫生标准，精心完成每一份寿司产品。',
+
+                'req.section2.title': '团队合作与库存管理',
+                'req.section2.content': '为保证寿司部门正常运作，员工需在完成本岗位职责的基础上，发挥团队合作精神，互相包容。请密切留意岗位库存情况，及时向主管反映缺货问题，以便安排订货。每天下班前，务必检查冰箱内次日所需食材，互相提醒，确保准备充分。',
+
+                'req.section3.title': '饭量控制',
+                'req.section3.content': '煮饭员工需特别注意饭量供应，确保下午3点左右不缺饭，同时避免剩饭过多。请根据每日需求灵活调整饭量，保持用心。',
+
+                'req.section4.title': '寿司卷处理',
+                'req.section4.content': '包好的寿司卷应尽快切成成品。若无法立即处理，需放入冰箱保存，必要时可使用急速冷冻机降温以保持新鲜。',
+
+                'req.section5.title': '寿司陈列与调整',
+                'req.section5.content': '员工需经常检查并整理寿司陈列框，遵循「少量多补」原则，及时补充缺货品项。发现牛油果变黑等品质问题应立即处理。根据天气、日期、人流量及季节，灵活调整晚餐寿司的制作时间与产量，确保产品新鲜。',
+
+                'req.section6.title': '小菜管理',
+                'req.section6.content': '确保小菜备货充足，避免补货时缺货。若小菜销量较低，需定期检查货架上小菜的品质，而非仅依赖保质期。切寿司蛋的刀具与砧板必须保持干净，以防蛋品变质。',
+
+                'req.section7.title': '三文鱼与带子处理',
+                'req.section7.content': '当天切好的三文鱼应尽量于次日使用，避免多次解冻影响新鲜度。带子需同样谨慎处理。',
+
+                'req.section8.title': '产品优先顺序',
+                'req.section8.content': '工作优先顺序如下：',
+                'req.section8.priority1': '第一优先：',
+                'req.section8.priority1.value': 'Weekly Promotion（每周促销产品）',
+                'req.section8.priority2': '第二优先：',
+                'req.section8.priority2.value': 'Top Sales（热销产品）',
+                'req.section8.priority3': '第三优先：',
+                'req.section8.priority3.value': 'Must Carry（必备产品）',
+                'req.section8.priority4': '最后：',
+                'req.section8.priority4.value': '常规产品',
+
+                'req.section9.title': '热饭盒制作与管理',
+                'req.section9.content': '热饭盒需在每天上午11点前及下午5点前完成，具体数量如下：',
+                'req.section9.item1': '烧鸡饭：12份',
+                'req.section9.item2': '鳗鱼饭：6份',
+                'req.section9.item3': '日式三文饭：6份',
+                'req.section9.note': '周六、周日中午需根据当天人流情况适当增减数量。若热饭盒销量较快，需及时补货；若存放超过两小时，需进行减价处理。',
+
+                'req.section10.title': '素食寿司制作',
+                'req.section10.content': '制作素食寿司卷时，刀具与砧板必须彻底清洗干净，确保符合全素食客人的食品安全需求。',
+
+                // Assignments Tab
+                'assign.section1.title': '出餐 A',
+                'assign.section1.task1': '煮饭 3锅、并准备洗好下一轮煮饭3锅的米和做第二轮的饭。蒸热醋饭。开打包机、清洁和处理展柜食物。补好小菜。取回蒸饭。',
+                'assign.section1.task2': '出餐 刺身、特价盘、组合盘（按第一轮要求的数量。与B位互相配合）。A-E盘（如果在有订单时完成）。',
+                'assign.section1.task3': '在12点前安排午餐。',
+                'assign.section1.task4': '午餐后接替出餐B午餐。继续补出餐 A、B位的出餐。直到出餐B回来。',
+                'assign.section1.task5': '切三文鱼3、COHO鱼1。（数量根据剩余量和销售情况确定切鱼的数量）。',
+                'assign.section1.task6': '填写早上温度表和出餐温度表。',
+                'assign.section1.task7': '备出餐的材料。清洁。',
+                'assign.section2.title': '出餐 B',
+                'assign.section2.task1': '拍打饭粒。',
+                'assign.section2.task2': '出餐ST2、ST4、ST5（按第一轮要求的数量。与A位互相配合）。在十一点半前完成并拍照上群。',
+                'assign.section2.task3': '根据销售情况，继续补A、B位的出餐。直到A位回来午餐。',
+                'assign.section2.task4': '午餐后继续A、B位的出餐。',
+                'assign.section2.task5': '备料（刨萝卜丝和洗生菜）。在5点拍照上群。',
+                'assign.section2.task6': '处理当天剩饭。最后清洁寿司部总清洁。',
+                'assign.section3.title': '卷1',
+                'assign.section3.task1': '组装包卷机并加油。打包寿司托盘、寿司卷席。',
+                'assign.section3.task2': '完成第一轮包卷要求。（与卷2协调进度）。完成三角饭的贴价钱和摆到展柜。',
+                'assign.section3.task3': '在完成第一轮包卷数量后。根据需要继续准备出餐用卷。',
+                'assign.section3.task4': '在12点前午餐。',
+                'assign.section3.task5': '准备包卷用的材料。',
+                'assign.section3.task6': '切三文鱼3。',
+                'assign.section3.task7': '继续完成晚间出餐用卷。',
+                'assign.section3.task8': '清洁。',
+                'assign.section4.title': '卷2',
+                'assign.section4.task1': '将煮好的第一轮饭打成寿司饭。做好寿司饭酸碱度测试。',
+                'assign.section4.task2': '完成包卷数量。（白加州9、加州36、三文鱼卷18、海鲜卷5）',
+                'assign.section4.task3': '在10点左右先将饭盒用的鸡和三文鱼拿到厨房加工。',
+                'assign.section4.task4': '打第二轮寿司饭。',
+                'assign.section4.task5': '开始做Bento饭（鸡饭6-三文鱼饭6-鳗鱼饭6-鸡饭6）。',
+                'assign.section4.task6': '做鳗鱼冷饭6-8。',
+                'assign.section4.task7': '备小菜和切鸡、鳗鱼。（小菜量架上4备货4）。',
+                'assign.section4.task8': '再煮三锅饭。午餐。',
+                'assign.section4.task9': '打寿司饭。送鸡、三文鱼到厨房加工。继续完成晚餐BENTO。（鸡饭6-三文鱼饭6-鳗鱼饭6-鸡饭6-12）。',
+                'assign.section4.task10': '备货、清洁。',
+
+                // Cleaning Tab
+                'clean.intro': '为了符合公共食品卫生安全的要求，并为各位同事提供一个干净、卫生、安全的工作环境，请寿司部的同事齐心协力，共同做好每日、每周、每月的清洁卫生工作。',
+                'clean.section1.title': '每日卫生工作',
+                'clean.section1.task1': '<strong>外场展示柜清洁：</strong>由<strong>早班同事(出餐A位同事)</strong>负责。',
+                'clean.section1.task2': '<strong>洗水盘清洁：</strong>长期保持清洁，尽量不要存放杂物。谁使用谁尽快清洁整理，以免影响其他人使用。最后清洁由<strong>晚班同事(出餐B位同事)</strong>负责。',
+                'clean.section1.task3': '<strong>饭锅、饭锅桌子和底下架子、拌饭保温箱和大米存放箱、寿司醋量杯等的清洁：</strong>由<strong>煮饭的同事</strong>每次负责清洁。',
+                'clean.section1.task4': '<strong>工作桌面卫生清洁：</strong>希望大家养成<strong>「谁使用谁负责」</strong>的习惯。卷位和出餐位由各自同事负责清洁。',
+                'clean.section1.task5': '<strong>铺饭机的卫生清潔：</strong>由<strong>卷1位同事</strong>使用后清洁。',
+                'clean.section1.task6': '<strong>卷位1号雪柜外表和内部清洁：</strong>由<strong>卷1位同事</strong>下班前清洁。',
+                'clean.section1.task7': '<strong>2号雪柜、冰柜外表和内部清洁：</strong>由<strong>出餐B同事</strong>清洁。',
+                'clean.section1.task8': '<strong>地面卫生清洗清洁：</strong>由<strong>晚班同事(出餐B位同事)</strong>负责。',
+                'clean.section1.task9': '<strong>手推车卫生清洁、砧板的盘位置：</strong>由<strong>晚班同事(出餐B位同事)</strong>负责。',
+                'clean.section1.task10': '<strong>电脑桌和包装机、急速冷冻机卫生清洁：</strong>由<strong>晚班同事(出餐B位同事)</strong>负责。',
+                'clean.section2.title': '每周卫生工作（星期一下午）',
+                'clean.section2.task1': '<strong>雪柜和冰柜内部彻底清洁：</strong>1号雪柜由<strong>卷1位同事</strong>负责；2号雪柜和冰柜由<strong>出餐A位同事</strong>负责。',
+                'clean.section2.task2': '<strong>出餐工作台下包装物整理、擦洗清洁：</strong>由<strong>出餐同事</strong>负责。',
+                'clean.section2.task3': '<strong>墙柜包装物整理、墙柜内外擦洗清洁，以及卷位台下包装物整理、擦洗清洁：</strong>由<strong>卷位同事</strong>负责。',
+                'clean.section3.title': '每月卫生工作（每月的最后一天）',
+                'clean.section3.task1': '<strong>后场大雪柜和冷冻柜内货架整理彻底清洁、展示柜顶的清洁：</strong>由当天上班同事共同负责（根据当天具体情况，由主管安排两位同事进行）。',
+            },
+            'en': {
+                // Header
+                'header.title': '🍣 DT Store Sushi Department Complete Guide',
+                'header.lastUpdate': '📅 Last Updated: 2025/11/29 | © By Ken Tai',
+
+                // Tabs
+                'tab.requirements': 'Work Requirements',
+                'tab.assignments': 'Position Assignments',
+                'tab.cleaning': 'Cleaning Schedule',
+
+                // Requirements Tab
+                'req.section1.title': 'Product Quality & Hygiene Standards',
+                'req.section1.content': 'To ensure sushi product quality and sales, all staff must maintain a serious and professional attitude, strictly follow sushi preparation requirements and hygiene standards, and carefully complete each sushi product.',
+
+                'req.section2.title': 'Teamwork & Inventory Management',
+                'req.section2.content': 'To ensure normal operation of the sushi department, staff must complete their position responsibilities while demonstrating teamwork spirit and mutual tolerance. Please closely monitor stock levels and promptly report shortages to supervisors for ordering arrangements. Before leaving each day, check the refrigerator for next day ingredients and remind each other to ensure adequate preparation.',
+
+                'req.section3.title': 'Rice Quantity Control',
+                'req.section3.content': 'Rice cooking staff must pay special attention to rice supply, ensuring no shortage around 3 PM while avoiding excessive leftovers. Please flexibly adjust rice quantity based on daily needs with care.',
+
+                'req.section4.title': 'Sushi Roll Handling',
+                'req.section4.content': 'Wrapped sushi rolls should be cut into finished products as soon as possible. If immediate processing is not possible, store in refrigerator, and use rapid freezer if necessary to maintain freshness.',
+
+                'req.section5.title': 'Sushi Display & Adjustment',
+                'req.section5.content': 'Staff must frequently check and organize sushi display cases, follow the "small quantity, frequent replenishment" principle, and promptly refill out-of-stock items. Immediately address quality issues such as blackened avocado. Flexibly adjust dinner sushi preparation time and quantity based on weather, date, foot traffic, and season to ensure product freshness.',
+
+                'req.section6.title': 'Side Dish Management',
+                'req.section6.content': 'Ensure adequate side dish stock to avoid shortages during replenishment. If side dish sales are low, regularly check shelf quality rather than relying solely on expiration dates. Keep knives and cutting boards for tamago clean to prevent spoilage.',
+
+                'req.section7.title': 'Salmon & Scallop Handling',
+                'req.section7.content': 'Salmon cut on the same day should be used the next day when possible to avoid multiple thawing affecting freshness. Scallops require similarly careful handling.',
+
+                'req.section8.title': 'Product Priority Order',
+                'req.section8.content': 'Work priority order is as follows:',
+                'req.section8.priority1': 'First Priority:',
+                'req.section8.priority1.value': 'Weekly Promotion',
+                'req.section8.priority2': 'Second Priority:',
+                'req.section8.priority2.value': 'Top Sales',
+                'req.section8.priority3': 'Third Priority:',
+                'req.section8.priority3.value': 'Must Carry',
+                'req.section8.priority4': 'Last:',
+                'req.section8.priority4.value': 'Regular Products',
+
+                'req.section9.title': 'Hot Bento Box Preparation & Management',
+                'req.section9.content': 'Hot bento boxes must be completed before 11 AM and 5 PM daily with the following quantities:',
+                'req.section9.item1': 'Chicken Rice: 12 boxes',
+                'req.section9.item2': 'Eel Rice: 6 boxes',
+                'req.section9.item3': 'Japanese Salmon Rice: 6 boxes',
+                'req.section9.note': 'Saturday and Sunday lunch quantities should be adjusted based on foot traffic. If boxes sell quickly, replenish promptly; if stored over two hours, mark down prices.',
+
+                'req.section10.title': 'Vegetarian Sushi Preparation',
+                'req.section10.content': 'When making vegetarian sushi rolls, knives and cutting boards must be thoroughly cleaned to ensure food safety requirements for vegan customers.',
+
+                // Assignments Tab
+                'assign.section1.title': 'Service Position A',
+                'assign.section1.task1': 'Cook 3 pots of rice, prepare and wash rice for next round of 3 pots, and make second round. Steam vinegar rice. Turn on packing machine, clean and handle display case food. Replenish side dishes. Retrieve steamed rice.',
+                'assign.section1.task2': 'Serve sashimi, special plates, combo plates (first round quantity requirements, coordinate with Position B). A-E plates (complete if orders available).',
+                'assign.section1.task3': 'Arrange lunch before 12 PM.',
+                'assign.section1.task4': 'After lunch, cover for Position B lunch break. Continue replenishing Position A & B service items until Position B returns.',
+                'assign.section1.task5': 'Cut 3 salmon, 1 COHO fish. (Determine quantity based on remaining stock and sales situation).',
+                'assign.section1.task6': 'Fill in morning temperature log and service temperature log.',
+                'assign.section1.task7': 'Prepare service materials. Clean.',
+                'assign.section2.title': 'Service Position B',
+                'assign.section2.task1': 'Fluff rice grains.',
+                'assign.section2.task2': 'Serve ST2, ST4, ST5 (first round quantity requirements, coordinate with Position A). Complete and photo upload to group before 11:30.',
+                'assign.section2.task3': 'Based on sales, continue replenishing Position A & B service items until Position A returns for lunch.',
+                'assign.section2.task4': 'After lunch, continue Position A & B service.',
+                'assign.section2.task5': 'Prep ingredients (shred radish and wash lettuce). Photo upload at 5 PM.',
+                'assign.section2.task6': 'Handle leftover rice from the day. Final sushi department general cleaning.',
+                'assign.section3.title': 'Roll Position 1',
+                'assign.section3.task1': 'Assemble rolling machine and oil. Pack sushi trays and rolling mats.',
+                'assign.section3.task2': 'Complete first round rolling requirements (coordinate progress with Roll 2). Complete pricing stickers for onigiri and place in display case.',
+                'assign.section3.task3': 'After completing first round rolling quantity, continue preparing rolls for service as needed.',
+                'assign.section3.task4': 'Lunch before 12 PM.',
+                'assign.section3.task5': 'Prepare rolling materials.',
+                'assign.section3.task6': 'Cut 3 salmon.',
+                'assign.section3.task7': 'Continue completing rolls for evening service.',
+                'assign.section3.task8': 'Clean.',
+                'assign.section4.title': 'Roll Position 2',
+                'assign.section4.task1': 'Mix first round cooked rice into sushi rice. Complete sushi rice pH test.',
+                'assign.section4.task2': 'Complete rolling quantities. (White California 9, California 36, Salmon Roll 18, Seafood Roll 5)',
+                'assign.section4.task3': 'Around 10 AM, take chicken and salmon for bento boxes to kitchen for processing.',
+                'assign.section4.task4': 'Mix second round sushi rice.',
+                'assign.section4.task5': 'Start making Bento boxes (Chicken 6 - Salmon 6 - Eel 6 - Chicken 6).',
+                'assign.section4.task6': 'Make cold eel rice 6-8.',
+                'assign.section4.task7': 'Prep side dishes and cut chicken, eel. (Side dish quantity: 4 on shelf, 4 in stock).',
+                'assign.section4.task8': 'Cook three more pots of rice. Lunch.',
+                'assign.section4.task9': 'Mix sushi rice. Send chicken, salmon to kitchen for processing. Continue completing dinner BENTO. (Chicken 6 - Salmon 6 - Eel 6 - Chicken 6-12).',
+                'assign.section4.task10': 'Stock up. Clean.',
+
+                // Cleaning Tab
+                'clean.intro': 'To meet public food hygiene and safety requirements and provide all colleagues with a clean, hygienic, and safe work environment, please work together in the sushi department to complete daily, weekly, and monthly cleaning tasks.',
+                'clean.section1.title': 'Daily Hygiene Tasks',
+                'clean.section1.task1': '<strong>Front Display Case Cleaning:</strong> Handled by <strong>morning shift staff (Service Position A)</strong>.',
+                'clean.section1.task2': '<strong>Sink Cleaning:</strong> Maintain cleanliness at all times, avoid storing items. User cleans immediately after use to avoid affecting others. Final cleaning by <strong>evening shift staff (Service Position B)</strong>.',
+                'clean.section1.task3': '<strong>Rice cooker, cooker table and lower shelf, rice warming box and rice storage box, sushi vinegar measuring cup cleaning:</strong> Handled by <strong>rice cooking staff</strong> each time.',
+                'clean.section1.task4': '<strong>Work surface hygiene:</strong> Please develop <strong>"user responsibility"</strong> habit. Roll and service positions cleaned by respective staff.',
+                'clean.section1.task5': '<strong>Rice spreading machine hygiene:</strong> Cleaned by <strong>Roll Position 1 staff</strong> after use.',
+                'clean.section1.task6': '<strong>Roll Position Refrigerator #1 exterior and interior cleaning:</strong> Cleaned by <strong>Roll Position 1 staff</strong> before leaving.',
+                'clean.section1.task7': '<strong>Refrigerator #2, freezer exterior and interior cleaning:</strong> Cleaned by <strong>Service Position B staff</strong>.',
+                'clean.section1.task8': '<strong>Floor washing and cleaning:</strong> Handled by <strong>evening shift staff (Service Position B)</strong>.',
+                'clean.section1.task9': '<strong>Cart hygiene, cutting board tray position:</strong> Handled by <strong>evening shift staff (Service Position B)</strong>.',
+                'clean.section1.task10': '<strong>Computer desk, packing machine, rapid freezer hygiene:</strong> Handled by <strong>evening shift staff (Service Position B)</strong>.',
+                'clean.section2.title': 'Weekly Hygiene Tasks (Monday Afternoon)',
+                'clean.section2.task1': '<strong>Refrigerator and freezer thorough interior cleaning:</strong> Refrigerator #1 by <strong>Roll Position 1 staff</strong>; Refrigerator #2 and freezer by <strong>Service Position A staff</strong>.',
+                'clean.section2.task2': '<strong>Service workstation under-counter packaging organization and cleaning:</strong> Handled by <strong>service staff</strong>.',
+                'clean.section2.task3': '<strong>Wall cabinet packaging organization, interior/exterior cleaning, and roll position under-counter packaging organization and cleaning:</strong> Handled by <strong>roll position staff</strong>.',
+                'clean.section3.title': 'Monthly Hygiene Tasks (Last Day of Month)',
+                'clean.section3.task1': '<strong>Back room large refrigerator and freezer shelf organization thorough cleaning, display case top cleaning:</strong> Jointly handled by staff on duty that day (supervisor assigns two staff based on specific situation).',
+            }
+        };
+
+        // i18n System
+        let currentLang = localStorage.getItem('dt-sushi-lang') || 'zh-TW';
+
+        function t(key) {
+            return translations[currentLang][key] || key;
+        }
+
+        function switchLanguage(lang) {
+            currentLang = lang;
+            localStorage.setItem('dt-sushi-lang', lang);
+
+            // Update language button states
+            document.querySelectorAll('.lang-button').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.lang === lang);
+            });
+
+            // Re-render page content
+            renderContent();
+        }
+
+        function renderContent() {
+            // Update header
+            document.querySelector('.main-title').textContent = t('header.title');
+            document.querySelector('.publish-info').textContent = t('header.lastUpdate');
+
+            // Update tab labels
+            const tabButtons = document.querySelectorAll('.tab-button');
+            tabButtons[0].innerHTML = `<span class="tab-icon">📋</span>${t('tab.requirements')}`;
+            tabButtons[1].innerHTML = `<span class="tab-icon">👥</span>${t('tab.assignments')}`;
+            tabButtons[2].innerHTML = `<span class="tab-icon">🧹</span>${t('tab.cleaning')}`;
+
+            // Update requirements tab content
+            renderRequirementsTab();
+            renderAssignmentsTab();
+            renderCleaningTab();
+        }
+
+        function renderRequirementsTab() {
+            const sections = document.querySelectorAll('#requirements .section');
+
+            // Section 1
+            sections[0].querySelector('.section-title').innerHTML =
+                `<span class="section-number">1</span>${t('req.section1.title')}`;
+            sections[0].querySelector('.section-content').textContent = t('req.section1.content');
+
+            // Section 2
+            sections[1].querySelector('.section-title').innerHTML =
+                `<span class="section-number">2</span>${t('req.section2.title')}`;
+            sections[1].querySelector('.section-content').textContent = t('req.section2.content');
+
+            // Section 3
+            sections[2].querySelector('.section-title').innerHTML =
+                `<span class="section-number">3</span>${t('req.section3.title')}`;
+            sections[2].querySelector('.section-content').textContent = t('req.section3.content');
+
+            // Section 4
+            sections[3].querySelector('.section-title').innerHTML =
+                `<span class="section-number">4</span>${t('req.section4.title')}`;
+            sections[3].querySelector('.section-content').textContent = t('req.section4.content');
+
+            // Section 5
+            sections[4].querySelector('.section-title').innerHTML =
+                `<span class="section-number">5</span>${t('req.section5.title')}`;
+            sections[4].querySelector('.section-content').textContent = t('req.section5.content');
+
+            // Section 6
+            sections[5].querySelector('.section-title').innerHTML =
+                `<span class="section-number">6</span>${t('req.section6.title')}`;
+            sections[5].querySelector('.section-content').textContent = t('req.section6.content');
+
+            // Section 7
+            sections[6].querySelector('.section-title').innerHTML =
+                `<span class="section-number">7</span>${t('req.section7.title')}`;
+            sections[6].querySelector('.section-content').textContent = t('req.section7.content');
+
+            // Section 8 (with priority list)
+            sections[7].querySelector('.section-title').innerHTML =
+                `<span class="section-number">8</span>${t('req.section8.title')}`;
+            const section8Content = sections[7].querySelector('.section-content');
+            section8Content.innerHTML = `
+                ${t('req.section8.content')}
+                <div class="highlight">
+                    <ul class="bullet-list">
+                        <li><strong>${t('req.section8.priority1')}</strong>${t('req.section8.priority1.value')}</li>
+                        <li><strong>${t('req.section8.priority2')}</strong>${t('req.section8.priority2.value')}</li>
+                        <li><strong>${t('req.section8.priority3')}</strong>${t('req.section8.priority3.value')}</li>
+                        <li><strong>${t('req.section8.priority4')}</strong>${t('req.section8.priority4.value')}</li>
+                    </ul>
+                </div>
+            `;
+
+            // Section 9 (with bento list)
+            sections[8].querySelector('.section-title').innerHTML =
+                `<span class="section-number">9</span>${t('req.section9.title')}`;
+            const section9Content = sections[8].querySelector('.section-content');
+            section9Content.innerHTML = `
+                ${t('req.section9.content')}
+                <div class="highlight">
+                    <ul class="bullet-list">
+                        <li>${t('req.section9.item1')}</li>
+                        <li>${t('req.section9.item2')}</li>
+                        <li>${t('req.section9.item3')}</li>
+                    </ul>
+                </div>
+                <div class="subsection">
+                    ${t('req.section9.note')}
+                </div>
+            `;
+
+            // Section 10
+            sections[9].querySelector('.section-title').innerHTML =
+                `<span class="section-number">10</span>${t('req.section10.title')}`;
+            sections[9].querySelector('.section-content').textContent = t('req.section10.content');
+        }
+
+        function renderAssignmentsTab() {
+            const sections = document.querySelectorAll('#assignments .section');
+
+            // Section 1: 出餐 A
+            sections[0].querySelector('.section-title').innerHTML =
+                `<span class="section-number">1</span>${t('assign.section1.title')}`;
+            const section1Tasks = sections[0].querySelectorAll('.task-list li');
+            for (let i = 0; i < section1Tasks.length; i++) {
+                section1Tasks[i].innerHTML =
+                    `<span class="task-number">${i + 1}.</span>${t(`assign.section1.task${i + 1}`)}`;
+            }
+
+            // Section 2: 出餐 B
+            sections[1].querySelector('.section-title').innerHTML =
+                `<span class="section-number">2</span>${t('assign.section2.title')}`;
+            const section2Tasks = sections[1].querySelectorAll('.task-list li');
+            for (let i = 0; i < section2Tasks.length; i++) {
+                section2Tasks[i].innerHTML =
+                    `<span class="task-number">${i + 1}.</span>${t(`assign.section2.task${i + 1}`)}`;
+            }
+
+            // Section 3: 卷1
+            sections[2].querySelector('.section-title').innerHTML =
+                `<span class="section-number">3</span>${t('assign.section3.title')}`;
+            const section3Tasks = sections[2].querySelectorAll('.task-list li');
+            for (let i = 0; i < section3Tasks.length; i++) {
+                section3Tasks[i].innerHTML =
+                    `<span class="task-number">${i + 1}.</span>${t(`assign.section3.task${i + 1}`)}`;
+            }
+
+            // Section 4: 卷2
+            sections[3].querySelector('.section-title').innerHTML =
+                `<span class="section-number">4</span>${t('assign.section4.title')}`;
+            const section4Tasks = sections[3].querySelectorAll('.task-list li');
+            for (let i = 0; i < section4Tasks.length; i++) {
+                section4Tasks[i].innerHTML =
+                    `<span class="task-number">${i + 1}.</span>${t(`assign.section4.task${i + 1}`)}`;
+            }
+        }
+
+        function renderCleaningTab() {
+            // Update intro text
+            const introElement = document.querySelector('#cleaning .section-content');
+            if (introElement && introElement.style.paddingLeft === '0px') {
+                introElement.textContent = t('clean.intro');
+            }
+
+            const sections = document.querySelectorAll('#cleaning .section');
+
+            // Section 1: 每日衛生工作
+            sections[0].querySelector('.section-title').innerHTML =
+                `<span class="section-number">1</span>${t('clean.section1.title')}`;
+            const section1Tasks = sections[0].querySelectorAll('.task-list li');
+            for (let i = 0; i < section1Tasks.length; i++) {
+                section1Tasks[i].innerHTML =
+                    `<span class="task-number">${i + 1}.</span>${t(`clean.section1.task${i + 1}`)}`;
+            }
+
+            // Section 2: 每週衛生工作
+            sections[1].querySelector('.section-title').innerHTML =
+                `<span class="section-number">2</span>${t('clean.section2.title')}`;
+            const section2Tasks = sections[1].querySelectorAll('.task-list li');
+            for (let i = 0; i < section2Tasks.length; i++) {
+                section2Tasks[i].innerHTML =
+                    `<span class="task-number">${i + 1}.</span>${t(`clean.section2.task${i + 1}`)}`;
+            }
+
+            // Section 3: 每月衛生工作
+            sections[2].querySelector('.section-title').innerHTML =
+                `<span class="section-number">3</span>${t('clean.section3.title')}`;
+            const section3Tasks = sections[2].querySelectorAll('.task-list li');
+            for (let i = 0; i < section3Tasks.length; i++) {
+                section3Tasks[i].innerHTML =
+                    `<span class="task-number">${i + 1}.</span>${t(`clean.section3.task${i + 1}`)}`;
+            }
+        }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set initial language button state
+            document.querySelectorAll('.lang-button').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.lang === currentLang);
+            });
+
+            // Render content in current language
+            renderContent();
+        });
+
         function switchTab(tabName) {
             // Hide all tab contents
             const tabContents = document.querySelectorAll('.tab-content');

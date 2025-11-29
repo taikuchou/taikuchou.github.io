@@ -200,7 +200,7 @@ const translations = {
 
     // Roll 2 Items
     "roll2.task.prep1": "將煮好的第一輪飯打成壽司飯，完成壽司飯酸鹼度測試。",
-    "roll2.task.prep2": "完成包卷數量（白加州 9、加州 40、三文魚卷 20、海鮮卷 5）。",
+    "roll2.task.prep2": "完成包卷數量（白加州 9、加州 36、三文魚卷 18、海鮮卷 5）。",
     "roll2.task.prep3": "約在 10 點左右先將飯合用的雞肉與三文魚送至廚房加工。",
     "roll2.task.prep4": "打第二輪壽司飯。",
     "roll2.task.prep5": "開始製作 Bento 飯（雞飯 6、三文魚飯 6、鰻魚飯 6、雞飯 6）。",
@@ -410,7 +410,7 @@ const translations = {
 
     // Roll 2 Items
     "roll2.task.prep1": "将煮好的第一轮饭打成寿司饭，完成寿司饭酸碱度测试。",
-    "roll2.task.prep2": "完成包卷数量（白加州 9、加州 40、三文鱼卷 20、海鲜卷 5）。",
+    "roll2.task.prep2": "完成包卷数量（白加州 9、加州 36、三文鱼卷 18、海鲜卷 5）。",
     "roll2.task.prep3": "约在 10 点左右先将饭合用的鸡肉与三文鱼送至厨房加工。",
     "roll2.task.prep4": "打第二轮寿司饭。",
     "roll2.task.prep5": "开始制作 Bento 饭（鸡饭 6、三文鱼饭 6、鳗鱼饭 6、鸡饭 6）。",
@@ -621,7 +621,7 @@ const translations = {
 
     // Roll 2 Items
     "roll2.task.prep1": "Mix first round cooked rice into sushi rice, complete sushi rice pH test.",
-    "roll2.task.prep2": "Complete roll quantities (White California 9, California 40, Salmon Roll 20, Seafood Roll 5).",
+    "roll2.task.prep2": "Complete roll quantities (White California 9, California 36, Salmon Roll 18, Seafood Roll 5).",
     "roll2.task.prep3": "Around 10 AM, send chicken and salmon for rice bowls to kitchen for processing.",
     "roll2.task.prep4": "Mix second round sushi rice.",
     "roll2.task.prep5": "Start making Bento bowls (Chicken 6, Salmon 6, Eel 6, Chicken 6).",
