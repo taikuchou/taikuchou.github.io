@@ -164,11 +164,9 @@
         }
 
         .item-name {
-            font-weight: 600;
-            font-size: 1.1rem;
+            font-weight: 500;
+            font-size: 0.95rem;
             color: var(--primary-color);
-            flex: 1;
-            margin-right: 1rem;
         }
 
         .item-name.missing {
@@ -193,8 +191,10 @@
         .item-code {
             font-family: 'Courier New', monospace;
             color: var(--secondary-color);
-            font-size: 0.95rem;
-            font-weight: 500;
+            font-size: 1.1rem;
+            font-weight: 600;
+            flex: 1;
+            margin-right: 1rem;
         }
 
         .item-code.missing {
@@ -730,10 +730,10 @@
 
                     card.innerHTML = `
                         <div class="item-header">
-                            <div class="item-name ${!item['Item Name'] ? 'missing' : ''}">${itemName}</div>
+                            <div class="item-code ${!item['Item Code'] ? 'missing' : ''}">${itemCode}</div>
                             <div class="item-quantity ${!item['Quantity'] ? 'no-qty' : ''}">${quantity}</div>
                         </div>
-                        <div class="item-code ${!item['Item Code'] ? 'missing' : ''}">代碼: ${itemCode}</div>
+                        <div class="item-name ${!item['Item Name'] ? 'missing' : ''}">${itemName}</div>
                     `;
 
                     mobileView.appendChild(card);
@@ -747,8 +747,8 @@
                 table.innerHTML = `
                     <thead>
                         <tr>
-                            <th>產品代碼</th>
                             <th>產品名稱</th>
+                            <th>產品代碼</th>
                             <th style="text-align: center;">數量</th>
                         </tr>
                     </thead>
@@ -769,8 +769,8 @@
                         : '<span class="qty-badge no-qty">(無數量)</span>';
 
                     row.innerHTML = `
-                        <td class="code-cell">${itemCode}</td>
                         <td>${itemName}</td>
+                        <td class="code-cell">${itemCode}</td>
                         <td style="text-align: center;">${quantity}</td>
                     `;
 
