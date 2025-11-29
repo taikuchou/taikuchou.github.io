@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>壽司產品代碼 - Sushi Product Codes</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --success-color: #27ae60;
+            --warning-color: #f39c12;
+            --bg-color: #ecf0f1;
+            --card-bg: #ffffff;
+            --text-color: #2c3e50;
+            --border-color: #bdc3c7;
+            --shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            padding-bottom: env(safe-area-inset-bottom);
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 1.5rem 1rem;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        h1 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            text-align: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .search-container {
+            max-width: 600px;
+            margin: 1rem auto 0;
+        }
+
+        #searchInput {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        #searchInput:focus {
+            outline: 2px solid var(--accent-color);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem;
+        }
+
+        .category {
+            margin-bottom: 2rem;
+        }
+
+        .category-header {
+            background: var(--card-bg);
+            padding: 1rem;
+            border-radius: 8px 8px 0 0;
+            border-left: 4px solid var(--secondary-color);
+            box-shadow: var(--shadow);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .category-header:hover {
+            background: #f8f9fa;
+        }
+
+        .category-header h2 {
+            font-size: 1.25rem;
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        .category-count {
+            background: var(--secondary-color);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+
+        .collapse-icon {
+            font-size: 1.25rem;
+            transition: transform 0.3s ease;
+            margin-left: 0.5rem;
+        }
+
+        .category.collapsed .collapse-icon {
+            transform: rotate(-90deg);
+        }
+
+        .category.collapsed .items-container {
+            display: none;
+        }
+
+        .items-container {
+            background: var(--card-bg);
+            border-radius: 0 0 8px 8px;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+        }
+
+        /* Mobile Card View */
+        .mobile-items {
+            display: block;
+        }
+
+        .item-card {
+            border-bottom: 1px solid var(--border-color);
+            padding: 1rem;
+            transition: background-color 0.2s ease;
+        }
+
+        .item-card:last-child {
+            border-bottom: none;
+        }
+
+        .item-card:hover {
+            background-color: #f8f9fa;
+        }
+
+        .item-card.no-data {
+            background-color: #fff3cd;
+            opacity: 0.6;
+        }
+
+        .item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 0.5rem;
+        }
+
+        .item-name {
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: var(--primary-color);
+            flex: 1;
+            margin-right: 1rem;
+        }
+
+        .item-name.missing {
+            color: #999;
+            font-style: italic;
+        }
+
+        .item-quantity {
+            background: var(--success-color);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 0.875rem;
+            white-space: nowrap;
+        }
+
+        .item-quantity.no-qty {
+            background: #95a5a6;
+        }
+
+        .item-code {
+            font-family: 'Courier New', monospace;
+            color: var(--secondary-color);
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+
+        .item-code.missing {
+            color: #999;
+        }
+
+        /* Desktop Table View */
+        .table-wrap {
+            display: none;
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        thead {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        th {
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        td {
+            padding: 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        tbody tr:hover {
+            background-color: #f8f9fa;
+        }
+
+        tbody tr.no-data {
+            background-color: #fff3cd;
+            opacity: 0.6;
+        }
+
+        .code-cell {
+            font-family: 'Courier New', monospace;
+            color: var(--secondary-color);
+            font-weight: 500;
+        }
+
+        .qty-badge {
+            display: inline-block;
+            background: var(--success-color);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 0.875rem;
+        }
+
+        .qty-badge.no-qty {
+            background: #95a5a6;
+        }
+
+        .missing-text {
+            color: #999;
+            font-style: italic;
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 3rem 1rem;
+            color: #666;
+        }
+
+        .no-results h3 {
+            margin-bottom: 0.5rem;
+        }
+
+        /* Responsive Design */
+        @media (min-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            .container {
+                padding: 2rem;
+            }
+
+            .mobile-items {
+                display: none;
+            }
+
+            .table-wrap {
+                display: block;
+            }
+        }
+
+        /* Print Styles */
+        @media print {
+            header {
+                position: static;
+            }
+
+            .search-container {
+                display: none;
+            }
+
+            .category {
+                page-break-inside: avoid;
+            }
+
+            .category-header {
+                cursor: default;
+            }
+
+            .collapse-icon {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>壽司產品代碼</h1>
+        <div class="search-container">
+            <input
+                type="text"
+                id="searchInput"
+                placeholder="搜尋產品名稱或代碼..."
+                autocomplete="off"
+            >
+        </div>
+    </header>
+
+    <div class="container" id="categoriesContainer">
+        <!-- Categories will be rendered here -->
+    </div>
+
+    <div class="no-results" id="noResults" style="display: none;">
+        <h3>未找到相關產品</h3>
+        <p>請嘗試其他搜尋關鍵字</p>
+    </div>
+
+    <script>
+        // Load JSON data
+        const productData = {
+  "出餐Ａ": [
+    {
+      "Item Code": 656385.0,
+      "Quantity": 3.0,
+      "Item Name": "辣三文魚 (生)"
+    },
+    {
+      "Item Code": 22119.0,
+      "Quantity": 2.0,
+      "Item Name": "雙色魚生"
+    },
+    {
+      "Item Code": 22124.0,
+      "Quantity": 4.0,
+      "Item Name": "魚生 - 8"
+    },
+    {
+      "Item Code": 509446.0,
+      "Quantity": 2.0,
+      "Item Name": "Coho刺身"
+    },
+    {
+      "Item Code": 730919.0,
+      "Quantity": 2.0,
+      "Item Name": "鴛鴦三文魚生"
+    },
+    {
+      "Item Code": 709543.0,
+      "Quantity": 2.0,
+      "Item Name": "刺身和捲禮盒"
+    },
+    {
+      "Item Code": 697777.0,
+      "Quantity": 2.0,
+      "Item Name": "干島之愛"
+    },
+    {
+      "Item Code": 22100.0,
+      "Quantity": 6.0,
+      "Item Name": "玉子"
+    },
+    {
+      "Item Code": 755168.0,
+      "Quantity": 2.0,
+      "Item Name": "水滴Sushi盤"
+    },
+    {
+      "Item Code": 713207.0,
+      "Quantity": 2.0,
+      "Item Name": "綜合卷物禮盒"
+    },
+    {
+      "Item Code": 535096.0,
+      "Quantity": 2.0,
+      "Item Name": "春彩錦"
+    },
+    {
+      "Item Code": 711090.0,
+      "Quantity": 2.0,
+      "Item Name": null
+    },
+    {
+      "Item Code": 794554.0,
+      "Quantity": 2.0,
+      "Item Name": "蝦"
+    },
+    {
+      "Item Code": 774024.0,
+      "Quantity": 2.0,
+      "Item Name": "漁生船"
+    },
+    {
+      "Item Code": 729189.0,
+      "Quantity": null,
+      "Item Name": "魚生 - 16"
+    },
+    {
+      "Item Code": 22443.0,
+      "Quantity": null,
+      "Item Name": "吞拿三文魚"
+    },
+    {
+      "Item Code": 22169.0,
+      "Quantity": null,
+      "Item Name": "青森錦合"
+    },
+    {
+      "Item Code": 535095.0,
+      "Quantity": null,
+      "Item Name": "花漾"
+    }
+  ],
+  "出餐Ｂ": [
+    {
+      "Item Code": 719731.0,
+      "Quantity": 4.0,
+      "Item Name": "三文魚小卷"
+    },
+    {
+      "Item Code": 719732.0,
+      "Quantity": 4.0,
+      "Item Name": "青瓜小卷"
+    },
+    {
+      "Item Code": 22108.0,
+      "Quantity": 5.0,
+      "Item Name": "加州卷"
+    },
+    {
+      "Item Code": 664465.0,
+      "Quantity": 5.0,
+      "Item Name": "辣加州卷"
+    },
+    {
+      "Item Code": 22282.0,
+      "Quantity": 4.0,
+      "Item Name": "牛油果卷"
+    },
+    {
+      "Item Code": 697030.0,
+      "Quantity": 2.0,
+      "Item Name": "牛油果青瓜卷"
+    },
+    {
+      "Item Code": 696999.0,
+      "Quantity": 5.0,
+      "Item Name": "牛油三文魚卷"
+    },
+    {
+      "Item Code": 708707.0,
+      "Quantity": 3.0,
+      "Item Name": "香辣海鮮卷"
+    },
+    {
+      "Item Code": 22101.0,
+      "Quantity": 2.0,
+      "Item Name": "熟三文魚"
+    },
+    {
+      "Item Code": 791932.0,
+      "Quantity": 2.0,
+      "Item Name": "辣熟三文魚"
+    },
+    {
+      "Item Code": 674110.0,
+      "Quantity": 4.0,
+      "Item Name": "三文魚楠壽司"
+    },
+    {
+      "Item Code": 22104.0,
+      "Quantity": 4.0,
+      "Item Name": "鰻魚魚壽司"
+    },
+    {
+      "Item Code": 765637.0,
+      "Quantity": 3.0,
+      "Item Name": "脆龍卷"
+    },
+    {
+      "Item Code": 730486.0,
+      "Quantity": 5.0,
+      "Item Name": "雜錦卷物組合"
+    },
+    {
+      "Item Code": 22249.0,
+      "Quantity": 4.0,
+      "Item Name": "卷物結合壽司"
+    },
+    {
+      "Item Code": 522089.0,
+      "Quantity": 2.0,
+      "Item Name": "田園組合壽司"
+    },
+    {
+      "Item Code": 22080.0,
+      "Quantity": 4.0,
+      "Item Name": "三文魚組合"
+    },
+    {
+      "Item Code": 22165.0,
+      "Quantity": 4.0,
+      "Item Name": "佐渡壽司"
+    },
+    {
+      "Item Code": 22078.0,
+      "Quantity": 4.0,
+      "Item Name": "加拿大壽司A"
+    },
+    {
+      "Item Code": 774912.0,
+      "Quantity": 4.0,
+      "Item Name": "炭燒三文魚壽司"
+    },
+    {
+      "Item Code": 528644.0,
+      "Quantity": 3.0,
+      "Item Name": "稻荷壽司組合"
+    },
+    {
+      "Item Code": 22117.0,
+      "Quantity": null,
+      "Item Name": "天婦羅蝦卷"
+    },
+    {
+      "Item Code": 660043.0,
+      "Quantity": null,
+      "Item Name": "辣天婦羅蝦卷"
+    },
+    {
+      "Item Code": 22283.0,
+      "Quantity": null,
+      "Item Name": "辣吞拿卷"
+    },
+    {
+      "Item Code": null,
+      "Quantity": null,
+      "Item Name": "辣三文魚卷"
+    },
+    {
+      "Item Code": 687915.0,
+      "Quantity": null,
+      "Item Name": "芒果卷"
+    },
+    {
+      "Item Code": 733623.0,
+      "Quantity": null,
+      "Item Name": "炸蝦卷"
+    },
+    {
+      "Item Code": 667907.0,
+      "Quantity": null,
+      "Item Name": "春之花"
+    }
+  ],
+  "卷1": [
+    {
+      "Item Code": 22023,
+      "Quantity": 30.0,
+      "Item Name": "燒汁三文飯團"
+    },
+    {
+      "Item Code": 713599,
+      "Quantity": 20.0,
+      "Item Name": "鰻魚飯團"
+    },
+    {
+      "Item Code": 713600,
+      "Quantity": 35.0,
+      "Item Name": "辣三文魚飯團"
+    },
+    {
+      "Item Code": 713598,
+      "Quantity": null,
+      "Item Name": "肉鬆飯團"
+    }
+  ],
+  "卷2": [
+    {
+      "Item Code": 677947.0,
+      "Item Name": "鰻魚",
+      "Quantity": null
+    },
+    {
+      "Item Code": 667093.0,
+      "Item Name": "海草",
+      "Quantity": null
+    },
+    {
+      "Item Code": 655274.0,
+      "Item Name": "小魚子",
+      "Quantity": null
+    },
+    {
+      "Item Code": 655279.0,
+      "Item Name": "飛魚子",
+      "Quantity": null
+    },
+    {
+      "Item Code": 667127.0,
+      "Item Name": "壽司蛋",
+      "Quantity": null
+    },
+    {
+      "Item Code": 655273.0,
+      "Item Name": "壽司姜",
+      "Quantity": null
+    },
+    {
+      "Item Code": 666114.0,
+      "Item Name": "三文魚飯",
+      "Quantity": null
+    },
+    {
+      "Item Code": 22022.0,
+      "Item Name": "鰻魚飯",
+      "Quantity": null
+    },
+    {
+      "Item Code": 22015.0,
+      "Item Name": "雞肉飯",
+      "Quantity": null
+    },
+    {
+      "Item Code": 782531.0,
+      "Item Name": "鰻魚飯(冷) 減價",
+      "Quantity": null
+    },
+    {
+      "Item Code": 735726.0,
+      "Item Name": "鰻魚飯(冷)",
+      "Quantity": null
+    },
+    {
+      "Item Code": null,
+      "Item Name": "芥末章魚",
+      "Quantity": null
+    },
+    {
+      "Item Code": null,
+      "Item Name": "柚子章魚",
+      "Quantity": null
+    }
+  ]
+};
+
+        // Render categories
+        function renderCategories(data = productData, searchTerm = '') {
+            const container = document.getElementById('categoriesContainer');
+            const noResults = document.getElementById('noResults');
+            container.innerHTML = '';
+
+            let hasResults = false;
+
+            for (const [categoryName, items] of Object.entries(data)) {
+                // Filter items based on search
+                const filteredItems = items.filter(item => {
+                    if (!searchTerm) return true;
+
+                    const name = (item['Item Name'] || '').toLowerCase();
+                    const code = (item['Item Code'] || '').toString().toLowerCase();
+                    const search = searchTerm.toLowerCase();
+
+                    return name.includes(search) || code.includes(search);
+                });
+
+                if (filteredItems.length === 0) continue;
+
+                hasResults = true;
+
+                const categoryDiv = document.createElement('div');
+                categoryDiv.className = 'category';
+
+                // Category header
+                const header = document.createElement('div');
+                header.className = 'category-header';
+                header.innerHTML = `
+                    <h2>${categoryName}</h2>
+                    <div style="display: flex; align-items: center;">
+                        <span class="category-count">${filteredItems.length} 項</span>
+                        <span class="collapse-icon">▼</span>
+                    </div>
+                `;
+                header.addEventListener('click', () => {
+                    categoryDiv.classList.toggle('collapsed');
+                });
+
+                categoryDiv.appendChild(header);
+
+                // Items container
+                const itemsContainer = document.createElement('div');
+                itemsContainer.className = 'items-container';
+
+                // Mobile view
+                const mobileView = document.createElement('div');
+                mobileView.className = 'mobile-items';
+
+                filteredItems.forEach(item => {
+                    const hasData = item['Item Code'] || item['Item Name'];
+                    const card = document.createElement('div');
+                    card.className = `item-card ${!hasData ? 'no-data' : ''}`;
+
+                    const itemName = item['Item Name'] || '(未命名)';
+                    const itemCode = item['Item Code'] ? Math.floor(item['Item Code']).toString() : '(無代碼)';
+                    const quantity = item['Quantity'] ? `數量: ${Math.floor(item['Quantity'])}` : '(無數量)';
+
+                    card.innerHTML = `
+                        <div class="item-header">
+                            <div class="item-name ${!item['Item Name'] ? 'missing' : ''}">${itemName}</div>
+                            <div class="item-quantity ${!item['Quantity'] ? 'no-qty' : ''}">${quantity}</div>
+                        </div>
+                        <div class="item-code ${!item['Item Code'] ? 'missing' : ''}">代碼: ${itemCode}</div>
+                    `;
+
+                    mobileView.appendChild(card);
+                });
+
+                // Desktop table view
+                const tableView = document.createElement('div');
+                tableView.className = 'table-wrap';
+
+                const table = document.createElement('table');
+                table.innerHTML = `
+                    <thead>
+                        <tr>
+                            <th>產品代碼</th>
+                            <th>產品名稱</th>
+                            <th style="text-align: center;">數量</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                `;
+
+                const tbody = table.querySelector('tbody');
+
+                filteredItems.forEach(item => {
+                    const hasData = item['Item Code'] || item['Item Name'];
+                    const row = document.createElement('tr');
+                    row.className = !hasData ? 'no-data' : '';
+
+                    const itemName = item['Item Name'] || '<span class="missing-text">(未命名)</span>';
+                    const itemCode = item['Item Code'] ? Math.floor(item['Item Code']).toString() : '<span class="missing-text">(無代碼)</span>';
+                    const quantity = item['Quantity']
+                        ? `<span class="qty-badge">${Math.floor(item['Quantity'])}</span>`
+                        : '<span class="qty-badge no-qty">(無數量)</span>';
+
+                    row.innerHTML = `
+                        <td class="code-cell">${itemCode}</td>
+                        <td>${itemName}</td>
+                        <td style="text-align: center;">${quantity}</td>
+                    `;
+
+                    tbody.appendChild(row);
+                });
+
+                tableView.appendChild(table);
+
+                itemsContainer.appendChild(mobileView);
+                itemsContainer.appendChild(tableView);
+                categoryDiv.appendChild(itemsContainer);
+                container.appendChild(categoryDiv);
+            }
+
+            // Show/hide no results message
+            if (hasResults) {
+                noResults.style.display = 'none';
+                container.style.display = 'block';
+            } else {
+                noResults.style.display = 'block';
+                container.style.display = 'none';
+            }
+        }
+
+        // Search functionality
+        const searchInput = document.getElementById('searchInput');
+        let searchTimeout;
+
+        searchInput.addEventListener('input', (e) => {
+            clearTimeout(searchTimeout);
+            searchTimeout = setTimeout(() => {
+                renderCategories(productData, e.target.value);
+            }, 300);
+        });
+
+        // Initial render
+        renderCategories();
+    </script>
+</body>
+</html>
