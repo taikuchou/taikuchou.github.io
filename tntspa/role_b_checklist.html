@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <title>出餐B工作流程清單</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --primary-color: #8d2c5f;
+      --secondary-color: #c54a90;
+      --success-color: #28a745;
+      --danger-color: #dc3545;
+      --warning-color: #ffc107;
+      --light-bg: #f8f9fa;
+      --card-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      --border-radius: 8px;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Microsoft JhengHei', sans-serif;
+      background: var(--light-bg);
+      padding: 1rem;
+      padding-bottom: env(safe-area-inset-bottom);
+      line-height: 1.6;
+    }
+
+    .header {
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+      color: white;
+      padding: 1.5rem;
+      border-radius: var(--border-radius);
+      margin-bottom: 1rem;
+      box-shadow: var(--card-shadow);
+    }
+
+    .header h1 {
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .progress-summary {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 1rem;
+      padding-top: 1rem;
+      border-top: 1px solid rgba(255,255,255,0.3);
+    }
+
+    .progress-bar-container {
+      flex: 1;
+      height: 24px;
+      background: rgba(255,255,255,0.2);
+      border-radius: 12px;
+      overflow: hidden;
+      margin: 0 1rem;
+    }
+
+    .progress-bar {
+      height: 100%;
+      background: var(--success-color);
+      transition: width 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: bold;
+      font-size: 0.85rem;
+    }
+
+    .section {
+      background: white;
+      border-radius: var(--border-radius);
+      padding: 1rem;
+      margin-bottom: 1rem;
+      box-shadow: var(--card-shadow);
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 2px solid var(--primary-color);
+    }
+
+    .section-title {
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: var(--primary-color);
+    }
+
+    .section-progress {
+      font-size: 0.9rem;
+      color: #666;
+      font-weight: 600;
+    }
+
+    .task-item {
+      display: flex;
+      align-items: flex-start;
+      padding: 0.75rem;
+      margin-bottom: 0.5rem;
+      background: var(--light-bg);
+      border-radius: 6px;
+      border-left: 4px solid transparent;
+      transition: all 0.2s ease;
+    }
+
+    .task-item:hover {
+      background: #e9ecef;
+    }
+
+    .task-item.checked {
+      background: #d4edda;
+      border-left-color: var(--success-color);
+    }
+
+    .task-item.checked .task-text {
+      text-decoration: line-through;
+      color: #6c757d;
+    }
+
+    .task-checkbox {
+      width: 24px;
+      height: 24px;
+      margin-right: 0.75rem;
+      cursor: pointer;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .task-text {
+      flex: 1;
+      font-size: 0.95rem;
+      color: #333;
+      white-space: pre-wrap;
+    }
+
+    .task-number {
+      font-weight: bold;
+      color: var(--primary-color);
+      margin-right: 0.5rem;
+    }
+
+    .subtask {
+      margin-left: 2rem;
+      font-size: 0.9rem;
+      color: #555;
+      padding: 0.25rem 0;
+    }
+
+    .controls {
+      position: sticky;
+      bottom: 0;
+      background: white;
+      padding: 1rem;
+      margin: -1rem -1rem 0 -1rem;
+      border-top: 2px solid #e9ecef;
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      flex: 1;
+      min-width: 120px;
+      padding: 0.75rem 1rem;
+      border: none;
+      border-radius: 6px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      text-align: center;
+    }
+
+    .btn-primary {
+      background: var(--primary-color);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: #6d1e4a;
+    }
+
+    .btn-danger {
+      background: var(--danger-color);
+      color: white;
+    }
+
+    .btn-danger:hover {
+      background: #c82333;
+    }
+
+    .btn-success {
+      background: var(--success-color);
+      color: white;
+    }
+
+    .btn-success:hover {
+      background: #218838;
+    }
+
+    .section-controls {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .btn-sm {
+      padding: 0.5rem 0.75rem;
+      font-size: 0.85rem;
+      border-radius: 4px;
+      border: none;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.2s ease;
+    }
+
+    .btn-outline {
+      background: white;
+      color: var(--primary-color);
+      border: 2px solid var(--primary-color);
+    }
+
+    .btn-outline:hover {
+      background: var(--primary-color);
+      color: white;
+    }
+
+    @media (max-width: 768px) {
+      body {
+        padding: 0.5rem;
+      }
+
+      .header {
+        padding: 1rem;
+      }
+
+      .header h1 {
+        font-size: 1.25rem;
+      }
+
+      .section {
+        padding: 0.75rem;
+      }
+
+      .btn {
+        min-width: 100px;
+        font-size: 0.9rem;
+      }
+
+      .subtask {
+        margin-left: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <h1>出餐B 工作流程清單</h1>
+    <div class="progress-summary">
+      <span id="completedCount">0/0</span>
+      <div class="progress-bar-container">
+        <div class="progress-bar" id="totalProgress">0%</div>
+      </div>
+    </div>
+  </div>
+
+  <div id="checklistContainer"></div>
+
+  <div class="section">
+    <div class="controls">
+      <button class="btn btn-success" onclick="selectAll()">全選</button>
+      <button class="btn btn-primary" onclick="deselectAll()">取消全選</button>
+      <button class="btn btn-danger" onclick="resetChecklist()">重設</button>
+    </div>
+  </div>
+
+  <script>
+    const STORAGE_KEY = 'role-b-checklist-v1.0';
+
+    // Workflow data structure for Role B
+    const workflowData = [
+      {
+        section: "準備工作",
+        tasks: [
+          {
+            id: 1,
+            text: "準備拿刀，砧板，容器加冰水並上包鮮膜"
+          },
+          {
+            id: 2,
+            text: "拍飯器加水加油"
+          },
+          {
+            id: 3,
+            text: "拍飯"
+          }
+        ]
+      },
+      {
+        section: "壽司製作 - 第一輪",
+        tasks: [
+          {
+            id: 10,
+            text: "三文魚腩壽司*4 ST2 111",
+            image: "images/salmon_belly_sushi.jpg",
+            subtasks: [
+              "三文魚腩壽司*5",
+            ]
+          },
+          {
+            id: 11,
+            text: "鰻魚壽司*4 ST2 111",
+            image: "images/unagi_sushi.jpg",
+            subtasks: [
+              "鰻魚壽司*5",
+              "掃鰻魚汁，加芝麻"
+            ]
+          },
+          {
+            id: 12,
+            text: "田園組合壽司*2 ST5 211",
+            image: "images/garden_combo_sushi.jpg",
+            subtasks: [
+            ]
+          },
+          {
+            id: 13,
+            text: "牛油果卷*3 ST2 111",
+            image: "images/avocado_roll.jpg",
+            subtasks: [
+              "立起來，傾斜45度角擺放",
+              
+            ]
+          },
+          {
+            id: 14,
+            text: "青瓜牛油卷*2 ST2 111",
+            image: "images/cucumber_avocado_roll.jpg",
+            subtasks: [
+              "平躺，傾斜45度角擺放"
+            ]
+          },
+          {
+            id: 15,
+            text: "三文卷（大）*4 ST2 111",
+            image: "images/salmon_roll_large.jpg",
+            subtasks: [
+              "16片",
+              "1+15"
+            ]
+          },
+          {
+            id: 16,
+            text: "青瓜卷（大）*4 ST2 111",
+            image: "images/cucumber_roll_large.jpg",
+            subtasks: [
+              "16片",
+              "1+15"
+            ]
+          }
+        ]
+      },
+      {
+        section: "壽司製作 - 第二輪",
+        tasks: [
+          {
+            id: 20,
+            text: "加州卷*5 ST2 111",
+            image: "images/california_roll.jpg",
+            subtasks: [
+              "立起來，傾斜45度角擺放"
+            ]
+          },
+          {
+            id: 21,
+            text: "辣加州卷*5 ST2 111",
+            image: "images/spicy_california_roll.jpg",
+            subtasks: [
+              "平躺，傾斜45度角擺放",
+              "辣美乃滋"
+            ]
+          },
+          {
+            id: 22,
+            text: "牛油果三文魚卷*5 ST2 111",
+            image: "images/avocado_salmon_roll.jpg",
+            subtasks: [
+              "立起來，傾斜45度角擺放"
+            ]
+          },
+          {
+            id: 23,
+            text: "香辣海鮮卷*3 ST2 111",
+            image: "images/spicy_seafood_roll.jpg",
+            subtasks: [
+              "平躺，傾斜45度角擺放",
+              "辣美乃滋，橙魚子"
+            ]
+          },
+          {
+            id: 24,
+            text: "天婦羅蝦卷*3 ST5 211",
+            image: "images/tempura_shrimp_roll.jpg",
+            subtasks: [
+              "平躺",
+              "鰻魚汁，美乃滋，醬汁錯開"
+            ]
+          },
+          {
+            id: 25,
+            text: "辣天婦羅蝦卷*3 ST5 211",
+            image: "images/spicy_tempura_shrimp_roll.jpg",
+            subtasks: [
+              "平躺",
+              "鰻魚汁，辣美乃滋，醬汁錯開"
+            ]
+          }
+        ]
+      },
+      {
+        section: "壽司製作 - 第三輪",
+        tasks: [
+          {
+            id: 30,
+            text: "脆龍卷*3 ST5 211",
+            image: "images/crunchy_dragon_roll.jpg",
+            subtasks: [
+              "鰻魚汁，美乃滋，醬汁錯開",
+              "天婦羅脆，紅魚子，黑芝麻"
+            ]
+          },
+          {
+            id: 31,
+            text: "熟三文卷*2 ST2 111",
+            image: "images/cooked_salmon_roll.jpg",
+            subtasks: [
+              "平躺，傾斜45度角擺放",
+              "鰻魚汁，美乃滋，醬汁錯開"
+            ]
+          },
+          {
+            id: 32,
+            text: "辣熟三文卷*2 ST2 111",
+            image: "images/spicy_cooked_salmon_roll.jpg",
+            subtasks: [
+              "平躺，傾斜45度角擺放",
+              "鰻魚汁，辣美乃滋，醬汁錯開"
+            ]
+          },
+          {
+            id: 33,
+            text: "炭燒三文魚壽司*4 ST4 111",
+            image: "images/charcoal_grilled_salmon_sushi.jpg",
+            subtasks: [
+              "coho司*2，三文魚司*2",
+              "熟三文卷上面點鰻魚汁"
+            ]
+          }
+        ]
+      },
+      {
+        section: "壽司製作 - 組合系列",
+        tasks: [
+          {
+            id: 40,
+            text: "三文魚組合壽司*4 ST5 211",
+            image: "images/salmon_combo_sushi.jpg",
+            subtasks: [
+              "三文魚司*6",
+              "加州卷*5片"
+            ]
+          },
+          {
+            id: 41,
+            text: "佐渡壽司*4 ST5 211",
+            image: "images/sado_sushi.jpg",
+            subtasks: [
+              "coho司、甜蝦司、三文魚司、帶子司、鰻魚司",
+              "白加州卷*5片"
+            ]
+          },
+          {
+            id: 42,
+            text: "加拿大壽司A*4 ST5 211",
+            image: "images/canada_sushi_a.jpg",
+            subtasks: [
+              "三角形的牛油果三文魚卷*6片",
+              "三文魚片*1 卷成花形，加紅魚子",
+              "coho司、甜蝦司、鰻魚司",
+              "帶魚子的白加州*3片，美乃滋，天婦羅脆和紅魚子"
+            ]
+          },
+          {
+            id: 43,
+            text: "卷物結合壽司*4 ST5 211",
+            image: "images/roll_combo_sushi.jpg",
+            subtasks: [
+              "加州*5片，對角線",
+              "(上)小青瓜*3片＋小三文*3片",
+              "(下)小三文*3片＋小青瓜*3片",
+              "加州*2片，右上與左下"
+            ]
+          },
+          {
+            id: 44,
+            text: "雜錦卷物組合*5 ST5 211",
+            image: "images/assorted_roll_combo.jpg",
+            subtasks: [
+              "平躺，傾斜45度角擺放",
+              "海鮮卷*3片，牛油果三文魚*3片，加州*6片(2列)",
+              "第1列和第3列擠辣美乃滋",
+              "第1列放橙魚子"
+            ]
+          },
+          {
+            id: 45,
+            text: "稻禾壽司組合*3 ST5 211",
+            image: "images/inaho_sushi_combo.jpg",
+            subtasks: [
+              "coho司、蟹肉辣美乃滋腐皮司、甜蝦司、毛豆沙拉腐皮司",
+              "帶魚子的白加州*5片，美乃滋，天婦羅脆和紅魚子"
+            ]
+          }
+        ]
+      },
+      {
+        section: "特殊品項（視庫存而定）",
+        tasks: [
+          {
+            id: 50,
+            text: "辣吞拿魚卷*? ST2 111",
+            image: "images/spicy_tuna_roll.jpg",
+            subtasks: [
+              "平躺，傾斜45度角擺放",
+              "辣美乃滋，蔥花"
+            ]
+          },
+          {
+            id: 51,
+            text: "辣三文卷*5+ ST2 111",
+            image: "images/spicy_salmon_roll.jpg",
+            subtasks: [
+              "平躺，傾斜45度角擺放",
+              "辣美乃滋，天婦羅脆"
+            ]
+          }
+        ]
+      },
+      {
+        section: "收尾工作",
+        tasks: [
+          {
+            id: 60,
+            text: "備料",
+            subtasks: [
+              "北寄貝",
+              "干貝",
+              "章魚片",
+              "鰻魚",
+              "吞拿片",
+              "甜蝦",
+              "蝦片",
+              "天婦羅碎",
+              "海苔細長條",
+              "海苔粗長條",
+              "生菜",
+              "蘿蔔絲"
+            ]
+          },
+          {
+            id: 61,
+            text: "清洗白盤子、鐵盤與拍飯器"
+          },
+          {
+            id: 62,
+            text: "洗水槽與拖地"
+          },
+          {
+            id: 63,
+            text: "拍照上傳大群"
+          },
+          {
+            id: 64,
+            text: "填寫展櫃、冷凍櫃，出餐卷位冰箱溫度表"
+          },
+          {
+            id: 65,
+            text: "貼減價標籤"
+          }
+        ]
+      }
+    ];
+
+    let checklistState = {};
+
+    // Initialize
+    function init() {
+      loadState();
+      renderChecklist();
+      updateProgress();
+    }
+
+    // Load state from localStorage
+    function loadState() {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (saved) {
+        try {
+          const data = JSON.parse(saved);
+          const today = new Date().toDateString();
+
+          // Reset if it's a new day
+          if (data.date !== today) {
+            checklistState = { date: today, tasks: {} };
+            saveState();
+          } else {
+            checklistState = data;
+          }
+        } catch (e) {
+          checklistState = { date: new Date().toDateString(), tasks: {} };
+        }
+      } else {
+        checklistState = { date: new Date().toDateString(), tasks: {} };
+      }
+    }
+
+    // Save state to localStorage
+    function saveState() {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(checklistState));
+    }
+
+    // Render checklist
+    function renderChecklist() {
+      const container = document.getElementById('checklistContainer');
+      container.innerHTML = '';
+
+      workflowData.forEach((section, sectionIndex) => {
+        const sectionDiv = document.createElement('div');
+        sectionDiv.className = 'section';
+
+        const sectionHeader = document.createElement('div');
+        sectionHeader.className = 'section-header';
+
+        const sectionTitle = document.createElement('div');
+        sectionTitle.className = 'section-title';
+        sectionTitle.textContent = section.section;
+
+        const sectionProgress = document.createElement('div');
+        sectionProgress.className = 'section-progress';
+        sectionProgress.id = `section-progress-${sectionIndex}`;
+
+        sectionHeader.appendChild(sectionTitle);
+        sectionHeader.appendChild(sectionProgress);
+
+        const sectionControls = document.createElement('div');
+        sectionControls.className = 'section-controls';
+
+        const selectAllBtn = document.createElement('button');
+        selectAllBtn.className = 'btn-sm btn-outline';
+        selectAllBtn.textContent = '全選此區';
+        selectAllBtn.onclick = () => selectSection(sectionIndex);
+
+        const deselectAllBtn = document.createElement('button');
+        deselectAllBtn.className = 'btn-sm btn-outline';
+        deselectAllBtn.textContent = '取消此區';
+        deselectAllBtn.onclick = () => deselectSection(sectionIndex);
+
+        sectionControls.appendChild(selectAllBtn);
+        sectionControls.appendChild(deselectAllBtn);
+
+        sectionDiv.appendChild(sectionHeader);
+        sectionDiv.appendChild(sectionControls);
+
+        section.tasks.forEach(task => {
+          const taskDiv = document.createElement('div');
+          taskDiv.className = 'task-item';
+          if (checklistState.tasks[task.id]) {
+            taskDiv.classList.add('checked');
+          }
+
+          const checkbox = document.createElement('input');
+          checkbox.type = 'checkbox';
+          checkbox.className = 'task-checkbox';
+          checkbox.checked = checklistState.tasks[task.id] || false;
+          checkbox.onchange = () => toggleTask(task.id);
+
+          const textDiv = document.createElement('div');
+          textDiv.className = 'task-text';
+
+          const taskNumber = document.createElement('span');
+          taskNumber.className = 'task-number';
+          taskNumber.textContent = `${task.id}.`;
+
+          textDiv.appendChild(taskNumber);
+          textDiv.appendChild(document.createTextNode(task.text));
+
+          taskDiv.appendChild(checkbox);
+          taskDiv.appendChild(textDiv);
+
+          sectionDiv.appendChild(taskDiv);
+
+          // Add image(s) if any
+          if (task.image) {
+            const imageDiv = document.createElement('div');
+            imageDiv.className = 'image-preview';
+            const img = document.createElement('img');
+            img.src = task.image;
+            img.alt = task.text;
+            img.loading = 'lazy';
+            imageDiv.appendChild(img);
+            sectionDiv.appendChild(imageDiv);
+          } else if (task.images && task.images.length > 0) {
+            task.images.forEach(imageSrc => {
+              const imageDiv = document.createElement('div');
+              imageDiv.className = 'image-preview';
+              const img = document.createElement('img');
+              img.src = imageSrc;
+              img.alt = task.text;
+              img.loading = 'lazy';
+              imageDiv.appendChild(img);
+              sectionDiv.appendChild(imageDiv);
+            });
+          }
+
+          // Add subtasks if any
+          if (task.subtasks && task.subtasks.length > 0) {
+            task.subtasks.forEach(subtask => {
+              const subtaskDiv = document.createElement('div');
+              subtaskDiv.className = 'subtask';
+              subtaskDiv.textContent = `• ${subtask}`;
+              sectionDiv.appendChild(subtaskDiv);
+            });
+          }
+        });
+
+        container.appendChild(sectionDiv);
+        updateSectionProgress(sectionIndex);
+      });
+    }
+
+    // Toggle task
+    function toggleTask(taskId) {
+      checklistState.tasks[taskId] = !checklistState.tasks[taskId];
+      saveState();
+      renderChecklist();
+      updateProgress();
+    }
+
+    // Update total progress
+    function updateProgress() {
+      const totalTasks = workflowData.reduce((sum, section) => sum + section.tasks.length, 0);
+      const completedTasks = Object.values(checklistState.tasks).filter(v => v).length;
+      const percentage = totalTasks > 0 ? Math.round((completedTasks / totalTasks) * 100) : 0;
+
+      document.getElementById('completedCount').textContent = `${completedTasks}/${totalTasks}`;
+      const progressBar = document.getElementById('totalProgress');
+      progressBar.style.width = `${percentage}%`;
+      progressBar.textContent = `${percentage}%`;
+    }
+
+    // Update section progress
+    function updateSectionProgress(sectionIndex) {
+      const section = workflowData[sectionIndex];
+      const totalTasks = section.tasks.length;
+      const completedTasks = section.tasks.filter(task => checklistState.tasks[task.id]).length;
+      const progressEl = document.getElementById(`section-progress-${sectionIndex}`);
+      progressEl.textContent = `${completedTasks}/${totalTasks}`;
+    }
+
+    // Select all tasks
+    function selectAll() {
+      workflowData.forEach(section => {
+        section.tasks.forEach(task => {
+          checklistState.tasks[task.id] = true;
+        });
+      });
+      saveState();
+      renderChecklist();
+      updateProgress();
+    }
+
+    // Deselect all tasks
+    function deselectAll() {
+      checklistState.tasks = {};
+      saveState();
+      renderChecklist();
+      updateProgress();
+    }
+
+    // Select section
+    function selectSection(sectionIndex) {
+      const section = workflowData[sectionIndex];
+      section.tasks.forEach(task => {
+        checklistState.tasks[task.id] = true;
+      });
+      saveState();
+      renderChecklist();
+      updateProgress();
+    }
+
+    // Deselect section
+    function deselectSection(sectionIndex) {
+      const section = workflowData[sectionIndex];
+      section.tasks.forEach(task => {
+        checklistState.tasks[task.id] = false;
+      });
+      saveState();
+      renderChecklist();
+      updateProgress();
+    }
+
+    // Reset checklist
+    function resetChecklist() {
+      if (confirm('確定要重設所有項目嗎？')) {
+        checklistState = { date: new Date().toDateString(), tasks: {} };
+        saveState();
+        renderChecklist();
+        updateProgress();
+      }
+    }
+
+    // Initialize on load
+    init();
+  </script>
+
+</body>
+</html>
