@@ -42,6 +42,7 @@
       margin-bottom: 1.5rem;
       box-shadow: var(--card-shadow);
       text-align: center;
+      position: relative;
     }
 
     .header h1 {
@@ -56,11 +57,13 @@
     }
 
     .language-switcher {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
       display: flex;
       gap: 0.5rem;
-      justify-content: center;
-      margin-top: 1rem;
       flex-wrap: wrap;
+      z-index: 100;
     }
 
     .lang-btn {
@@ -73,17 +76,40 @@
       font-size: 0.9rem;
       transition: all 0.3s;
       font-weight: 500;
-    }
-
-    .lang-btn:hover {
-      background: rgba(255, 255, 255, 0.3);
-      border-color: rgba(255, 255, 255, 0.6);
+      display: none;
+      opacity: 0;
+      transform: scale(0.8);
     }
 
     .lang-btn.active {
       background: white;
       color: var(--primary-color);
       border-color: white;
+      display: block;
+      opacity: 1;
+      transform: scale(1);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    }
+
+    .lang-btn.active::after {
+      content: ' ⋯';
+      opacity: 0.6;
+      font-size: 0.8em;
+    }
+
+    .language-switcher.expanded .lang-btn {
+      display: block;
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .language-switcher.expanded .lang-btn.active::after {
+      content: '';
+    }
+
+    .lang-btn:hover {
+      background: rgba(255, 255, 255, 0.3);
+      border-color: rgba(255, 255, 255, 0.6);
     }
 
     .search-bar {
@@ -233,8 +259,23 @@
     }
 
     @media (max-width: 768px) {
+      .header {
+        padding: 2rem 1rem 2rem 1rem;
+      }
+
       .header h1 {
         font-size: 1.5rem;
+        padding-right: 4rem;
+      }
+
+      .language-switcher {
+        top: 0.75rem;
+        right: 0.75rem;
+      }
+
+      .lang-btn {
+        padding: 0.35rem 0.8rem;
+        font-size: 0.85rem;
       }
 
       .item-name {
@@ -303,10 +344,10 @@
         quantity: '數量',
         notes: '備註',
         icons: {
-          box: '📦',
-          threeSaucePackets: '🍶',
-          quantity: '🔢',
-          notes: '📝'
+          box: '🍱',
+          threeSaucePackets: '🧂',
+          quantity: '#️⃣',
+          notes: '📋'
         },
         sushiNames: {
           '674110': '三文魚腩壽司',
@@ -372,10 +413,10 @@
         quantity: '数量',
         notes: '备注',
         icons: {
-          box: '📦',
-          threeSaucePackets: '🍶',
-          quantity: '🔢',
-          notes: '📝'
+          box: '🍱',
+          threeSaucePackets: '🧂',
+          quantity: '#️⃣',
+          notes: '📋'
         },
         sushiNames: {
           '674110': '三文鱼腩寿司',
@@ -441,10 +482,10 @@
         quantity: 'Quantity',
         notes: 'Notes',
         icons: {
-          box: '📦',
-          threeSaucePackets: '🍶',
-          quantity: '🔢',
-          notes: '📝'
+          box: '🍱',
+          threeSaucePackets: '🧂',
+          quantity: '#️⃣',
+          notes: '📋'
         },
         sushiNames: {
           '674110': 'Salmon Belly Sushi',
@@ -888,11 +929,65 @@
         }
       });
 
-      // Add language switcher event listeners
+      // Add language switcher long-press event listeners
+      const languageSwitcher = document.querySelector('.language-switcher');
+      let longPressTimer = null;
+      let isLongPress = false;
+
       document.querySelectorAll('.lang-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-          changeLanguage(btn.dataset.lang);
+        // Handle long-press start (touch)
+        btn.addEventListener('touchstart', (e) => {
+          if (btn.classList.contains('active')) {
+            isLongPress = false;
+            longPressTimer = setTimeout(() => {
+              isLongPress = true;
+              languageSwitcher.classList.add('expanded');
+            }, 500); // 500ms for long-press
+          }
         });
+
+        // Handle long-press start (mouse)
+        btn.addEventListener('mousedown', (e) => {
+          if (btn.classList.contains('active')) {
+            isLongPress = false;
+            longPressTimer = setTimeout(() => {
+              isLongPress = true;
+              languageSwitcher.classList.add('expanded');
+            }, 500); // 500ms for long-press
+          }
+        });
+
+        // Handle release (touch)
+        btn.addEventListener('touchend', () => {
+          if (longPressTimer) {
+            clearTimeout(longPressTimer);
+            longPressTimer = null;
+          }
+        });
+
+        // Handle release (mouse)
+        btn.addEventListener('mouseup', () => {
+          if (longPressTimer) {
+            clearTimeout(longPressTimer);
+            longPressTimer = null;
+          }
+        });
+
+        // Handle click for language change
+        btn.addEventListener('click', () => {
+          if (!btn.classList.contains('active') || isLongPress) {
+            changeLanguage(btn.dataset.lang);
+            languageSwitcher.classList.remove('expanded');
+          }
+          isLongPress = false;
+        });
+      });
+
+      // Close expanded menu when clicking outside
+      document.addEventListener('click', (e) => {
+        if (!languageSwitcher.contains(e.target)) {
+          languageSwitcher.classList.remove('expanded');
+        }
       });
 
       // Add search event listener
