@@ -645,6 +645,7 @@ const translations = {
     "ing.seafoodMix": "(Type 2 Inside-Out / Assorted Mix)",
     "ing.assorted": "Assorted",
     "ing.whiteSesame": "White Sesame",
+    "ing.blackSesame": "Black Sesame",
     "ing.blackWhiteSesame": "Black & White Sesame",
     "ing.orangeTobiko": "Orange Tobiko",
     "ing.redTobiko": "Red Tobiko",

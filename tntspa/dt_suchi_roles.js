@@ -132,8 +132,8 @@
     { nameKey: "mapleLeafRoll", styleKey: "ing.type3Inside", toppingsKeys: ["ing.whiteSesame", "ing.orangeTobiko"], fillingsKeys: ["note.mapleLeafFilling"] },
     { nameKey: "cookedSalmon", styleKey: "ing.type2Inside", toppingsKeys: ["ing.whiteSesame"], fillingsKeys: ["ing.cookedSalmon", "ing.cucumber"], notesKey: "note.cookedSalmonNote" },
     { nameKey: "bigRoll", styleKey: "ing.type3Normal", toppingsKeys: [], fillingsKeys: ["ing.crabstick 2", "ing.cucumber 30g", "ing.egg 30g", "ing.pickledRadish 2", "ing.redTobiko"] },
-    { nameKey: "spicyTunaRoll", styleKey: "ing.type2Inside", toppingsKeys: ["ing.whiteSesame"], fillingsKeys: ["ing.tunaSashimi 80g", "ing.cucumber"] },
-    { nameKey: "spicySalmonRoll", styleKey: "ing.type2Inside", toppingsKeys: ["ing.whiteSesame"], fillingsKeys: ["ing.salmonSashimi 80g", "ing.cucumber"] }
+    { nameKey: "spicyTunaRoll", styleKey: "ing.type2Inside", toppingsKeys: ["ing.blackWhiteSesame"], fillingsKeys: ["ing.tunaSashimi 80g", "ing.cucumber"] },
+    { nameKey: "spicySalmonRoll", styleKey: "ing.type2Inside", toppingsKeys: ["ing.blackWhiteSesame"], fillingsKeys: ["ing.salmonSashimi 80g", "ing.cucumber"] }
   ];
 
   function buildData() {
