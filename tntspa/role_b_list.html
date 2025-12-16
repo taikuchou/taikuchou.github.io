@@ -298,6 +298,45 @@
         grid-template-columns: repeat(3, 1fr);
       }
     }
+
+    .footer {
+      text-align: center;
+      padding: 2rem 1rem;
+      margin-top: 3rem;
+      border-top: 2px solid #e0e0e0;
+      color: #666;
+      font-size: 0.9rem;
+    }
+
+    .footer-content {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .copyright {
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+    }
+
+    .version {
+      margin-bottom: 0.5rem;
+      color: #666;
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+
+    .release-date {
+      color: #999;
+      font-size: 0.85rem;
+    }
+
+    @media (max-width: 768px) {
+      .footer {
+        font-size: 0.85rem;
+        padding: 1.5rem 1rem;
+        margin-top: 2rem;
+      }
+    }
   </style>
 </head>
 <body>
@@ -328,6 +367,13 @@
 
   <div class="items-container" id="itemsContainer"></div>
 
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="version" id="versionText">版本 1.0.0</div>
+      <div class="release-date" id="releaseDateText">發布日期：2025年12月16日</div>
+    </div>
+  </footer>
+
   <script>
     // i18n Translations
     const translations = {
@@ -343,6 +389,8 @@
         threeSaucePackets: '三寶',
         quantity: '數量',
         notes: '備註',
+        version: '版本 1.0.0',
+        releaseDate: '發布日期：2025年12月16日',
         icons: {
           box: '🍱',
           threeSaucePackets: '🧂',
@@ -412,6 +460,8 @@
         threeSaucePackets: '三宝',
         quantity: '数量',
         notes: '备注',
+        version: '版本 1.0.0',
+        releaseDate: '发布日期：2025年12月16日',
         icons: {
           box: '🍱',
           threeSaucePackets: '🧂',
@@ -481,6 +531,8 @@
         threeSaucePackets: 'Three sauce packets',
         quantity: 'Quantity',
         notes: 'Notes',
+        version: 'Version 1.0.0',
+        releaseDate: 'Release Date: December 16, 2025',
         icons: {
           box: '🍱',
           threeSaucePackets: '🧂',
@@ -894,6 +946,8 @@
       document.getElementById('statItemsLabel').textContent = t('statItemsLabel');
       document.getElementById('statQuantityLabel').textContent = t('statQuantityLabel');
       document.getElementById('searchInput').placeholder = t('searchPlaceholder');
+      document.getElementById('versionText').textContent = t('version');
+      document.getElementById('releaseDateText').textContent = t('releaseDate');
       document.documentElement.lang = currentLang;
       document.title = t('pageTitle');
     }
