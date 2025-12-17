@@ -188,6 +188,14 @@
       background: var(--danger-color);
     }
 
+    .btn-import {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    }
+
+    .btn-import:hover {
+      background: linear-gradient(135deg, #5568d3 0%, #65408b 100%);
+    }
+
     .products-table {
       background: white;
       border-radius: 8px;
@@ -393,36 +401,22 @@
       border-color: var(--success-color);
     }
 
-    .import-section {
-      display: flex;
-      gap: 0.5rem;
-      align-items: center;
-      margin-top: 1rem;
-      padding-top: 1rem;
-      border-top: 1px solid var(--border-color);
-    }
-
     .file-input {
       display: none;
     }
 
-    .file-label {
-      display: inline-block;
-      padding: 0.75rem 1.5rem;
-      background: var(--primary-color);
-      color: white;
-      border-radius: 6px;
+    label.btn {
       cursor: pointer;
-      transition: opacity 0.3s;
+      margin-right: 0.5rem;
+      margin-bottom: 0.5rem;
     }
 
-    .file-label:hover {
+    label.btn:hover {
       opacity: 0.9;
     }
 
-    .file-name {
-      color: var(--text-light);
-      font-size: 0.9rem;
+    .import-status {
+      transition: opacity 0.3s;
     }
 
     /* Mobile Cards */
@@ -646,16 +640,17 @@
 
       .controls {
         padding: 0.75rem;
-        display: flex;
-        flex-wrap: wrap;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
         gap: 0.5rem;
       }
 
-      .controls .btn {
-        flex: 1 1 auto;
-        min-width: calc(50% - 0.25rem);
+      .controls .btn,
+      .controls label.btn {
         margin: 0;
         text-align: center;
+        padding: 0.75rem 0.5rem;
+        font-size: 0.9rem;
       }
 
       .stock-summary {
@@ -699,21 +694,9 @@
         font-size: 0.8rem;
       }
 
-      .import-section {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-
-      .file-label {
-        width: 100%;
-        text-align: center;
-        padding: 0.6rem 1rem;
-        font-size: 0.9rem;
-      }
-
-      .file-name {
-        margin-top: 0.5rem;
-        font-size: 0.85rem;
+      .import-status {
+        font-size: 0.8rem;
+        padding: 0.5rem;
       }
 
       .notifications {
@@ -835,7 +818,10 @@
       <button class="btn btn-success" onclick="openAddProductModal()">➕</button>
       <button class="btn" onclick="exportData()">💾</button>
       <button class="btn btn-danger" onclick="clearAllData()">🗑️</button>
+      <input type="file" id="importFile" class="file-input" accept=".json" onchange="importFromJSON(event)">
+      <label for="importFile" class="btn btn-import">📂 匯入</label>
     </div>
+    <div class="import-status" id="fileName" style="text-align: center; font-size: 0.85rem; color: #7f8c8d; margin-top: -0.5rem; margin-bottom: 1rem; min-height: 1.2rem;"></div>
 
     <div class="stock-summary" id="stockSummary">
       <!-- Summary cards will be rendered here -->
@@ -843,29 +829,23 @@
 
     <div class="search-filter-section">
       <div class="search-bar">
-        <input type="text" id="searchInput" class="search-input" placeholder="🔍 搜尋產品名稱或編號 Search by name or product number..." oninput="applyFilters()">
+        <input type="text" id="searchInput" class="search-input" placeholder="🔍 搜尋產品名稱或編號" oninput="applyFilters()">
         <button class="btn" onclick="clearSearch()">清除</button>
       </div>
 
       <div class="filter-group">
         <span class="filter-label">庫存狀態:</span>
         <button class="filter-btn" data-filter="stock" data-value="all" onclick="toggleFilter(this, 'stock')">全部</button>
-        <button class="filter-btn" data-filter="stock" data-value="critical" onclick="toggleFilter(this, 'stock')">🚨 嚴重不足</button>
-        <button class="filter-btn" data-filter="stock" data-value="low" onclick="toggleFilter(this, 'stock')">⚠️ 庫存不足</button>
-        <button class="filter-btn" data-filter="stock" data-value="normal" onclick="toggleFilter(this, 'stock')">✅ 正常</button>
+        <button class="filter-btn" data-filter="stock" data-value="critical" onclick="toggleFilter(this, 'stock')">🚨</button>
+        <button class="filter-btn" data-filter="stock" data-value="low" onclick="toggleFilter(this, 'stock')">⚠️</button>
+        <button class="filter-btn" data-filter="stock" data-value="normal" onclick="toggleFilter(this, 'stock')">✅</button>
       </div>
 
       <div class="filter-group" style="margin-top: 0.5rem;">
         <span class="filter-label">訂購狀態:</span>
         <button class="filter-btn" data-filter="order" data-value="all" onclick="toggleFilter(this, 'order')">全部</button>
-        <button class="filter-btn" data-filter="order" data-value="urgent" onclick="toggleFilter(this, 'order')">🔴 需要訂購</button>
-        <button class="filter-btn" data-filter="order" data-value="ok" onclick="toggleFilter(this, 'order')">🟢 正常</button>
-      </div>
-
-      <div class="import-section">
-        <input type="file" id="importFile" class="file-input" accept=".json" onchange="importFromJSON(event)">
-        <label for="importFile" class="file-label">📂 匯入</label>
-        <span class="file-name" id="fileName"></span>
+        <button class="filter-btn" data-filter="order" data-value="urgent" onclick="toggleFilter(this, 'order')">🔴</button>
+        <button class="filter-btn" data-filter="order" data-value="ok" onclick="toggleFilter(this, 'order')">🟢</button>
       </div>
     </div>
 
@@ -1122,19 +1102,19 @@
 
       summaryDiv.innerHTML = `
         <div class="summary-card critical">
-          <h4>🚨 嚴重不足</h4>
+          <h4>🚨嚴重不足</h4>
           <div class="count">${criticalCount}</div>
         </div>
         <div class="summary-card warning">
-          <h4>⚠️ 庫存不足</h4>
+          <h4>⚠️庫存不足</h4>
           <div class="count">${lowStockCount}</div>
         </div>
         <div class="summary-card info">
-          <h4>📅 需要訂購</h4>
+          <h4>📅訂購提醒</h4>
           <div class="count">${needsOrderCount}</div>
         </div>
         <div class="summary-card success">
-          <h4>✅ 正常</h4>
+          <h4>✅正常</h4>
           <div class="count">${normalCount}</div>
         </div>
       `;
@@ -1436,12 +1416,12 @@
       // Add critical stock alerts
       criticalStock.forEach(p => {
         const stockStatus = getStockStatus(p);
-        alerts.push(`<div class="notification-item" style="border-left: 4px solid var(--danger-color); padding-left: 0.5rem;"><strong>🚨 ${p.name}</strong> <code style="background: #f8d7da; padding: 0.2rem 0.4rem; border-radius: 3px;">#${p.productNumber}</code> - <span style="color: var(--danger-color);">${stockStatus.text}</span> - 現有: ${p.currentQuantity} ${p.unit}, 最低: ${p.minimumStock} ${p.unit}</div>`);
+        alerts.push(`<div class="notification-item" style="border-left: 4px solid var(--danger-color); padding-left: 0.5rem;"><strong>🚨 ${p.name}</strong> - <span style="color: var(--danger-color);">${stockStatus.text}</span> - 現有: ${p.currentQuantity} ${p.unit}, 最低: ${p.minimumStock} ${p.unit}</div>`);
       });
 
       // Add low stock alerts
       lowStock.forEach(p => {
-        alerts.push(`<div class="notification-item" style="border-left: 4px solid var(--warning-color); padding-left: 0.5rem;"><strong>⚠️ ${p.name}</strong> <code style="background: #fff3cd; padding: 0.2rem 0.4rem; border-radius: 3px;">#${p.productNumber}</code> - 庫存不足 - 現有: ${p.currentQuantity} ${p.unit}, 最低: ${p.minimumStock} ${p.unit}</div>`);
+        alerts.push(`<div class="notification-item" style="border-left: 4px solid var(--warning-color); padding-left: 0.5rem;"><strong>⚠️ ${p.name}</strong> - 庫存不足 - 現有: ${p.currentQuantity} ${p.unit}, 最低: ${p.minimumStock} ${p.unit}</div>`);
       });
 
       // Add order alerts
@@ -1449,7 +1429,7 @@
         const nextOrderDate = calculateNextOrderDate(p.lastImportDate, p.reorderCycle);
         const daysUntil = daysUntilOrder(nextOrderDate);
         const urgency = daysUntil <= 0 ? '立即訂購!' : `${daysUntil}天內訂購`;
-        alerts.push(`<div class="notification-item"><strong>📅 ${p.name}</strong> <code style="background: #e7f3ff; padding: 0.2rem 0.4rem; border-radius: 3px;">#${p.productNumber}</code> - ${urgency} - 下次訂購日: ${nextOrderDate}</div>`);
+        alerts.push(`<div class="notification-item"><strong>📅 ${p.name}</strong>  - ${urgency} - 下次訂購日: ${nextOrderDate}</div>`);
       });
 
       if (alerts.length > 0) {
