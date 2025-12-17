@@ -1,0 +1,1743 @@
+<!DOCTYPE html>
+<!--
+  Product Inventory Management System
+  Mobile-First Responsive Design
+
+  Features:
+  - Track current quantity vs minimum stock levels
+  - Automatic reorder date calculation
+  - Multi-level stock alerts:
+    * Out of Stock (quantity = 0)
+    * Critical (quantity ≤ 50% of minimum)
+    * Low Stock (quantity ≤ minimum)
+    * Normal (quantity > minimum)
+  - Order notifications based on reorder cycle
+  - Visual dashboard with summary cards
+  - Inline editing for all fields
+  - LocalStorage persistence
+  - Bilingual (Traditional Chinese / English)
+  - Search and filter functionality
+  - Column sorting (click headers to sort, toggle direction)
+  - Import/Export JSON data
+  - Responsive design:
+    * Mobile (<768px): Card-based layout
+    * Desktop (>768px): Table view
+    * Touch-optimized interactions
+
+  JSON Import Format Example:
+  [
+    {
+      "name": "產品名稱",
+      "productNumber": "PROD-001",
+      "currentQuantity": 10,
+      "minimumStock": 5,
+      "unit": "kg",
+      "lastImportDate": "2025-12-01",
+      "reorderCycle": 14,
+      "notifyDays": 3,
+      "notes": "備註"
+    }
+  ]
+-->
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <title>產品庫存管理 - Product Inventory</title>
+  <style>
+    :root {
+      --primary-color: #2c3e50;
+      --success-color: #27ae60;
+      --warning-color: #f39c12;
+      --danger-color: #e74c3c;
+      --bg-light: #ecf0f1;
+      --border-color: #bdc3c7;
+      --text-dark: #2c3e50;
+      --text-light: #7f8c8d;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+      background: var(--bg-light);
+      padding: 1rem;
+      padding-bottom: 2rem;
+      color: var(--text-dark);
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    header {
+      background: white;
+      padding: 1.5rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      margin-bottom: 1.5rem;
+    }
+
+    h1 {
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+      color: var(--primary-color);
+    }
+
+    .subtitle {
+      color: var(--text-light);
+      font-size: 0.9rem;
+    }
+
+    .view-mode-indicator {
+      display: inline-block;
+      font-size: 0.75rem;
+      padding: 0.25rem 0.5rem;
+      border-radius: 4px;
+      background: var(--bg-light);
+      color: var(--text-light);
+      margin-left: 0.5rem;
+    }
+
+    @media (max-width: 768px) {
+      .view-mode-indicator.desktop {
+        display: none;
+      }
+    }
+
+    @media (min-width: 769px) {
+      .view-mode-indicator.mobile {
+        display: none;
+      }
+    }
+
+    .notifications {
+      background: #fff3cd;
+      border: 1px solid var(--warning-color);
+      border-radius: 8px;
+      padding: 1rem;
+      margin-bottom: 1.5rem;
+      display: none;
+    }
+
+    .notifications.active {
+      display: block;
+    }
+
+    .notifications h3 {
+      color: var(--warning-color);
+      margin-bottom: 0.5rem;
+      font-size: 1.1rem;
+    }
+
+    .notification-item {
+      padding: 0.5rem 0;
+      border-bottom: 1px solid rgba(243, 156, 18, 0.2);
+    }
+
+    .notification-item:last-child {
+      border-bottom: none;
+    }
+
+    .notification-item strong {
+      color: var(--danger-color);
+    }
+
+    .controls {
+      background: white;
+      padding: 1rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      margin-bottom: 1.5rem;
+    }
+
+    .btn {
+      background: var(--primary-color);
+      color: white;
+      border: none;
+      padding: 0.75rem 1.5rem;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 1rem;
+      margin-right: 0.5rem;
+      margin-bottom: 0.5rem;
+      transition: all 0.2s;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .btn:hover {
+      opacity: 0.9;
+    }
+
+    .btn:active {
+      transform: scale(0.95);
+    }
+
+    .btn-success {
+      background: var(--success-color);
+    }
+
+    .btn-danger {
+      background: var(--danger-color);
+    }
+
+    .products-table {
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      overflow: hidden;
+    }
+
+    .table-wrapper {
+      display: block;
+    }
+
+    .mobile-cards {
+      display: none;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    thead {
+      background: var(--primary-color);
+      color: white;
+    }
+
+    th, td {
+      padding: 1rem;
+      text-align: left;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    th {
+      font-weight: 600;
+      font-size: 0.9rem;
+      position: relative;
+      user-select: none;
+    }
+
+    th.sortable {
+      cursor: pointer;
+      padding-right: 2rem;
+    }
+
+    th.sortable:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    th.sortable::after {
+      content: '⇅';
+      position: absolute;
+      right: 0.5rem;
+      opacity: 0.3;
+      font-size: 0.9rem;
+    }
+
+    th.sortable.sort-asc::after {
+      content: '▲';
+      opacity: 1;
+      color: #fff;
+    }
+
+    th.sortable.sort-desc::after {
+      content: '▼';
+      opacity: 1;
+      color: #fff;
+    }
+
+    tbody tr:hover {
+      background: #f8f9fa;
+    }
+
+    tbody tr.needs-order {
+      background: #fff3cd;
+    }
+
+    .stock-summary {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      background: white;
+      padding: 1rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      margin-bottom: 1.5rem;
+    }
+
+    .summary-card {
+      flex: 1;
+      min-width: 200px;
+      padding: 1rem;
+      border-radius: 6px;
+      border-left: 4px solid;
+    }
+
+    .summary-card.critical {
+      background: #f8d7da;
+      border-left-color: var(--danger-color);
+    }
+
+    .summary-card.warning {
+      background: #fff3cd;
+      border-left-color: var(--warning-color);
+    }
+
+    .summary-card.info {
+      background: #e7f3ff;
+      border-left-color: #0056b3;
+    }
+
+    .summary-card.success {
+      background: #d4edda;
+      border-left-color: var(--success-color);
+    }
+
+    .summary-card h4 {
+      margin: 0 0 0.5rem 0;
+      font-size: 0.85rem;
+      color: var(--text-light);
+      text-transform: uppercase;
+    }
+
+    .summary-card .count {
+      font-size: 2rem;
+      font-weight: bold;
+      color: var(--primary-color);
+    }
+
+    .search-filter-section {
+      background: white;
+      padding: 1rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      margin-bottom: 1.5rem;
+    }
+
+    .search-bar {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .search-input {
+      flex: 1;
+      min-width: 250px;
+      padding: 0.75rem;
+      border: 2px solid var(--border-color);
+      border-radius: 6px;
+      font-size: 1rem;
+    }
+
+    .search-input:focus {
+      outline: none;
+      border-color: var(--primary-color);
+    }
+
+    .filter-group {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .filter-label {
+      font-weight: 600;
+      color: var(--text-dark);
+      margin-right: 0.5rem;
+    }
+
+    .filter-btn {
+      padding: 0.5rem 1rem;
+      border: 2px solid var(--border-color);
+      background: white;
+      color: var(--text-dark);
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      transition: all 0.3s;
+    }
+
+    .filter-btn:hover {
+      background: var(--bg-light);
+    }
+
+    .filter-btn.active {
+      background: var(--primary-color);
+      color: white;
+      border-color: var(--primary-color);
+    }
+
+    .filter-btn.active.critical {
+      background: var(--danger-color);
+      border-color: var(--danger-color);
+    }
+
+    .filter-btn.active.warning {
+      background: var(--warning-color);
+      border-color: var(--warning-color);
+    }
+
+    .filter-btn.active.success {
+      background: var(--success-color);
+      border-color: var(--success-color);
+    }
+
+    .import-section {
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+      margin-top: 1rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--border-color);
+    }
+
+    .file-input {
+      display: none;
+    }
+
+    .file-label {
+      display: inline-block;
+      padding: 0.75rem 1.5rem;
+      background: var(--primary-color);
+      color: white;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: opacity 0.3s;
+    }
+
+    .file-label:hover {
+      opacity: 0.9;
+    }
+
+    .file-name {
+      color: var(--text-light);
+      font-size: 0.9rem;
+    }
+
+    /* Mobile Cards */
+    .product-card {
+      background: white;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+      transition: box-shadow 0.3s;
+    }
+
+    .product-card:hover {
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+
+    .product-card.critical-stock {
+      border-left: 4px solid var(--danger-color);
+      background: #fff5f5;
+    }
+
+    .product-card.low-stock {
+      border-left: 4px solid var(--warning-color);
+      background: #fffef5;
+    }
+
+    .product-card.needs-order {
+      border-left: 4px solid #0056b3;
+      background: #f8fcff;
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 0.75rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .card-title {
+      flex: 1;
+    }
+
+    .card-name {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--primary-color);
+      margin-bottom: 0.5rem;
+    }
+
+    .card-number {
+      font-size: 0.85rem;
+      color: #666;
+      font-weight: 600;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 0.3rem 0.6rem;
+      border-radius: 6px;
+      display: inline-block;
+      letter-spacing: 0.5px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .card-actions {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .card-body {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .card-field {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card-field.full-width {
+      grid-column: 1 / -1;
+    }
+
+    .card-label {
+      font-size: 0.75rem;
+      color: var(--text-light);
+      margin-bottom: 0.25rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .card-value {
+      font-size: 0.95rem;
+      color: var(--text-dark);
+      font-weight: 500;
+    }
+
+    .card-value.editable {
+      cursor: pointer;
+      padding: 0.25rem 0.5rem;
+      border-radius: 4px;
+      transition: background 0.2s;
+    }
+
+    .card-value.editable:hover {
+      background: var(--bg-light);
+    }
+
+    .card-value.editable:active {
+      background: #dce4ec;
+      transform: scale(0.98);
+    }
+
+    .card-value.large {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--primary-color);
+    }
+
+    .card-footer {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .editable {
+      cursor: pointer;
+      padding: 0.25rem 0.5rem;
+      border-radius: 4px;
+      transition: background 0.2s;
+    }
+
+    .editable:hover {
+      background: var(--bg-light);
+    }
+
+    input[type="text"],
+    input[type="date"],
+    input[type="number"] {
+      padding: 0.5rem;
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
+      font-size: 0.9rem;
+      width: 100%;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 0.25rem 0.75rem;
+      border-radius: 12px;
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+
+    .badge-success {
+      background: #d4edda;
+      color: #155724;
+    }
+
+    .badge-warning {
+      background: #fff3cd;
+      color: #856404;
+    }
+
+    .badge-danger {
+      background: #f8d7da;
+      color: #721c24;
+    }
+
+    .action-buttons {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .btn-small {
+      padding: 0.4rem 0.8rem;
+      font-size: 0.85rem;
+    }
+
+    /* Mobile responsive */
+    @media (max-width: 768px) {
+      body {
+        padding: 0.5rem;
+        padding-bottom: 2rem;
+      }
+
+      header {
+        padding: 1rem;
+      }
+
+      h1 {
+        font-size: 1.25rem;
+      }
+
+      .subtitle {
+        font-size: 0.85rem;
+      }
+
+      /* Hide table, show cards on mobile */
+      .table-wrapper {
+        display: none !important;
+      }
+
+      .mobile-cards {
+        display: block !important;
+        padding: 1rem;
+      }
+
+      .products-table {
+        background: transparent;
+        box-shadow: none;
+      }
+
+      .btn {
+        padding: 0.6rem 1rem;
+        font-size: 0.9rem;
+      }
+
+      .controls {
+        padding: 0.75rem;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+      }
+
+      .controls .btn {
+        flex: 1 1 auto;
+        min-width: calc(50% - 0.25rem);
+        margin: 0;
+        text-align: center;
+      }
+
+      .stock-summary {
+        gap: 0.5rem;
+        padding: 0.75rem;
+      }
+
+      .summary-card {
+        min-width: calc(50% - 0.25rem);
+        padding: 0.75rem;
+      }
+
+      .summary-card h4 {
+        font-size: 0.75rem;
+      }
+
+      .summary-card .count {
+        font-size: 1.5rem;
+      }
+
+      .search-filter-section {
+        padding: 0.75rem;
+      }
+
+      .search-input {
+        min-width: 100%;
+        font-size: 1rem;
+      }
+
+      .filter-group {
+        font-size: 0.85rem;
+      }
+
+      .filter-label {
+        width: 100%;
+        margin-bottom: 0.25rem;
+      }
+
+      .filter-btn {
+        padding: 0.4rem 0.75rem;
+        font-size: 0.8rem;
+      }
+
+      .import-section {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .file-label {
+        width: 100%;
+        text-align: center;
+        padding: 0.6rem 1rem;
+        font-size: 0.9rem;
+      }
+
+      .file-name {
+        margin-top: 0.5rem;
+        font-size: 0.85rem;
+      }
+
+      .notifications {
+        padding: 0.75rem;
+        font-size: 0.9rem;
+      }
+
+      .notifications h3 {
+        font-size: 1rem;
+      }
+
+      .notification-item {
+        font-size: 0.85rem;
+        padding: 0.5rem 0;
+      }
+
+      .modal-content {
+        width: 95%;
+        padding: 1.5rem;
+      }
+
+      .modal-content h2 {
+        font-size: 1.25rem;
+      }
+
+      .form-group label {
+        font-size: 0.9rem;
+      }
+
+      .btn-small {
+        padding: 0.35rem 0.7rem;
+        font-size: 0.8rem;
+      }
+    }
+
+    /* Tablet view - keep table */
+    @media (min-width: 769px) and (max-width: 1024px) {
+      .table-wrapper {
+        overflow-x: auto;
+      }
+
+      table {
+        font-size: 0.85rem;
+      }
+
+      th, td {
+        padding: 0.75rem 0.5rem;
+      }
+    }
+
+    /* Modal styles */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.5);
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal.active {
+      display: flex;
+    }
+
+    .modal-content {
+      background: white;
+      padding: 2rem;
+      border-radius: 8px;
+      max-width: 500px;
+      width: 90%;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+
+    .modal-content h2 {
+      margin-bottom: 1.5rem;
+      color: var(--primary-color);
+    }
+
+    .form-group {
+      margin-bottom: 1rem;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+      color: var(--text-dark);
+    }
+
+    .form-actions {
+      display: flex;
+      gap: 0.5rem;
+      margin-top: 1.5rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>
+        📦 產品庫存管理
+        <span class="view-mode-indicator mobile">📱</span>
+        <span class="view-mode-indicator desktop">🖥️</span>
+      </h1>
+      <p class="subtitle">追蹤產品訂購週期與庫存提醒</p>
+    </header>
+
+    <div class="notifications" id="notifications">
+      <h3>⚠️ 庫存與訂購提醒</h3>
+      <div id="notificationList"></div>
+    </div>
+
+    <div class="controls">
+      <button class="btn btn-success" onclick="openAddProductModal()">➕</button>
+      <button class="btn" onclick="exportData()">💾</button>
+      <button class="btn btn-danger" onclick="clearAllData()">🗑️</button>
+    </div>
+
+    <div class="stock-summary" id="stockSummary">
+      <!-- Summary cards will be rendered here -->
+    </div>
+
+    <div class="search-filter-section">
+      <div class="search-bar">
+        <input type="text" id="searchInput" class="search-input" placeholder="🔍 搜尋產品名稱或編號 Search by name or product number..." oninput="applyFilters()">
+        <button class="btn" onclick="clearSearch()">清除</button>
+      </div>
+
+      <div class="filter-group">
+        <span class="filter-label">庫存狀態:</span>
+        <button class="filter-btn" data-filter="stock" data-value="all" onclick="toggleFilter(this, 'stock')">全部</button>
+        <button class="filter-btn" data-filter="stock" data-value="critical" onclick="toggleFilter(this, 'stock')">🚨 嚴重不足</button>
+        <button class="filter-btn" data-filter="stock" data-value="low" onclick="toggleFilter(this, 'stock')">⚠️ 庫存不足</button>
+        <button class="filter-btn" data-filter="stock" data-value="normal" onclick="toggleFilter(this, 'stock')">✅ 正常</button>
+      </div>
+
+      <div class="filter-group" style="margin-top: 0.5rem;">
+        <span class="filter-label">訂購狀態:</span>
+        <button class="filter-btn" data-filter="order" data-value="all" onclick="toggleFilter(this, 'order')">全部</button>
+        <button class="filter-btn" data-filter="order" data-value="urgent" onclick="toggleFilter(this, 'order')">🔴 需要訂購</button>
+        <button class="filter-btn" data-filter="order" data-value="ok" onclick="toggleFilter(this, 'order')">🟢 正常</button>
+      </div>
+
+      <div class="import-section">
+        <input type="file" id="importFile" class="file-input" accept=".json" onchange="importFromJSON(event)">
+        <label for="importFile" class="file-label">📂 匯入</label>
+        <span class="file-name" id="fileName"></span>
+      </div>
+    </div>
+
+    <div class="products-table">
+      <!-- Desktop Table View -->
+      <div class="table-wrapper">
+        <!-- <div style="padding: 0.5rem 1rem; background: #f8f9fa; border-radius: 8px 8px 0 0; font-size: 0.85rem; color: #7f8c8d;">
+          💡 提示 Tip: 點擊欄位標題進行排序 Click column headers to sort
+        </div> -->
+        <table>
+          <thead>
+            <tr>
+              <th class="sortable" data-sort="name" onclick="sortTable('name')">產品名稱</th>
+              <th class="sortable" data-sort="productNumber" onclick="sortTable('productNumber')" style="display: none;">產品編號</th>
+              <th class="sortable" data-sort="currentQuantity" onclick="sortTable('currentQuantity')">現有數量</th>
+              <th class="sortable" data-sort="minimumStock" onclick="sortTable('minimumStock')">最低存量</th>
+              <th class="sortable" data-sort="unit" onclick="sortTable('unit')">單位</th>
+              <th class="sortable" data-sort="lastImportDate" onclick="sortTable('lastImportDate')">上次進貨日期</th>
+              <th class="sortable" data-sort="reorderCycle" onclick="sortTable('reorderCycle')">訂購週期(天)</th>
+              <th class="sortable" data-sort="nextOrderDate" onclick="sortTable('nextOrderDate')">下次訂購日期</th>
+              <th class="sortable" data-sort="notifyDays" onclick="sortTable('notifyDays')">提前通知(天)</th>
+              <th>備註</th>
+              <th class="sortable" data-sort="stockStatus" onclick="sortTable('stockStatus')">庫存狀態</th>
+              <th class="sortable" data-sort="orderStatus" onclick="sortTable('orderStatus')">訂購狀態</th>
+              <th>操作</th>
+            </tr>
+          </thead>
+          <tbody id="productsTableBody">
+            <!-- Products will be rendered here -->
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Mobile Card View -->
+      <div class="mobile-cards" id="mobileCardsContainer">
+        <!-- Product cards will be rendered here -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Add/Edit Product Modal -->
+  <div class="modal" id="productModal">
+    <div class="modal-content">
+      <h2 id="modalTitle">新增產品</h2>
+      <form id="productForm" onsubmit="saveProduct(event)">
+        <div class="form-group">
+          <label>產品名稱*</label>
+          <input type="text" id="productName" required>
+        </div>
+        <div class="form-group">
+          <label>產品編號*</label>
+          <input type="text" id="productNumber" required>
+        </div>
+        <div class="form-group">
+          <label>現有數量 </label>
+          <input type="number" id="currentQuantity" min="0" value="0" step="0.01">
+        </div>
+        <div class="form-group">
+          <label>最低存量*</label>
+          <input type="number" id="minimumStock" min="0" value="0" step="0.01" required>
+        </div>
+        <div class="form-group">
+          <label>單位*</label>
+          <input type="text" id="unit" placeholder="kg, g, 件, 盒..." required>
+        </div>
+        <div class="form-group">
+          <label>上次進貨日期*</label>
+          <input type="date" id="lastImportDate" required>
+        </div>
+        <div class="form-group">
+          <label>訂購週期*</label>
+          <input type="number" id="reorderCycle" min="1" value="30" required>
+        </div>
+        <div class="form-group">
+          <label>提前通知天數*</label>
+          <input type="number" id="notifyDays" min="1" value="3" required>
+        </div>
+        <div class="form-group">
+          <label>備註</label>
+          <input type="text" id="notes" placeholder="供應商、儲存方式等...">
+        </div>
+        <div class="form-actions">
+          <button type="submit" class="btn btn-success">💾</button>
+          <button type="button" class="btn" onclick="closeProductModal()">取消</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    const STORAGE_KEY = 'product-inventory-data';
+    let products = [];
+    let editingProductId = null;
+    let currentFilters = {
+      search: '',
+      stock: 'all',
+      order: 'all'
+    };
+    let currentSort = {
+      column: null,
+      direction: 'asc'
+    };
+
+    // Initialize on page load
+    document.addEventListener('DOMContentLoaded', function() {
+      loadProducts();
+      initializeFilters();
+      renderStockSummary();
+      renderProducts();
+      checkNotifications();
+
+      // Debug: Log products to console
+      console.log('=== Product Inventory Loaded ===');
+      console.log('Total products:', products.length);
+      products.forEach(p => {
+        console.log(`- ${p.name} | Product #: ${p.productNumber || 'MISSING'}`);
+      });
+    });
+
+    // Load products from localStorage
+    function loadProducts() {
+      const stored = localStorage.getItem(STORAGE_KEY);
+      if (stored) {
+        try {
+          products = JSON.parse(stored);
+
+          // Data migration: ensure all products have productNumber
+          let needsSave = false;
+          products = products.map(product => {
+            if (!product.productNumber) {
+              // Generate a product number if missing
+              const prefix = product.name.substring(0, 4).toUpperCase().replace(/\s/g, '');
+              const timestamp = Date.now().toString().slice(-4);
+              product.productNumber = `${prefix}-${timestamp}`;
+              needsSave = true;
+            }
+            // Ensure all required fields exist
+            if (product.currentQuantity === undefined) product.currentQuantity = 0;
+            if (product.minimumStock === undefined) product.minimumStock = 0;
+            if (!product.unit) product.unit = '-';
+            if (!product.notes) product.notes = '';
+            return product;
+          });
+
+          if (needsSave) {
+            console.log('Migrated products data to include productNumber');
+            saveProducts();
+          }
+        } catch (e) {
+          console.error('Failed to parse stored data:', e);
+          products = [];
+        }
+      }
+
+      // Initialize with sample data if no products
+      if (products.length === 0) {
+        products = [
+          {
+            id: Date.now(),
+            name: '鮭魚 Salmon',
+            productNumber: 'FISH-001',
+            currentQuantity: 5,
+            minimumStock: 3,
+            unit: 'kg',
+            lastImportDate: '2025-12-10',
+            reorderCycle: 7,
+            notifyDays: 2,
+            notes: '冷藏保存，供應商：海鮮公司'
+          },
+          {
+            id: Date.now() + 1,
+            name: '壽司米 Sushi Rice',
+            productNumber: 'RICE-001',
+            currentQuantity: 2,
+            minimumStock: 10,
+            unit: 'kg',
+            lastImportDate: '2025-12-14',
+            reorderCycle: 14,
+            notifyDays: 3,
+            notes: '常溫保存，每兩週訂購'
+          }
+        ];
+        saveProducts();
+      }
+    }
+
+    // Save products to localStorage
+    function saveProducts() {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(products));
+    }
+
+    // Calculate next order date
+    function calculateNextOrderDate(lastImportDate, reorderCycle) {
+      const date = new Date(lastImportDate);
+      date.setDate(date.getDate() + parseInt(reorderCycle));
+      return date.toISOString().split('T')[0];
+    }
+
+    // Calculate days until order
+    function daysUntilOrder(nextOrderDate) {
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      const orderDate = new Date(nextOrderDate);
+      orderDate.setHours(0, 0, 0, 0);
+      const diffTime = orderDate - today;
+      return Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    }
+
+    // Get stock level status
+    function getStockStatus(product) {
+      const current = parseFloat(product.currentQuantity) || 0;
+      const minimum = parseFloat(product.minimumStock) || 0;
+
+      if (current <= 0) {
+        return { text: '缺貨', class: 'badge-danger', lowStock: true, critical: true };
+      } else if (current <= minimum * 0.5) {
+        return { text: '嚴重不足', class: 'badge-danger', lowStock: true, critical: true };
+      } else if (current <= minimum) {
+        return { text: '庫存不足', class: 'badge-warning', lowStock: true, critical: false };
+      } else {
+        return { text: '正常', class: 'badge-success', lowStock: false, critical: false };
+      }
+    }
+
+    // Get order schedule status
+    function getOrderStatus(product) {
+      const nextOrderDate = calculateNextOrderDate(product.lastImportDate, product.reorderCycle);
+      const daysUntil = daysUntilOrder(nextOrderDate);
+
+      if (daysUntil <= 0) {
+        return { text: '立即訂購', class: 'badge-danger', needsOrder: true };
+      } else if (daysUntil <= product.notifyDays) {
+        return { text: `${daysUntil}天後訂購 ${daysUntil}d`, class: 'badge-warning', needsOrder: true };
+      } else {
+        return { text: `${daysUntil}天 ${daysUntil}d`, class: 'badge-success', needsOrder: false };
+      }
+    }
+
+    // Render stock summary cards
+    function renderStockSummary() {
+      const summaryDiv = document.getElementById('stockSummary');
+
+      const criticalCount = products.filter(p => getStockStatus(p).critical).length;
+      const lowStockCount = products.filter(p => {
+        const status = getStockStatus(p);
+        return status.lowStock && !status.critical;
+      }).length;
+      const needsOrderCount = products.filter(p => getOrderStatus(p).needsOrder).length;
+      const normalCount = products.filter(p => {
+        const stockStatus = getStockStatus(p);
+        const orderStatus = getOrderStatus(p);
+        return !stockStatus.lowStock && !orderStatus.needsOrder;
+      }).length;
+
+      summaryDiv.innerHTML = `
+        <div class="summary-card critical">
+          <h4>🚨 嚴重不足</h4>
+          <div class="count">${criticalCount}</div>
+        </div>
+        <div class="summary-card warning">
+          <h4>⚠️ 庫存不足</h4>
+          <div class="count">${lowStockCount}</div>
+        </div>
+        <div class="summary-card info">
+          <h4>📅 需要訂購</h4>
+          <div class="count">${needsOrderCount}</div>
+        </div>
+        <div class="summary-card success">
+          <h4>✅ 正常</h4>
+          <div class="count">${normalCount}</div>
+        </div>
+      `;
+    }
+
+    // Filter products based on current filters
+    function getFilteredProducts() {
+      let filtered = products.filter(product => {
+        // Search filter
+        if (currentFilters.search) {
+          const searchTerm = currentFilters.search.toLowerCase();
+          const nameMatch = product.name.toLowerCase().includes(searchTerm);
+          const numberMatch = product.productNumber.toLowerCase().includes(searchTerm);
+          if (!nameMatch && !numberMatch) return false;
+        }
+
+        // Stock status filter
+        if (currentFilters.stock !== 'all') {
+          const stockStatus = getStockStatus(product);
+          if (currentFilters.stock === 'critical' && !stockStatus.critical) return false;
+          if (currentFilters.stock === 'low' && (!stockStatus.lowStock || stockStatus.critical)) return false;
+          if (currentFilters.stock === 'normal' && stockStatus.lowStock) return false;
+        }
+
+        // Order status filter
+        if (currentFilters.order !== 'all') {
+          const orderStatus = getOrderStatus(product);
+          if (currentFilters.order === 'urgent' && !orderStatus.needsOrder) return false;
+          if (currentFilters.order === 'ok' && orderStatus.needsOrder) return false;
+        }
+
+        return true;
+      });
+
+      // Apply sorting if active
+      if (currentSort.column) {
+        filtered = sortProducts(filtered, currentSort.column, currentSort.direction);
+      }
+
+      return filtered;
+    }
+
+    // Sort products by column
+    function sortProducts(productList, column, direction) {
+      const sorted = [...productList].sort((a, b) => {
+        let aValue, bValue;
+
+        switch (column) {
+          case 'name':
+          case 'productNumber':
+          case 'unit':
+            aValue = (a[column] || '').toLowerCase();
+            bValue = (b[column] || '').toLowerCase();
+            break;
+
+          case 'currentQuantity':
+          case 'minimumStock':
+          case 'reorderCycle':
+          case 'notifyDays':
+            aValue = parseFloat(a[column]) || 0;
+            bValue = parseFloat(b[column]) || 0;
+            break;
+
+          case 'lastImportDate':
+            aValue = new Date(a.lastImportDate);
+            bValue = new Date(b.lastImportDate);
+            break;
+
+          case 'nextOrderDate':
+            aValue = new Date(calculateNextOrderDate(a.lastImportDate, a.reorderCycle));
+            bValue = new Date(calculateNextOrderDate(b.lastImportDate, b.reorderCycle));
+            break;
+
+          case 'stockStatus':
+            const stockStatusOrder = { critical: 0, lowStock: 1, normal: 2 };
+            const aStock = getStockStatus(a);
+            const bStock = getStockStatus(b);
+            aValue = aStock.critical ? 0 : (aStock.lowStock ? 1 : 2);
+            bValue = bStock.critical ? 0 : (bStock.lowStock ? 1 : 2);
+            break;
+
+          case 'orderStatus':
+            const aOrder = getOrderStatus(a);
+            const bOrder = getOrderStatus(b);
+            aValue = aOrder.needsOrder ? 0 : 1;
+            bValue = bOrder.needsOrder ? 0 : 1;
+            break;
+
+          default:
+            return 0;
+        }
+
+        if (aValue < bValue) return direction === 'asc' ? -1 : 1;
+        if (aValue > bValue) return direction === 'asc' ? 1 : -1;
+        return 0;
+      });
+
+      return sorted;
+    }
+
+    // Sort table by column
+    function sortTable(column) {
+      // Toggle direction if same column, otherwise default to ascending
+      if (currentSort.column === column) {
+        currentSort.direction = currentSort.direction === 'asc' ? 'desc' : 'asc';
+      } else {
+        currentSort.column = column;
+        currentSort.direction = 'asc';
+      }
+
+      // Update header UI
+      document.querySelectorAll('th.sortable').forEach(th => {
+        th.classList.remove('sort-asc', 'sort-desc');
+      });
+
+      const activeHeader = document.querySelector(`th[data-sort="${column}"]`);
+      if (activeHeader) {
+        activeHeader.classList.add(`sort-${currentSort.direction}`);
+      }
+
+      // Re-render table
+      renderProducts();
+    }
+
+    // Render products table
+    function renderProducts() {
+      // Render both table and mobile cards
+      renderTableView();
+      renderMobileCards();
+    }
+
+    // Render desktop table view
+    function renderTableView() {
+      const tbody = document.getElementById('productsTableBody');
+      tbody.innerHTML = '';
+
+      const filteredProducts = getFilteredProducts();
+
+      if (products.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="13" style="text-align: center; padding: 2rem; color: #7f8c8d;">尚無產品資料</td></tr>';
+        return;
+      }
+
+      if (filteredProducts.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="13" style="text-align: center; padding: 2rem; color: #7f8c8d;">找不到符合條件的產品</td></tr>';
+        return;
+      }
+
+      filteredProducts.forEach(product => {
+        const nextOrderDate = calculateNextOrderDate(product.lastImportDate, product.reorderCycle);
+        const stockStatus = getStockStatus(product);
+        const orderStatus = getOrderStatus(product);
+
+        const tr = document.createElement('tr');
+
+        // Highlight rows based on status priority: critical stock > low stock > needs order
+        if (stockStatus.critical) {
+          tr.style.backgroundColor = '#f8d7da';  // Critical stock - red background
+        } else if (stockStatus.lowStock) {
+          tr.style.backgroundColor = '#fff3cd';  // Low stock - yellow background
+        } else if (orderStatus.needsOrder) {
+          tr.style.backgroundColor = '#e7f3ff';  // Needs order - blue background
+        }
+
+        tr.innerHTML = `
+          <td class="editable" onclick="editField(${product.id}, 'name')">${product.name}</td>
+          <td class="editable" onclick="editField(${product.id}, 'productNumber')" style="display:none;"><strong>${product.productNumber || '-'}</strong></td>
+          <td class="editable" onclick="editField(${product.id}, 'currentQuantity')"><strong>${product.currentQuantity || 0}</strong></td>
+          <td class="editable" onclick="editField(${product.id}, 'minimumStock')">${product.minimumStock || 0}</td>
+          <td class="editable" onclick="editField(${product.id}, 'unit')">${product.unit || '-'}</td>
+          <td class="editable" onclick="editField(${product.id}, 'lastImportDate')">${product.lastImportDate}</td>
+          <td class="editable" onclick="editField(${product.id}, 'reorderCycle')">${product.reorderCycle} 天</td>
+          <td><strong>${nextOrderDate}</strong></td>
+          <td class="editable" onclick="editField(${product.id}, 'notifyDays')">${product.notifyDays} 天</td>
+          <td class="editable" onclick="editField(${product.id}, 'notes')" style="max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;" title="${product.notes || ''}">${product.notes || '-'}</td>
+          <td><span class="badge ${stockStatus.class}">${stockStatus.text}</span></td>
+          <td><span class="badge ${orderStatus.class}">${orderStatus.text}</span></td>
+          <td>
+            <div class="action-buttons">
+              <button class="btn btn-small" onclick="openEditProductModal(${product.id})">✏️</button>
+              <button class="btn btn-danger btn-small" onclick="deleteProduct(${product.id})">🗑️</button>
+            </div>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    // Render mobile card view
+    function renderMobileCards() {
+      const container = document.getElementById('mobileCardsContainer');
+      container.innerHTML = '';
+
+      const filteredProducts = getFilteredProducts();
+
+      if (products.length === 0) {
+        container.innerHTML = '<div style="text-align: center; padding: 2rem; color: #7f8c8d;">尚無產品資料<br></div>';
+        return;
+      }
+
+      if (filteredProducts.length === 0) {
+        container.innerHTML = '<div style="text-align: center; padding: 2rem; color: #7f8c8d;">找不到符合條件的產品<br></div>';
+        return;
+      }
+
+      filteredProducts.forEach(product => {
+        const nextOrderDate = calculateNextOrderDate(product.lastImportDate, product.reorderCycle);
+        const stockStatus = getStockStatus(product);
+        const orderStatus = getOrderStatus(product);
+
+        const card = document.createElement('div');
+        card.className = 'product-card';
+
+        // Add status classes
+        if (stockStatus.critical) {
+          card.classList.add('critical-stock');
+        } else if (stockStatus.lowStock) {
+          card.classList.add('low-stock');
+        } else if (orderStatus.needsOrder) {
+          card.classList.add('needs-order');
+        }
+
+        card.innerHTML = `
+          <div class="card-header">
+            <div class="card-title">
+              <div class="card-name">${product.name}</div>
+              <div class="card-number" style="display:none;">#${product.productNumber}</div>
+            </div>
+            <div class="card-actions">
+              <button class="btn btn-small" onclick="openEditProductModal(${product.id})">✏️</button>
+              <button class="btn btn-danger btn-small" onclick="deleteProduct(${product.id})">🗑️</button>
+            </div>
+          </div>
+
+          <div class="card-body">
+            <div class="card-field">
+              <div class="card-label">現有數量</div>
+              <div class="card-value large editable" onclick="editField(${product.id}, 'currentQuantity')">${product.currentQuantity || 0} ${product.unit}</div>
+            </div>
+            <div class="card-field">
+              <div class="card-label">最低存量</div>
+              <div class="card-value editable" onclick="editField(${product.id}, 'minimumStock')">${product.minimumStock || 0} ${product.unit}</div>
+            </div>
+            <div class="card-field">
+              <div class="card-label">上次進貨</div>
+              <div class="card-value editable" onclick="editField(${product.id}, 'lastImportDate')">${product.lastImportDate}</div>
+            </div>
+            <div class="card-field">
+              <div class="card-label">下次訂購</div>
+              <div class="card-value"><strong>${nextOrderDate}</strong></div>
+            </div>
+            <div class="card-field">
+              <div class="card-label">訂購週期</div>
+              <div class="card-value editable" onclick="editField(${product.id}, 'reorderCycle')">${product.reorderCycle} 天</div>
+            </div>
+            <div class="card-field">
+              <div class="card-label">提前通知</div>
+              <div class="card-value editable" onclick="editField(${product.id}, 'notifyDays')">${product.notifyDays} 天</div>
+            </div>
+            ${product.notes ? `
+            <div class="card-field full-width">
+              <div class="card-label">備註</div>
+              <div class="card-value editable" onclick="editField(${product.id}, 'notes')">${product.notes}</div>
+            </div>
+            ` : ''}
+          </div>
+
+          <div class="card-footer">
+            <span class="badge ${stockStatus.class}">${stockStatus.text}</span>
+            <span class="badge ${orderStatus.class}">${orderStatus.text}</span>
+          </div>
+        `;
+
+        container.appendChild(card);
+      });
+    }
+
+    // Check and display notifications
+    function checkNotifications() {
+      const notificationsDiv = document.getElementById('notifications');
+      const notificationList = document.getElementById('notificationList');
+
+      const alerts = [];
+
+      // Check for low stock items (priority 1 - most critical)
+      const criticalStock = products.filter(p => getStockStatus(p).critical);
+      const lowStock = products.filter(p => {
+        const status = getStockStatus(p);
+        return status.lowStock && !status.critical;
+      });
+
+      // Check for items needing order (priority 2)
+      const needsOrder = products.filter(p => {
+        const status = getOrderStatus(p);
+        const stockStatus = getStockStatus(p);
+        return status.needsOrder && !stockStatus.lowStock;
+      });
+
+      // Add critical stock alerts
+      criticalStock.forEach(p => {
+        const stockStatus = getStockStatus(p);
+        alerts.push(`<div class="notification-item" style="border-left: 4px solid var(--danger-color); padding-left: 0.5rem;"><strong>🚨 ${p.name}</strong> <code style="background: #f8d7da; padding: 0.2rem 0.4rem; border-radius: 3px;">#${p.productNumber}</code> - <span style="color: var(--danger-color);">${stockStatus.text}</span> - 現有: ${p.currentQuantity} ${p.unit}, 最低: ${p.minimumStock} ${p.unit}</div>`);
+      });
+
+      // Add low stock alerts
+      lowStock.forEach(p => {
+        alerts.push(`<div class="notification-item" style="border-left: 4px solid var(--warning-color); padding-left: 0.5rem;"><strong>⚠️ ${p.name}</strong> <code style="background: #fff3cd; padding: 0.2rem 0.4rem; border-radius: 3px;">#${p.productNumber}</code> - 庫存不足 - 現有: ${p.currentQuantity} ${p.unit}, 最低: ${p.minimumStock} ${p.unit}</div>`);
+      });
+
+      // Add order alerts
+      needsOrder.forEach(p => {
+        const nextOrderDate = calculateNextOrderDate(p.lastImportDate, p.reorderCycle);
+        const daysUntil = daysUntilOrder(nextOrderDate);
+        const urgency = daysUntil <= 0 ? '立即訂購!' : `${daysUntil}天內訂購`;
+        alerts.push(`<div class="notification-item"><strong>📅 ${p.name}</strong> <code style="background: #e7f3ff; padding: 0.2rem 0.4rem; border-radius: 3px;">#${p.productNumber}</code> - ${urgency} - 下次訂購日: ${nextOrderDate}</div>`);
+      });
+
+      if (alerts.length > 0) {
+        notificationsDiv.classList.add('active');
+        notificationList.innerHTML = alerts.join('');
+      } else {
+        notificationsDiv.classList.remove('active');
+      }
+    }
+
+    // Inline field editing
+    function editField(productId, fieldName) {
+      const product = products.find(p => p.id === productId);
+      if (!product) return;
+
+      const currentValue = product[fieldName] || '';
+      let inputType = 'text';
+
+      if (fieldName === 'lastImportDate') inputType = 'date';
+      if (fieldName === 'reorderCycle' || fieldName === 'notifyDays') inputType = 'number';
+      if (fieldName === 'currentQuantity' || fieldName === 'minimumStock') inputType = 'number';
+
+      const newValue = prompt(`編輯 ${fieldName}:`, currentValue);
+
+      if (newValue !== null && newValue !== currentValue) {
+        if (inputType === 'number') {
+          product[fieldName] = (fieldName === 'currentQuantity' || fieldName === 'minimumStock') ? parseFloat(newValue) : parseInt(newValue);
+        } else {
+          product[fieldName] = newValue;
+        }
+        saveProducts();
+        renderStockSummary();
+        renderProducts();
+        checkNotifications();
+      }
+    }
+
+    // Modal functions
+    function openAddProductModal() {
+      editingProductId = null;
+      document.getElementById('modalTitle').textContent = '新增產品';
+      document.getElementById('productForm').reset();
+      document.getElementById('lastImportDate').valueAsDate = new Date();
+      document.getElementById('productModal').classList.add('active');
+    }
+
+    function openEditProductModal(productId) {
+      const product = products.find(p => p.id === productId);
+      if (!product) return;
+
+      editingProductId = productId;
+      document.getElementById('modalTitle').textContent = '編輯產品';
+      document.getElementById('productName').value = product.name;
+      document.getElementById('productNumber').value = product.productNumber;
+      document.getElementById('currentQuantity').value = product.currentQuantity || 0;
+      document.getElementById('minimumStock').value = product.minimumStock || 0;
+      document.getElementById('unit').value = product.unit || '';
+      document.getElementById('lastImportDate').value = product.lastImportDate;
+      document.getElementById('reorderCycle').value = product.reorderCycle;
+      document.getElementById('notifyDays').value = product.notifyDays;
+      document.getElementById('notes').value = product.notes || '';
+      document.getElementById('productModal').classList.add('active');
+    }
+
+    function closeProductModal() {
+      document.getElementById('productModal').classList.remove('active');
+      editingProductId = null;
+    }
+
+    function saveProduct(event) {
+      event.preventDefault();
+
+      const productData = {
+        name: document.getElementById('productName').value,
+        productNumber: document.getElementById('productNumber').value,
+        currentQuantity: parseFloat(document.getElementById('currentQuantity').value) || 0,
+        minimumStock: parseFloat(document.getElementById('minimumStock').value) || 0,
+        unit: document.getElementById('unit').value,
+        lastImportDate: document.getElementById('lastImportDate').value,
+        reorderCycle: parseInt(document.getElementById('reorderCycle').value),
+        notifyDays: parseInt(document.getElementById('notifyDays').value),
+        notes: document.getElementById('notes').value || ''
+      };
+
+      if (editingProductId) {
+        // Update existing product
+        const product = products.find(p => p.id === editingProductId);
+        Object.assign(product, productData);
+      } else {
+        // Add new product
+        productData.id = Date.now();
+        products.push(productData);
+      }
+
+      saveProducts();
+      renderStockSummary();
+      renderProducts();
+      checkNotifications();
+      closeProductModal();
+    }
+
+    function deleteProduct(productId) {
+      if (!confirm('確定要刪除此產品？')) return;
+
+      products = products.filter(p => p.id !== productId);
+      saveProducts();
+      renderStockSummary();
+      renderProducts();
+      checkNotifications();
+    }
+
+    function exportData() {
+      const dataStr = JSON.stringify(products, null, 2);
+      const dataBlob = new Blob([dataStr], { type: 'application/json' });
+      const url = URL.createObjectURL(dataBlob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `product-inventory-${new Date().toISOString().split('T')[0]}.json`;
+      link.click();
+      URL.revokeObjectURL(url);
+    }
+
+    function clearAllData() {
+      if (!confirm('⚠️ 確定要清除所有產品資料？此操作無法復原！\n')) return;
+
+      products = [];
+      saveProducts();
+      renderStockSummary();
+      renderProducts();
+      checkNotifications();
+    }
+
+    // Initialize filter buttons
+    function initializeFilters() {
+      // Set default active filters
+      document.querySelector('[data-filter="stock"][data-value="all"]').classList.add('active');
+      document.querySelector('[data-filter="order"][data-value="all"]').classList.add('active');
+    }
+
+    // Toggle filter button
+    function toggleFilter(button, filterType) {
+      // Remove active class from all buttons of this type
+      document.querySelectorAll(`[data-filter="${filterType}"]`).forEach(btn => {
+        btn.classList.remove('active', 'critical', 'warning', 'success');
+      });
+
+      // Add active class to clicked button
+      button.classList.add('active');
+
+      // Add color class based on filter value
+      const value = button.dataset.value;
+      if (value === 'critical') {
+        button.classList.add('critical');
+      } else if (value === 'low' || value === 'urgent') {
+        button.classList.add('warning');
+      } else if (value === 'normal' || value === 'ok') {
+        button.classList.add('success');
+      }
+
+      // Update current filters
+      currentFilters[filterType] = value;
+
+      // Re-render with filters
+      renderProducts();
+    }
+
+    // Apply search and filters
+    function applyFilters() {
+      const searchInput = document.getElementById('searchInput');
+      currentFilters.search = searchInput.value.trim();
+      renderProducts();
+    }
+
+    // Clear search
+    function clearSearch() {
+      document.getElementById('searchInput').value = '';
+      currentFilters.search = '';
+      renderProducts();
+    }
+
+    // Import data from JSON file
+    function importFromJSON(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+
+      const fileNameDisplay = document.getElementById('fileName');
+      fileNameDisplay.textContent = `讀取中...${file.name}`;
+
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        try {
+          const importedData = JSON.parse(e.target.result);
+
+          // Validate data structure
+          if (!Array.isArray(importedData)) {
+            throw new Error('JSON 格式錯誤：必須是陣列');
+          }
+
+          // Validate each product has required fields
+          const requiredFields = ['name', 'productNumber', 'unit', 'lastImportDate', 'reorderCycle', 'notifyDays'];
+          const invalidProducts = importedData.filter(product => {
+            return !requiredFields.every(field => product.hasOwnProperty(field));
+          });
+
+          if (invalidProducts.length > 0) {
+            throw new Error(`發現 ${invalidProducts.length} 個產品缺少必要欄位`);
+          }
+
+          // Ask user whether to replace or merge
+          const action = confirm(
+            `找到 ${importedData.length} 個產品資料\n` +
+            '確定：取代現有資料\n' +
+            '取消：合併資料（新增不重複的產品\n' +
+            '繼續？'
+          );
+
+          if (action === null) {
+            fileNameDisplay.textContent = '已取消';
+            event.target.value = '';
+            return;
+          }
+
+          if (action) {
+            // Replace all data
+            products = importedData.map(p => ({
+              ...p,
+              id: p.id || Date.now() + Math.random(),
+              currentQuantity: parseFloat(p.currentQuantity) || 0,
+              minimumStock: parseFloat(p.minimumStock) || 0,
+              reorderCycle: parseInt(p.reorderCycle),
+              notifyDays: parseInt(p.notifyDays),
+              notes: p.notes || ''
+            }));
+            fileNameDisplay.textContent = `✅ 已取代 ${importedData.length} 個產品`;
+          } else {
+            // Merge data (add only new products)
+            let addedCount = 0;
+            importedData.forEach(importedProduct => {
+              const exists = products.some(p => p.productNumber === importedProduct.productNumber);
+              if (!exists) {
+                products.push({
+                  ...importedProduct,
+                  id: Date.now() + Math.random(),
+                  currentQuantity: parseFloat(importedProduct.currentQuantity) || 0,
+                  minimumStock: parseFloat(importedProduct.minimumStock) || 0,
+                  reorderCycle: parseInt(importedProduct.reorderCycle),
+                  notifyDays: parseInt(importedProduct.notifyDays),
+                  notes: importedProduct.notes || ''
+                });
+                addedCount++;
+              }
+            });
+            fileNameDisplay.textContent = `✅ 新增 ${addedCount} 個產品`;
+          }
+
+          saveProducts();
+          renderStockSummary();
+          renderProducts();
+          checkNotifications();
+
+          // Clear file input
+          setTimeout(() => {
+            event.target.value = '';
+            fileNameDisplay.textContent = '';
+          }, 5000);
+
+        } catch (error) {
+          console.error('Import error:', error);
+          fileNameDisplay.textContent = `❌ 錯誤: ${error.message}`;
+          alert(`匯入失敗 Import failed:\n${error.message}`);
+          event.target.value = '';
+        }
+      };
+
+      reader.onerror = function() {
+        fileNameDisplay.textContent = '❌ 檔案讀取失敗';
+        event.target.value = '';
+      };
+
+      reader.readAsText(file);
+    }
+
+    // Close modal when clicking outside
+    document.getElementById('productModal').addEventListener('click', function(e) {
+      if (e.target === this) {
+        closeProductModal();
+      }
+    });
+  </script>
+</body>
+</html>
