@@ -802,7 +802,7 @@
 
                     card.innerHTML = `
                         <div class="item-header">
-                            <div class="item-code ${!item['Item Code'] ? 'missing' : ''}">${itemCode}</div>
+                            <div class="item-code ${!item['Item Code'] ? 'missing' : ''}">${itemCode} - ${itemName}</div>
                             <div class="item-quantity ${!item['Quantity'] ? 'no-qty' : ''}">${quantity}</div>
                         </div>
                         
