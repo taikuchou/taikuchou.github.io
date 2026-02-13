@@ -2004,7 +2004,7 @@ quizData = {
         "total_questions": 72,
         "questions": [
             {
-                "question_number": 1,
+                "id": 1,
                 "question": "Which is the Front-Mu point of Small Intestine?",
                 "options": {
                     "A": "RN10 Xiawan",
@@ -2015,7 +2015,7 @@ quizData = {
                 "answer": "D"
             },
             {
-                "question_number": 2,
+                "id": 2,
                 "question": "Which waveform in electro-acupuncture is easier for human body to generate adaption?",
                 "options": {
                     "A": "Sparse-dense wave",
@@ -2026,7 +2026,7 @@ quizData = {
                 "answer": "D"
             },
             {
-                "question_number": 3,
+                "id": 3,
                 "question": "What are the needling depth and directions on Back-Shu points BL13 to BL21?",
                 "options": {
                     "A": "Obliquely 0.5 \u2013 0.8 cun",
@@ -2037,7 +2037,7 @@ quizData = {
                 "answer": "C"
             },
             {
-                "question_number": 4,
+                "id": 4,
                 "question": "The distance between SI-7 and SI-8 is:",
                 "options": {
                     "A": "5 cun",
@@ -2048,7 +2048,7 @@ quizData = {
                 "answer": "C"
             },
             {
-                "question_number": 5,
+                "id": 5,
                 "question": "Which belongs to both the Luo-Connecting and the Eight Confluent Points?",
                 "options": {
                     "A": "KI6 (Zhaohai)",
@@ -2059,7 +2059,7 @@ quizData = {
                 "answer": "D"
             },
             {
-                "question_number": 6,
+                "id": 6,
                 "question": "Which element of Five Elements does PC9 (Zhongchong) belong to?",
                 "options": {
                     "A": "Wood",
@@ -2070,7 +2070,7 @@ quizData = {
                 "answer": "A"
             },
             {
-                "question_number": 7,
+                "id": 7,
                 "question": "Which alcohol percentage is used for fire cupping?",
                 "options": {
                     "A": "50%",
@@ -2081,7 +2081,7 @@ quizData = {
                 "answer": "C"
             },
             {
-                "question_number": 8,
+                "id": 8,
                 "question": "Which is a Commanding or Si Zong point for head and nape?",
                 "options": {
                     "A": "SJ5 (Waiguan)",
@@ -2092,7 +2092,7 @@ quizData = {
                 "answer": "C"
             },
             {
-                "question_number": 9,
+                "id": 9,
                 "question": "Which point is used for malposition of the foetus and what is its location?",
                 "options": {
                     "A": "SP-1, at the junction of lines drawn along the medial border of the nail and the base of the nail",
@@ -2103,7 +2103,7 @@ quizData = {
                 "answer": "D"
             },
             {
-                "question_number": 10,
+                "id": 10,
                 "question": "What is scalp acupuncture mainly used for?",
                 "options": {
                     "A": "Cerebral disorders",
@@ -2114,7 +2114,7 @@ quizData = {
                 "answer": "A"
             },
             {
-                "question_number": 11,
+                "id": 11,
                 "question": "Which specific group does SP6 Sanyinjiao belong to?",
                 "options": {
                     "A": "Five-Shu",
@@ -2125,7 +2125,7 @@ quizData = {
                 "answer": "C"
             },
             {
-                "question_number": 12,
+                "id": 12,
                 "question": "Which 3 GB points are located on the Dai channel?",
                 "options": {
                     "A": "GB-26, GB-27, GB-28",
@@ -2136,7 +2136,7 @@ quizData = {
                 "answer": "A"
             },
             {
-                "question_number": 13,
+                "id": 13,
                 "question": "In ear acupuncture, points related to the digestive tract are distributed around:",
                 "options": {
                     "A": "The ear lobe",
@@ -2147,7 +2147,7 @@ quizData = {
                 "answer": "B"
             },
             {
-                "question_number": 14,
+                "id": 14,
                 "question": "Which point is located on the radial side of the tendon of flexor carpi ulnaris, 1 cun proximal to the wrist?",
                 "options": {
                     "A": "HT-4 Lingdao",
@@ -2158,7 +2158,7 @@ quizData = {
                 "answer": "D"
             },
             {
-                "question_number": 15,
+                "id": 15,
                 "question": "Which point is located 5 cun below the olecranon, on the lateral side of the forearm, between the radius and ulna?",
                 "options": {
                     "A": "TE-9 Sidu",
@@ -2169,7 +2169,7 @@ quizData = {
                 "answer": "D"
             },
             {
-                "question_number": 16,
+                "id": 16,
                 "question": "Choose the correct back shu points for the following organs: Lung, Liver, Spleen and Kidney",
                 "options": {
                     "A": "UB-15, UB-17, UB-21, UB-23",
@@ -2180,7 +2180,7 @@ quizData = {
                 "answer": "D"
             },
             {
-                "question_number": 17,
+                "id": 17,
                 "question": "Which of the following points carries the highest risk of pneumothorax, if needled improperly?",
                 "options": {
                     "A": "LR-13 Zhangmen",
@@ -2191,7 +2191,7 @@ quizData = {
                 "answer": "B"
             },
             {
-                "question_number": 18,
+                "id": 18,
                 "question": "What do the Eight Influential Points influence?",
                 "options": {
                     "A": "Zang organs, Fu organs, meridians, vessels, Qi, blood, Yin, Yang",
@@ -2202,7 +2202,7 @@ quizData = {
                 "answer": "B"
             },
             {
-                "question_number": 19,
+                "id": 19,
                 "question": "When is the best time to give an acupuncture treatment?",
                 "options": {
                     "A": "Before the disease attacks",
@@ -2213,7 +2213,7 @@ quizData = {
                 "answer": "C"
             },
             {
-                "question_number": 20,
+                "id": 20,
                 "question": "Select the therapy in which Acupuncture Syncope will not occur.",
                 "options": {
                     "A": "Acu-pressure",
@@ -2224,7 +2224,7 @@ quizData = {
                 "answer": "D"
             },
             {
-                "question_number": 21,
+                "id": 21,
                 "question": "Which method is used on the four extremity points EX-UE11 (Shixuan)?",
                 "options": {
                     "A": "Spot pricking",
@@ -2235,7 +2235,7 @@ quizData = {
                 "answer": "A"
             },
             {
-                "question_number": 22,
+                "id": 22,
                 "question": "A patient comes in with chills and fever, a painful neck and shoulders and floating pulse. Which channel would you choose to treat this patient?",
                 "options": {
                     "A": "Tai Yang channel",
@@ -2246,7 +2246,7 @@ quizData = {
                 "answer": "A"
             },
             {
-                "question_number": 23,
+                "id": 23,
                 "question": "Which alcohol percentage is used in preparing needle site for insertion?",
                 "options": {
                     "A": "50%",
@@ -2257,7 +2257,7 @@ quizData = {
                 "answer": "B"
             },
             {
-                "question_number": 24,
+                "id": 24,
                 "question": "Which one is NOT among the Guasha effects?",
                 "options": {
                     "A": "Free channels and dredge collaterals",
@@ -2268,7 +2268,7 @@ quizData = {
                 "answer": "D"
             },
             {
-                "question_number": 25,
+                "id": 25,
                 "question": "Which point is selected to treat a locked or tight jaw?",
                 "options": {
                     "A": "LR3 (Taichong)",
@@ -2279,7 +2279,7 @@ quizData = {
                 "answer": "D"
             },
             {
-                "question_number": 26,
+                "id": 26,
                 "question": "Which angle is formed by the needle and the surface of the skin when needling CV17 (Tanzhong)?",
                 "options": {
                     "A": "90\u00b0",
@@ -2290,7 +2290,7 @@ quizData = {
                 "answer": "C"
             },
             {
-                "question_number": 27,
+                "id": 27,
                 "question": "Name three points which are considered special in the treatment of frozen shoulder?",
                 "options": {
                     "A": "LI-4, LI-11, LI-15",
@@ -2301,7 +2301,7 @@ quizData = {
                 "answer": "C"
             },
             {
-                "question_number": 28,
+                "id": 28,
                 "question": "Choose the confluent points for the following extra channels: Chong channel, Yang Qiao channel, Du channel and Ren channel",
                 "options": {
                     "A": "LU-7, SI-3, UB-62, SP-4",
@@ -2312,7 +2312,7 @@ quizData = {
                 "answer": "C"
             },
             {
-                "question_number": 29,
+                "id": 29,
                 "question": "The following point can nourish Heart Yin, clear Heat and treat night sweating.",
                 "options": {
                     "A": "HT-3 Shaohai",
@@ -2323,7 +2323,7 @@ quizData = {
                 "answer": "C"
             },
             {
-                "question_number": 30,
+                "id": 30,
                 "question": "Choose the Lower He-Sea points for the following organs: Stomach, San Jiao and Urinary Bladder",
                 "options": {
                     "A": "ST-36, UB-40, UB-42",
@@ -2334,7 +2334,7 @@ quizData = {
                 "answer": "C"
             },
             {
-                "question_number": 31,
+                "id": 31,
                 "question": "To treat abdominal pain around the umbilicus, which Lower He-Sea point should be selected?",
                 "options": {
                     "A": "GB34 (Yanglingquan)",
@@ -2345,7 +2345,7 @@ quizData = {
                 "answer": "B"
             },
             {
-                "question_number": 32,
+                "id": 32,
                 "question": "What is FALSE about the selection of distant points?",
                 "options": {
                     "A": "It often refers to those points below the elbow and knee joints.",
@@ -2356,7 +2356,7 @@ quizData = {
                 "answer": "D"
             },
             {
-                "question_number": 33,
+                "id": 33,
                 "question": "What is the best point combination to pain along the entire spine?",
                 "options": {
                     "A": "Du-4, Du-14",
@@ -2367,7 +2367,7 @@ quizData = {
                 "answer": "B"
             },
             {
-                "question_number": 34,
+                "id": 34,
                 "question": "Which specific group of points are Back-Shu Points usually combined in use?",
                 "options": {
                     "A": "Yuan-Source",
@@ -2378,7 +2378,7 @@ quizData = {
                 "answer": "D"
             },
             {
-                "question_number": 35,
+                "id": 35,
                 "question": "Which area of the ear are pelvic cavity points found?",
                 "options": {
                     "A": "Ear lobe",
@@ -2389,7 +2389,7 @@ quizData = {
                 "answer": "C"
             },
             {
-                "question_number": 36,
+                "id": 36,
                 "question": "Which point is best to treat a patient suffering from red eyes and headaches due to Excess Liver Fire?",
                 "options": {
                     "A": "LV-2 Xingjian",
@@ -2400,7 +2400,7 @@ quizData = {
                 "answer": "A"
             },
             {
-                "question_number": 37,
+                "id": 37,
                 "question": "Which of the following Eight Confluent Points is communicated with Du/Governor Meridian?",
                 "options": {
                     "A": "BL62 (Shenmai)",
@@ -2411,7 +2411,7 @@ quizData = {
                 "answer": "D"
             },
             {
-                "question_number": 38,
+                "id": 38,
                 "question": "The use of HT7 (Shenmen) and KI6 (Zhaohai) in a prescription is according to all the following principles EXCEPT:",
                 "options": {
                     "A": "Upper and Lower combination",
@@ -2422,7 +2422,7 @@ quizData = {
                 "answer": "D"
             },
             {
-                "question_number": 39,
+                "id": 39,
                 "question": "Which alcohol percentage is used for fire cupping?",
                 "options": {
                     "A": "50%",
@@ -2433,7 +2433,7 @@ quizData = {
                 "answer": "C"
             },
             {
-                "question_number": 40,
+                "id": 40,
                 "question": "Which waveform in electro-acupuncture is less easy for the human body to generate adaption?",
                 "options": {
                     "A": "Sparse-dense wave",
@@ -2444,7 +2444,7 @@ quizData = {
                 "answer": "B"
             },
             {
-                "question_number": 41,
+                "id": 41,
                 "question": "Choose the correct front Mu points for the following organs: Urinary Bladder, San Jiao, Stomach, and Pericardium",
                 "options": {
                     "A": "RN-2, RN-5, RN-6, RN-14",
@@ -2455,7 +2455,7 @@ quizData = {
                 "answer": "D"
             },
             {
-                "question_number": 42,
+                "id": 42,
                 "question": "Which of Five Shu Points are generally used to clear Heat?",
                 "options": {
                     "A": "Ying-Spring",
@@ -2466,7 +2466,7 @@ quizData = {
                 "answer": "A"
             },
             {
-                "question_number": 43,
+                "id": 43,
                 "question": "Which of the following points is NOT a Luo/Connecting point?",
                 "options": {
                     "A": "GB37 (Guangming)",
@@ -2477,7 +2477,7 @@ quizData = {
                 "answer": "C"
             },
             {
-                "question_number": 44,
+                "id": 44,
                 "question": "Which insertion method should be used when needling EX-HN3 (Yintang)?",
                 "options": {
                     "A": "Single-Handed insertion",
@@ -2488,7 +2488,7 @@ quizData = {
                 "answer": "D"
             },
             {
-                "question_number": 45,
+                "id": 45,
                 "question": "Which pair of points should be selected for a patient with chronic insomnia related to multiple organ disorder?",
                 "options": {
                     "A": "SP-4, GB-41",
@@ -2499,7 +2499,7 @@ quizData = {
                 "answer": "D"
             },
             {
-                "question_number": 46,
+                "id": 46,
                 "question": "Five Shu points of the Heart are:",
                 "options": {
                     "A": "HT3, HT4, HT5, HT7, HT8",
@@ -2510,7 +2510,7 @@ quizData = {
                 "answer": "C"
             },
             {
-                "question_number": 47,
+                "id": 47,
                 "question": "Which group are distal points?",
                 "options": {
                     "A": "UB63, UB65, GB37, GB39",
@@ -2521,7 +2521,7 @@ quizData = {
                 "answer": "A"
             },
             {
-                "question_number": 48,
+                "id": 48,
                 "question": "Distance between SP7 and SP8 is:",
                 "options": {
                     "A": "5 cun",
@@ -2532,7 +2532,7 @@ quizData = {
                 "answer": "B"
             },
             {
-                "question_number": 49,
+                "id": 49,
                 "question": "Front-Mu point of the Spleen is:",
                 "options": {
                     "A": "RN12",
@@ -2543,7 +2543,7 @@ quizData = {
                 "answer": "D"
             },
             {
-                "question_number": 50,
+                "id": 50,
                 "question": "Which group are all on the same level?",
                 "options": {
                     "A": "KI15, ST25, SP15",
@@ -2554,7 +2554,7 @@ quizData = {
                 "answer": "C"
             },
             {
-                "question_number": 51,
+                "id": 51,
                 "question": "Yuan-Source points are located:",
                 "options": {
                     "A": "Only on Yin meridians",
@@ -2565,7 +2565,7 @@ quizData = {
                 "answer": "D"
             },
             {
-                "question_number": 52,
+                "id": 52,
                 "question": "LI10 is located:",
                 "options": {
                     "A": "2 cun below LI11",
@@ -2576,7 +2576,7 @@ quizData = {
                 "answer": "D"
             },
             {
-                "question_number": 53,
+                "id": 53,
                 "question": "Influential point of Vessels is:",
                 "options": {
                     "A": "UB11",
@@ -2587,7 +2587,7 @@ quizData = {
                 "answer": "D"
             },
             {
-                "question_number": 54,
+                "id": 54,
                 "question": "Which statements about confluent points are correct?",
                 "options": {
                     "A": "They connect extraordinary vessels",
@@ -2598,7 +2598,7 @@ quizData = {
                 "answer": "C"
             },
             {
-                "question_number": 55,
+                "id": 55,
                 "question": "Jiao-crossing points are:",
                 "options": {
                     "A": "Only on Yin channels",
@@ -2609,7 +2609,7 @@ quizData = {
                 "answer": "C"
             },
             {
-                "question_number": 56,
+                "id": 56,
                 "question": "Confluent points of Chong and Dai vessels are:",
                 "options": {
                     "A": "SP4, GB41",
@@ -2620,7 +2620,7 @@ quizData = {
                 "answer": "A"
             },
             {
-                "question_number": 57,
+                "id": 57,
                 "question": "Primary function of Luo-connecting points:",
                 "options": {
                     "A": "Promote Qi flow",
@@ -2631,7 +2631,7 @@ quizData = {
                 "answer": "A"
             },
             {
-                "question_number": 58,
+                "id": 58,
                 "question": "SI channel belongs to:",
                 "options": {
                     "A": "Tai Yang",
@@ -2642,7 +2642,7 @@ quizData = {
                 "answer": "A"
             },
             {
-                "question_number": 59,
+                "id": 59,
                 "question": "Foot Yang meridians include:",
                 "options": {
                     "A": "ST, SP, LR",
@@ -2653,7 +2653,7 @@ quizData = {
                 "answer": "C"
             },
             {
-                "question_number": 60,
+                "id": 60,
                 "question": "Local points are:",
                 "options": {
                     "A": "Always distal",
@@ -2664,7 +2664,7 @@ quizData = {
                 "answer": "C"
             },
             {
-                "question_number": 61,
+                "id": 61,
                 "question": "Standard cun measurement of patient\u2019s thumb width equals:",
                 "options": {
                     "A": "1 cun",
@@ -2675,7 +2675,7 @@ quizData = {
                 "answer": "C"
             },
             {
-                "question_number": 62,
+                "id": 62,
                 "question": "Yuan-Luo combination for Kidney deficiency:",
                 "options": {
                     "A": "KI2, UB57",
@@ -2686,7 +2686,7 @@ quizData = {
                 "answer": "C"
             },
             {
-                "question_number": 63,
+                "id": 63,
                 "question": "Shoulder region points group:",
                 "options": {
                     "A": "LI4, SJ5, SI3",
@@ -2697,7 +2697,7 @@ quizData = {
                 "answer": "B"
             },
             {
-                "question_number": 64,
+                "id": 64,
                 "question": "Hua Tuo Jia Ji points are located in the:",
                 "options": {
                     "A": "Cervical region",
@@ -2708,7 +2708,7 @@ quizData = {
                 "answer": "C"
             },
             {
-                "question_number": 65,
+                "id": 65,
                 "question": "Five Shu sequence on Yin channels is:",
                 "options": {
                     "A": "Wood-Fire-Earth-Metal-Water",
@@ -2719,7 +2719,7 @@ quizData = {
                 "answer": "A"
             },
             {
-                "question_number": 66,
+                "id": 66,
                 "question": "Front-Mu points are mostly located on the:",
                 "options": {
                     "A": "Back",
@@ -2730,7 +2730,7 @@ quizData = {
                 "answer": "D"
             },
             {
-                "question_number": 67,
+                "id": 67,
                 "question": "He-Sea points treat:",
                 "options": {
                     "A": "Upper body disorders",
@@ -2741,7 +2741,7 @@ quizData = {
                 "answer": "D"
             },
             {
-                "question_number": 68,
+                "id": 68,
                 "question": "Confluent point of Du Mai:",
                 "options": {
                     "A": "LU7",
@@ -2752,7 +2752,7 @@ quizData = {
                 "answer": "D"
             },
             {
-                "question_number": 69,
+                "id": 69,
                 "question": "RN15 is located:",
                 "options": {
                     "A": "2 cun above umbilicus",
@@ -2763,7 +2763,7 @@ quizData = {
                 "answer": "C"
             },
             {
-                "question_number": 70,
+                "id": 70,
                 "question": "Highest and lowest points on body:",
                 "options": {
                     "A": "DU20, KI1",
@@ -2774,7 +2774,7 @@ quizData = {
                 "answer": "C"
             },
             {
-                "question_number": 71,
+                "id": 71,
                 "question": "Back-Shu points are most effective:",
                 "options": {
                     "A": "Before disease develops",
@@ -2785,7 +2785,7 @@ quizData = {
                 "answer": "B"
             },
             {
-                "question_number": 72,
+                "id": 72,
                 "question": "Command point for abdomen:",
                 "options": {
                     "A": "ST36",
@@ -2804,7 +2804,7 @@ quizData = {
         "total_questions": 86,
         "questions": [
             {
-                "question_number": 1,
+                "id": 1,
                 "question": "The following formula best addresses which S/Sxs: Ge Gen (Radix Puerariae) Huang Qin (Radix Scutellariae) Huang Lian (Rhizoma Coptidis)",
                 "options": {
                     "A": "fever, lack of thirst, foul smelling diarrhea",
@@ -2815,7 +2815,7 @@ quizData = {
                 "answer": "A"
             },
             {
-                "question_number": 2,
+                "id": 2,
                 "question": "Which herb clears Liver heat, brightens the eyes, and moistens the Large Intestine?",
                 "options": {
                     "A": "Jue Ming Zi",
@@ -2826,7 +2826,7 @@ quizData = {
                 "answer": "A"
             },
             {
-                "question_number": 3,
+                "id": 3,
                 "question": "Which herb clears heat due to Kidney yin deficiency; for night sweats, steaming bones, tidal fever, or spermatorrhea?",
                 "options": {
                     "A": "Huang Qin",
@@ -2837,7 +2837,7 @@ quizData = {
                 "answer": "B"
             },
             {
-                "question_number": 4,
+                "id": 4,
                 "question": "A patient presents with whooping cough with heat signs. Which formula treats this pattern?",
                 "options": {
                     "A": "Yin Qiao San",
@@ -2848,7 +2848,7 @@ quizData = {
                 "answer": "B"
             },
             {
-                "question_number": 5,
+                "id": 5,
                 "question": "Overdose of Long Dan Xie Gan Tang may cause:",
                 "options": {
                     "A": "Constipation",
@@ -2859,7 +2859,7 @@ quizData = {
                 "answer": "B"
             },
             {
-                "question_number": 6,
+                "id": 6,
                 "question": "Taste and temperature of Dang Gui?",
                 "options": {
                     "A": "Cold, bitter",
@@ -2870,7 +2870,7 @@ quizData = {
                 "answer": "B"
             },
             {
-                "question_number": 7,
+                "id": 7,
                 "question": "What is the most likely tongue and pulse for Ping Wei San pattern?",
                 "options": {
                     "A": "Thick greasy coating, slippery pulse",
@@ -2881,7 +2881,7 @@ quizData = {
                 "answer": "A"
             },
             {
-                "question_number": 8,
+                "id": 8,
                 "question": "What special instruction should be followed when preparing Zhi Fu Zi in decoction?",
                 "options": {
                     "A": "Add at the end",
@@ -2892,7 +2892,7 @@ quizData = {
                 "answer": "D"
             },
             {
-                "question_number": 9,
+                "id": 9,
                 "question": "Modification for genital itching in Long Dan Xie Gan Tang pattern:",
                 "options": {
                     "A": "Remove Huang Qin",
@@ -2903,7 +2903,7 @@ quizData = {
                 "answer": "D"
             },
             {
-                "question_number": 10,
+                "id": 10,
                 "question": "Which herb treats summerheat with dampness and tonifies Spleen?",
                 "options": {
                     "A": "Bai Bian Dou",
@@ -2914,7 +2914,7 @@ quizData = {
                 "answer": "A"
             },
             {
-                "question_number": 11,
+                "id": 11,
                 "question": "Tian Ma and Gou Teng combination treats:",
                 "options": {
                     "A": "Liver Wind",
@@ -2925,7 +2925,7 @@ quizData = {
                 "answer": "A"
             },
             {
-                "question_number": 12,
+                "id": 12,
                 "question": "Taste and temperature of Xuan Shen?",
                 "options": {
                     "A": "Warm, acrid",
@@ -2936,7 +2936,7 @@ quizData = {
                 "answer": "B"
             },
             {
-                "question_number": 13,
+                "id": 13,
                 "question": "Du Huo primarily treats:",
                 "options": {
                     "A": "Upper body Bi syndrome",
@@ -2947,7 +2947,7 @@ quizData = {
                 "answer": "B"
             },
             {
-                "question_number": 14,
+                "id": 14,
                 "question": "Long Yan Rou primarily tonifies:",
                 "options": {
                     "A": "Kidney Yang",
@@ -2958,7 +2958,7 @@ quizData = {
                 "answer": "B"
             },
             {
-                "question_number": 15,
+                "id": 15,
                 "question": "Long Yan Rou enters which channels?",
                 "options": {
                     "A": "HT, SP",
@@ -2969,7 +2969,7 @@ quizData = {
                 "answer": "A"
             },
             {
-                "question_number": 16,
+                "id": 16,
                 "question": "Which herb releases exterior and benefits throat?",
                 "options": {
                     "A": "Bo He",
@@ -2980,7 +2980,7 @@ quizData = {
                 "answer": "A"
             },
             {
-                "question_number": 17,
+                "id": 17,
                 "question": "Which herb cools blood and stops bleeding?",
                 "options": {
                     "A": "Di Yu",
@@ -2991,7 +2991,7 @@ quizData = {
                 "answer": "D"
             },
             {
-                "question_number": 18,
+                "id": 18,
                 "question": "Which herb drains Damp-Heat from Liver and Gallbladder?",
                 "options": {
                     "A": "Long Dan Cao",
@@ -3002,7 +3002,7 @@ quizData = {
                 "answer": "A"
             },
             {
-                "question_number": 19,
+                "id": 19,
                 "question": "Which herb strongly tonifies Yuan Qi?",
                 "options": {
                     "A": "Ren Shen",
@@ -3013,7 +3013,7 @@ quizData = {
                 "answer": "A"
             },
             {
-                "question_number": 20,
+                "id": 20,
                 "question": "Which herb calms the Shen and nourishes Heart blood?",
                 "options": {
                     "A": "Suan Zao Ren",
@@ -3024,7 +3024,7 @@ quizData = {
                 "answer": "D"
             },
             {
-                "question_number": 21,
+                "id": 21,
                 "question": "Which herb expels Wind-Damp and alleviates pain?",
                 "options": {
                     "A": "Qiang Huo",
@@ -3035,7 +3035,7 @@ quizData = {
                 "answer": "D"
             },
             {
-                "question_number": 22,
+                "id": 22,
                 "question": "Which herb transforms Phlegm and stops cough?",
                 "options": {
                     "A": "Ban Xia",
@@ -3046,7 +3046,7 @@ quizData = {
                 "answer": "D"
             },
             {
-                "question_number": 23,
+                "id": 23,
                 "question": "Which herb invigorates Blood and regulates menstruation?",
                 "options": {
                     "A": "Dan Shen",
@@ -3057,7 +3057,7 @@ quizData = {
                 "answer": "D"
             },
             {
-                "question_number": 24,
+                "id": 24,
                 "question": "Which herb tonifies Qi and raises Yang?",
                 "options": {
                     "A": "Ren Shen",
@@ -3068,7 +3068,7 @@ quizData = {
                 "answer": "B"
             },
             {
-                "question_number": 25,
+                "id": 25,
                 "question": "Which herb clears Heart fire and promotes urination?",
                 "options": {
                     "A": "Dan Zhu Ye",
@@ -3079,7 +3079,7 @@ quizData = {
                 "answer": "D"
             },
             {
-                "question_number": 26,
+                "id": 26,
                 "question": "Which herb warms the interior and rescues devastated Yang?",
                 "options": {
                     "A": "Gan Jiang",
@@ -3090,7 +3090,7 @@ quizData = {
                 "answer": "C"
             },
             {
-                "question_number": 27,
+                "id": 27,
                 "question": "Which herb cools the blood and resolves toxicity?",
                 "options": {
                     "A": "Sheng Di Huang",
@@ -3101,7 +3101,7 @@ quizData = {
                 "answer": "D"
             },
             {
-                "question_number": 28,
+                "id": 28,
                 "question": "Which herb stops bleeding and transforms blood stasis?",
                 "options": {
                     "A": "San Qi",
@@ -3112,7 +3112,7 @@ quizData = {
                 "answer": "D"
             },
             {
-                "question_number": 29,
+                "id": 29,
                 "question": "Which herb calms Liver and anchors Yang?",
                 "options": {
                     "A": "Long Gu",
@@ -3123,7 +3123,7 @@ quizData = {
                 "answer": "D"
             },
             {
-                "question_number": 30,
+                "id": 30,
                 "question": "Which herb drains Lung heat and stops cough?",
                 "options": {
                     "A": "Sang Bai Pi",
@@ -3134,7 +3134,7 @@ quizData = {
                 "answer": "A"
             },
             {
-                "question_number": 31,
+                "id": 31,
                 "question": "Which herb expels parasites?",
                 "options": {
                     "A": "Shi Jun Zi",
@@ -3145,7 +3145,7 @@ quizData = {
                 "answer": "D"
             },
             {
-                "question_number": 32,
+                "id": 32,
                 "question": "Which herb promotes urination and leaches out Dampness?",
                 "options": {
                     "A": "Fu Ling",
@@ -3156,7 +3156,7 @@ quizData = {
                 "answer": "D"
             },
             {
-                "question_number": 33,
+                "id": 33,
                 "question": "Which herb is used for constipation due to Heat?",
                 "options": {
                     "A": "Da Huang",
@@ -3167,7 +3167,7 @@ quizData = {
                 "answer": "D"
             },
             {
-                "question_number": 34,
+                "id": 34,
                 "question": "Which herb regulates Qi and relieves distension?",
                 "options": {
                     "A": "Chen Pi",
@@ -3178,7 +3178,7 @@ quizData = {
                 "answer": "D"
             },
             {
-                "question_number": 35,
+                "id": 35,
                 "question": "Which herb tonifies Blood and regulates menses?",
                 "options": {
                     "A": "Dang Gui",
@@ -3189,7 +3189,7 @@ quizData = {
                 "answer": "D"
             },
             {
-                "question_number": 36,
+                "id": 36,
                 "question": "Which herb clears deficiency Heat?",
                 "options": {
                     "A": "Zhi Mu",
@@ -3200,7 +3200,7 @@ quizData = {
                 "answer": "D"
             },
             {
-                "question_number": 37,
+                "id": 37,
                 "question": "Which herb opens the orifices and revives consciousness?",
                 "options": {
                     "A": "She Xiang",
@@ -3211,7 +3211,7 @@ quizData = {
                 "answer": "D"
             },
             {
-                "question_number": 38,
+                "id": 38,
                 "question": "Which herb astringes Lung and stops cough?",
                 "options": {
                     "A": "Wu Wei Zi",
@@ -3222,7 +3222,7 @@ quizData = {
                 "answer": "D"
             },
             {
-                "question_number": 39,
+                "id": 39,
                 "question": "Which herb tonifies Kidney Yin?",
                 "options": {
                     "A": "Shu Di Huang",
@@ -3233,7 +3233,7 @@ quizData = {
                 "answer": "D"
             },
             {
-                "question_number": 40,
+                "id": 40,
                 "question": "Which herb stabilizes the exterior and stops spontaneous sweating?",
                 "options": {
                     "A": "Huang Qi",
@@ -3244,7 +3244,7 @@ quizData = {
                 "answer": "A"
             },
             {
-                "question_number": 41,
+                "id": 41,
                 "question": "Which herb disperses Liver Qi stagnation and alleviates pain?",
                 "options": {
                     "A": "Chai Hu",
@@ -3255,7 +3255,7 @@ quizData = {
                 "answer": "D"
             },
             {
-                "question_number": 42,
+                "id": 42,
                 "question": "Which herb cools the blood and stops bleeding from Heat in the Blood?",
                 "options": {
                     "A": "Di Yu",
@@ -3266,7 +3266,7 @@ quizData = {
                 "answer": "D"
             },
             {
-                "question_number": 43,
+                "id": 43,
                 "question": "Which herb moistens the intestines and unblocks the bowels?",
                 "options": {
                     "A": "Huo Ma Ren",
@@ -3277,7 +3277,7 @@ quizData = {
                 "answer": "D"
             },
             {
-                "question_number": 44,
+                "id": 44,
                 "question": "Which herb clears Heat and relieves toxicity for carbuncles and sores?",
                 "options": {
                     "A": "Jin Yin Hua",
@@ -3288,7 +3288,7 @@ quizData = {
                 "answer": "D"
             },
             {
-                "question_number": 45,
+                "id": 45,
                 "question": "Which herb warms the channels and stops pain due to Cold?",
                 "options": {
                     "A": "Rou Gui",
@@ -3299,7 +3299,7 @@ quizData = {
                 "answer": "D"
             },
             {
-                "question_number": 46,
+                "id": 46,
                 "question": "Which herb clears Lung Heat and resolves Phlegm?",
                 "options": {
                     "A": "Gua Lou",
@@ -3310,7 +3310,7 @@ quizData = {
                 "answer": "D"
             },
             {
-                "question_number": 47,
+                "id": 47,
                 "question": "Which herb tonifies Spleen Qi and dries Dampness?",
                 "options": {
                     "A": "Bai Zhu",
@@ -3321,7 +3321,7 @@ quizData = {
                 "answer": "D"
             },
             {
-                "question_number": 48,
+                "id": 48,
                 "question": "Which herb expels Wind-Heat and benefits the throat?",
                 "options": {
                     "A": "Niu Bang Zi",
@@ -3332,7 +3332,7 @@ quizData = {
                 "answer": "D"
             },
             {
-                "question_number": 49,
+                "id": 49,
                 "question": "Which herb stops cough and calms wheezing?",
                 "options": {
                     "A": "Xing Ren",
@@ -3343,7 +3343,7 @@ quizData = {
                 "answer": "D"
             },
             {
-                "question_number": 50,
+                "id": 50,
                 "question": "Which herb invigorates Blood and expels Wind?",
                 "options": {
                     "A": "Chuan Xiong",
@@ -3354,7 +3354,7 @@ quizData = {
                 "answer": "A"
             },
             {
-                "question_number": 51,
+                "id": 51,
                 "question": "Which herb clears Stomach Heat and alleviates irritability?",
                 "options": {
                     "A": "Shi Gao",
@@ -3365,7 +3365,7 @@ quizData = {
                 "answer": "D"
             },
             {
-                "question_number": 52,
+                "id": 52,
                 "question": "Which herb tonifies Liver and Kidney Yin?",
                 "options": {
                     "A": "Nu Zhen Zi",
@@ -3376,7 +3376,7 @@ quizData = {
                 "answer": "D"
             },
             {
-                "question_number": 53,
+                "id": 53,
                 "question": "Which herb transforms Dampness and relieves summerheat?",
                 "options": {
                     "A": "Huo Xiang",
@@ -3387,7 +3387,7 @@ quizData = {
                 "answer": "D"
             },
             {
-                "question_number": 54,
+                "id": 54,
                 "question": "Which herb regulates menstruation and alleviates pain?",
                 "options": {
                     "A": "Yan Hu Suo",
@@ -3398,7 +3398,7 @@ quizData = {
                 "answer": "D"
             },
             {
-                "question_number": 55,
+                "id": 55,
                 "question": "Which herb strongly anchors floating Yang?",
                 "options": {
                     "A": "Long Gu",
@@ -3409,7 +3409,7 @@ quizData = {
                 "answer": "D"
             },
             {
-                "question_number": 56,
+                "id": 56,
                 "question": "Which herb stops diarrhea and stabilizes the intestines?",
                 "options": {
                     "A": "Rou Dou Kou",
@@ -3420,7 +3420,7 @@ quizData = {
                 "answer": "D"
             },
             {
-                "question_number": 57,
+                "id": 57,
                 "question": "Which herb invigorates Blood and reduces swelling?",
                 "options": {
                     "A": "San Qi",
@@ -3431,7 +3431,7 @@ quizData = {
                 "answer": "D"
             },
             {
-                "question_number": 58,
+                "id": 58,
                 "question": "Which herb tonifies Lung Qi and generates fluids?",
                 "options": {
                     "A": "Ren Shen",
@@ -3442,7 +3442,7 @@ quizData = {
                 "answer": "D"
             },
             {
-                "question_number": 59,
+                "id": 59,
                 "question": "Which herb expels Wind-Cold-Damp from upper body?",
                 "options": {
                     "A": "Qiang Huo",
@@ -3453,7 +3453,7 @@ quizData = {
                 "answer": "A"
             },
             {
-                "question_number": 60,
+                "id": 60,
                 "question": "Which herb clears Heat and drains Dampness from Lower Burner?",
                 "options": {
                     "A": "Huang Bai",
@@ -3464,7 +3464,7 @@ quizData = {
                 "answer": "D"
             },
             {
-                "question_number": 61,
+                "id": 61,
                 "question": "Which herb clears Heat and cools Blood for maculae and rashes?",
                 "options": {
                     "A": "Sheng Di Huang",
@@ -3475,7 +3475,7 @@ quizData = {
                 "answer": "D"
             },
             {
-                "question_number": 62,
+                "id": 62,
                 "question": "Which herb transforms Phlegm-Heat and stops cough?",
                 "options": {
                     "A": "Zhe Bei Mu",
@@ -3486,7 +3486,7 @@ quizData = {
                 "answer": "D"
             },
             {
-                "question_number": 63,
+                "id": 63,
                 "question": "Which herb tonifies Qi and nourishes Yin?",
                 "options": {
                     "A": "Tai Zi Shen",
@@ -3497,7 +3497,7 @@ quizData = {
                 "answer": "D"
             },
             {
-                "question_number": 64,
+                "id": 64,
                 "question": "Which herb calms the Shen and anchors floating Yang?",
                 "options": {
                     "A": "Long Gu",
@@ -3508,7 +3508,7 @@ quizData = {
                 "answer": "D"
             },
             {
-                "question_number": 65,
+                "id": 65,
                 "question": "Which herb invigorates Blood and alleviates pain?",
                 "options": {
                     "A": "Yan Hu Suo",
@@ -3519,7 +3519,7 @@ quizData = {
                 "answer": "D"
             },
             {
-                "question_number": 66,
+                "id": 66,
                 "question": "Which herb stops bleeding and tonifies Blood?",
                 "options": {
                     "A": "E Jiao",
@@ -3530,7 +3530,7 @@ quizData = {
                 "answer": "A"
             },
             {
-                "question_number": 67,
+                "id": 67,
                 "question": "Which herb expels Wind and alleviates spasms?",
                 "options": {
                     "A": "Gou Teng",
@@ -3541,7 +3541,7 @@ quizData = {
                 "answer": "D"
             },
             {
-                "question_number": 68,
+                "id": 68,
                 "question": "Which herb warms Kidney and assists Yang?",
                 "options": {
                     "A": "Fu Zi",
@@ -3552,7 +3552,7 @@ quizData = {
                 "answer": "D"
             },
             {
-                "question_number": 69,
+                "id": 69,
                 "question": "Which herb clears Liver Fire and drains Damp-Heat?",
                 "options": {
                     "A": "Long Dan Cao",
@@ -3563,7 +3563,7 @@ quizData = {
                 "answer": "A"
             },
             {
-                "question_number": 70,
+                "id": 70,
                 "question": "Which herb tonifies Blood and stops bleeding?",
                 "options": {
                     "A": "E Jiao",
@@ -3574,7 +3574,7 @@ quizData = {
                 "answer": "A"
             },
             {
-                "question_number": 71,
+                "id": 71,
                 "question": "Which herb clears Heat from the Qi level?",
                 "options": {
                     "A": "Shi Gao",
@@ -3585,7 +3585,7 @@ quizData = {
                 "answer": "D"
             },
             {
-                "question_number": 72,
+                "id": 72,
                 "question": "Which herb regulates Qi and alleviates pain in hypochondrium?",
                 "options": {
                     "A": "Chai Hu",
@@ -3596,7 +3596,7 @@ quizData = {
                 "answer": "D"
             },
             {
-                "question_number": 73,
+                "id": 73,
                 "question": "Which herb clears Heat and dries Dampness in Stomach?",
                 "options": {
                     "A": "Huang Lian",
@@ -3607,7 +3607,7 @@ quizData = {
                 "answer": "A"
             },
             {
-                "question_number": 74,
+                "id": 74,
                 "question": "Which herb moistens Lung and stops cough?",
                 "options": {
                     "A": "Chuan Bei Mu",
@@ -3618,7 +3618,7 @@ quizData = {
                 "answer": "D"
             },
             {
-                "question_number": 75,
+                "id": 75,
                 "question": "Which herb resolves toxicity and dissipates nodules?",
                 "options": {
                     "A": "Xia Ku Cao",
@@ -3629,7 +3629,7 @@ quizData = {
                 "answer": "D"
             },
             {
-                "question_number": 76,
+                "id": 76,
                 "question": "Which herb tonifies Spleen and Lung Qi?",
                 "options": {
                     "A": "Ren Shen",
@@ -3640,7 +3640,7 @@ quizData = {
                 "answer": "D"
             },
             {
-                "question_number": 77,
+                "id": 77,
                 "question": "Which herb clears Heat and relieves irritability in febrile disease?",
                 "options": {
                     "A": "Zhi Zi",
@@ -3651,7 +3651,7 @@ quizData = {
                 "answer": "D"
             },
             {
-                "question_number": 78,
+                "id": 78,
                 "question": "Which herb invigorates Blood and expels stasis from trauma?",
                 "options": {
                     "A": "San Qi",
@@ -3662,7 +3662,7 @@ quizData = {
                 "answer": "D"
             },
             {
-                "question_number": 79,
+                "id": 79,
                 "question": "Which herb anchors Liver Yang and improves vision?",
                 "options": {
                     "A": "Shi Jue Ming",
@@ -3673,7 +3673,7 @@ quizData = {
                 "answer": "A"
             },
             {
-                "question_number": 80,
+                "id": 80,
                 "question": "Which herb transforms Damp and awakens Spleen?",
                 "options": {
                     "A": "Huo Xiang",
@@ -3684,7 +3684,7 @@ quizData = {
                 "answer": "D"
             },
             {
-                "question_number": 81,
+                "id": 81,
                 "question": "Which herb strongly purges accumulations?",
                 "options": {
                     "A": "Da Huang",
@@ -3695,7 +3695,7 @@ quizData = {
                 "answer": "D"
             },
             {
-                "question_number": 82,
+                "id": 82,
                 "question": "Which herb stops chronic cough due to deficiency?",
                 "options": {
                     "A": "Wu Wei Zi",
@@ -3706,7 +3706,7 @@ quizData = {
                 "answer": "A"
             },
             {
-                "question_number": 83,
+                "id": 83,
                 "question": "Which herb clears Heat from Ying level?",
                 "options": {
                     "A": "Xi Jiao",
@@ -3717,7 +3717,7 @@ quizData = {
                 "answer": "D"
             },
             {
-                "question_number": 84,
+                "id": 84,
                 "question": "Which herb tonifies Blood and stops bleeding from deficiency?",
                 "options": {
                     "A": "E Jiao",
@@ -3728,7 +3728,7 @@ quizData = {
                 "answer": "A"
             },
             {
-                "question_number": 85,
+                "id": 85,
                 "question": "Which herb clears Damp-Heat and stops itching?",
                 "options": {
                     "A": "Ku Shen",
@@ -3739,7 +3739,7 @@ quizData = {
                 "answer": "D"
             },
             {
-                "question_number": 86,
+                "id": 86,
                 "question": "Which herb expels Wind-Cold from exterior?",
                 "options": {
                     "A": "Ma Huang",
@@ -3758,7 +3758,7 @@ quizData = {
         "total_questions": 84,
         "questions": [
             {
-                "question_number": 1,
+                "id": 1,
                 "question": "Influenza, chills, fever, stiff neck and floating tight pulse. What is the diagnosis?",
                 "options": {
                     "A": "Tai Yang Cold syndrome",
@@ -3769,7 +3769,7 @@ quizData = {
                 "answer": "A"
             },
             {
-                "question_number": 2,
+                "id": 2,
                 "question": "Temple headache is associated with which meridian?",
                 "options": {
                     "A": "Stomach",
@@ -3780,7 +3780,7 @@ quizData = {
                 "answer": "B"
             },
             {
-                "question_number": 3,
+                "id": 3,
                 "question": "Which pulse indicates phlegm?",
                 "options": {
                     "A": "Wiry",
@@ -3791,7 +3791,7 @@ quizData = {
                 "answer": "C"
             },
             {
-                "question_number": 4,
+                "id": 4,
                 "question": "Dyspnea worse with exertion indicates:",
                 "options": {
                     "A": "Lung heat",
@@ -3802,7 +3802,7 @@ quizData = {
                 "answer": "B"
             },
             {
-                "question_number": 5,
+                "id": 5,
                 "question": "Globus sensation due to plum pit qi is treated with:",
                 "options": {
                     "A": "Ban Xia Hou Po Tang",
@@ -3813,7 +3813,7 @@ quizData = {
                 "answer": "B"
             },
             {
-                "question_number": 6,
+                "id": 6,
                 "question": "Postpartum fatigue with pale tongue and thready pulse indicates:",
                 "options": {
                     "A": "Liver Qi stagnation",
@@ -3824,7 +3824,7 @@ quizData = {
                 "answer": "B"
             },
             {
-                "question_number": 7,
+                "id": 7,
                 "question": "Severe hypochondriac pain with irritability. Which herbs to add?",
                 "options": {
                     "A": "Yu Jin + Xiang Fu",
@@ -3835,7 +3835,7 @@ quizData = {
                 "answer": "A"
             },
             {
-                "question_number": 8,
+                "id": 8,
                 "question": "Which pair of points is used for hemorrhoids?",
                 "options": {
                     "A": "LI11, ST37",
@@ -3846,7 +3846,7 @@ quizData = {
                 "answer": "D"
             },
             {
-                "question_number": 9,
+                "id": 9,
                 "question": "Which point is used first for diarrhea?",
                 "options": {
                     "A": "ST36",
@@ -3857,7 +3857,7 @@ quizData = {
                 "answer": "D"
             },
             {
-                "question_number": 10,
+                "id": 10,
                 "question": "Alternating chills and fever indicates which stage?",
                 "options": {
                     "A": "Tai Yang",
@@ -3868,7 +3868,7 @@ quizData = {
                 "answer": "C"
             },
             {
-                "question_number": 11,
+                "id": 11,
                 "question": "Urgent summer diarrhea requires which manipulation?",
                 "options": {
                     "A": "Strong reducing",
@@ -3879,7 +3879,7 @@ quizData = {
                 "answer": "D"
             },
             {
-                "question_number": 12,
+                "id": 12,
                 "question": "Real cold false heat pattern is:",
                 "options": {
                     "A": "True heat",
@@ -3890,7 +3890,7 @@ quizData = {
                 "answer": "D"
             },
             {
-                "question_number": 13,
+                "id": 13,
                 "question": "Treatment principle for asthma with phlegm-damp:",
                 "options": {
                     "A": "Tonify Kidney",
@@ -3901,7 +3901,7 @@ quizData = {
                 "answer": "C"
             },
             {
-                "question_number": 14,
+                "id": 14,
                 "question": "Dysentery due to damp-heat in Large Intestine:",
                 "options": {
                     "A": "Tonify Spleen",
@@ -3912,7 +3912,7 @@ quizData = {
                 "answer": "C"
             },
             {
-                "question_number": 15,
+                "id": 15,
                 "question": "Red tongue with yellow coat indicates:",
                 "options": {
                     "A": "Cold",
@@ -3923,7 +3923,7 @@ quizData = {
                 "answer": "B"
             },
             {
-                "question_number": 16,
+                "id": 16,
                 "question": "Floating pulse indicates:",
                 "options": {
                     "A": "Interior condition",
@@ -3934,7 +3934,7 @@ quizData = {
                 "answer": "B"
             },
             {
-                "question_number": 17,
+                "id": 17,
                 "question": "Deep pulse indicates:",
                 "options": {
                     "A": "Exterior",
@@ -3945,7 +3945,7 @@ quizData = {
                 "answer": "B"
             },
             {
-                "question_number": 18,
+                "id": 18,
                 "question": "Wiry pulse is commonly seen in:",
                 "options": {
                     "A": "Phlegm",
@@ -3956,7 +3956,7 @@ quizData = {
                 "answer": "B"
             },
             {
-                "question_number": 19,
+                "id": 19,
                 "question": "Slippery pulse is seen in:",
                 "options": {
                     "A": "Blood stasis",
@@ -3967,7 +3967,7 @@ quizData = {
                 "answer": "B"
             },
             {
-                "question_number": 20,
+                "id": 20,
                 "question": "Pale tongue indicates:",
                 "options": {
                     "A": "Heat",
@@ -3978,7 +3978,7 @@ quizData = {
                 "answer": "C"
             },
             {
-                "question_number": 21,
+                "id": 21,
                 "question": "Thready pulse indicates:",
                 "options": {
                     "A": "Blood deficiency",
@@ -3989,7 +3989,7 @@ quizData = {
                 "answer": "A"
             },
             {
-                "question_number": 22,
+                "id": 22,
                 "question": "Rapid pulse indicates:",
                 "options": {
                     "A": "Cold",
@@ -4000,7 +4000,7 @@ quizData = {
                 "answer": "B"
             },
             {
-                "question_number": 23,
+                "id": 23,
                 "question": "Slow pulse indicates:",
                 "options": {
                     "A": "Heat",
@@ -4011,7 +4011,7 @@ quizData = {
                 "answer": "B"
             },
             {
-                "question_number": 24,
+                "id": 24,
                 "question": "Tidal fever suggests:",
                 "options": {
                     "A": "Qi deficiency",
@@ -4022,7 +4022,7 @@ quizData = {
                 "answer": "B"
             },
             {
-                "question_number": 25,
+                "id": 25,
                 "question": "Night sweats indicate:",
                 "options": {
                     "A": "Yang deficiency",
@@ -4033,7 +4033,7 @@ quizData = {
                 "answer": "C"
             },
             {
-                "question_number": 26,
+                "id": 26,
                 "question": "Aversion to cold with fever indicates:",
                 "options": {
                     "A": "Interior heat",
@@ -4044,7 +4044,7 @@ quizData = {
                 "answer": "B"
             },
             {
-                "question_number": 27,
+                "id": 27,
                 "question": "High fever without chills suggests:",
                 "options": {
                     "A": "Yang Ming stage",
@@ -4055,7 +4055,7 @@ quizData = {
                 "answer": "A"
             },
             {
-                "question_number": 28,
+                "id": 28,
                 "question": "Alternating chills and fever indicates:",
                 "options": {
                     "A": "Tai Yang",
@@ -4066,7 +4066,7 @@ quizData = {
                 "answer": "C"
             },
             {
-                "question_number": 29,
+                "id": 29,
                 "question": "Epigastric fullness relieved by pressure suggests:",
                 "options": {
                     "A": "Deficiency",
@@ -4077,7 +4077,7 @@ quizData = {
                 "answer": "A"
             },
             {
-                "question_number": 30,
+                "id": 30,
                 "question": "Epigastric fullness aggravated by pressure suggests:",
                 "options": {
                     "A": "Deficiency",
@@ -4088,7 +4088,7 @@ quizData = {
                 "answer": "B"
             },
             {
-                "question_number": 31,
+                "id": 31,
                 "question": "Floating rapid pulse indicates:",
                 "options": {
                     "A": "Exterior heat",
@@ -4099,7 +4099,7 @@ quizData = {
                 "answer": "A"
             },
             {
-                "question_number": 32,
+                "id": 32,
                 "question": "Deep weak pulse indicates:",
                 "options": {
                     "A": "Exterior",
@@ -4110,7 +4110,7 @@ quizData = {
                 "answer": "C"
             },
             {
-                "question_number": 33,
+                "id": 33,
                 "question": "Red tip of tongue indicates:",
                 "options": {
                     "A": "Heart heat",
@@ -4121,7 +4121,7 @@ quizData = {
                 "answer": "A"
             },
             {
-                "question_number": 34,
+                "id": 34,
                 "question": "Purple tongue indicates:",
                 "options": {
                     "A": "Heat",
@@ -4132,7 +4132,7 @@ quizData = {
                 "answer": "C"
             },
             {
-                "question_number": 35,
+                "id": 35,
                 "question": "Teeth marks on tongue indicate:",
                 "options": {
                     "A": "Spleen Qi deficiency",
@@ -4143,7 +4143,7 @@ quizData = {
                 "answer": "A"
             },
             {
-                "question_number": 36,
+                "id": 36,
                 "question": "Greasy tongue coating indicates:",
                 "options": {
                     "A": "Dampness",
@@ -4154,7 +4154,7 @@ quizData = {
                 "answer": "A"
             },
             {
-                "question_number": 37,
+                "id": 37,
                 "question": "No tongue coating suggests:",
                 "options": {
                     "A": "Excess heat",
@@ -4165,7 +4165,7 @@ quizData = {
                 "answer": "B"
             },
             {
-                "question_number": 38,
+                "id": 38,
                 "question": "Dry tongue suggests:",
                 "options": {
                     "A": "Fluid damage",
@@ -4176,7 +4176,7 @@ quizData = {
                 "answer": "A"
             },
             {
-                "question_number": 39,
+                "id": 39,
                 "question": "Copious clear urine indicates:",
                 "options": {
                     "A": "Heat",
@@ -4187,7 +4187,7 @@ quizData = {
                 "answer": "B"
             },
             {
-                "question_number": 40,
+                "id": 40,
                 "question": "Scanty dark urine indicates:",
                 "options": {
                     "A": "Cold",
@@ -4198,7 +4198,7 @@ quizData = {
                 "answer": "C"
             },
             {
-                "question_number": 41,
+                "id": 41,
                 "question": "Edema that is worse in the morning suggests:",
                 "options": {
                     "A": "Kidney Yang deficiency",
@@ -4209,7 +4209,7 @@ quizData = {
                 "answer": "A"
             },
             {
-                "question_number": 42,
+                "id": 42,
                 "question": "Edema that is worse in the evening suggests:",
                 "options": {
                     "A": "Kidney deficiency",
@@ -4220,7 +4220,7 @@ quizData = {
                 "answer": "B"
             },
             {
-                "question_number": 43,
+                "id": 43,
                 "question": "Sudden severe headache with red face and wiry pulse indicates:",
                 "options": {
                     "A": "Liver Yang rising",
@@ -4231,7 +4231,7 @@ quizData = {
                 "answer": "A"
             },
             {
-                "question_number": 44,
+                "id": 44,
                 "question": "Chronic cough with weak voice indicates:",
                 "options": {
                     "A": "Excess heat",
@@ -4242,7 +4242,7 @@ quizData = {
                 "answer": "B"
             },
             {
-                "question_number": 45,
+                "id": 45,
                 "question": "Chest oppression with slippery pulse suggests:",
                 "options": {
                     "A": "Blood deficiency",
@@ -4253,7 +4253,7 @@ quizData = {
                 "answer": "B"
             },
             {
-                "question_number": 46,
+                "id": 46,
                 "question": "Sharp fixed pain indicates:",
                 "options": {
                     "A": "Qi stagnation",
@@ -4264,7 +4264,7 @@ quizData = {
                 "answer": "B"
             },
             {
-                "question_number": 47,
+                "id": 47,
                 "question": "Pain that moves indicates:",
                 "options": {
                     "A": "Wind",
@@ -4275,7 +4275,7 @@ quizData = {
                 "answer": "A"
             },
             {
-                "question_number": 48,
+                "id": 48,
                 "question": "Pain relieved by warmth suggests:",
                 "options": {
                     "A": "Heat",
@@ -4286,7 +4286,7 @@ quizData = {
                 "answer": "B"
             },
             {
-                "question_number": 49,
+                "id": 49,
                 "question": "Pain aggravated by warmth suggests:",
                 "options": {
                     "A": "Heat",
@@ -4297,7 +4297,7 @@ quizData = {
                 "answer": "A"
             },
             {
-                "question_number": 50,
+                "id": 50,
                 "question": "Profuse sweating indicates:",
                 "options": {
                     "A": "Exterior wind",
@@ -4308,7 +4308,7 @@ quizData = {
                 "answer": "B"
             },
             {
-                "question_number": 51,
+                "id": 51,
                 "question": "Spontaneous sweating indicates:",
                 "options": {
                     "A": "Qi deficiency",
@@ -4319,7 +4319,7 @@ quizData = {
                 "answer": "A"
             },
             {
-                "question_number": 52,
+                "id": 52,
                 "question": "Night sweating indicates:",
                 "options": {
                     "A": "Yang deficiency",
@@ -4330,7 +4330,7 @@ quizData = {
                 "answer": "B"
             },
             {
-                "question_number": 53,
+                "id": 53,
                 "question": "Fever that worsens in afternoon indicates:",
                 "options": {
                     "A": "Exterior heat",
@@ -4341,7 +4341,7 @@ quizData = {
                 "answer": "B"
             },
             {
-                "question_number": 54,
+                "id": 54,
                 "question": "Loud voice indicates:",
                 "options": {
                     "A": "Excess",
@@ -4352,7 +4352,7 @@ quizData = {
                 "answer": "A"
             },
             {
-                "question_number": 55,
+                "id": 55,
                 "question": "Low weak voice indicates:",
                 "options": {
                     "A": "Heat",
@@ -4363,7 +4363,7 @@ quizData = {
                 "answer": "C"
             },
             {
-                "question_number": 56,
+                "id": 56,
                 "question": "Faint pulse indicates:",
                 "options": {
                     "A": "Excess",
@@ -4374,7 +4374,7 @@ quizData = {
                 "answer": "B"
             },
             {
-                "question_number": 57,
+                "id": 57,
                 "question": "Empty pulse indicates:",
                 "options": {
                     "A": "Deficiency",
@@ -4385,7 +4385,7 @@ quizData = {
                 "answer": "A"
             },
             {
-                "question_number": 58,
+                "id": 58,
                 "question": "Full pulse indicates:",
                 "options": {
                     "A": "Deficiency",
@@ -4396,7 +4396,7 @@ quizData = {
                 "answer": "B"
             },
             {
-                "question_number": 59,
+                "id": 59,
                 "question": "Hollow pulse indicates:",
                 "options": {
                     "A": "Blood loss",
@@ -4407,7 +4407,7 @@ quizData = {
                 "answer": "A"
             },
             {
-                "question_number": 60,
+                "id": 60,
                 "question": "Choppy pulse indicates:",
                 "options": {
                     "A": "Phlegm",
@@ -4418,7 +4418,7 @@ quizData = {
                 "answer": "B"
             },
             {
-                "question_number": 61,
+                "id": 61,
                 "question": "Soggy pulse indicates:",
                 "options": {
                     "A": "Dampness with deficiency",
@@ -4429,7 +4429,7 @@ quizData = {
                 "answer": "A"
             },
             {
-                "question_number": 62,
+                "id": 62,
                 "question": "Tight pulse indicates:",
                 "options": {
                     "A": "Heat",
@@ -4440,7 +4440,7 @@ quizData = {
                 "answer": "B"
             },
             {
-                "question_number": 63,
+                "id": 63,
                 "question": "Intermittent pulse indicates:",
                 "options": {
                     "A": "Cold",
@@ -4451,7 +4451,7 @@ quizData = {
                 "answer": "C"
             },
             {
-                "question_number": 64,
+                "id": 64,
                 "question": "Surging pulse indicates:",
                 "options": {
                     "A": "Heat",
@@ -4462,7 +4462,7 @@ quizData = {
                 "answer": "A"
             },
             {
-                "question_number": 65,
+                "id": 65,
                 "question": "Which stage shows dryness and constipation?",
                 "options": {
                     "A": "Tai Yang",
@@ -4473,7 +4473,7 @@ quizData = {
                 "answer": "B"
             },
             {
-                "question_number": 66,
+                "id": 66,
                 "question": "Which stage presents with abdominal fullness and diarrhea?",
                 "options": {
                     "A": "Tai Yang",
@@ -4484,7 +4484,7 @@ quizData = {
                 "answer": "C"
             },
             {
-                "question_number": 67,
+                "id": 67,
                 "question": "Cold limbs with thirst suggests:",
                 "options": {
                     "A": "Tai Yang",
@@ -4495,7 +4495,7 @@ quizData = {
                 "answer": "B"
             },
             {
-                "question_number": 68,
+                "id": 68,
                 "question": "Interior excess heat shows:",
                 "options": {
                     "A": "Red tongue with yellow coat",
@@ -4506,7 +4506,7 @@ quizData = {
                 "answer": "A"
             },
             {
-                "question_number": 69,
+                "id": 69,
                 "question": "Exterior wind-cold shows:",
                 "options": {
                     "A": "Floating tight pulse",
@@ -4517,7 +4517,7 @@ quizData = {
                 "answer": "A"
             },
             {
-                "question_number": 70,
+                "id": 70,
                 "question": "Exterior wind-heat shows:",
                 "options": {
                     "A": "Floating rapid pulse",
@@ -4528,7 +4528,7 @@ quizData = {
                 "answer": "A"
             },
             {
-                "question_number": 71,
+                "id": 71,
                 "question": "Qi stagnation pain is:",
                 "options": {
                     "A": "Sharp fixed",
@@ -4539,7 +4539,7 @@ quizData = {
                 "answer": "B"
             },
             {
-                "question_number": 72,
+                "id": 72,
                 "question": "Blood stasis pain is:",
                 "options": {
                     "A": "Moving",
@@ -4550,7 +4550,7 @@ quizData = {
                 "answer": "C"
             },
             {
-                "question_number": 73,
+                "id": 73,
                 "question": "Cold pain is relieved by:",
                 "options": {
                     "A": "Cold",
@@ -4561,7 +4561,7 @@ quizData = {
                 "answer": "B"
             },
             {
-                "question_number": 74,
+                "id": 74,
                 "question": "Heat pain is relieved by:",
                 "options": {
                     "A": "Warmth",
@@ -4572,7 +4572,7 @@ quizData = {
                 "answer": "B"
             },
             {
-                "question_number": 75,
+                "id": 75,
                 "question": "Deficiency pain is relieved by:",
                 "options": {
                     "A": "Pressure",
@@ -4583,7 +4583,7 @@ quizData = {
                 "answer": "A"
             },
             {
-                "question_number": 76,
+                "id": 76,
                 "question": "Excess pain is aggravated by:",
                 "options": {
                     "A": "Pressure",
@@ -4594,7 +4594,7 @@ quizData = {
                 "answer": "A"
             },
             {
-                "question_number": 77,
+                "id": 77,
                 "question": "Yellow tongue coat indicates:",
                 "options": {
                     "A": "Cold",
@@ -4605,7 +4605,7 @@ quizData = {
                 "answer": "B"
             },
             {
-                "question_number": 78,
+                "id": 78,
                 "question": "White tongue coat indicates:",
                 "options": {
                     "A": "Heat",
@@ -4616,7 +4616,7 @@ quizData = {
                 "answer": "B"
             },
             {
-                "question_number": 79,
+                "id": 79,
                 "question": "Thick coating indicates:",
                 "options": {
                     "A": "Deficiency",
@@ -4627,7 +4627,7 @@ quizData = {
                 "answer": "B"
             },
             {
-                "question_number": 80,
+                "id": 80,
                 "question": "Thin coating indicates:",
                 "options": {
                     "A": "Severe excess",
@@ -4638,7 +4638,7 @@ quizData = {
                 "answer": "B"
             },
             {
-                "question_number": 81,
+                "id": 81,
                 "question": "Dry cough with scanty sputum suggests:",
                 "options": {
                     "A": "Cold phlegm",
@@ -4649,7 +4649,7 @@ quizData = {
                 "answer": "C"
             },
             {
-                "question_number": 82,
+                "id": 82,
                 "question": "Copious yellow sputum suggests:",
                 "options": {
                     "A": "Cold phlegm",
@@ -4660,7 +4660,7 @@ quizData = {
                 "answer": "B"
             },
             {
-                "question_number": 83,
+                "id": 83,
                 "question": "Frequent clear urination suggests:",
                 "options": {
                     "A": "Heat",
@@ -4671,7 +4671,7 @@ quizData = {
                 "answer": "B"
             },
             {
-                "question_number": 84,
+                "id": 84,
                 "question": "Burning urination suggests:",
                 "options": {
                     "A": "Cold",
