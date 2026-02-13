@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TCM Complete Practice Quiz - 中醫完整練習題系統</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="questions.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🏥 TCM Complete Practice Quiz</h1>
+            <p>Traditional Chinese Medicine - 中醫完整練習題庫系統</p>
+        </div>
+
+        <div class="quiz-selector">
+            <h2>📚 選擇題庫 Select Quiz (共9個題庫)</h2>
+            <div class="quiz-buttons">
+                <div class="quiz-button" onclick="loadQuiz('professionalism')">
+                    <div class="icon">⚖️</div>
+                    <h3>Professionalism</h3>
+                    <p>專業倫理</p>
+                    <span class="count">21 題</span>
+                </div>
+                <div class="quiz-button" onclick="loadQuiz('safety')">
+                    <div class="icon">🛡️</div>
+                    <h3>Safety</h3>
+                    <p>臨床安全</p>
+                    <span class="count">24 題</span>
+                </div>
+                <div class="quiz-button" onclick="loadQuiz('anatomy')">
+                    <div class="icon">🫀</div>
+                    <h3>Anatomy and Physiology</h3>
+                    <p>解剖生理學</p>
+                    <span class="count">27 題</span>
+                </div>
+                <div class="quiz-button" onclick="loadQuiz('pathophysiology')">
+                    <div class="icon">🧬</div>
+                    <h3>Pathophysiology</h3>
+                    <p>病理生理學</p>
+                    <span class="count">39 題</span>
+                </div>
+                <div class="quiz-button" onclick="loadQuiz('pharmacology')">
+                    <div class="icon">💊</div>
+                    <h3>Pharmacology</h3>
+                    <p>藥理學</p>
+                    <span class="count">15 題</span>
+                </div>
+                <div class="quiz-button" onclick="loadQuiz('foundations')">
+                    <div class="icon">📖</div>
+                    <h3>Foundations</h3>
+                    <p>中醫基礎理論</p>
+                    <span class="count">48 題</span>
+                </div>
+                <div class="quiz-button" onclick="loadQuiz('acupuncture')">
+                    <div class="icon">📍</div>
+                    <h3>Acupuncture Foundations</h3>
+                    <p>針灸學</p>
+                    <span class="count">72 題</span>
+                </div>
+                <div class="quiz-button" onclick="loadQuiz('herbology')">
+                    <div class="icon">🌿</div>
+                    <h3>Herbal Foundations</h3>
+                    <p>中藥學</p>
+                    <span class="count">86 題</span>
+                </div>
+                <div class="quiz-button" onclick="loadQuiz('diagnosis')">
+                    <div class="icon">🔍</div>
+                    <h3>TCM Diagnosis</h3>
+                    <p>診斷學</p>
+                    <span class="count">84 題</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="controls">
+            <div class="score-display" id="scoreDisplay">請選擇上方題庫開始練習</div>
+            <div class="button-group">
+                <button class="btn-success" onclick="checkAnswers()">✓ 批改答案</button>
+                <button class="btn-primary" onclick="toggleAnswers()">👁️ 顯示/隱藏答案</button>
+                <button class="btn-secondary" onclick="resetQuiz()">🔄 重設題目</button>
+            </div>
+        </div>
+
+        <div class="result-summary" id="resultSummary"></div>
+
+        <div id="questionsContainer" class="questions-container">
+            <div class="welcome-message">
+                <h2>👋 歡迎使用 TCM 練習題庫系統</h2>
+                <p>請從上方選擇一個題庫開始練習</p>
+                <p>本系統包含完整的 TCM 練習題目</p>
+                <div class="stats">
+                    <div class="stat-box">
+                        <div class="stat-number">9</div>
+                        <div class="stat-label">題庫數量</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-number">416</div>
+                        <div class="stat-label">總題目數</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>
