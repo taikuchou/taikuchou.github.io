@@ -1,988 +1,624 @@
-<!--
-author: Boostraptheme
-author URL: https://boostraptheme.com
-License: Creative Commons Attribution 4.0 Unported
-License URL: https://creativecommons.org/licenses/by/4.0/
--->
-
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ken Tai — Resume</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Mono:wght@300;400;500&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0f0e0d;
+    --paper: #f5f2ec;
+    --accent: #c0392b;
+    --muted: #6b6560;
+    --rule: #d8d2c8;
+    --highlight: #e8e0d0;
+  }
 
-    <link rel="shortcut icon" href="img/favicon.ico">
-    <title>About Ken Tai</title>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-    <!-- Global stylesheets -->
-    <link href="css/bootstrap/bootstrap.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed:100,200,300,400,500,600,700,800,900" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i" rel="stylesheet">
-    <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet">
-    <link href="css/devicons/css/devicons.min.css" rel="stylesheet">
-    <link href="css/simple-line-icons/css/simple-line-icons.css" rel="stylesheet">
-    <link href="css/style.css" rel="stylesheet">
+  html { font-size: 16px; scroll-behavior: smooth; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    line-height: 1.7;
+    min-height: 100vh;
+  }
+
+  /* ── GRAIN OVERLAY ── */
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none; z-index: 0; opacity: 0.4;
+  }
+
+  /* ── LAYOUT ── */
+  .page {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 60px 40px 100px;
+    position: relative; z-index: 1;
+  }
+
+  /* ── HEADER ── */
+  header {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: end;
+    gap: 20px;
+    padding-bottom: 28px;
+    border-bottom: 2px solid var(--ink);
+    margin-bottom: 10px;
+    opacity: 0;
+    animation: fadeUp 0.7s ease forwards;
+  }
+
+  .name-block h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3rem, 7vw, 5.5rem);
+    font-weight: 900;
+    line-height: 0.95;
+    letter-spacing: -2px;
+    color: var(--ink);
+  }
+
+  .name-block .tagline {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-top: 10px;
+  }
+
+  .contact-block {
+    text-align: right;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--muted);
+    line-height: 1.9;
+  }
+
+  .contact-block a {
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .contact-block a:hover { color: var(--accent); }
+
+  /* ── ISSUE LINE ── */
+  .issue-line {
+    display: flex;
+    justify-content: space-between;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    padding: 8px 0 32px;
+    border-bottom: 1px solid var(--rule);
+    margin-bottom: 48px;
+    opacity: 0;
+    animation: fadeUp 0.7s 0.1s ease forwards;
+  }
+
+  /* ── SECTION ── */
+  section {
+    margin-bottom: 52px;
+    opacity: 0;
+    animation: fadeUp 0.7s ease forwards;
+  }
+  section:nth-child(3) { animation-delay: 0.15s; }
+  section:nth-child(4) { animation-delay: 0.22s; }
+  section:nth-child(5) { animation-delay: 0.29s; }
+  section:nth-child(6) { animation-delay: 0.36s; }
+  section:nth-child(7) { animation-delay: 0.43s; }
+  section:nth-child(8) { animation-delay: 0.50s; }
+
+  .section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 18px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--rule);
+  }
+
+  /* ── SUMMARY GRID ── */
+  .summary-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--rule);
+    border: 1px solid var(--rule);
+  }
+
+  .summary-item {
+    background: var(--paper);
+    padding: 20px 22px;
+    transition: background 0.2s;
+  }
+  .summary-item:hover { background: var(--highlight); }
+
+  .summary-item h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 0.85rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+    color: var(--ink);
+  }
+  .summary-item p {
+    font-size: 0.82rem;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  /* ── CERTS ── */
+  .cert-columns {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+
+  .cert-group h4 {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    padding-bottom: 6px;
+    border-bottom: 1px solid var(--rule);
+    margin-bottom: 10px;
+  }
+
+  .cert-group ul { list-style: none; }
+  .cert-group li {
+    font-size: 0.78rem;
+    color: var(--muted);
+    padding: 3px 0;
+    padding-left: 12px;
+    position: relative;
+    line-height: 1.4;
+  }
+  .cert-group li::before {
+    content: '—';
+    position: absolute; left: 0;
+    color: var(--rule);
+    font-size: 0.7rem;
+  }
+
+  /* ── WORK EXPERIENCE ── */
+  .employer-block {
+    margin-bottom: 40px;
+  }
+
+  .employer-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .employer-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.25rem;
+    font-weight: 700;
+  }
+
+  .employer-meta {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.68rem;
+    color: var(--muted);
+    text-align: right;
+    line-height: 1.6;
+  }
+
+  .project {
+    padding: 18px 0;
+    border-bottom: 1px dashed var(--rule);
+  }
+  .project:last-child { border-bottom: none; }
+
+  .project-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 0.95rem;
+    font-weight: 700;
+    font-style: italic;
+    margin-bottom: 6px;
+    color: var(--ink);
+  }
+
+  .project-desc {
+    font-size: 0.82rem;
+    color: var(--ink);
+    margin-bottom: 10px;
+    line-height: 1.65;
+  }
+
+  .project-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 8px;
+  }
+
+  .meta-pill {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.08em;
+    background: var(--highlight);
+    border: 1px solid var(--rule);
+    padding: 2px 8px;
+    color: var(--muted);
+  }
+
+  .tech-list {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.68rem;
+    color: var(--muted);
+    line-height: 1.7;
+  }
+  .tech-list span {
+    display: inline-block;
+    margin-right: 4px;
+    color: var(--accent);
+  }
+
+  /* ── INSTRUCTOR ── */
+  .instructor-block {
+    background: var(--highlight);
+    border-left: 3px solid var(--accent);
+    padding: 22px 26px;
+  }
+  .instructor-block p { font-size: 0.85rem; color: var(--ink); line-height: 1.7; }
+  .instructor-awards {
+    margin-top: 10px;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.68rem;
+    color: var(--accent);
+    letter-spacing: 0.06em;
+  }
+
+  /* ── EDUCATION + VOLUNTEER ── */
+  .edu-item {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: start;
+    padding: 14px 0;
+    border-bottom: 1px dashed var(--rule);
+  }
+  .edu-item:last-child { border-bottom: none; }
+
+  .edu-degree {
+    font-family: 'Playfair Display', serif;
+    font-size: 0.9rem;
+    font-weight: 700;
+  }
+  .edu-school {
+    font-size: 0.8rem;
+    color: var(--muted);
+    margin-top: 2px;
+  }
+  .edu-date {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--muted);
+    white-space: nowrap;
+    margin-top: 4px;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    margin-top: 60px;
+    padding-top: 20px;
+    border-top: 2px solid var(--ink);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  footer p {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .footer-links a {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.62rem;
+    color: var(--muted);
+    text-decoration: none;
+    margin-left: 20px;
+    letter-spacing: 0.06em;
+    transition: color 0.2s;
+  }
+  .footer-links a:hover { color: var(--accent); }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(18px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── PRINT ── */
+  @media print {
+    body { background: white; }
+    body::before { display: none; }
+    section { animation: none; opacity: 1; }
+    header { animation: none; opacity: 1; }
+    .issue-line { animation: none; opacity: 1; }
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 600px) {
+    .page { padding: 32px 20px 60px; }
+    header { grid-template-columns: 1fr; }
+    .contact-block { text-align: left; }
+    .summary-grid { grid-template-columns: 1fr; }
+    .cert-columns { grid-template-columns: 1fr 1fr; }
+    .employer-header { flex-direction: column; gap: 4px; }
+    .employer-meta { text-align: left; }
+    footer { flex-direction: column; gap: 10px; align-items: flex-start; }
+    .footer-links a { margin-left: 0; margin-right: 16px; }
+  }
+</style>
 </head>
+<body>
+<div class="page">
 
-<body id="page-top">
-    
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top" id="sideNav">
-      <a class="navbar-brand js-scroll-trigger" href="#page-top">
-        <span class="d-block d-lg-none  mx-0 px-0"><img src="img/logo-white.png" alt="" class="img-fluid"></span>
-        <span class="d-none d-lg-block">
-          <img class="img-fluid img-profile rounded-circle mx-auto mb-2" src="img/profile.jpg" alt="">
-        </span>
-      </a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link js-scroll-trigger" href="#about">About</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link js-scroll-trigger" href="#experience">Experience</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link js-scroll-trigger" href="#portfolio">Portfolio</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link js-scroll-trigger" href="#skills">Skills</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link js-scroll-trigger" href="#awards">Awards</a>
-                </li>
-                <!-- <li class="nav-item">
-                    <a class="nav-link js-scroll-trigger" href="#contact">Contact</a>
-                </li> -->
-            </ul>
-        </div>
-    </nav>
-
-    <div class="container-fluid p-0">
-
-    <!--====================================================
-                        ABOUT
-    ======================================================-->
-      <section class="resume-section p-3 p-lg-5 d-flex d-column" id="about">
-          <div class="my-auto" >
-              <img src="img/logo-s.png" class="img-fluid mb-3" alt="">
-              <h1 class="mb-0">Ken
-                <span class="text-primary">Tai</span>
-              </h1>
-              <div class="subheading mb-5">Driven by Continuous Improvement
-              </div>
-              <p class="mb-5" style="max-width: 500px;" >I'm passionate about coding and feel a great sense of accomplishment when solving complex problems. I have experience with a range of technologies, including Java, .NET C#, Objective-C, Swift, SwiftUI, Flutter, and Python, and I always prioritize secure coding practices. Continuous learning is essential to me, and I’m dedicated to improving not only my technical skills but also my soft skills, such as communication, collaboration, and adaptability. I embrace challenges and believe that, through teamwork, we can always find solutions to overcome them.</p>
-              <ul class="list-inline list-social-icons mb-0">
-                  <li class="list-inline-item">
-                      <a href="mailto:taikuchou@gmail.com">
-                  <span class="fa-stack fa-lg">
-                    <i class="fa fa-circle fa-stack-2x"></i>
-                    <i class="fa fa-envelope-o fa-stack-1x fa-inverse"></i>
-                  </span>
-                </a>
-                  </li>
-                  <!-- <li class="list-inline-item">
-                      <a href="#">
-                  <span class="fa-stack fa-lg">
-                    <i class="fa fa-circle fa-stack-2x"></i>
-                    <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
-                  </span>
-                </a>
-                  </li> -->
-                  <li class="list-inline-item">
-                      <a href="https://www.linkedin.com/in/ken-tai-kuchou/">
-                  <span class="fa-stack fa-lg">
-                    <i class="fa fa-circle fa-stack-2x"></i>
-                    <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
-                  </span>
-                </a>
-                  </li>
-                  <!-- <li class="list-inline-item">
-                      <a href="https://www.linkedin.com/in/ken-tai-kuchou/">
-                  <span class="fa-stack fa-lg">
-                    <i class="fa fa-circle fa-stack-2x"></i>
-                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
-                  </span>
-                </a>
-                  </li> -->
-              </ul>
-          </div>
-      </section>
-
-    <!--====================================================
-                        EXPERIENCE
-    ======================================================-->      
-      <section class="resume-section p-3 p-lg-5 " id="experience">
-          <div class="row my-auto">
-              <div class="col-12">
-                <h2 class="  text-center">Experience</h2>
-                <div class="mb-5 heading-border"></div>
-              </div>
-              <div class="resume-item col-md-6 col-sm-12 " > 
-                <div class="card mx-0 p-4 mb-5" style="border-color: #17a2b8; box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.21);">
-                  <div class=" resume-content mr-auto">
-                      <h4 class="mb-3"><i class="fa fa-globe mr-3 text-info"></i> Senior Software Developer II</h4>
-                      <p>Achieved 6 web and mobile projects + 2 consulting projects. Specialized in integrating front-end, back-end, and Middleware software architecture to improve
-                        scalability and ensure compatibility between devices and software versions.</p>
-                  </div>
-                  <div class="resume-date text-md-right">
-                      <span class="text-primary">Sep 2019 - Aug 2023</span>
-                  </div>
-                </div>  
-              </div>
-              <div class="resume-item col-md-6 col-sm-12">
-                <div class="card mx-0 p-4 mb-5" style="border-color: #ffc107; box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.21);">
-                  <div class="resume-content mr-auto">
-                      <h4 class="mb-3"><i class="fa fa-laptop mr-3 text-warning"></i> Senior Software Developer</h4>
-                      <p>Agile development methodologies, code refactoring and optimized performance to enhance
-                        development workflows. Integrated front-end, back-end, database design, third-party payment systems, as well as third-party
-                        APIs and SDKs.</p>
-                  </div>
-                  <div class="resume-date text-md-right">
-                      <span class="text-primary">Dec 2014 - Aug 2019</span>
-                  </div>
-                </div>  
-              </div>
-              <div class="resume-item col-md-6 col-sm-12">
-                <div class="card mx-0 p-4 mb-5" style="border-color: #28a745; box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.21);">
-                  <div class="resume-content mr-auto">
-                      <h4 class="mb-3"><i class="fa fa-camera mr-3 text-success"></i> Software Developer</h4>
-                      <p>Designing and developing complex web applications to ensure high performance,
-                        scalability, and reliability.Data synchronization techniques & development between mobile applications and server-side
-                        components.</p>
-                  </div>
-                  <div class="resume-date text-md-right">
-                      <span class="text-primary">Feb 2013 - Nov 2014</span>
-                  </div>
-                </div>  
-              </div>
-              <div class="resume-item col-md-6 col-sm-12">
-                <div class="card mx-0 p-4 mb-5" style="border-color: #2196f3; box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.21);">
-                  <div class="resume-content mr-auto">
-                      <h4 class="mb-3"><i class="fa fa-area-chart mr-3 text-primary"></i> Senior Instructor</h4>
-                      <p>Over 6,000 hours of teaching experience, delivering 42 courses. Developed learning resources including lecture slides, code examples, and
-                        assignments, including Java, .NET, Swift, Objective-C, Flutter, Web security, and design patterns.</p>
-                  </div>
-                  <div class="resume-date text-md-right">
-                      <span class="text-primary">Jul 2010 - Aug 2023</span>
-                  </div>
-                </div>  
-              </div>
-          </div>
-      </section>
-
-    <!--====================================================
-                        PORTFOLIO
-    ======================================================-->      
-      <section class="resume-section p-3 p-lg-5 d-flex flex-column" id="portfolio"> 
-          <div class="row my-auto">
-              <div class="col-12">
-                <h2 class="  text-center">Portfolio</h2>
-                <div class="mb-5 heading-border"></div>
-              </div>
-              <div class="col-md-12">
-                <div class="port-head-cont">
-                  <button class="btn btn-general btn-green filter-b" data-filter="all">All</button>
-                  <button class="btn btn-general btn-green filter-b" data-filter="web">Web Application</button>
-                  <button class="btn btn-general btn-green filter-b" data-filter="mobile">Mobile Apps</button>
-                  <!-- <button class="btn btn-general btn-green filter-b" data-filter="marketing">Graphics Design</button>  -->
-                </div>
-              </div>
-          </div>
-          <div class="row my-auto">
-              <div class="col-sm-4 portfolio-item filter web">
-                  <a class="portfolio-link" href="#portfolioModal4" data-toggle="modal">
-                      <div class="caption-port">
-                          <div class="caption-port-content">
-                              <i class="fa fa-search-plus fa-3x"></i>
-                          </div>
-                      </div>
-                      <img class="img-fluid" src="img/portfolio/p-4.jpg" alt="Cram School System">
-                  </a>
-              </div>
-              <div class="col-sm-4 portfolio-item filter mobile web">
-                  <a class="portfolio-link" href="#portfolioModal5" data-toggle="modal">
-                      <div class="caption-port">
-                          <div class="caption-port-content">
-                              <i class="fa fa-search-plus fa-3x"></i>
-                          </div>
-                      </div>
-                      <img class="img-fluid" src="img/portfolio/p-5.jpg" alt="Hospital Apps">
-                  </a>
-              </div>
-              <div class="col-sm-4 portfolio-item filter web mobile">
-                  <a class="portfolio-link" href="#portfolioModal6" data-toggle="modal">
-                      <div class="caption-port">
-                          <div class="caption-port-content">
-                              <i class="fa fa-search-plus fa-3x"></i>
-                          </div>
-                      </div>
-                      <img class="img-fluid" src="img/portfolio/p-6.jpg" alt="E-commerce System">
-                  </a>
-              </div>              
-              <div class="col-sm-4 portfolio-item filter mobile">
-                  <a class="portfolio-link" href="#portfolioModal7" data-toggle="modal">
-                      <div class="caption-port">
-                          <div class="caption-port-content">
-                              <i class="fa fa-search-plus fa-3x"></i>
-                          </div>
-                      </div>
-                      <img class="img-fluid" src="img/portfolio/p-7.jpg" alt="Andriod App for Vender Food Safety">
-                  </a>
-              </div>
-              <div class="col-sm-4 portfolio-item filter mobile">
-                  <a class="portfolio-link" href="#portfolioModal8" data-toggle="modal">
-                      <div class="caption-port">
-                          <div class="caption-port-content">
-                              <i class="fa fa-search-plus fa-3x"></i>
-                          </div>
-                      </div>
-                      <img class="img-fluid" src="img/portfolio/p-8.jpg" alt="In-house Android and iOS Apps">
-                  </a>
-              </div>
-              <!-- <div class="col-sm-4 portfolio-item filter finance">
-                  <a class="portfolio-link" href="#portfolioModal9" data-toggle="modal">
-                      <div class="caption-port">
-                          <div class="caption-port-content">
-                              <i class="fa fa-search-plus fa-3x"></i>
-                          </div>
-                      </div>
-                      <img class="img-fluid" src="img/portfolio/p-9.jpg" alt="">
-                  </a>
-              </div>              
-              <div class="col-sm-4 portfolio-item filter marketing">
-                  <a class="portfolio-link" href="#portfolioModal1" data-toggle="modal">
-                      <div class="caption-port">
-                          <div class="caption-port-content">
-                              <i class="fa fa-search-plus fa-3x"></i>
-                          </div>
-                      </div>
-                      <img class="img-fluid" src="img/portfolio/p-1.jpg" alt="">
-                  </a>
-              </div>
-              <div class="col-sm-4 portfolio-item filter marketing">
-                  <a class="portfolio-link" href="#portfolioModal2" data-toggle="modal">
-                      <div class="caption-port">
-                          <div class="caption-port-content">
-                              <i class="fa fa-search-plus fa-3x"></i>
-                          </div>
-                      </div>
-                      <img class="img-fluid" src="img/portfolio/p-2.jpg" alt="">
-                  </a>
-              </div>
-              <div class="col-sm-4 portfolio-item filter finance">
-                  <a class="portfolio-link" href="#portfolioModal3" data-toggle="modal">
-                      <div class="caption-port">
-                          <div class="caption-port-content">
-                              <i class="fa fa-search-plus fa-3x"></i>
-                          </div>
-                      </div>
-                      <img class="img-fluid" src="img/portfolio/p-3.jpg" alt="">
-                  </a>
-              </div>  -->
-          </div>
-      </section>
-
-    <!--====================================================
-                        SKILLS
-    ======================================================-->       
-      <section class=" d-flex flex-column" id="skills">
-         <div class="p-lg-5 p-3 skill-cover">
-          <h3 class="text-center text-white">Coding Skills</h3>
-          <div class="row text-center my-auto "> 
-              <div class="col-md-3 col-sm-6">
-                  <div class="skill-item">
-                      <!-- <i class="fa fa-html5 fa-5x"></i> -->
-                      <h2><span class="counter"> 84 </span><span>%</span></h2>
-                      <p>HTML5</p>
-                  </div>
-              </div>
-              <div class="col-md-3 col-sm-6">
-                  <div class="skill-item">
-                      <!-- <i class="fa fa-css3 fa-5x"></i> -->
-                      <h2><span class="counter"> 80 </span><span>%</span></h2>
-                      <p>CSS3</p>
-                  </div>
-              </div>
-              <div class="col-md-3 col-sm-6">
-                  <div class="skill-item">
-                      <!-- <i class="fa fa-code fa-5x"></i> -->
-                      <h2><span class="counter"> 75 </span><span>%</span></h2>
-                      <p>JQuery</p>
-                  </div>
-              </div>
-              <div class="col-md-3 col-sm-6">
-                  <div class="skill-item">
-                      <!-- <i class="fa fa-globe fa-5x"></i> -->
-                      <h2><span class="counter"> 87 </span><span>%</span></h2>
-                      <p>JSON</p>
-                  </div>
-              </div>
-              <div class="col-md-3 col-sm-6">
-                <div class="skill-item">
-                    <!-- <i class="fa fa-code fa-5x"></i> -->
-                    <h2><span class="counter"> 85 </span><span>%</span></h2>
-                    <p>Java</p>
-                </div>
-              </div>
-            <div class="col-md-3 col-sm-6">
-                <div class="skill-item">
-                    <!-- <i class="fa fa-code fa-5x"></i> -->
-                    <h2><span class="counter"> 90 </span><span>%</span></h2>
-                    <p>.NET</p>
-                </div>
-            </div>
-            <div class="col-md-3 col-sm-6">
-                <div class="skill-item">
-                    <!-- <i class="fa fa-code fa-5x"></i> -->
-                    <h2><span class="counter"> 90 </span><span>%</span></h2>
-                    <p>Swift</p>
-                </div>
-            </div>
-            <div class="col-md-3 col-sm-6">
-                <div class="skill-item">
-                    <!-- <i class="fa fa-code fa-5x"></i> -->
-                    <h2><span class="counter"> 70 </span><span>%</span></h2>
-                    <p>Objective-C</p>
-                </div>
-            </div>
-            <div class="col-md-3 col-sm-6">
-              <div class="skill-item">
-                  <!-- <i class="fa fa-code fa-5x"></i> -->
-                  <h2><span class="counter"> 85 </span><span>%</span></h2>
-                  <p>Swift</p>
-              </div>
-          </div>
-          <div class="col-md-3 col-sm-6">
-              <div class="skill-item">
-                  <!-- <i class="fa fa-code fa-5x"></i> -->
-                  <h2><span class="counter"> 90 </span><span>%</span></h2>
-                  <p>SwiftUI</p>
-              </div>
-          </div>
-          <div class="col-md-3 col-sm-6">
-              <div class="skill-item">
-                  <!-- <i class="fa fa-code fa-5x"></i> -->
-                  <h2><span class="counter"> 90 </span><span>%</span></h2>
-                  <p>Flutter</p>
-              </div>
-          </div>
-          <div class="col-md-3 col-sm-6">
-              <div class="skill-item">
-                  <!-- <i class="fa fa-code fa-5x"></i> -->
-                  <h2><span class="counter"> 70 </span><span>%</span></h2>
-                  <p>Angular</p>
-              </div>
-          </div>
-          </div>
-         </div> 
-      </section>
-
-    <!--====================================================
-                           AWARDS
-    ======================================================-->       
-      <section class="resume-section p-3 p-lg-5 d-flex flex-column" id="awards">
-          <div class="row my-auto" style="margin: 0 auto;">
-              <div class="col-12">
-                <h2 class="  text-center">Awards</h2>
-                <div class="mb-5 heading-border"></div>
-              </div> 
-              <div class="main-award col-12" id="award-box">
-                  <div class="award">
-                      <div class="award-icon"></div>
-                      <div class="award-content">
-                          <span class="date">2022</span>
-                          <h5 class="title">EC-Council Instructor Circle of Excellence Award</h5>
-                          <!-- <p class="description">
-                              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum mattis felis vitae risus pulvinar tincidunt. Nam ac venenatis enim. Aenean hendrerit justo sed.
-                          </p> -->
-                      </div>
-                  </div>
-                  <div class="award">
-                      <div class="award-icon"></div>
-                      <div class="award-content">
-                          <span class="date">2021</span>
-                          <h5 class="title">EC-Council Instructor Best New Comer Award</h5>
-                          <!-- <p class="description">
-                              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum mattis felis vitae risus pulvinar tincidunt. Nam ac venenatis enim. Aenean hendrerit justo sed.
-                          </p> -->
-                      </div>
-                  </div>
-              </div>
-          </div>
-      </section> 
-
-    <!--====================================================
-                          CONTACT
-    ======================================================-->       
-      <!-- <section class="resume-section p-3 p-lg-5 d-flex flex-column">
-          <div class="row my-auto" id="contact" style="display: none;"> 
-            <div class="col-md-8">
-              <div class="contact-cont">
-                <h3>CONTACT Us</h3>
-                <div class="heading-border-light"></div>
-                <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using Content here.</p>
-              </div>   
-              <div class="row con-form">
-                <div class="col-md-12">
-                  <input type="text" name="full-name" placeholder="Full Name" class="form-control">
-                </div>
-                <div class="col-md-12">
-                  <input type="text" name="email" placeholder="Email Id" class="form-control">
-                </div>
-                <div class="col-md-12">
-                  <input type="text" name="subject" placeholder="Subject" class="form-control">
-                </div>
-                <div class="col-md-12"><textarea name="" id=""></textarea></div>
-                <div class="col-md-12 sub-but"><button class="btn btn-general btn-white" role="button">Send</button></div>
-              </div>
-            </div>
-            <div class="col-md-4 col-sm-12 mt-5"> 
-              <div class="contact-cont2"> 
-                <div class="contact-add contact-box-desc">
-                  <h3><i class="fa fa-map-marker cl-atlantis fa-2x"></i> Address</h3>
-                  <p>Toronto Downtown,  <br>
-                    Ontario, CA <br></p>
-                </div>
-                <div class="contact-phone contact-side-desc contact-box-desc">
-                  <h3><i class="fa fa-phone cl-atlantis fa-2x"></i> Phone</h3>
-                  <p>647 405 9986</p>
-                </div>
-                <div class="contact-mail contact-side-desc contact-box-desc">
-                  <h3><i class="fa fa-envelope-o cl-atlantis fa-2x"></i> Email</h3>
-                <address class="address-details-f"> 
-                  
-                  Email: <a href="mailto:taikuchou@gmail.com" class="">taikuchou@gmail.com</a>
-                </address>
-                <ul class="list-inline social-icon-f top-data">
-                  <li><a href="https://www.facebook.com/kentaitech" target="_empty"><i class="fa top-social fa-facebook" style="color: #4267b2; border-color:#4267b2;"></i></a></li>
-                  <li><a href="https://www.linkedin.com/in/ken-tai-kuchou/" target="_empty"><i class="fa top-social fa-linkedin" style="color: #4AB3F4; border-color:#4AB3F4;"></i></a></li>
-                  <li><a href="#" target="_empty"><i class="fa top-social fa-google-plus" style="color: #e24343; border-color:#e24343;"></i></a></li> 
-                </ul>
-                </div>
-              </div>
-            </div> 
-          </div>
-      </section> -->
-
-      <!-- <section class=" d-flex flex-column" id="maps">
-        <div id="map">
-          <div class="map-responsive">
-             <iframe src="https://www.google.com/maps/embed?pb=!1m10!1m8!1m3!1d6030.418742494061!2d-111.34563870463673!3d26.01036670629853!3m2!1i1024!2i768!4f13.1!5e0!3m2!1ses-419!2smx!4v1471908546569" width="600" height="450" frameborder="0" style="border:0" allowfullscreen></iframe>
-          </div>
-        </div>
-      </section> -->
-
-
+  <!-- HEADER -->
+  <header>
+    <div class="name-block">
+      <h1>Ken<br>Tai</h1>
+      <p class="tagline">Full-Stack Developer &amp; Technical Lead · 10+ Years</p>
     </div>
+    <div class="contact-block">
+      <div>647.405.9986</div>
+      <div><a href="mailto:taikuchou@gmail.com">taikuchou@gmail.com</a></div>
+      <div>Toronto, ON</div>
+      <div><a href="https://www.linkedin.com/in/ken-tai-kuchou/" target="_blank">LinkedIn ↗</a></div>
+      <div><a href="https://github.com/taikuchou" target="_blank">GitHub ↗</a></div>
+    </div>
+  </header>
 
-<!--====================================================
-                    PORTFOLIO MODALS
-======================================================-->
-    <div class="portfolio-modal modal fade" id="portfolioModal1" tabindex="-1" role="dialog" aria-hidden="true" >
-      <div class="modal-dialog" role="document">
-          <div class="modal-content">
-              <div class="close-modal" data-dismiss="modal">
-                  <div class="lr">
-                      <div class="rl"></div>
-                  </div>
-              </div>
-              <div class="container">
-                  <div class="row">
-                          <div class="modal-body">
-                              <div class="title-bar">
-                                <div class="col-md-12">
-                                  <h2 class="text-center">Our Project</h2>
-                                  <div class="heading-border"></div>
-                                </div>
-                              </div>
-                              <div class="row">
-                                <div class="col-md-6">
-                                  <img class="img-fluid img-centered" src="img/portfolio/p-1.jpg" alt="">
-                                </div>
-                                <div class="col-md-6">
-                                  <!-- <p>Our new Project every processes had become fragmented; meaning quality and service were inconsistent. This lack of standardization was adversely impacting operating costs, productivity and customer satisfaction. For several years now Payfast has worked strategically with innovations as a means of developing new solutions, products and services. In line with this vision, Success was approached to find new payments solutions to offer Payfast customers on their website, including open invoice and partial payments options.</p>
-                                  <ul class="list-inline item-details">
-                                      <li>Client:
-                                          <strong>
-                                            <a href="#">Techs Soft</a>
-                                          </strong>
-                                      </li>
-                                      <li>Date:
-                                          <strong>
-                                            <a href="#">April 2018</a>
-                                          </strong>
-                                      </li>
-                                      <li>Service:
-                                          <strong>
-                                            <a href="#">Web Development</a>
-                                          </strong>
-                                      </li>
-                                  </ul> -->
-                                  <button class="btn btn-general btn-white" type="button" data-dismiss="modal">
-                                      <i class="fa fa-times"></i> Close
-                                  </button>
-                              </div>
-                            </div>
-                          </div>
-                  </div>
-              </div>
-          </div>
+  <div class="issue-line">
+    <span>Software Engineer · Enterprise &amp; Mobile</span>
+    <span>Java · Angular · iOS · Azure · Cloud</span>
+  </div>
+
+  <!-- SUMMARY -->
+  <section>
+    <div class="section-label">Qualifications</div>
+    <div class="summary-grid">
+      <div class="summary-item">
+        <h3>Full-Stack &amp; Leadership</h3>
+        <p>Over 10 years in full-stack development, system integration, and technical leadership delivering secure, scalable, AODA-compliant enterprise solutions.</p>
+      </div>
+      <div class="summary-item">
+        <h3>Backend Expertise</h3>
+        <p>Spring Boot, Spring MVC, JPA/Hibernate, JUnit, Maven, Gradle — REST API design with OAuth 2 ensuring performance and maintainability.</p>
+      </div>
+      <div class="summary-item">
+        <h3>Frontend Proficiency</h3>
+        <p>Angular 13+, AngularJS, JavaScript, TypeScript, HTML5, and CSS building responsive and accessible applications.</p>
+      </div>
+      <div class="summary-item">
+        <h3>Cloud Skills</h3>
+        <p>Azure Function Apps, Event Hubs, Service Bus, and Queues. Collaborative workflows via Git, code reviews, and pull requests.</p>
+      </div>
+      <div class="summary-item">
+        <h3>Cross-Department Collaboration</h3>
+        <p>Proven leadership with developers, UX designers, analysts, and stakeholders. Skilled at translating user requirements into effective technical solutions.</p>
+      </div>
+      <div class="summary-item">
+        <h3>Successful Project Delivery</h3>
+        <p>Delivered Taiwan government modernization projects, Rakuten C2C marketplace, NTUH iPad Apps, and UNI Airline iOS booking app on time.</p>
       </div>
     </div>
-    <div class="portfolio-modal modal fade" id="portfolioModal2" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="close-modal" data-dismiss="modal">
-                    <div class="lr">
-                        <div class="rl"></div>
-                    </div>
-                </div>
-                <div class="container">
-                <div class="row">
-                        <div class="modal-body">
-                            <div class="title-bar">
-                              <div class="col-md-12">
-                                <h2 class="text-center">Our Project</h2>
-                                <div class="heading-border"></div>
-                              </div>
-                            </div>
-                            <div class="row">
-                              <div class="col-md-6">
-                                <img class="img-fluid img-centered" src="img/portfolio/p-2.jpg" alt="">
-                              </div>
-                              <div class="col-md-6">
-                                <!-- <p>Our new Project every processes had become fragmented; meaning quality and service were inconsistent. This lack of standardization was adversely impacting operating costs, productivity and customer satisfaction. For several years now Payfast has worked strategically with innovations as a means of developing new solutions, products and services. In line with this vision, Success was approached to find new payments solutions to offer Payfast customers on their website, including open invoice and partial payments options.</p>
-                                <ul class="list-inline item-details">
-                                    <li>Client:
-                                        <strong>
-                                          <a href="#">Techs Soft</a>
-                                        </strong>
-                                    </li>
-                                    <li>Date:
-                                        <strong>
-                                          <a href="#">April 2018</a>
-                                        </strong>
-                                    </li>
-                                    <li>Service:
-                                        <strong>
-                                          <a href="#">Web Development</a>
-                                        </strong>
-                                    </li>
-                                </ul> -->
-                                <button class="btn btn-general btn-white" type="button" data-dismiss="modal">
-                                    <i class="fa fa-times"></i> Close
-                                </button>
-                            </div>
-                          </div>
-                        </div>
-                </div>
-            </div>
-            </div>
-        </div>
-    </div>
-    <div class="portfolio-modal modal fade" id="portfolioModal3" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="close-modal" data-dismiss="modal">
-                    <div class="lr">
-                        <div class="rl"></div>
-                    </div>
-                </div>
-                <div class="container">
-                <div class="row">
-                        <div class="modal-body">
-                            <div class="title-bar">
-                              <div class="col-md-12">
-                                <h2 class="text-center">Our Project</h2>
-                                <div class="heading-border"></div>
-                              </div>
-                            </div>
-                            <div class="row">
-                              <div class="col-md-6">
-                                <img class="img-fluid img-centered" src="img/portfolio/p-3.jpg" alt="">
-                              </div>
-                              <div class="col-md-6">
-                                <!-- <p>Our new Project every processes had become fragmented; meaning quality and service were inconsistent. This lack of standardization was adversely impacting operating costs, productivity and customer satisfaction. For several years now Payfast has worked strategically with innovations as a means of developing new solutions, products and services. In line with this vision, Success was approached to find new payments solutions to offer Payfast customers on their website, including open invoice and partial payments options.</p>
-                                <ul class="list-inline item-details">
-                                    <li>Client:
-                                        <strong>
-                                          <a href="#">Techs Soft</a>
-                                        </strong>
-                                    </li>
-                                    <li>Date:
-                                        <strong>
-                                          <a href="#">April 2018</a>
-                                        </strong>
-                                    </li>
-                                    <li>Service:
-                                        <strong>
-                                          <a href="#">Web Development</a>
-                                        </strong>
-                                    </li>
-                                </ul> -->
-                                <button class="btn btn-general btn-white" type="button" data-dismiss="modal">
-                                    <i class="fa fa-times"></i> Close
-                                </button>
-                              </div>
-                          </div>
-                        </div>
-                </div>
-            </div>
-            </div>
-        </div>
-    </div>
-    <div class="portfolio-modal modal fade" id="portfolioModal4" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="close-modal" data-dismiss="modal">
-                    <div class="lr">
-                        <div class="rl"></div>
-                    </div>
-                </div>
-                <div class="container">
-                <div class="row">
-                        <div class="modal-body">
-                            <div class="title-bar">
-                              <div class="col-md-12">
-                                <h2 class="text-center">Our Project</h2>
-                                <div class="heading-border"></div>
-                              </div>
-                            </div>
-                            <div class="row">
-                              <div class="col-md-6">
-                                <img class="img-fluid img-centered" src="img/portfolio/p-4.jpg" alt="">
-                              </div>
-                              <div class="col-md-6">
-                                <!-- <p>Our new Project every processes had become fragmented; meaning quality and service were inconsistent. This lack of standardization was adversely impacting operating costs, productivity and customer satisfaction. For several years now Payfast has worked strategically with innovations as a means of developing new solutions, products and services. In line with this vision, Success was approached to find new payments solutions to offer Payfast customers on their website, including open invoice and partial payments options.</p>
-                                <ul class="list-inline item-details">
-                                    <li>Client:
-                                        <strong>
-                                          <a href="#">Techs Soft</a>
-                                        </strong>
-                                    </li>
-                                    <li>Date:
-                                        <strong>
-                                          <a href="#">April 2018</a>
-                                        </strong>
-                                    </li>
-                                    <li>Service:
-                                        <strong>
-                                          <a href="#">Web Development</a>
-                                        </strong>
-                                    </li>
-                                </ul> -->
-                                <button class="btn btn-general btn-white" type="button" data-dismiss="modal">
-                                    <i class="fa fa-times"></i> Close
-                                </button>
-                              </div>
-                          </div>
-                        </div>
-                </div>
-            </div>
-            </div>
-        </div>
-    </div>
-    <div class="portfolio-modal modal fade" id="portfolioModal5" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="close-modal" data-dismiss="modal">
-                    <div class="lr">
-                        <div class="rl"></div>
-                    </div>
-                </div>
-                <div class="container">
-                <div class="row">
-                        <div class="modal-body">
-                            <div class="title-bar">
-                              <div class="col-md-12">
-                                <h2 class="text-center">Our Project</h2>
-                                <div class="heading-border"></div>
-                              </div>
-                            </div>
-                            <div class="row">
-                              <div class="col-md-6">
-                                <img class="img-fluid img-centered" src="img/portfolio/p-5.jpg" alt="">
-                              </div>
-                              <div class="col-md-6">
-                                <!-- <p>Our new Project every processes had become fragmented; meaning quality and service were inconsistent. This lack of standardization was adversely impacting operating costs, productivity and customer satisfaction. For several years now Payfast has worked strategically with innovations as a means of developing new solutions, products and services. In line with this vision, Success was approached to find new payments solutions to offer Payfast customers on their website, including open invoice and partial payments options.</p>
-                                <ul class="list-inline item-details">
-                                    <li>Client:
-                                        <strong>
-                                          <a href="#">Techs Soft</a>
-                                        </strong>
-                                    </li>
-                                    <li>Date:
-                                        <strong>
-                                          <a href="#">April 2018</a>
-                                        </strong>
-                                    </li>
-                                    <li>Service:
-                                        <strong>
-                                          <a href="#">Web Development</a>
-                                        </strong>
-                                    </li>
-                                </ul> -->
-                                <button class="btn btn-general btn-white" type="button" data-dismiss="modal">
-                                    <i class="fa fa-times"></i> Close
-                                </button>
-                            </div>
-                          </div>
-                        </div>
-                </div>
-            </div>
-            </div>
-        </div>
-    </div>
-    <div class="portfolio-modal modal fade" id="portfolioModal6" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="close-modal" data-dismiss="modal">
-                    <div class="lr">
-                        <div class="rl"></div>
-                    </div>
-                </div>
-                <div class="container">
-                <div class="row">
-                        <div class="modal-body">
-                            <div class="title-bar">
-                              <div class="col-md-12">
-                                <h2 class="text-center">Our Project</h2>
-                                <div class="heading-border"></div>
-                              </div>
-                            </div>
-                            <div class="row">
-                              <div class="col-md-6">
-                                <img class="img-fluid img-centered" src="img/portfolio/p-6.jpg" alt="">
-                              </div>
-                              <div class="col-md-6">
-                                <!-- <p>Our new Project every processes had become fragmented; meaning quality and service were inconsistent. This lack of standardization was adversely impacting operating costs, productivity and customer satisfaction. For several years now Payfast has worked strategically with innovations as a means of developing new solutions, products and services. In line with this vision, Success was approached to find new payments solutions to offer Payfast customers on their website, including open invoice and partial payments options.</p>
-                                <ul class="list-inline item-details">
-                                    <li>Client:
-                                        <strong>
-                                          <a href="#">Techs Soft</a>
-                                        </strong>
-                                    </li>
-                                    <li>Date:
-                                        <strong>
-                                          <a href="#">April 2018</a>
-                                        </strong>
-                                    </li>
-                                    <li>Service:
-                                        <strong>
-                                          <a href="#">Web Development</a>
-                                        </strong>
-                                    </li>
-                                </ul> -->
-                                <button class="btn btn-general btn-white" type="button" data-dismiss="modal">
-                                    <i class="fa fa-times"></i> Close
-                                </button>
-                            </div>
-                          </div>
-                        </div>
-                </div>
-            </div>
-            </div>
-        </div>
-    </div>    
-    <div class="portfolio-modal modal fade" id="portfolioModal7" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="close-modal" data-dismiss="modal">
-                    <div class="lr">
-                        <div class="rl"></div>
-                    </div>
-                </div>
-                <div class="container">
-                <div class="row">
-                        <div class="modal-body">
-                            <div class="title-bar">
-                              <div class="col-md-12">
-                                <h2 class="text-center">Our Project</h2>
-                                <div class="heading-border"></div>
-                              </div>
-                            </div>
-                            <div class="row">
-                              <div class="col-md-6">
-                                <img class="img-fluid img-centered" src="img/portfolio/p-7.jpg" alt="">
-                              </div>
-                              <div class="col-md-6">
-                                <!-- <p>Our new Project every processes had become fragmented; meaning quality and service were inconsistent. This lack of standardization was adversely impacting operating costs, productivity and customer satisfaction. For several years now Payfast has worked strategically with innovations as a means of developing new solutions, products and services. In line with this vision, Success was approached to find new payments solutions to offer Payfast customers on their website, including open invoice and partial payments options.</p>
-                                <ul class="list-inline item-details">
-                                    <li>Client:
-                                        <strong>
-                                          <a href="#">Techs Soft</a>
-                                        </strong>
-                                    </li>
-                                    <li>Date:
-                                        <strong>
-                                          <a href="#">April 2018</a>
-                                        </strong>
-                                    </li>
-                                    <li>Service:
-                                        <strong>
-                                          <a href="#">Web Development</a>
-                                        </strong>
-                                    </li>
-                                </ul> -->
-                                <button class="btn btn-general btn-white" type="button" data-dismiss="modal">
-                                    <i class="fa fa-times"></i> Close
-                                </button>
-                            </div>
-                          </div>
-                        </div>
-                </div>
-            </div>
-            </div>
-        </div>
-    </div>
-    <div class="portfolio-modal modal fade" id="portfolioModal8" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="close-modal" data-dismiss="modal">
-                    <div class="lr">
-                        <div class="rl"></div>
-                    </div>
-                </div>
-                <div class="container">
-                <div class="row">
-                        <div class="modal-body">
-                            <div class="title-bar">
-                              <div class="col-md-12">
-                                <h2 class="text-center">Our Project</h2>
-                                <div class="heading-border"></div>
-                              </div>
-                            </div>
-                            <div class="row">
-                              <div class="col-md-6">
-                                <img class="img-fluid img-centered" src="img/portfolio/p-8.jpg" alt="">
-                              </div>
-                              <div class="col-md-6">
-                                <!-- <p>Our new Project every processes had become fragmented; meaning quality and service were inconsistent. This lack of standardization was adversely impacting operating costs, productivity and customer satisfaction. For several years now Payfast has worked strategically with innovations as a means of developing new solutions, products and services. In line with this vision, Success was approached to find new payments solutions to offer Payfast customers on their website, including open invoice and partial payments options.</p>
-                                <ul class="list-inline item-details">
-                                    <li>Client:
-                                        <strong>
-                                          <a href="#">Techs Soft</a>
-                                        </strong>
-                                    </li>
-                                    <li>Date:
-                                        <strong>
-                                          <a href="#">April 2018</a>
-                                        </strong>
-                                    </li>
-                                    <li>Service:
-                                        <strong>
-                                          <a href="#">Web Development</a>
-                                        </strong>
-                                    </li>
-                                </ul> -->
-                                <button class="btn btn-general btn-white" type="button" data-dismiss="modal">
-                                    <i class="fa fa-times"></i> Close
-                                </button>
-                            </div>
-                          </div>
-                        </div>
-                </div>
-            </div>
-            </div>
-        </div>
-    </div>
-    <div class="portfolio-modal modal fade" id="portfolioModal9" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="close-modal" data-dismiss="modal">
-                    <div class="lr">
-                        <div class="rl"></div>
-                    </div>
-                </div>
-                <div class="container">
-                <div class="row">
-                        <div class="modal-body">
-                            <div class="title-bar">
-                              <div class="col-md-12">
-                                <h2 class="text-center">Our Project</h2>
-                                <div class="heading-border"></div>
-                              </div>
-                            </div>
-                            <div class="row">
-                              <div class="col-md-6">
-                                <img class="img-fluid img-centered" src="img/portfolio/p-9.jpg" alt="">
-                              </div>
-                              <div class="col-md-6">
-                                <!-- <p>Our new Project every processes had become fragmented; meaning quality and service were inconsistent. This lack of standardization was adversely impacting operating costs, productivity and customer satisfaction. For several years now Payfast has worked strategically with innovations as a means of developing new solutions, products and services. In line with this vision, Success was approached to find new payments solutions to offer Payfast customers on their website, including open invoice and partial payments options.</p>
-                                <ul class="list-inline item-details">
-                                    <li>Client:
-                                        <strong>
-                                          <a href="#">Techs Soft</a>
-                                        </strong>
-                                    </li>
-                                    <li>Date:
-                                        <strong>
-                                          <a href="#">April 2018</a>
-                                        </strong>
-                                    </li>
-                                    <li>Service:
-                                        <strong>
-                                          <a href="#">Web Development</a>
-                                        </strong>
-                                    </li>
-                                </ul> -->
-                                <button class="btn btn-general btn-white" type="button" data-dismiss="modal">
-                                    <i class="fa fa-times"></i> Close
-                                </button>
-                            </div>
-                          </div>
-                        </div>
-                </div>
-            </div>
-            </div>
-        </div>
-    </div>    
+  </section>
 
+  <!-- CERTIFICATIONS -->
+  <section>
+    <div class="section-label">Certifications</div>
+    <div class="cert-columns">
+      <div class="cert-group">
+        <h4>Java</h4>
+        <ul>
+          <li>Oracle Certified Expert, EE 6 Web Component Developer</li>
+          <li>Oracle Certified Professional: Java SE 11 Developer</li>
+        </ul>
+      </div>
+      <div class="cert-group">
+        <h4>Microsoft .NET</h4>
+        <ul>
+          <li>Microsoft Certified Technology Specialist</li>
+          <li>Microsoft Certified Professional Developer</li>
+        </ul>
+      </div>
+      <div class="cert-group">
+        <h4>AI</h4>
+        <ul>
+          <li>Microsoft Azure AI Fundamentals</li>
+          <li>AWS Certified AI Practitioner</li>
+        </ul>
+      </div>
+      <div class="cert-group">
+        <h4>Cybersecurity</h4>
+        <ul>
+          <li>EC-Council Certified Application Security Engineer Java</li>
+          <li>EC-Council Certified Application Security Engineer .NET</li>
+        </ul>
+      </div>
+      <div class="cert-group">
+        <h4>Cloud &amp; Mobile</h4>
+        <ul>
+          <li>Google Professional Cloud Architect</li>
+          <li>App Development with Swift Certified User</li>
+        </ul>
+      </div>
+      <div class="cert-group">
+        <h4>Data</h4>
+        <ul>
+          <li>IBM Data Analyst Professional Certificate</li>
+        </ul>
+      </div>
+    </div>
+  </section>
 
-    <!-- Global javascript -->
-    <script src="js/jquery/jquery.min.js"></script>
-    <script src="js/bootstrap/bootstrap.bundle.min.js"></script>
-    <script src="js/jquery-easing/jquery.easing.min.js"></script>
-    <script src="js/counter/jquery.waypoints.min.js"></script>
-    <script src="js/counter/jquery.counterup.min.js"></script>
-    <script src="js/custom.js"></script>
-    <script>
-        $(document).ready(function(){
+  <!-- WORK EXPERIENCE -->
+  <section>
+    <div class="section-label">Work Experience</div>
 
-        $(".filter-b").click(function(){
-            var value = $(this).attr('data-filter');
-            if(value == "all")
-            { 
-                $('.filter').show('1000');
-            }
-            else
-            { 
-                $(".filter").not('.'+value).hide('3000');
-                $('.filter').filter('.'+value).show('3000');
-            }
-        });
-        
-        if ($(".filter-b").removeClass("active")) {
-          $(this).removeClass("active");
-        }
-        $(this).addClass("active");
-        });
+    <!-- BITs -->
+    <div class="employer-block">
+      <div class="employer-header">
+        <div class="employer-name">BITs Information Technology</div>
+        <div class="employer-meta">
+          New Taipei City, Taiwan<br>
+          Feb 2013 — Aug 2023
+        </div>
+      </div>
 
-        // SKILLS
-        $(function () {
-            $('.counter').counterUp({
-                delay: 10,
-                time: 2000
-            });
+      <div class="project">
+        <div class="project-title">Case-Tracking iPad Apps — National Taiwan University Hospital</div>
+        <p class="project-desc">Built and maintained iPad apps for Taiwan's top-ranked hospital, integrated with backend systems (Web API, PACS) serving 3,000+ doctors, nurses, and ER staff. Included crash tracking and multi-device iOS support.</p>
+        <div class="project-meta">
+          <span class="meta-pill">Senior Developer Lead</span>
+          <span class="meta-pill">Mentored 5 members</span>
+          <span class="meta-pill">iPad / iOS</span>
+        </div>
+        <div class="tech-list"><span>→</span> Objective-C · Swift · SwiftUI · Flutter · Python · Django · RESTful API · Firebase · Docker</div>
+      </div>
 
-        });
-    </script> 
+      <div class="project">
+        <div class="project-title">Rakuten C2C Marketplace App</div>
+        <p class="project-desc">Developed a Rakuten marketplace app for C2C second-hand exchanges, integrating payment and logistics APIs across iOS and Android platforms.</p>
+        <div class="project-meta">
+          <span class="meta-pill">Senior Developer Lead</span>
+          <span class="meta-pill">Mentored 4 members</span>
+          <span class="meta-pill">iOS &amp; Android</span>
+        </div>
+        <div class="tech-list"><span>→</span> Java · Spring · Hibernate · Angular · Kotlin · Swift · RESTful API</div>
+      </div>
+
+      <div class="project">
+        <div class="project-title">Cram School Learning App &amp; CRM System</div>
+        <p class="project-desc">Developed a video-based desktop learning application for middle school students with offline playback on Windows and Mac. Built a CRM to monitor student progress in real time.</p>
+        <div class="project-meta">
+          <span class="meta-pill">Senior Developer</span>
+          <span class="meta-pill">Mentored 2 members</span>
+          <span class="meta-pill">Desktop / Web</span>
+        </div>
+        <div class="tech-list"><span>→</span> Java · JavaFX · ASP.NET Web API · GCP · DBCS</div>
+      </div>
+
+      <div class="project">
+        <div class="project-title">Government Audits Management System</div>
+        <p class="project-desc">Built an Android app and backend for Taiwan's Ministry of Health and Welfare to support on-site food safety inspections with data sync, real-time reports, and progress tracking.</p>
+        <div class="project-meta">
+          <span class="meta-pill">Senior Developer</span>
+          <span class="meta-pill">Android</span>
+        </div>
+        <div class="tech-list"><span>→</span> Java · ASP.NET Web API · DBCS</div>
+      </div>
+
+      <div class="project">
+        <div class="project-title">Standard Chartered Bank — Internal API Integration</div>
+        <p class="project-desc">Designed and implemented integration and optimization of internal APIs with functional enhancements to support system consolidation during a multinational bank merger.</p>
+        <div class="project-meta">
+          <span class="meta-pill">Software Developer</span>
+          <span class="meta-pill">API</span>
+        </div>
+        <div class="tech-list"><span>→</span> ASP.NET · Web Service (XML)</div>
+      </div>
+
+      <div class="project">
+        <div class="project-title">UNI Airline iOS Booking App</div>
+        <p class="project-desc">Developed a mobile booking app for a Taiwan domestic airline with real-time flight info, reservation services, and departure reminders.</p>
+        <div class="project-meta">
+          <span class="meta-pill">Software Developer</span>
+          <span class="meta-pill">Mentored 3 members</span>
+          <span class="meta-pill">iOS</span>
+        </div>
+        <div class="tech-list"><span>→</span> Objective-C · Web Service (XML)</div>
+      </div>
+    </div>
+
+    <!-- Systex -->
+    <div class="employer-block">
+      <div class="employer-header">
+        <div class="employer-name">Systex Corp.</div>
+        <div class="employer-meta">
+          Taipei, Taiwan<br>
+          Jul 2010 — Aug 2023
+        </div>
+      </div>
+      <div class="instructor-block">
+        <p><strong>Contract Senior Instructor</strong> — Created learning materials and partnered with industry to teach Java, .NET, Swift, Objective-C, Flutter, and Web/Mobile development. Delivered <strong>6,000+ hours</strong> of in-person training across <strong>42 courses</strong> with an average feedback score of <strong>8.3 / 9.0</strong>.</p>
+        <p class="instructor-awards">🏆 Circle of Excellence (2022) &nbsp;·&nbsp; Best Newcomer (2021) — EC-Council</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- EDUCATION -->
+  <section>
+    <div class="section-label">Education</div>
+
+    <div class="edu-item">
+      <div>
+        <div class="edu-degree">Data Analyst Program</div>
+        <div class="edu-school">NPower Canada · Toronto, Canada</div>
+      </div>
+      <div class="edu-date">Dec 2024</div>
+    </div>
+
+    <div class="edu-item">
+      <div>
+        <div class="edu-degree">Master's Degree, Computer Science</div>
+        <div class="edu-school">National Taiwan Normal University · Taipei, Taiwan</div>
+      </div>
+      <div class="edu-date">July 2011</div>
+    </div>
+  </section>
+
+  <!-- VOLUNTEER -->
+  <section>
+    <div class="section-label">Volunteer Experience</div>
+    <div class="edu-item">
+      <div>
+        <div class="edu-degree">Online Volunteer Instructor — Swift Programming</div>
+        <div class="edu-school">Kurius · Toronto, Canada</div>
+        <p style="font-size:0.8rem; color:var(--muted); margin-top:6px; max-width:560px;">Mentored ~9 high school students in a 10-hour Swift course, fostering collaboration and supporting learners from diverse backgrounds in a positive and inclusive environment.</p>
+      </div>
+      <div class="edu-date">Dec 2023 — Feb 2024</div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>Ken Tai · Full-Stack Engineer</p>
+    <div class="footer-links">
+      <a href="https://www.linkedin.com/in/ken-tai-kuchou/" target="_blank">LinkedIn</a>
+      <a href="https://github.com/taikuchou" target="_blank">GitHub</a>
+      <a href="mailto:taikuchou@gmail.com">Email</a>
+    </div>
+  </footer>
+
+</div>
 </body>
-
 </html>
